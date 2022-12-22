@@ -1,0 +1,87 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{multicol}
+
+\newcommand\letsymbol{\mathord{\sqsupset}}
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\theoremstyle{definition}
+\newtheorem*{example}{Пример}
+\newtheorem*{definition}{Определение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+% \begin{multicols*}{2}
+    \tableofcontents
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \section{Теория булевых функций}
+    \subsection{Определение булевой функции (БФ). Количество БФ от n переменных. Таблица истинности БФ}
+    \begin{definition}
+        Булева функция от n переменных - это отображение $\{0,1\}^n \rightarrow \{0, 1\}$
+    \end{definition}
+
+    \begin{remark}
+        Количество БФ от n переменных - $2^{2^n}$
+    \end{remark}
+    \begin{proof}
+        Каждая булева функция определяется своим столбцом значений.
+         Столбец является булевым вектором длины $m=2n$, где n – число аргументов функции.
+          Число различных векторов длины m (а значит и число булевых функций, зависящих от n переменных) равно $2^m=2^{2^n}$
+    \end{proof}
+    \subsection{Булевы функции одной и двух переменных (их таблицы, названия)}
+Булевы функции одной переменной:
+         \begin{tabular}{c|cccc}
+        x & $f_1$ & $f_2$ & $f_3$ & $f_4$ \\
+        \hline
+        0 & 0 & 0 & 1 & 1 \\
+        1 & 0 & 1 & 0 & 1 \\ 
+        \end{tabular}
+    $f_1$ - тождественный 0, $f_2$ - тождественная функция, $f_3$ - отрицание ($\neg$), $f_4$ - тождественная 1
+\\ \\
+    Булевы функции двух переменных
+    \begin{tabular}{cc|cccccccccccccccc}
+        x & y & 0 & $\wedge$ & $\rightarrow '$ & $x$ & $\leftarrow '$ & $y$ & $+$ & $\vee$ & $\downarrow$ & $\leftrightarrow$ & $y'$ & $\leftarrow$ & $x'$ & $\rightarrow$ & | & 1\\
+        \hline
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ 
+        1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+        1 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 \\
+        \end{tabular}
+    \begin{enumerate}
+        \item $\wedge$ - конъюнкция
+        \item $\leftarrow$ -  антиимпликация
+        \item $\rightarrow$ - импликация
+        \item $\vee$ - дизъюнкция
+        \item | - штрих Шеффера
+        \item $\downarrow$ - стрелка Пирса
+        \item + -  взаимоисключающее или, сложение по модулю 2 (XOR)
+    \end{enumerate}
+    \subsection{Формулы логики высказываний. Представление БФ формулами}
+    \begin{definition}
+        Формула логики высказываний - слово алфавита логики высказываний,
+        построенное по следующим правилам:
+        \begin{enumerate}
+            \item символ переменной - формула
+            \item символы 0 и 1 - формулы
+            \item если $\Phi_1$ и $\Phi_2$ - формулы, то слова ($\Phi_1 \& \Phi_2$),
+            ($\Phi_1 \leftrightarrow \Phi_2$), ($\Phi_1 \rightarrow \Phi_2$), 
+            ($\Phi_1 | \Phi_2$), $\dots$ , $\Phi_1 '$ тоже формулы
+        \end{enumerate}
+    \end{definition}
+% \end{multicols*}
+
+\end{document}
