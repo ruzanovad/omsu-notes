@@ -137,11 +137,33 @@
         Класс S является замкнутым.
     \end{remark}
     \begin{proof}
-        
+        Возьмем БФ $g, g_1, \dots g_k \in S$ и докажем, что их
+        суперпозиция будет также из класса S. \\
+        Если $F(x_1, \dots, x_n) = g(g_1(x_1, \dots, x_n), \dots, g_k(x_1, \dots, x_n))$,\\
+        то $F^*(x_1, \dots, x_n) = \neg F(\neg x_1, \dots, \neg x_n) = $
+        $\neg g(g_1(\neg x_1, \dots, \neg x_n), \dots, g_k(\neg x_1, \dots, \neg x_n))$.
+
+        Так как $g_i \in S,$ то $g_i(x_1, \dots, x_n) = \neg g_i(\neg x_1, \dots, \neg x_n)$,
+        что эквивалентно $ \neg g_i(x_1, \dots, x_n) = g_i(\neg x_1, \dots, \neg x_n)$.
+        Следовательно, $F^*(x_1, \dots, x_n) = \neg g(\neg g_1(x_1, \dots, x_n), \dots, \neg g_k (x_1, \dots, x_n))$.\\
+        Так как $g\in S$, то $\neg g(\neg g_1(x_1, \dots, x_n), \dots, \neg g_k (x_1, \dots, x_n))$
+        $= (g_1(x_1, \dots, x_n), \dots, g_k(x_1, \dots, x_n))$
+        $\implies f^*(x_1, \dots, x_n) = F(x_1, \dots, x_n)$
     \end{proof}
     \subsection{Класс монотонных функций}
     \subsection{Класс линейных функций}
     \subsection{Леммы о несамодвойственной, немонотонной, нелинейной функциях}
+    \begin{lemma}[о несамодвойственной функции]
+        Если БФ $f^*(x_1, \dots, x_n)$ несамодвойственна, то замыкание класса $[f, \neg x]$
+        содержит тождественно ложную БФ 0 и тождественно истинную БФ 1.
+    \end{lemma}
+    \begin{proof}
+        Так как f несамодвойственна, то существует набор $a_1, \dots, a_n$
+        значений аргументов такой, что \\ $f(a_1, \dots, a_n) \neq \neg f(\neg a_1, \dots, \neg a_n)$ \\
+        Так как БФ принимают только значения 0 и 1, то $f(a_1, \dots, a_n) = f(\neg a_1, \dots, \neg a_n)$ \\
+        Составим функцию $g(x) = f(x^{a_1}, \dots, x^{a_n})$
+
+    \end{proof}
     \subsection{Теорема Поста о полноте системы булевых функций}
     \subsection{Релейно-контактные схемы: определение, примеры, функция проводимости. Анализ и синтез РКС (умение решать задачи)}
     \section{Логика высказываний}
