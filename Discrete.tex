@@ -83,6 +83,44 @@
         \end{enumerate}
     \end{definition}
     \subsection{Эквивалентные формулы. Основные эквивалентности теории булевых функций}
+	\begin{definition}
+		Формулы логики высказываний 	$\Phi$($x_1$, $x_2$, ..., $x_n$) и $\Psi$($x_1$, $x_2$, ..., $x_n$) эквивалетные, если для всех наборов значений $a_1$, ..., $a_n\in\{$0, 1$\}$
+		$\Phi$($a_1$, ..., $a_n$) = 1 $\Leftrightarrow \Psi$($a_1$, ..., $a_n$) = 1
+	\end{definition}
+	\begin{theorem}
+		Справедливы следующие эквивалетности
+		\begin{enumerate}
+			\item a $\vee$ b $\equiv$ b $\vee$ a
+			\item a $\wedge$ b $\equiv$ b $\wedge$ a
+			\item a $\vee$ (b $\vee$ c) $\equiv$ (a $\vee$ b) $\vee$ c
+			\item a $\wedge$ (b $\wedge$ c) $\equiv$ (a $\wedge$ b) $\wedge$ c
+			\item a $\wedge$ (b $\vee$ c) $\equiv$ a$\wedge$b $\vee$ a$\wedge$c
+			\item a $\vee$  b $\wedge$ c $\equiv$ (a $\vee$ b) $\wedge$ (a $\vee$ c)
+			\item a $\vee$ a $\equiv$ a
+			\item a $\wedge$ a $\equiv$ a
+			\item $\overline{(a \vee b)} \equiv \overline{a} \wedge \overline{b}$
+			\item $\overline{(a \wedge b)} \equiv \overline{a} \vee \overline{b}$
+			\item $\overline{\overline{a}} \equiv a$
+			\item a $\vee$ a $\wedge$ b $\equiv$ a
+			\item a $\wedge$ (a $\vee$ b) $\equiv$ a
+			\item a $\vee$ $\overline{a} \wedge b \equiv a \vee b$
+			\item a $\wedge$ $(\overline{a} \vee b) \equiv ab$
+			\item $a \vee 0 \equiv a$
+			\item $a \wedge 0 \equiv 0$
+			\item $a \vee 1 \equiv 1$
+			\item $a \wedge 1 \equiv a$
+			\item $a \vee \overline{a} \equiv 1$
+			\item $a\overline{a} \equiv 0$
+			\item $a \rightarrow b \equiv \overline{a} \vee b$
+			\item $a \leftrightarrow b \equiv \overline{a} \wedge \overline{b} \vee a \wedge b \equiv (a \rightarrow b) \wedge (b \rightarrow a)$
+			\item $a + b \equiv \overline{a \leftrightarrow b} \equiv \overline{a} \wedge b \vee a \wedge \overline{b}$
+			\item $a | b \equiv \overline{a \wedge b}$
+			\item $a \downarrow b \equiv \overline{a \vee b}$
+		\end{enumerate}
+		\begin{proof}
+			Доказательство сводится к построению таблиц истинности для левой и правой частей каждой эквивалентности
+		\end{proof}
+	\end{theorem}
     \subsection{Тождественно истинные (ложные) и выполнимые БФ}
     \subsection{ДНФ и КНФ, алгоритмы приведения}
     \subsection{СДНФ и СКНФ, теоремы существования и единственности, алгоритмы приведения}
