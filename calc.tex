@@ -1,4 +1,5 @@
 \documentclass[a4paper]{article}
+\usepackage{cmap}
 \usepackage[utf8]{inputenc}
 \usepackage[T2A]{fontenc}
 \usepackage{amsfonts}
@@ -28,9 +29,145 @@
 \begin{document}
     \tableofcontents
     \section{Интегралы, зависящие от параметра}
-    \subsection{	Интегралы зависящие от параметра. Принцип равномерной сходимости}
+    \subsection{	Интегралы, зависящие от параметра. Принцип равномерной сходимости}
+    $\letsymbol f(x,y): [a, b]\times Y$
+
+    Для $\forall y \in Y f_y(x) = f(x,y) - \letsymbol\quad$ она $\in R([a, b])$ (интегрируема)
+    
+    $\implies \forall \alpha\quad$ и $\quad\beta\in[a,b]$ определена функция $F(y, \alpha, \beta) = \int_{a}^{b} f_y(x)dx = \int_{a}^{b} f(x, y)dx$
+
+    $F(y, \alpha, \beta)$ - функция, заданная интегралом, зависящим от параметра
+
+    [$F(y, a, b)$ - частный случай функции]
+
+    \begin{definition}
+        $X\times Y \subset \mathbb{R}^2, f(x,y)$ определена на $X\times Y$, пусть $y_0$ - предельная точка Y
+   \begin{enumerate}
+        \item пусть $\forall x \in X \quad \exists \lim\limits_{y\to y_0}f(x,y):=\phi(x)$
+        \item пусть $\forall \epsilon >0 \exists \delta(\epsilon)$ такая что $|y - y_0|<\delta |f(x,y) - \phi(x)|< \epsilon$ для $\forall x \implies$ тогда говорят, что $f(x,y)$ равномерно сходится к $\phi(x)$ 
+      \end{enumerate}
+   \end{definition}
+
+   \begin{theorem}[Свойства равномерной сходимости]
+    $f:X \times Y \longrightarrow \mathbb{R}, y_0$ - предельная точка $Y$
+\begin{enumerate}
+    \item $f(x,y)$ равномерно на $X$ сходится к $\phi(x)$ тогда и только тогда,
+     если $\forall \epsilon>0 \quad \exists \delta(\epsilon): \forall x \in X \forall y', y'' \in Y$ $|f(x, y') - f(x, y'')|<\epsilon$ [Критерий Коши]
+    \item $f(x,y)$ равномерно по $X$ стремится к $\phi(x)$ тогда и только тогда, если для  $\forall\{y_n\}$ так что $y_n \longrightarrow y_0$
+     - последовательность $\{f(x,y_n)\}$ равномерно сходится к $\phi(x)$ [сходимость по Гейне]
+    \item Если при $\forall y$ функция $f(x,y)$ непрерывна по x (интегрируема) и $f(x,y)$ равномерно сходится к $\phi(x)$, то $\phi(x)$ -  непрерывна и интегрируема
+    \item $\letsymbol x_0, y_0$ предельные точки X и Y, $f(x,y)$ равномерно по х сходится к $\phi(x)$,\hfill \break 
+     $\letsymbol\forall y \in Y \exists \lim\limits_{x \to x_0}f(x,y) =: \psi(y)$, тогда $\exists \lim\limits_{x \to x_0}\phi(x) = \lim\limits_{y \to y_0}\psi(y) [= \lim\limits_{x \to x_0}\lim\limits_{y \to y_0}f(x,y)]$ 
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \begin{enumerate}
+         \item $\triangleleft \Rightarrow  \lim\limits_{y \to y_0}f(x,y) =: \phi(y)$\hfill \break 
+         $|f(x,y') - f(x,y'')| = |f(x,y') - \phi(x) - f(x,y'')+\phi(x)| \le |f(x,y') - \phi(x)| + |f(x,y'')-\phi(x)|$\hfill \break
+         $\Leftarrow x \in X |f(x,y') - f(x,y'')| < \epsilon$ при
+         $
+         \begin{array}{l}
+              |y_0 - y'|< \delta\\
+              |y_0 - y''|<\delta
+         \end{array}
+         $
+         $\Leftarrow$ при $\forall x \exists \lim\limits_{y\to y_0}f(x,y)=:\phi(x)$
+    
+         $|f(x,y')-f(x,y'')| < \epsilon$, $y''\rightarrow y_0$
+    
+         $|f(x,y')-\phi(x)| \le\epsilon$ ,$f(x,y) \rightrightarrows \phi(x)$
+         \item \hypertarget{p1}{Необходимость очевидна}
+         
+         Достаточность: $\{y_n\} \rightarrow y_0$
+    
+         $\{f(x,y_n)\} \rightarrow \phi(x)$, пусть $|y_0 - y_n|< \delta = \frac{1}{n} \implies {\ y_n}\ \rightarrow y_0$ 
+         
+         и $|f(x,y_n) - \phi(x)|>\epsilon$; $f(x,y_n) \nrightarrow\phi(x)$ противоречие
+         \item $\letsymbol \{y_n \} \rightarrow y_0, f_n(x) = f(x, y_n)$
+         
+         $f_n(x)$ равномерно сходится к $\phi(x)$ по \hyperlink{p1}{2}
+    
+         Далее $\phi(x)$  равномерный предел хороших функий $\implies \phi(x)$ хорошая
+
+         Попа дробнее... (для последовательности функций от одной переменной)
+
+         $|s(x_0+h) - s(x_0)| = |s(x_0+h) + s_n(x_0 + h) - s_n(x_0) - s_n(x_0+h) + s_n(x_0)- s(x_0)|$ 
+         
+         $\leq |s(x_0+h) - s_n(x_0 + h)| + |s_n(x_0 + h) - s_n(x_0)| + |s_n(x_0) - s(x_0)|$
+
+         Каждое из этих слагаемых меньше $\epsilon/3$(среднее по причине непрерывности $s_n(x)$, остальные по причине равномерной сходимости)
+         \item $f(x,y) \rightrightarrows \phi(x), \letsymbol \epsilon>0$, выберем $\delta >0$ такое что:
+         
+         $|y_0 - y'| < \delta$ и $|y_0-y''|< \delta \implies$
+    
+         $|f(x,y') - f(x,y'')|< \epsilon$ по к. Коши
+    
+         $x \to x_0 : |\psi(y') - \psi(y'')| \leq \epsilon \implies$
+         
+         для $\psi(y)$ верен критерий Коши $\implies$
+    
+         $\exists \lim\limits_{y \to y_0}\psi(y) = A = \lim\limits_{y \to y_0}\lim\limits_{x \to x_0}f(x,y)$
+    
+         $|f(x,y) - \phi(x)|< \epsilon, |\psi(y) - A|< \epsilon$ если $|y - y_0|< \delta$
+    
+         $|\phi(x)-A| \leq {|\phi(x) - f(x,y)|}_{\leq\epsilon}+{|f(x,y) - \psi(y)|}_{<\epsilon, \text{т.к дельты}} + {|\psi(y) - A|}_{\leq\epsilon} \leq 3\epsilon$
+    
+         при $x \to x_0 \implies \lim\limits_{x\to x_0}\phi(x) = A$ 
+    \end{enumerate}
+\end{proof}
+
     \subsection{	Теорема о коммутировании двух предельных переходов. Предельный переход под  знаком интеграла}
+
+    $f(x,y): [a,b]\times Y\rightarrow\mathbb{R}, y_0$ - предельная точка Y и 
+    $f_y(x) = f(x,y)$ - интегрируема на $[a,b]$
+    
+    $F(y) = \int_{a}^bf(x,y)dx$
+    \begin{theorem}[О предельном переходе] \hypertarget{p2}{}
+         Если кроме того, что $f(x,y)$ равномерно на $[a,b]$ стремится к $\phi(x)$ при $y\to y_0$, то
+         $\lim\limits_{y\to y_0}F(y) = \lim\limits_{y\to y_0}\int_{a}^bf(x,y)dx = \int_{a}^b \lim\limits_{y\to y_0} f(x,y)dx$
+    \end{theorem}
+    \begin{proof}
+         $\triangleleft \phi(x)$ - равномерный предел, непрерывен
+    
+    $f_y(x)\implies \phi(x) $ - интегрируема, $\letsymbol{} \epsilon > 0 \quad \delta(\epsilon)>0$ выбрано из
+    определения равномерной сходимости
+    
+    $|\int_{a}^bf(x,y)dx - \int_{a}^b\phi(x)dx|$ = $|\int_{a}^b(f(x,y) - \phi(x))dx| \leq \int_{a}^b|f(x,y) - \phi(x)|dx$
+    $\leq \epsilon(b-a)$ если $|y - y_0|<\epsilon$
+    
+    $\lim\limits_{y\to y_0}\int_{a}^b f(x,y)dx = \int_{a}^b \phi(x) dx$
+    \end{proof}
+
     \subsection{	Теорема о непрерывности интеграла, зависящего от параметра}
+    \begin{theorem}[Непрерывность]
+
+        $f(x,y) - $непрерывна, $f: [a,b]\times [c,d]\rightarrow \mathbb{R} \implies$
+   
+        $f(y) = \int_{a}^b f(x,y)dx $ непрерывна на $[c,d]$
+   \end{theorem}
+   \begin{proof}
+        $\triangleleft [a,b]\times [c,d]$ компакт $\implies f(x,y)$ равномерно непрерывна на компакте
+   
+   $\forall \epsilon>0:$
+   $
+        \begin{array}{l}
+             |x - x'|< \delta\\
+             |y - y'|<\delta
+        \end{array}
+        $
+        $\implies |f(x,y) - f(x', y')|<\epsilon$
+   
+        $x' = x, y' = y_0$
+   
+        $|f(x,y) - f(x,y_0)|<\epsilon$ при $|y - y_0|< \delta(\epsilon)$
+   
+        $f(x,y) \rightrightarrows f(x, y_0) = \phi(x)$ равномерный предел не зависит от х 
+   
+        по теореме о предельном переходе:
+        
+        $\lim\limits_{y\to y_0} F(y) = \lim\limits_{y\to y_0} \int_{a}^b f(x,y)dx = \int_{a}^b \phi(x) dx = \int_{a}^b f(x,y_0)dx  = F(y_0)\implies$
+        $F$ непрерывна в $y_0 \in [c,d]\implies F$ непрерывна на $[c,d] $
+   \end{proof}
     \subsection{	Дифференцирование под знаком интеграла. Правило Лейбница}
     \subsection{	Интегрирование под знаком интеграла}
     \subsection{	Непрерывность и дифференцируемость интеграла с переменными пределами интегрирования}
