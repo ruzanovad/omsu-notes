@@ -1,4 +1,5 @@
 \documentclass[a4paper]{article}
+\usepackage{cmap}
 \usepackage[utf8]{inputenc}
 \usepackage[T2A]{fontenc}
 \usepackage{amsfonts}
@@ -90,20 +91,20 @@
 	\begin{theorem}
 		Справедливы следующие эквивалетности
 		\begin{enumerate}
-			\item a $\vee$ b $\equiv$ b $\vee$ a
+			\item a $\vee$ b $\equiv$ b $\vee$ a  \textbf{симметричность}
 			\item a $\wedge$ b $\equiv$ b $\wedge$ a
-			\item a $\vee$ (b $\vee$ c) $\equiv$ (a $\vee$ b) $\vee$ c
+			\item a $\vee$ (b $\vee$ c) $\equiv$ (a $\vee$ b) $\vee$ c \textbf{ассоциативность}
 			\item a $\wedge$ (b $\wedge$ c) $\equiv$ (a $\wedge$ b) $\wedge$ c
-			\item a $\wedge$ (b $\vee$ c) $\equiv$ a$\wedge$b $\vee$ a$\wedge$c
+			\item a $\wedge$ (b $\vee$ c) $\equiv$ a$\wedge$b $\vee$ a$\wedge$c \textbf{транзитивность}
 			\item a $\vee$  b $\wedge$ c $\equiv$ (a $\vee$ b) $\wedge$ (a $\vee$ c)
-			\item a $\vee$ a $\equiv$ a
+			\item a $\vee$ a $\equiv$ a \textbf{идемпотентность}
 			\item a $\wedge$ a $\equiv$ a
-			\item $\overline{(a \vee b)} \equiv \overline{a} \wedge \overline{b}$
+			\item $\overline{(a \vee b)} \equiv \overline{a} \wedge \overline{b}$ \textbf{законы де Моргана}
 			\item $\overline{(a \wedge b)} \equiv \overline{a} \vee \overline{b}$
-			\item $\overline{\overline{a}} \equiv a$
-			\item a $\vee$ a $\wedge$ b $\equiv$ a
+			\item $\overline{\overline{a}} \equiv a$ \textbf{двойное отрицание}
+			\item a $\vee$ a $\wedge$ b $\equiv$ a \textbf{поглощение}
 			\item a $\wedge$ (a $\vee$ b) $\equiv$ a
-			\item a $\vee$ $\overline{a} \wedge b \equiv a \vee b$
+			\item a $\vee$ $\overline{a} \wedge b \equiv a \vee b$ \textbf{слабое поглощение}
 			\item a $\wedge$ $(\overline{a} \vee b) \equiv ab$
 			\item $a \vee 0 \equiv a$
 			\item $a \wedge 0 \equiv 0$
@@ -135,20 +136,20 @@
     \begin{definition}
         Класс $T_1 = \{f(x_1,\dots, x_n)$ | $f(1, \dots, 1) = 1\}$
     \end{definition}
-    \begin{tabular}{c|c|c|c}
-        & $T_0$ & $T_1$ & S\\
+    \begin{tabular}{c|c|c|c|c|c}
+        & $T_0$ & $T_1$ & S & M & L\\
         \hline
-        0 & + & - & - \\
-        1 & - & + & - \\
-        x & + & + & - \\
-        $\neg x$ & - & - & + \\
-        $xy$ & + & + & - \\
-        $x \vee y$ & + & + & -\\
-        $x\oplus y$ & + & - & -\\
-        $x\leftrightarrow y$ & - & + & -\\
-        $x\rightarrow$ & - & + & -\\
-        $x|y$ & - & - & -\\
-        $x\downarrow y$ & - & - & -\\
+        0 & + & - & - & + & +\\
+        1 & - & + & - & + & + \\
+        x & + & + & - & + & +\\
+        $\neg x$ & - & - & +  & - & +\\
+        $xy$ & + & + & - & + & -\\
+        $x \vee y$ & + & + & - & + & -\\
+        $x\oplus y$ & + & - & - & - & +\\
+        $x\leftrightarrow y$ & - & + & - & - & +\\
+        $x\rightarrow$ & - & + & - & - & -\\
+        $x|y$ & - & - & - & - & -\\
+        $x\downarrow y$ & - & - & - & - & -\\
     \end{tabular}
     \begin{remark}
         Классы $T_0, T_1$ являются замкнутыми.
@@ -189,17 +190,107 @@
         $\implies f^*(x_1, \dots, x_n) = F(x_1, \dots, x_n)$
     \end{proof}
     \subsection{Класс монотонных функций}
+    \begin{definition}
+        Назовем два набора из 0 и 1 $a = (a_1, \dots a_n), b = (b_1, \dots b_n)$
+        \textbf{соседними}, если все их координаты (кроме одной) совпадают.
+    \end{definition}
+    \begin{definition}
+        Пусть k - номер единственной координаты, по которой отличаются соседние наборы a, b.
+        Если $a_k = 0$, $b_k = 1$, то мы будем говорить, что набор a \textbf{меньше} набора b
+        ($a\prec b$)
+    \end{definition}
+    \begin{definition}[Монотонная функция]
+        БФ $f(x_1, \dots x_n)$ называется монотонной, если
+        $\forall$ соседних наборов $a,b$ таких, что $a\prec b\implies f(a) \leq f(b)$
+    \end{definition}
+    \begin{remark}
+        Класс M является замкнутым.
+    \end{remark}
+    \begin{proof}
+        $g, g_1, \dots g_k \in M, F(x_1, \dots, x_n) = g(g_1, \dots g_k)$
+        и рассмотрим два произвольных набора $a\prec b$. Пусть $c_1 = g_1(a), d_1 = g_1(b), \dots$
+        $c_k = g_k(a), \dots d_k = g_k(b)$
+
+        $g_i \in M \implies c_i\leq d_i $
+
+        Если наборы $c = (c_1, \dots, c_k)$ и $d = (d_1, \dots, d_k)$ - соседние,
+        то и $F(c)\leq F(d)$
+
+        В противном случае легко показать, что $\exists$ цепочка
+
+        \begin{align*}
+            c \prec e_1 \prec\dots\prec e_l \prec d
+        \end{align*}
+        (то есть наши наборы сравнимы по определению Ашаева)
+        
+        и $g(c) \leq g(d)\implies F(c) \leq F(d) \implies F\in M$
+    \end{proof}
     \subsection{Класс линейных функций}
     \subsection{Леммы о несамодвойственной, немонотонной, нелинейной функциях}
     \begin{lemma}[о несамодвойственной функции]
-        Если БФ $f^*(x_1, \dots, x_n)$ несамодвойственна, то замыкание класса $[f, \neg x]$
+        Если БФ $f(x_1, \dots, x_n)$ несамодвойственна, то замыкание класса $[f, \neg x]$
         содержит тождественно ложную БФ 0 и тождественно истинную БФ 1.
     \end{lemma}
     \begin{proof}
         Так как f несамодвойственна, то существует набор $a_1, \dots, a_n$
         значений аргументов такой, что \\ $f(a_1, \dots, a_n) \neq \neg f(\neg a_1, \dots, \neg a_n)$ \\
         Так как БФ принимают только значения 0 и 1, то $f(a_1, \dots, a_n) = f(\neg a_1, \dots, \neg a_n)$ \\
-        Составим функцию $g(x) = f(x^{a_1}, \dots, x^{a_n})$
+        Составим функцию $g(x) = f(x^{a_1}, \dots, x^{a_n})$, где 
+        
+        \begin{equation*}
+            x^a = 
+            \begin{cases}
+                x & \text{если $a = 1$}  \\ 
+                \text{$\neg x$} & \text{если $a = 0$} 
+            \end{cases}
+        \end{equation*}
+        Очевидно, что $g \in [f, \neg x]$, так как является их суперпозицией.
+
+        $g(0) = f(0^{a_1}, \dots, 0^{a_n}) = f(\neg a_1, \dots, \neg a_n)$, 
+        $g(1) = f(1^{a_1}, \dots, 1^{a_n}) = f(a_1, \dots, a_n)$, 
+
+        $g(0) = g(1)$ - $g$ - константа, $g$ и $\neg g$ принимают значения 0 и 1 чтд.
+    \end{proof}
+    \begin{lemma}[О немонотонной функции]
+        Если $f(x_1, \dots, x_n)$ немонотонна, то $x' \in [f, 0, 1]$
+    \end{lemma}
+    \begin{proof}
+        Из немонотонности f следует существование двух соседних наборов 
+        $a = (a_1, \dots, a_n) \prec (b_1, \dots, b_n) = b$
+        такие, что $f(a) > f(b)$. Б.О.О считаем, что они отличаются только в первой
+        координате
+        \begin{align*}
+            a_1 = 0 \\
+            b_1 = 1 \\
+            a_i = b_i
+        \end{align*}
+        $\sphericalangle g(x, a_2, \dots, a_n) \in [f, 0, 1]$\\
+        $g(0) = f(a) = 1\quad, g(1) = f(b) = 0 \implies g \equiv x'$
+    \end{proof}
+    \begin{lemma}[О нелинейной функции]
+        $f(x_1, \dots, x_n) \notin L \implies xy \in [f, 0, 1, x']$
+    \end{lemma}
+    \begin{proof}
+        $f(x_1, \dots, x_n) \notin L\implies$ полином Жегалкина функции f содержит конъюнкцию двух переменных $x_1$ и $x_2$
+    
+        $\implies f(x_1, \dots, x_n)=$
+        $x_1x_2h_{12}(x_3, \dots x_n) + x_1h_1(x_3, \dots x_n) + h_0(x_3, \dots x_n)$
+        
+        $f\notin L \implies h_{12}\neq 0 \implies \exists (a_3, \dots a_n) h_{12} (a_3, \dots a_n) = 1$
+
+        Подставим этот набор в ПЖ $f$:
+
+        $g(x_1, x_2) = f(x_1, x_2, a_3\dots  a_n) = $
+        $x_1x_2h_{12}(a_3, \dots a_n) + x_1h_1(a_3, \dots a_n) + h_0(a_3, \dots a_n)$
+
+        $h_i\in \{0, 1\}\implies \exists 8$ вариантов того, как выглядит полином Жегалкина
+
+        \begin{enumerate}
+            \item Система функций $[g, \neg, 0, 1]$ полна и содержит конъюнкцию
+            \item g - конъюнкция
+            \item $xy = g(x, y') \vee xy = g(x', y)\implies xy \in $замыкание
+        \end{enumerate}
+        Т.к $g$ выражается через $f(x_1, \dots x_n), 0, 1$, то конъюнкция также лежит в замыкании $[f, \neg, 0, 1]$
 
     \end{proof}
     \subsection{Теорема Поста о полноте системы булевых функций}
