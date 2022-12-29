@@ -169,10 +169,214 @@
         $F$ непрерывна в $y_0 \in [c,d]\implies F$ непрерывна на $[c,d] $
    \end{proof}
     \subsection{	Дифференцирование под знаком интеграла. Правило Лейбница}
+    \begin{theorem}[О дифференцируемости интеграла, зависящего от параметра]\hypertarget{theorem4}{}
+     $f(x,y)$ - определена в $[a, b]\times[c, d]$ при $\forall y \in [c, d]$
+     функция $f_y(x) = f(x, y)$ непрерывна по х, $\letsymbol{} f'_y(x,y)\exists$
+     и непрерывна в прямоугольнике, тогда
+
+     $F(y) = \int_{a}^{b}f(x,y)dx$ и $F'(y) = \int_{a}^{b}f'_y(x,y)dx$
+\end{theorem}
+\begin{proof}
+$\triangleleft$ в силу непрерывности $f(x,y)$ по х, определена $F(y) = \int_{a}^{b}f(x,y)dx$
+
+$y_0 \in [c,d], F(y_0) = \int_{a}^{b}f(x,y_0)dx$
+
+$F(y_0+\triangle) = \int_{a}^{b}f(x,y_0 + \triangle)dx$
+
+$\frac{F(y_0+\triangle) - F(y_0)}{\triangle} = \int_{a}^{b}\frac{f(x,y_0+\triangle) - f(x,y_0)}{\triangle}dx$
+
+По теореме Лагранжа, $\exists \theta \in (0, 1)$ т.ч 
+
+$\frac{f(x,y_0+\triangle) - f(x, y_0)}{\triangle} = f'_y(x, y_0+\theta\triangle)$
+
+т.к F непрерывна $\implies$ равномерно непрерывна  $\implies$
+для $\epsilon>0 \exists \delta>0$
+$\begin{array}{l}
+|x' - x''|< \delta\\
+|y' - y''|<\delta
+\end{array}
+$
+$\implies |f'_y(x', y') - f'_y(x'', y'')|$
+
+
+$x' = x'' = x, y' = y_0 + \triangle\theta, y'' = y_0,$если $\triangle<\delta$
+
+$|\frac{f(x,y_0+\triangle) - f(x, y_0)}{\triangle} - f_y'(x,y_0)| = |f'_y(x, y_0+\theta\triangle) - f_y'(x,y_0)|<\epsilon$ т.к $\delta(\epsilon)$
+
+неравенство не зависит от точек, т.е
+
+$\frac{f(x,y_0+\triangle) - f(x, y_0)}{\triangle}\rightrightarrows f_y'(x,y_0)$ равномерно по х
+
+В силу теоремы \hyperlink{p2}{о предельном переходе}, получаем что $\int_a^b \frac{f(x,y_0+\triangle) - f(x, y_0)}{\triangle}dx \rightarrow \int_a^b f'_y(x, y_0)dx$
+
+$\frac{F(y_0+\triangle) - F(y_0))}{\triangle} \rightarrow F'_y(y_0)$
+\end{proof}
     \subsection{	Интегрирование под знаком интеграла}
+    \begin{theorem}[О интегрируемости F(y)] 
+     $\letsymbol{}f(x,y)$ непрерывна в $[a, b]x[c, d]$, тогда имеет место равенство
+
+     $\int_c^d (\int_a^b f(x,y)dx)dy = \int_a^b (\int_c^d f(x,y)dy)dx$
+\end{theorem}
+\begin{proof}
+     $\triangleleft \letsymbol{} \eta \in [c, d]$, покажем, что
+$\int_c^\eta (\int_a^b f(x,y)dx)dy = \int_a^b (\int_c^\eta f(x,y)dy)dx$
+
+$\int_c^\eta F(y)dy = \mathcal{F}(\eta) -  \mathcal{F}(c), \mathcal{F}' = F$
+
+Производная левой части по $\eta = F(\eta) = \int_a^b f(x,\eta)dx$
+
+$\phi (\eta) := \int_c^\eta f(x,y)dy$ непрерывна по x
+
+$\phi (x, \eta) \rightarrow \phi_\eta'(x, \eta)$
+
+$\letsymbol{} \Phi(x, \eta)'= \phi(x,\eta), \Phi'(x,\eta) = f$
+
+$\phi(x,\eta) = \Phi(x,\eta) - \Phi(x, c)$
+
+$\phi'_\eta = \Phi'_\eta  = f \quad \phi'_\eta(x, \eta) = f(x, \eta)$
+
+По \hyperlink{theorem4}{предыдущей теореме}
+$(\int_a^{b}\phi(x, \eta)dx)'_\eta = \int_a^b \phi_\eta'(x, \eta)dx$
+$= \int_a^b f(x,\eta)dx = F(\eta)\implies$
+левая и правая часть могут отличаться лишь на const, но при $\eta = c$
+обе части равны 0 $\implies C = 0$
+\end{proof}
     \subsection{	Непрерывность и дифференцируемость интеграла с переменными пределами интегрирования}
+    \begin{theorem}
+     $\letsymbol{} f(x,y)$ определена и непрерывна в прямоугольнике $[a, b]\times[c, d]$
+
+     $x = \alpha(y); x = \beta(y)$ непрерывны и не выходят за пределы прямоугольника
+
+     Тогда $F(y) = \int_{\alpha(y)}^{\beta(y)}f(x,y)dx$ непрерывен
+\end{theorem}
+
+\begin{proof}
+     $\triangleleft y_0\in[c,d]$
+
+     $F(y) = \int_{\alpha(y_0)}^{\beta(y_0)}f(x,y)dx + \int_{\beta(y_0)}^{\beta(y)}f(x,y)dx - \int_{\alpha(y_0)}^{\alpha(y)}f(x,y)dx$
+
+     т.к $\beta(y_0), \alpha(y_0) = C$, то 
+
+     $\int_{\alpha(y_0)}^{\beta(y_0)}f(x,y)dx \stackrel{\rm{def}}{=}\widetilde{F}(y)\rightarrow \int_{\alpha(y_0)}^{\beta(y_0)}f(x,y_0)dx = \widetilde{F}(y_0)$
+
+     $|\int_{\beta(y_0)}^{\beta(y)}f(x,y)dx| \leq \int_{\beta(y_0)}^{\beta(y)}|f(x,y)|dx \leq M |\beta(y)-\beta(y_0)|\to 0$, где
+     $M \leq |f(x,y)|$, при $y\to y_0$
+
+     при $y \to y_0 \quad F(y) \to \widetilde{F}(y)$
+
+     $F(y)\to \widetilde{F}(y) \to \widetilde{F}(y_0) = F(y_0)$
+\end{proof}
+
+\begin{theorem}
+     $\letsymbol{}f(x,y)$ определена в $[a,b]\times[c,d]$ имеет в ней непрерывную производную $f'_y(x,y)$
+
+     $\alpha'(y)$ и $\beta'(y)$ - непрерывны, тогда $F'_y(y) = \int_{\alpha(y_0)}^{\beta(y_0)}f'_y(x,y)dx + \beta'(y)f(\beta(y), y) - \alpha'(y)f(\alpha(y), y)$
+\end{theorem}
+
+\begin{proof}
+     $F(y) = \int_{\alpha(y_0)}^{\beta(y_0)}f(x,y)dx + \int_{\beta(y_0)}^{\beta(y)}f(x,y)dx - \int_{\alpha(y_0)}^{\alpha(y)}f(x,y)dx$
+
+     $(\int_{\alpha(y_0)}^{\beta(y_0)}f(x,y)dx)'_y = \int_{\alpha(y_0)}^{\beta(y_0)}f'_y(x,y)dx$ т.к пределы постоянные
+
+     $\frac{\int_{\beta(y_0)}^{\beta(y)} f(x,y)dx - 0}{y-y_0} = \frac{f(\widetilde{x}, y) (\beta(y) - \beta(y_0))}{y-y_0} [\widetilde{x}$ между $\beta(y)$ и $\beta(y_0)]$
+
+     при $y  \to y_0 \frac{\int_{\beta(y_0)}^{\beta(y)} f(x,y)dx}{y-y_0} \to f(\beta(y_0), y_0)\beta'(y_0)$, т.е
+     
+     $(\int_{\alpha(y_0)}^{\beta(y_0)}f(x,y)dx)'_y = f(\beta(y), y)\beta'(y)$, аналогично со вторым интегралом
+\end{proof}
     \subsection{	Равномерная сходимость интегралов. Достаточные признаки равномерной сходимости}
+
+    $\int_a^\omega F(x)dx$ - несобственный, если $\omega = \pm\infty$ или $f(x)$ не ограничена в окрестности $\omega$
+
+$\letsymbol{} f(x,y)$ определена на множестве $[a, \omega)\times Y$
+
+Для всех $y\in Y$ функция $f_y(x) = f(x,y)$ несобственно интегрируема на $[a, \omega)$, тогда $F(y) = \int_a^\omega f(x,y)dx = \lim\limits_{b\to\omega} \int_a^b f(x,y)$
+
+\begin{definition}
+     $f(b, y) = \int_a^b f(x,y) dx$, тогда сходимость F(y) равносильна существованию предела $\lim\limits_{b\to\omega}F(b, y) = F(y) = F(\omega, y)$
+\end{definition}
+\begin{definition}
+     F(y) называется равномерно сходящейся относительно y на Y, если $\forall\epsilon \quad\exists\delta(\epsilon): \forall y\in Y \quad \forall b \in (a,\omega) |b-\omega|< \delta \implies |F(b, y) - F(y)| < \epsilon$
+
+     $F(b, y)\rightrightarrows_{b\to \omega} F(y)$
+\end{definition}
+\begin{remark}
+     $\letsymbol{} - \{b_n\}$ - последовательность сходится к $\omega$ согласно свойствам равномерной сходимости
+
+     $F(b,y) \rightrightarrows F(y) \leftrightarrow F(b_n, y) \rightrightarrows F(y)$
+
+     $a_n y \stackrel{\rm{def}}{=} \int_{b_n}^{b_{n+1}}f(x,y)dx, b_1 = a, b_j \geq a$
+
+     Тогда $F(y) = \sum_{n = 1}^{\infty} a_n(y) $
+
+     Равномерная сходимость F(y) равносильна равномерной сходимости ряда
+\end{remark}
+
+\begin{theorem}[Признаки равномерной сходимости интеграла]
+     \begin{enumerate}
+          \item(Вейерштрасса) $f(x,y)$ определена на $[a, \omega)\times Y, \omega$ - особая точка f(x,y) и f(x,y) интегрируема на $[a,b]\subset[a, \omega)$
+          Если $\exists \phi(x) такая что |f(x,y)| \leq\phi(x)\quad \forall x \in [a,\omega)\forall y\in Y$ и $\int_a^\omega \phi(x)dx$ сходится, то $\int_a^\omega f(x, y)dx = F(y)$
+          \item(Дирихле) $F(y) = \int_a^\omega f(x, y)g(x,y)dx, g(x,y)$ монотонно по х -> $\omega$ равномерно по y стремится к 0
+          и для $\forall$ отрезка $[a,b]\subset[a,\omega)$
+
+          $|\int_a^b f(x, y)dx|\leq L$, тогда F(y) сходится равномерно
+          \item (Абель) $F(y) = \int_a^\omega f(x, y)g(x,y)dx$
+          
+          Если $\int_a^\omega f(x, y)dx$ сходится равномерно $g(x,y)$ монотонно по х равномерно по у сходится к своему пределу 
+     \end{enumerate}
+\end{theorem}
+\begin{proof}
+     \begin{enumerate}
+          \item очевидно
+          Для F(y) используем критерий Коши
+          \item $\int_{b'}^{b''}f(x,y)g(x,y)dx = g(b', y)\int_{b'}^\xi f(x,y)dx + g(b'', y)\int_{\xi}^{b''} f(x,y)dx, \xi \in (b', b'')$
+          
+          $g(b, y)\to 0$ равномерно по y $\implies\exists B$ такое что $\forall b', b'' > B$
+
+          $|g(b', y)|< \frac{\epsilon}{2L}\quad |g(b'', y)|< \frac{\epsilon}{2L}\implies F(y)$ сходится равномерно
+          \item $\int_a^\omega f(x,y)dx$ сходится равномерно
+          $\forall \epsilon>0 \exists\delta \quad \forall b', b'' > B |\int_{b'}^{b''}f(x,y)dx| \widetilde{\epsilon}$
+
+          т.к $g(x,y)$ равномерно сходится к G(y)
+
+          $|g(x,y)|\leq M$ при х близком к $\omega$
+
+          $\widetilde{\epsilon} = \frac{\epsilon}{2M}$, $|\int_{b'}^{b''}f(x,y)g(x,y)dx|\leq M\frac{\epsilon}{2M} +M\frac{\epsilon}{2M} = \epsilon\implies F(y)$ сходится равномерно
+     \end{enumerate}
+\end{proof}
     \subsection{	Предельный переход в несобственном интеграле, зависящем от параметра}
+    \begin{theorem}[О предельном переходе] \hypertarget{p4}{}
+     $\letsymbol{}f(x,y)$ определена на $[a,\omega)\times Y$ для $\forall y\in Y$, интегрируема на $[a,b]\subset[a, \omega]$ равномерно относительно у сходится к функции $\phi(x)$ при $y\to y_0$ если $F(y) = \int_a^\omega f(x,y)dx$ 
+     сходится равномерно относительно $y\in Y$
+     $\lim_{y \to y_0}  \int_a^\omega  f(x,y)dx = \int_a^\omega  \phi(x)dx = \int_a^\omega  \lim_{y \to y_0}  f(x,y)dx$ 
+\end{theorem}
+
+\begin{proof}
+     $F(b, y) = \int_a^b f(x,y)dx$ это несобственный интеграл и для него верна теорема о \hyperlink{p2}{о предельном переходе}
+
+     $\lim_{y \to y_0}F(b, y) = \int_{a}^{b} \phi(x) \,dx $
+
+     $\lim_{b\to \omega}F(b, y) = \int_a^\omega f(x,y)dx$ - равномерно
+
+     $F(b,y)$ - для этой функции верны условии о перемене предельных переходов $\implies$
+
+     $\lim_{y \to y_0} \lim_{b \to \omega} \int_a^b f(x,y)dx = lim_{y \to y_0} \int_a^\omega f(x,y)dx$
+\end{proof}
+Следствие:
+Если $f(x,y)$ монотонно по y $\lim_{y \to y_0}  f(x,y) = \phi(x)$ - непрерывны, тогда
+
+$\int_a^\omega \phi(x)dx\rightrightarrows\int_a^\omega f(x,y)dx$ сходится равномерно
+
+$\lim_{y \to y_0} F(y) = \int_a^\omega \phi(x)dx$
+\begin{proof}
+     $f(x,y)\to \phi(x)\quad y\to y_0 \quad \forall\epsilon>0\exists\delta: |y - y_0|< \delta\implies |f(x,y) - \phi(x)|< \epsilon$
+
+     $\letsymbol{} f(x,y)$ возрастает по y, тогда $F(b, y) = \int_a^b f(x,y)dx$ возрастает по у
+
+     но $f(x,y)\leq\phi(x)\implies F(b, y)\leq \int_a^b \phi(x)dx \leq \int_a^\omega \phi(x)dx\implies \lim_{b \to \omega} F(b,y) = \int_a^\omega f(x,y)dy$ - сходится
+
+     Равномерность по Вейерштрассу
+\end{proof}
     \subsection{	Дифференцирование  по параметру несобственного интеграла}
     \subsection{	Интегрирование по параметру несобственного интеграла}
     
