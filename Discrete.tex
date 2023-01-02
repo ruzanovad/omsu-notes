@@ -45,7 +45,7 @@
           Число различных векторов длины m (а значит и число булевых функций, зависящих от n переменных) равно $2^m=2^{2^n}$
     \end{proof}
     \subsection{Булевы функции одной и двух переменных (их таблицы, названия)}
-Булевы функции одной переменной:
+        Булевы функции одной переменной:
          \begin{tabular}{c|cccc}
         x & $f_1$ & $f_2$ & $f_3$ & $f_4$ \\
         \hline
@@ -134,38 +134,40 @@
     \end{theorem}
 	\begin{theorem}
 		Справедливы следующие эквивалетности
-		\begin{enumerate}
-			\item a $\vee$ b $\equiv$ b $\vee$ a  \textbf{симметричность}
-			\item a $\wedge$ b $\equiv$ b $\wedge$ a
-			\item a $\vee$ (b $\vee$ c) $\equiv$ (a $\vee$ b) $\vee$ c \textbf{ассоциативность}
-			\item a $\wedge$ (b $\wedge$ c) $\equiv$ (a $\wedge$ b) $\wedge$ c
-			\item a $\wedge$ (b $\vee$ c) $\equiv$ a$\wedge$b $\vee$ a$\wedge$c \textbf{транзитивность}
-			\item a $\vee$  b $\wedge$ c $\equiv$ (a $\vee$ b) $\wedge$ (a $\vee$ c)
-			\item a $\vee$ a $\equiv$ a \textbf{идемпотентность}
-			\item a $\wedge$ a $\equiv$ a
-			\item $\overline{(a \vee b)} \equiv \overline{a} \wedge \overline{b}$ \textbf{законы де Моргана}
-			\item $\overline{(a \wedge b)} \equiv \overline{a} \vee \overline{b}$
-			\item $\overline{\overline{a}} \equiv a$ \textbf{двойное отрицание}
-			\item a $\vee$ a $\wedge$ b $\equiv$ a \textbf{поглощение}
-			\item a $\wedge$ (a $\vee$ b) $\equiv$ a
-			\item a $\vee$ $\overline{a} \wedge b \equiv a \vee b$ \textbf{слабое поглощение}
-			\item a $\wedge$ $(\overline{a} \vee b) \equiv ab$
-			\item $a \vee 0 \equiv a$
-			\item $a \wedge 0 \equiv 0$
-			\item $a \vee 1 \equiv 1$
-			\item $a \wedge 1 \equiv a$
-			\item $a \vee \overline{a} \equiv 1$
-			\item $a\overline{a} \equiv 0$
-			\item $a \rightarrow b \equiv \overline{a} \vee b$
-			\item $a \leftrightarrow b \equiv \overline{a} \wedge \overline{b} \vee a \wedge b \equiv (a \rightarrow b) \wedge (b \rightarrow a)$
-			\item $a + b \equiv \overline{a \leftrightarrow b} \equiv \overline{a} \wedge b \vee a \wedge \overline{b}$
-			\item $a | b \equiv \overline{a \wedge b}$
-			\item $a \downarrow b \equiv \overline{a \vee b}$
-		\end{enumerate}
-		\begin{proof}
-			Доказательство сводится к построению таблиц истинности для левой и правой частей каждой эквивалентности
-		\end{proof}
+        \begin{multicols*}{2}
+            \begin{enumerate}
+                \item a $\vee$ b $\equiv$ b $\vee$ a  \textbf{симметричность}
+                \item a $\wedge$ b $\equiv$ b $\wedge$ a
+                \item a $\vee$ (b $\vee$ c) $\equiv$ (a $\vee$ b) $\vee$ c \textbf{ассоциативность}
+                \item a $\wedge$ (b $\wedge$ c) $\equiv$ (a $\wedge$ b) $\wedge$ c
+                \item a $\wedge$ (b $\vee$ c) $\equiv$ a$\wedge$b $\vee$ a$\wedge$c \textbf{дистрибутивность}
+                \item a $\vee$  b $\wedge$ c $\equiv$ (a $\vee$ b) $\wedge$ (a $\vee$ c)
+                \item a $\vee$ a $\equiv$ a \textbf{идемпотентность}
+                \item a $\wedge$ a $\equiv$ a
+                \item $\overline{(a \vee b)} \equiv \overline{a} \wedge \overline{b}$ \textbf{законы де Моргана}
+                \item $\overline{(a \wedge b)} \equiv \overline{a} \vee \overline{b}$
+                \item $\overline{\overline{a}} \equiv a$ \textbf{двойное отрицание}
+                \item a $\vee$ a $\wedge$ b $\equiv$ a \textbf{поглощение}
+                \item a $\wedge$ (a $\vee$ b) $\equiv$ a
+                \item a $\vee$ $\overline{a} \wedge b \equiv a \vee b$ \textbf{слабое поглощение}
+                \item a $\wedge$ $(\overline{a} \vee b) \equiv ab$
+                \item $a \vee 0 \equiv a$
+                \item $a \wedge 0 \equiv 0$
+                \item $a \vee 1 \equiv 1$
+                \item $a \wedge 1 \equiv a$
+                \item $a \vee \overline{a} \equiv 1$
+                \item $a\overline{a} \equiv 0$
+                \item $a \rightarrow b \equiv \overline{a} \vee b$
+                \item $a \leftrightarrow b \equiv \overline{a} \wedge \overline{b} \vee a \wedge b \equiv (a \rightarrow b) \wedge (b \rightarrow a)$
+                \item $a + b \equiv \overline{a \leftrightarrow b} \equiv \overline{a} \wedge b \vee a \wedge \overline{b}$
+                \item $a | b \equiv \overline{a \wedge b}$
+                \item $a \downarrow b \equiv \overline{a \vee b}$
+            \end{enumerate}
+        \end{multicols*}
 	\end{theorem}
+    \begin{proof}
+        Доказательство сводится к построению таблиц истинности для левой и правой частей каждой эквивалентности
+    \end{proof}
     \subsection{Тождественно истинные (ложные) и выполнимые БФ}
     \begin{definition}
         Формула $\Phi(x_1, \dots, x_n)$ называется тождественно истинной
@@ -273,6 +275,30 @@
     \subsection{Минимизация нормальных форм (карты Карно)}
     \subsection{Полином Жегалкина, его существование и единственность. Алгоритм построения}
     \subsection{Суперпозиция булевых функций. Замкнутые классы булевых функций}
+    \begin{definition}
+        Суперпозиция булевых функций $f(x_1, \dots, x_n)$ и $f_i(x_1, \dots, x_k), i = 1, \dots, n$, — это функция 
+        $F(x_1, \dots, x_k) = f(f_1, \dots, f_n).$
+    \end{definition}
+    \begin{definition}
+        Подстановка переменной y вместо $x_i$ в булеву функцию $f(x_1, \dots, x_n)$ — это суперпозиция вида 
+        $f(x_1, \dots,x_{i - 1}, y, x_{i + 1}, \dots, x_n).$
+    \end{definition}
+    \begin{definition}
+        Замыкание класса K булевых функций (обозначение: [K]) — это наименьший класс, 
+        содержащий все функции класса K, всевозможные их суперпозиции и результаты 
+        подстановок переменных, суперпозиции полученных функций и т.д.
+    \end{definition}
+    \begin{definition}
+        Замкнутый класс булевых функций — это класс, равный своему замыканию.
+    \end{definition}
+    \begin{example}
+        $M = \{x', x\oplus y\}.$
+        \begin{enumerate}
+            \item $0\in [M]$, так как $0 = x\oplus x$
+            \item $1\in [M]$, так как $1 = (x\oplus x)'$
+            \item $x\oplus y\oplus z\in [M]$
+        \end{enumerate}
+    \end{example}
     \subsection{Полные системы булевых функций, базисы}
     \begin{definition}
         Система булевых функций является полной(в классе К), если ее замыкание равно классу всех булевых функций(классу К)
@@ -331,7 +357,7 @@
         $x \vee y$ & + & + & - & + & -\\
         $x\oplus y$ & + & - & - & - & +\\
         $x\leftrightarrow y$ & - & + & - & - & +\\
-        $x\rightarrow$ & - & + & - & - & -\\
+        $x\rightarrow y$ & - & + & - & - & -\\
         $x|y$ & - & - & - & - & -\\
         $x\downarrow y$ & - & - & - & - & -\\
     \end{tabular}
@@ -558,12 +584,38 @@
         Классы Поста являются максимальными замкнутыми классами (предполными) и других нет.
     \end{statement}
     \begin{proof}
-        Докажем максимальность $T_0$. Пусть он не максимален, т.е существует замкнутый класс A
-        такой, что $T_0\subset A \subset \mathcal{B}$, тогда $[T_0]\subseteq A$
+        $ $
 
-        Пусть $f_0\in A\setminus T_0$, тогда $g(x) = f(x, \dots, x)\notin T_0$. Если $g(1) = 0, g \equiv \neg(x)$,
-        иначе $g\equiv 1$. Так как $T_0\ni 0, xy,$ немонотонные и несамодвойственные функции, $[T_0, f] = \mathcal{B},$
-        а это противоречит $[T_0, f]\subseteq A$. Остальные классы аналогично.
+        \begin{itemize}
+            \item Докажем максимальность $T_0$. Пусть он не максимален, т.е существует замкнутый класс A
+            такой, что $T_0\subset A \subset \mathcal{B}$, тогда $[T_0]\subseteq A$
+    
+            Пусть $f_0\in A\setminus T_0$, тогда $g(x) = f(x, \dots, x)\notin T_0$. Если $g(1) = 0, g \equiv \neg(x)$,
+            иначе $g\equiv 1$. Так как $T_0\ni 0, xy,$ немонотонные и несамодвойственные функции, $[T_0, f] = \mathcal{B},$
+            а это противоречит $[T_0, f]\subseteq A$.
+            \item Докажем максимальность $T_1$. Пусть он не максимален, т.е существует замкнутый класс A
+            такой, что $T_1\subset A \subset \mathcal{B}$, тогда $[T_1]\subseteq A$
+    
+            Пусть $f_1\in A\setminus T_1$, тогда $g(x) = f(x, \dots, x)\notin T_1$. Если $g(0) = 1, g \equiv \neg(x)$,
+            иначе $g\equiv 0$. Так как $T_1\ni 1, xy,$ немонотонные и несамодвойственные функции, $[T_1, f] = \mathcal{B},$
+            а это противоречит $[T_1, f]\subseteq A$.
+            \item K = S. Пусть $f(x_1, \dots, x_n) \notin S.$ $x'\in S$, по лемме о несамодвойственной функции
+            $0, 1\in [f, x']\subseteq[S, f]$
+
+            Выберем в S нелинейную функцию, например, $g = xy+yz+xz$. По лемме о нелинейной функции
+            $xy\in[g, 0, 1, x']\subseteq [S, f]\implies \{xy, x'\}\in [S, f]$
+
+            $\mathcal{B} = [xy, x']\subseteq[S, f]=B$
+            \item K = M, $f(x_1, \dots, x_n) \notin M$. По лемме о немонотонной функции
+            $0, 1 \in M$; $x' \in [f, 0, 1]\subseteq [M, f]$
+
+            $\{xy, x'\}\in [M, f]\implies \mathcal{B}=[xy, x']\subseteq[M, f] = B$
+            \item K = L, $f(x_1, \dots, x_n) \notin L$. По лемме о нелинейной функции
+            $x', 0, 1\in L;$ $xy\in  [0, 1, x', f]\subseteq [L, f]$
+
+            $\{xy, x'\}\in [L, f]\implies \mathcal{B}=[xy, x']\subseteq[L f] = B$
+        \end{itemize}
+        
     \end{proof}
     \subsection{Релейно-контактные схемы: определение, примеры, функция проводимости. Анализ и синтез РКС (умение решать задачи)}
     \section{Логика высказываний}
@@ -572,8 +624,152 @@
     \subsection{Понятия прямой теоремы, а также противоположной, обратной и обратной к противоположной теорем}
     \subsection{Понятия необходимых и достаточных условий}
     \subsection{Формальные системы. Выводы в формальных системах. Свойства выводов}
+    \begin{definition}
+        Формальная система состоит из четырех элементов:
+        \begin{enumerate}
+            \item алфавит (некоторое множество)
+            \item набор формул (множество слов, отобранных с помощью некоторых правил)
+            \item набор аксиом (множество формул, отобранных по некоторым правилам)
+            \item набор правил вывода вида $\frac{\phi_1, \dots, \phi_n}{\Psi}$
+            (из формул $\phi_1, \dots, \phi_n$ следует формула $\Psi$)
+        \end{enumerate}
+    \end{definition}
+    \begin{definition}
+        Вывод формулы $\phi$ из множества формул $\Gamma$ в формальной системе — это конечная 
+        последовательность формул $\phi_1, \dots , \phi_n = \phi$, в которой каждая $\phi_i$
+        \begin{itemize}
+            \item либо аксиома формальной системы
+            \item либо принадлежит множеству $\Gamma$ (является гипотезой)
+            \item либо получена из предыдущих формул по одному из правил вывода.
+        \end{itemize}
+    \end{definition}
+    \begin{definition}
+        Формула $\phi$ выводитcя из множества формул $\Gamma$ (обозначение:$ \Gamma \vdash \phi$), если существует 
+вывод $\phi$ из $\Gamma$.
+    \end{definition}
+    \begin{statement}[Свойства выводов]
+        $ $\\
+        \begin{enumerate}
+            \item Если $\Gamma \vdash \phi$, то существует конечное подмножество $\Gamma_0 \subseteq \Gamma$ такое, что $\Gamma_0 \vdash \phi$.
+            \item Если $\Gamma \vdash \phi$ и $\Gamma \subseteq \Delta$, то $\psi \vdash \Delta$.
+            \item (транзитивность выводимости) Если $\Gamma \vdash \Delta$ (т.е. все формулы из $\Delta$ выводятся из $\Gamma$) и 
+            $\Delta \vdash \phi$, то и $\Gamma \vdash \phi$.
+        \end{enumerate}
+    \end{statement}
+    \begin{proof}
+        $ $\\
+        \begin{enumerate}
+            \item $\Gamma\vdash \phi: \exists\phi_1, \dots, \phi_n = \phi$.
+            Так как вывод конечный, то можно найти конечное множество гипотез, оно и будет $\Gamma_0$
+            \item Есть вывод $\Gamma\vdash \phi: \phi_1, \dots, \phi_n = \phi$
+            
+            Гипотезы $\Gamma\subseteq$ гипотезы из $\Delta\implies\Delta \vdash \phi$
+            \item $\Gamma \vdash \Delta, \Delta\vdash\psi$
+            
+            $\psi_{i1},\dots, \psi_{ik} = \psi_i$ - вывод $\psi_i$ из $\Gamma$ $[\Delta = \bigcup_{i}\psi_i]$
+
+            $\theta_1, \dots, \theta_m = \phi$ - вывод $\Delta\vdash\psi$
+
+            Построим единую последовательность $\psi_{i1},\dots, \psi_{ik}, \theta_1, \dots, \theta_m = \phi$ (проходим по всевозможным
+            $\psi_i$)
+        \end{enumerate}
+    \end{proof}
     \subsection{Исчисление высказываний (ИВ) Гильберта. Примеры выводов}
+    \begin{definition}
+        Исчисление высказываний - конкретная формальная система на базе логики высказываний.
+        \begin{enumerate}
+            \item алфавит = символы переменных, отрицание, импликация, скобки
+            \item формулы ИВ -  формулы языка ЛВ, использующие только отрицание и импликацию
+            \item (схемы аксиом) аксиомы ИВ:
+            \begin{itemize}
+                \item[$A_1$] $A\rightarrow (B\rightarrow A)$ 
+                \item[$A_2$] $(A\rightarrow (B\rightarrow C))\rightarrow ((A\rightarrow B)\rightarrow (A \rightarrow C))$ 
+                \item[$A_3$] $(B'\rightarrow A')\rightarrow((B'\rightarrow A)\rightarrow B)$
+            \end{itemize}
+            \item силлогизм: $\frac{A, A\rightarrow B}{B}$ \textbf{modus ponens}
+        \end{enumerate}
+    \end{definition}
+    \begin{example}
+        $A, A\rightarrow B, \vdash B$
+        \begin{enumerate}
+            \item A
+            \item $A\rightarrow B$
+            \item B (MP 1, 2)
+        \end{enumerate}
+    \end{example}
+    \begin{example}
+        $A \vdash B\rightarrow A$
+        \begin{enumerate}
+            \item($A_1$) $A\rightarrow (B\rightarrow A)$ 
+            \item A
+            \item $B\rightarrow A$ (MP 1, 2)
+        \end{enumerate}
+    \end{example}
+    \begin{remark}
+        Если $\Gamma=\varnothing$, то пишем $\vdash \phi(\phi$ доказуема)
+    \end{remark}
     \subsection{Теорема о дедукции для ИВ}
+    \begin{theorem}
+        $\Gamma$ - множество формул, A, B - формулы ИВ. Тогда
+        $\Gamma, A\vdash B \Leftrightarrow \Gamma, \vdash A\rightarrow B$
+    \end{theorem}
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Leftarrow$]$\Gamma \vdash A\rightarrow B$, строим $\Gamma, A\vdash B$
+            
+            $\Gamma,  A\vdash A, A\rightarrow B$ и $A, A\rightarrow B \vdash B (MP)$,
+            По транзитивности получаем требуемое.
+            \item[$\Rightarrow$] 
+            доказывается индукцией по длине вывода B из $\Gamma$, A.
+            \begin{enumerate}
+                \item Если этот вывод — длины 1, то B — аксиома или гипотеза. Если B
+                — аксиома, то имеем вывод A $\rightarrow$ B ( из $\varnothing$):
+                \begin{enumerate}
+                    \item B (аксиома)
+                    \item B $\rightarrow$ (A $\rightarrow$ B) (аксиома A1)
+                    \item A $\rightarrow$ B (1,2, MP)
+                \end{enumerate}
+                \item Если B $\in$ $\Gamma$, то имеем такой же вывод A $\rightarrow$ B из $\Gamma$:
+                \begin{enumerate}
+                    \item B (гипотеза)
+                    \item B $\rightarrow$ (A $\rightarrow$ B) (аксиома A1)
+                    \item A $\rightarrow$ B (1,2, MP)
+                \end{enumerate}
+                \item Если B = A, то A $\rightarrow$ B = A $\rightarrow$ A. Но $\vdash$ A $\rightarrow$ A:
+                    \begin{enumerate}
+                        \item ($A_2$) $(A\rightarrow ((A\rightarrow A)\rightarrow A))\rightarrow ((A\rightarrow (A\rightarrow A))\rightarrow (A \rightarrow A))$ 
+                        \item ($A_1$) $A\rightarrow ((A\rightarrow A)\rightarrow A)$ 
+                        \item (MP 1, 2) $(A\rightarrow(A\rightarrow A))\rightarrow(A\rightarrow A)$
+                        \item ($A_1$) $A\rightarrow (A\rightarrow A)$ 
+                        \item (MP 3, 4) $A\rightarrow A$
+                    \end{enumerate}
+                \item Предположим теперь, что $\Gamma$, A $\vdash$ B и утверждение ($\Rightarrow$) верно для
+                всех более коротких выводов, т.е.
+                для всех C, если $\Gamma$, A $\vdash$ C и вывод C из $\Gamma$, A короче, чем вывод B, то
+                $\Gamma$ $\vdash$ A $\rightarrow$ C.
+            \end{enumerate}
+            Докажем, что $\Gamma$ $\vdash$ A $\rightarrow$ B.
+            
+            Рассмотрим вывод из $\Gamma$, A, который заканчивается формулой B. При
+            этом B может оказаться аксиомой или гипотезой (тогда все предыдущие
+            формулы для доказательства B не нужны). Но в этом случае $\Gamma$ $\vdash$ A $\rightarrow$ B
+            по (1)–(3).
+            Остается случай, когда B получается по MP из формул C, C $\rightarrow$ B, причем $\Gamma$, A $\vdash$ C и $\Gamma$, A $\vdash$ C $\rightarrow$ B с более короткими доказательствами. По
+            предположению индукции имеем
+            
+            (*) $\Gamma$ $\vdash$ A $\rightarrow$ C, A $\rightarrow$ (C $\rightarrow$ B).
+            С другой стороны,
+            (**) A $\rightarrow$ C, A $\rightarrow$ (C $\rightarrow$ B) $\vdash$ A $\rightarrow$ B:
+            \begin{enumerate}
+                \item A $\rightarrow$ C (гипотеза)
+                \item A $\rightarrow$ (C $\rightarrow$ B) (гипотеза)
+                \item (A $\rightarrow$ (C $\rightarrow$ B)) $\rightarrow$ ((A $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ B)) (аксиома A2)
+                \item (A $\rightarrow$ C) $\rightarrow$ (A $\rightarrow$ B) (2,3, MP)
+                \item A $\rightarrow$ B (1,4, MP)
+            \end{enumerate}
+            Из (*), (**) по транзитивности получаем $\Gamma$ $\vdash$ A $\rightarrow$ B.
+        \end{itemize}
+    \end{proof}
     \subsection{Теорема о полноте и непротиворечивости ИВ}
     \subsection{ИВ Генцена, его полнота}
     \subsection{Метод резолюций для логики высказываний (без обоснования корректности)}
