@@ -673,11 +673,145 @@
         
     \end{proof}
     \subsection{Релейно-контактные схемы: определение, примеры, функция проводимости. Анализ и синтез РКС (умение решать задачи)}
+    \begin{definition}
+        Реле это некоторое устройство, которое может находиться в одном из двух возможных состояний: включенном и выключенном. 
+    \end{definition}
+    \begin{example}
+        Примеры реле: различные выключатели, термодатчики, датчики движения и т.п. 
+    \end{example}
+
+    Реле используются в построении различных электрических схем. 
+    Включение или выключение реле приводит к появлению 
+    или исчезновению тока на определённых участках электрической схемы. 
+    
+
+
+    Пусть S некоторая электрическая схема, содержащая реле $x_1, \dots , x_n$. Со схемой
+    S можно связать функцию проводимости $f_S$, которая равна 1, если схема проводит
+    ток при заданном состоянии реле (и $f_S$ равна 0 в противном случае). Возникает
+    вопрос: а какие аргументы имеет функция $f_S$? Для определения аргументов $f_S$ мы
+    будем рассматривать каждое реле $x_i$ как переменную, принимающую значения из
+    множества $\{0, 1\}$ с очевидной интерпретацией: $x_i = 0$, если реле выключено, и $x_i = 1$,
+    если реле включено.
+
+    Таким образом функция проводимости $f_S(x_1, \dots , x_n)$ становится булевой функцией, 
+    зависящей от текущего состояния своих реле.
+
+    \begin{enumerate}
+        \item цепь замкнута - $f_S = 1$
+        \item цепь не замкнута $f_S = 0$
+        \item последовательное соединение $f_S(x, y) = xy$
+        \item параллельное соединение $f_S(x, y) = x\vee y$
+    \end{enumerate}
+    Задачи, связанные с релейно-контактными схемами можно подразделить на две
+большие группы:
+\begin{enumerate}
+    \item дана схема, нужно построить более простую схему с такой же функцией проводимости
+    \item нужно построить схему по описанию её функции проводимости.
+\end{enumerate}
     \section{Логика высказываний}
     \subsection{Парадоксы в математике. Парадоксы Г. Кантора и  Б. Рассела}
-    \subsection{Логическое следование в логике высказываний. Проверка логического следования с помощью таблиц истинности и  эквивалентных преобразований.}
+    \subsection{Логическое следование в логике высказываний. Проверка логического следования с помощью таблиц истинности и эквивалентных преобразований.}
+    \begin{definition}
+    Интерпретация переменных - это отображение вида $\alpha : \{ x, x_1, \dots, x_n \} \to \{ 0, 1\} $.
+    Задать интерпретацию - приписать j-той переменной значение 0, 1
+    \end{definition}
+    Если $\Phi$ - формула, а $\alpha$ - интерпретация, то $\Phi^\alpha$ - значение формулы, когда вместо $x_i$ подставили $\alpha (x_i)$
+    
+    Первый способ определить математическое понятие доказательства - логическое следование.
+    \begin{definition}
+        $\Gamma $ - множество формул, $\Phi$  - формула логики высказываний. Формула $ \Phi$  логически следует из $\Gamma$ ($\Gamma \models \Phi $), если для любой интерпретации
+        $\alpha_k$ верно - если истинны все формулы из $\Gamma$ при этой интерпретации, то истинна и $\Phi$.
+
+        $\forall \alpha (\forall \psi \in \Gamma$ $\psi^\alpha = 1)\implies \Phi^\alpha = 1$
+    \end{definition}
+    \subsubsection*{Свойства логического следования}
+    \begin{enumerate}
+        \item $\Phi \models \Psi, \Psi \models \Theta \implies \Phi \models \Theta$
+        \item $\Gamma, \Delta $ - множество формул, $\Phi$ - формула. Если $\forall \psi\in\Delta$ $\Gamma\models\psi$ $[\Gamma \models \Delta]$ $\&\Delta\models\Phi$, то $\Gamma\models\Phi$
+        \item Если $\Gamma \models \Phi, \Gamma \subseteq \Delta, \implies \Delta \models \Phi$
+        \item $\models \Phi \implies \Phi \equiv 1$
+        \item $\Phi_1, \dots, \Phi_n\models \Phi_1,\& \dots,\& \Phi_n$ \& 
+        
+        $\Phi_1,\& \dots,\& \Phi_n\models\Phi_1 \dots \Phi_n$
+        \item $\Gamma, \Phi\models \Psi\Leftrightarrow \Gamma \models \Phi \to \Psi$
+        \item Если $\Gamma = \{\Phi_1, \dots, \Phi_n \}$ - конечное, то $\Gamma \models \Phi \Leftrightarrow \Phi_1,\& \dots,\& \Phi_n\to \Phi \equiv 1$
+    \end{enumerate}
+    \begin{proof}
+        \begin{enumerate}
+            \item Следует из 2 [$\Delta= \{ \Psi\}, \Gamma = \{\Phi \}  $]
+            \item $\Gamma \models \Delta: \forall \alpha$ - интерпретация $\forall \Psi \in \Delta [(\forall \theta \in \Gamma \quad \theta^\alpha = 1)\implies \Psi^\alpha = 1]$
+            
+            $\Delta \models \Phi: \forall \alpha$ - интерпретация $[(\forall \Psi \in \Delta \quad \Psi^\alpha = 1)\implies \Phi^\alpha = 1]$
+
+            $(\forall \theta \in \Gamma \quad \theta^\alpha = 1)\implies \forall \Psi \in \Delta \quad \Psi^\alpha = 1\implies \Phi^\alpha = 1$
+
+            $\implies \Gamma \models \Phi$
+
+            [тупо пишем условие]
+            \item $\Gamma \models \Phi\implies \Phi: \forall \alpha [(\forall \Psi \in \Gamma \quad \Psi^\alpha = 1)\implies \Phi^\alpha = 1]$
+            
+            $\Gamma \subseteq \Delta: \forall\Psi\in\Delta \quad \Psi^\alpha = 1\implies \forall\Psi\in\Gamma \quad \Psi^\alpha = 1\implies \Phi^\alpha = 1$
+            \item $\models \Phi \Leftrightarrow \forall \alpha (\forall \Psi \in \varnothing\quad \Psi^\alpha = 1)\to \Phi^\alpha = 1 \implies \forall \alpha \quad \Phi^\alpha = 1\implies \Phi \equiv 1$
+            \item $\alpha$ - инт., тогда $(\forall \Psi \in \{ \Phi_1, \dots, \Phi_n\} \Psi^\alpha = 1)\Leftrightarrow (\Phi_1, \dots, \Phi_n)^\alpha = 1\implies$
+            $\Phi_1, \dots, \Phi_n\models \Phi_1,\& \dots,\& \Phi_n$.
+            Обратное аналогично.
+            \item \begin{itemize}
+                \item[$\Rightarrow$]
+                    \begin{equation}
+                        \forall \alpha \text{- инт.}[(\forall \theta \in \Gamma\quad \theta^\alpha = 1\quad \&\quad \Phi^\alpha = 1)\implies \Psi^\alpha = 1]\tag{*}
+                    \end{equation}    
+                    пусть $\alpha: (\forall \theta \in \Gamma \quad \theta^\alpha = 1)$  
+                    \begin{enumerate}
+                        \item $\Phi^\alpha= 1$, тогда из (*) $\Psi^\alpha = 1 (\Phi\to \Psi)^\alpha = 1$
+                        \item $\Phi^\alpha = 0\implies (\Phi\to\Psi) = 1\implies$
+                    \end{enumerate}     
+                    $(\Phi\to \Psi)^\alpha = 1$
+                \item[$\Leftarrow$] $\Gamma \models \Phi\to \Psi:$
+                
+                $\alpha: (\forall \theta \in \Gamma \quad \theta^\alpha = 1)\implies (\Phi\to \Psi)^\alpha = 1$
+
+                Из истинности всех формул из $\Gamma$ следует истинность импликации, а если добавить еще и 
+                истинность $\Phi$ при той же интерпретации, то из этого будет следовать истинность посылки, то есть $\Psi$.  
+            \end{itemize}
+            \item Следует из п.4-п.6
+        \end{enumerate}
+    \end{proof}
+    Проверять логическое следование можно при помощи таблиц истинности и эквивалентных преобразований, пользуясь 7 свойством
+    (проверить, является ли импликация тождественно истинной функцией или нет).
     \subsection{Понятия прямой теоремы, а также противоположной, обратной и обратной к противоположной теорем}
+    Многие математические теоремы имеют структуру, выражаемую формулой $X\to Y$. 
+    Утверждение X называется условием теоремы, а утверждение Y — ее заключением.
+    Далее, если некоторая теорема имеет форму $X\to Y$, утверждение $Y\to X$ называется \textbf{обратным} для данной теоремы.
+    Это утверждение может быть справедливым, и тогда оно называется теоремой, \textbf{обратной} для теоремы $X\to Y$, которая, 
+    в свою очередь, называется \textbf{прямой} теоремой.
+
+    Для теоремы, сформулированной в виде импликации $X\to Y$, кроме обратного утверждения $Y\to X$
+    можно сформулировать противоположное утверждение. Им называется утверждение вида $\lnot X\to\lnot Y$.
+    Утверждение, противоположное данной теореме, может быть также теоремой, т. е. быть истинным высказыванием,
+    но может таковым и не быть. 
+
+    Теорема, обратная противоположной: $\lnot X\to\lnot Y$ (контрапозиция).
+    \begin{statement}
+        $A\to B \models B' \to A'$
+
+        $A\to B, B\to A \models B' \to A', A' \to B'$
+
+        \begin{enumerate}
+            \item Из прямого следует противоположное обратному
+            \item Из прямого утверждения в общем случае не следует обратное и противоположное 
+            \item Если одновременно истинно и прямое, и обратное, то истинны все четыре
+        \end{enumerate}
+    \end{statement}
+    \begin{example}
+        Если формула - ДНФ, то это дизъюнкция.
+        Прямое и контрапозиция верны, а противоположное и обратное нет.
+    \end{example}
     \subsection{Понятия необходимых и достаточных условий}
+    Если некоторая математическая теорема имеет структуру, выражаемую формулой $X\to Y$, то высказывание Y 
+    называется \textbf{необходимым} условием для высказывания X (другими словами, если X истинно, то Y с необходимостью должно быть 
+    также истинным), а высказывание X называется \textbf{достаточным} условием для высказывания Y (другими словами, для того чтобы Y 
+    было истинным, достаточно, чтобы истинным было высказывание X).
     \subsection{Формальные системы. Выводы в формальных системах. Свойства выводов}
     \begin{definition}
         Формальная система состоит из четырех элементов:
