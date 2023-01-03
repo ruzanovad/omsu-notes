@@ -7,6 +7,7 @@
 \usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{multicol}
+\usepackage{xcolor}
 
 \newcommand\letsymbol{\mathord{\sqsupset}}
 \usepackage[russian]{babel}
@@ -1054,6 +1055,20 @@
         Формула замкнутая, если она не содержит свободных переменных.
     \end{definition}
     \subsection{Истинность формул на алгебраической системе}
+    \begin{definition}
+        Множество истинности формулы $\phi$ в алгебраической системе $\mathfrak{a}$ - это
+        $A_\phi = \{(a_1, \dots, a_n) | a_i \in A, \mathfrak{a}\models \phi(a_1, \dots, a_n)\} $
+    \end{definition}
+    \begin{definition}
+        Множество $B\subseteq A^n$ выразимо в алгебраической системе $\mathfrak{a}$, если 
+        $\exists$ формула $\phi$ такая , что $A_\phi = B$
+    \end{definition}
+    \begin{definition}
+        Функция $f:A^n \to A$ выразима, если выразимо множество $\Gamma_f = \{ (a_1, \dots, a_n, b) | a_i, b \in A, b = f(a_1, \dots, a_n)\} $
+    \end{definition}
+    \begin{definition}
+        Предикат $P:A^n \to \{ 0, 1\} $ выразим, если выразимо его множество истинности. !!!
+    \end{definition}
     Каждый терм $t(x_1,\dots, x_n)$ определяет в системе $\mathfrak{a}$ функцию $t_{\mathfrak{a}}: A^n \rightarrow A$
     следующим образом: в терме все функциональные и 
     константные символы заменяются на их интерпретации в системе A, после чего 
@@ -1078,42 +1093,169 @@
             элемента $b \in A$ выполнено $A \models \phi (b, a_1, \dots a_n)$.
         \end{enumerate}
     \end{definition}
-    \begin{definition}
-        Формула $\phi(x_1, \dots, x_n)$ сигнатуры $\sigma$ тождественно истинная (ложна) в алгебраической 
-системе $A = <A, \sigma>$, если для всех наборов элементов $a_1\dots a_n \in A$ выполнено 
-$A \models \phi(a_1\dots a_n) (A \not\models \phi(a_1\dots a_n)).$
-    \end{definition}
-    \begin{definition}
-        Формула $\phi(x_1, \dots, x_n)$ выполнима в алгебраической системе 
-$A = <A, \sigma>$, если для хотя бы одного набора элементов $a_1\dots a_n \in A $ выполнено 
-$A \models \phi(a_1\dots a_n)$.
-    \end{definition}
-    \begin{definition}
-        Формула $\phi$ сигнатуры $\sigma $ тождественно истинная (ложна), если $\phi$ тождественно истинна 
-(ложна) во всех алгебраических системах сигнатуры $\sigma$. 
-    \end{definition}
-    \begin{definition}
-        Формула $\phi$ сигнатуры $\sigma$ выполнима, 
-если $\phi$ выполнима хотя бы в одной алгебраической системе сигнатуры $\sigma$. 
-    \end{definition}
     \subsection{Изоморфизм систем. Теорема о сохранении значений термов и формул в изоморфных системах. Автоморфизм}
+    \begin{definition}
+        Алгебраические системы A и B изоморфны (обозначение: A $\cong$ B), если существует 
+        изоморфизм A на B.
+    \end{definition}
     \subsection{Элементарная теория алгебраической системы. Элементарная эквивалентность систем. Связь понятий изоморфизма и элементарной эквивалентности}
     \subsection{Выразимость свойств в логике предикатов. Умение записать формулой различные свойства систем и элементов систем}
     \subsection{Эквивалентность формул логики предикатов}
+    \begin{definition}
+        Формулы $\phi(x_1, \dots, x_n)$ и $\psi(x_1, \dots, x_n)$ сигнатуры $\sigma$ эквивалентны
+        в алгебраической системе $\mathfrak{a} = <A, \sigma>$ ($\phi \sim_\mathfrak{a} \psi$), если
+        \begin{align*}
+            \forall a_1, \dots, a_n\in A\quad\mathfrak{a}\models \psi(a_1, \dots, a_n)
+        \end{align*}
+    \end{definition}
+    \begin{definition}
+        Формулы $\phi(x_1, \dots, x_n)$ и $\psi(x_1, \dots, x_n)$ сигнатуры $\sigma$ эквивалентны
+        ($\phi \sim  \psi$), если
+        \begin{align*}
+            \forall \mathfrak{a} = <A, \sigma> (\phi \sim_\mathfrak{a} \psi)
+        \end{align*}
+    \end{definition}
     \subsection{Тождественно истинные (ложные) и выполнимые формулы}
+    \begin{definition}
+        Формула $\phi(x_1, \dots, x_n)$ сигнатуры $\sigma$ тождественно истинная (ложна) в алгебраической 
+        системе $A = <A, \sigma>$, если для всех наборов элементов $a_1\dots a_n \in A$ выполнено 
+        $A \models \phi(a_1\dots a_n) (A \not\models \phi(a_1\dots a_n)).$
+    \end{definition}
+    \begin{definition}
+        Формула $\phi(x_1, \dots, x_n)$ выполнима в алгебраической системе 
+        $A = <A, \sigma>$, если для хотя бы одного набора элементов $a_1\dots a_n \in A $ выполнено 
+        $A \models \phi(a_1\dots a_n)$.
+    \end{definition}
+    \begin{definition}
+        Формула $\phi$ сигнатуры $\sigma $ тождественно истинная (ложна), если $\phi$ тождественно истинна 
+        (ложна) во всех алгебраических системах сигнатуры $\sigma$. 
+    \end{definition}
+    \begin{definition}
+        Формула $\phi$ сигнатуры $\sigma$ выполнима, 
+        если $\phi$ выполнима хотя бы в одной алгебраической системе сигнатуры $\sigma$. 
+    \end{definition}
     \subsection{Пренексный вид формулы}
+    \begin{definition}
+        Формула $\phi$ находится в пренексном виде, если она 
+        \begin{itemize}
+            \item либо не содержит кванторов (бескванторная)
+            \item либо имеет вид $Q_1 x_1\dots Q_n x_n \psi$, где $Q_i$ - кванторы, а формула $\psi$ бескванторная.
+        \end{itemize}
+    \begin{theorem}[о приведении формулы логики предикатов в пренексный вид]
+        Любая формула логики предикатов может быть преобразована в эквивалентную формулу в пренексном виде.
+    \end{theorem}
+    \end{definition}
     \subsection{Основные эквивалентности логики предикатов}
+    \begin{statement}[Об эквивалентностях ЛВ]
+        Пусть $\phi(x_1, \dots, x_n), \psi(x_1, \dots, x_n)$ от булевых переменных, $\phi_1, \dots, \phi_n$ - формулы ЛП
+
+        Тогда если $\phi \sim\psi$  В ЛВ, то результат подстановки эквивалентен в ЛП
+    \end{statement}
+    \begin{proof}
+        $\mathfrak{a}$ - произвольная алг. система сигнатуры $\sigma$, $a_1, \dots, a_n \in A$,
+        тогда $b_i = \phi_i(a_1, \dots, a_k)\in \{ 0, 1\} $
+        $\phi \sim\psi$ в ЛВ $\Leftrightarrow \forall b_1, \dots, b_n \in \{ 0, 1\} \phi(b_1, \dots, b_n) = \psi (b_1, \dots, b_n)$
+    \end{proof}
+    \begin{theorem}[Основные эквивалентности ЛП]
+        След. пары формул эквивалентны
+        [свободные переменные остаются свободными]:
+        \begin{enumerate}
+            \item (Перестановка одноименных кванторов) 
+            \begin{alignat*}{2}
+                \forall y \forall x P(x) \sim \forall x \forall y P(x)
+                \quad&\quad
+                \exists y \exists x P(x) \sim \exists x \exists y P(x)
+            \end{alignat*}
+            \item (Переименование связанных переменных) нельзя брать свободные переменные
+            \begin{alignat*}{2}
+                \forall x \psi(x) \sim \forall y \psi(y)
+                \quad&\quad
+                \exists x \psi(x) \sim \exists y \psi(y)
+            \end{alignat*}
+            \item (Отрицание и кванторы)
+            \begin{alignat*}{2}
+                \neg(\forall x \psi(x)) \sim \exists x \neg \psi(x)
+                \quad&\quad
+                \neg (\exists x \psi(x)) \sim \forall x \neg \psi(x)
+            \end{alignat*}
+            \item             
+            \begin{alignat*}{2}
+                (\forall x \phi(x)) \& (\forall x \psi(x)) \sim \forall x \phi(x) \& \psi(x)
+                \quad&\quad
+                (\exists x \phi(x)) \vee (\exists x \psi(x)) \sim \exists x \phi(x) \vee \psi(x)
+            \end{alignat*}
+            \item             
+            \begin{alignat*}{2}
+                (\forall x \phi(x)) \vee (\forall y \psi(y)) \sim \forall x \forall y (\phi(x) \vee \psi(y))
+                \quad&\quad
+                (\exists x \phi(x)) \& (\exists y \psi(y)) \sim \exists x \exists y  (\phi(x) \& \psi(y))
+            \end{alignat*}
+            \item
+                \begin{align*}
+                    (\forall x \phi(x)) \&/\vee (\exists y \psi(y)) \sim \forall x \exists y (\phi(x) \&/\vee \psi(y)) \sim \exists y \forall x (\phi(x) \&/\vee \psi(y))
+                \end{align*}
+            \item переменная х не входит свободно в $\psi$
+            \begin{alignat*}{2}
+                (\forall x \phi(x)) \&/\vee \psi \sim \forall x  (\phi(x) \&/\vee \psi)
+                \quad&\quad
+                (\exists x \phi(x)) \&/\vee \psi \sim \exists x  (\phi(x) \&/\vee \psi)
+            \end{alignat*}
+            \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        \begin{enumerate}
+            \item 
+        \end{enumerate}
+    \end{proof}
     \subsection{Классы формул $\Sigma_n, \Pi_n, \Delta_n$. Соотношения между классами}
+    \begin{definition}
+        Класс $\Sigma_n$ (n > 0) состоит из всех формул в пренексном виде, у которых кванторный префикс 
+        начинается с квантора существования и содержит (n-1) перемену кванторов.
+    \end{definition}
+    \begin{definition}
+        Класс $\Pi_n$ (n > 0) состоит из всех формул в пренексном виде, у которых кванторный префикс 
+    начинается с квантора всеобщности и содержит (n-1) перемену кванторов.
+    \end{definition}
+    \begin{definition}
+        Класс $\Delta_n$ (n > 0) состоит из всех формул, которые можно привести как к виду $\Pi_n$, 
+        так и к виду $\Sigma_n$.
+    \end{definition}
+    
+    При n = 0 классы $\Sigma_0$ = $\Pi_0$ = $\Delta_0$ — все бескванторные формулы.
+
     \subsection{Нормальная форма Сколема, ее построение (на примерах)}
     \subsection{Проверка существования вывода методом резолюций (алгоритм)}
     \subsection{Логическое следование в логике предикатов}
+    \begin{definition}
+        Пусть $\Gamma$ — множество формул логики предикатов сигнатуры $\sigma, \phi(x_1, \dots, x_n)$ -- формула 
+        сигнатуры $\sigma$. Тогда формула $\phi$ \textbf{логически следует} из множества $\Gamma (\Gamma \models \phi)$, если для любой 
+        алгебраической системы $\mathfrak{a} = <A, \sigma>$ и любых элементов $a_1, \dots, a_n \in A$ , если на этих элементах 
+        в системе $\mathfrak{a}$ истинны все формулы из $\Gamma$, то истинна и $\phi(a_1, \dots, a_n)$.
+    \end{definition}
     \subsection{Исчисление предикатов (ИП)  Гильберта. Свойства выводов}
     \subsection{Теория. Модель теории}
+    \begin{definition}
+        Теория сигнатуры $\sigma$ - это произвольное множество замкнутых формул сигнатуры  $\sigma$.
+    \end{definition}
+    \begin{definition}
+        Модель теории T — это алгебраическая система A, в которой истинны одновременно все 
+    формулы теории T.
+    \end{definition}
     \subsection{Непротиворечивая теория. Полная теория. Свойства непротиворечивых и полных теорий}
+    \begin{definition}
+        Теория T противоречивая, если существует формула $\phi$ такая, что одновременно 
+    $T \models \phi$ и $T \models \neg\phi$. В противном случае теория T непротиворечивая.
+    \end{definition}
     \subsection{Теорема о существовании модели (без доказательства)}
+    \begin{theorem}[Теорема о существовании модели]
+        Каждая непротиворечивая теория имеет модель. 
+    \end{theorem}
     \subsection{Теорема о связи выводимости и противоречивости}
     \subsection{Теоремы о корректности и полноте ИП}
     \subsection{Теорема компактности}
+    \begin{theorem}[Теорема компактности]
+        Теория имеет модель $\Leftrightarrow$ каждая ее конечная подтеория имеет модель. 
+    \end{theorem}
     \subsection{Аксиоматизируемые и конечно аксиоматизируемые классы. Конечно аксиоматизируемые теории}
     \subsection{Обоснование нестандартного анализа (построение алгебраической системы, элементарно эквивалентной полю вещественных чисел, содержащей бесконечно малые элементы)}
     \subsection{Метод резолюций для логики предикатов (без доказательства корректности)}
