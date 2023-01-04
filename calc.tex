@@ -8,6 +8,7 @@
 \usepackage{hyperref}
 \usepackage{multicol}
 \usepackage{tikz} 
+% \usepackage{pdfpages}
 
 \newcommand\letsymbol{\mathord{\sqsupset}}
 \usepackage[russian]{babel}
@@ -379,28 +380,1219 @@ $\lim_{y \to y_0} F(y) = \int_a^\omega \phi(x)dx$
      Равномерность по Вейерштрассу
 \end{proof}
     \subsection{	Дифференцирование  по параметру несобственного интеграла}
+    \begin{theorem}[О непрерывности интеграла] \hypertarget{p5}{}
+     $\letsymbol f(x,y)$ - определена на $[a,\omega)\times[c, d]$ и непрерывна
+
+     $F(y) = \int_a^\omega f(x,y)dx$ сходится равномерно относительно у на [c,d]
+
+     Тогда F(y) - непрерывная функция на [c,d]
+\end{theorem}
+\begin{proof}
+     $\triangleleft$ Пусть $y_0\in[c,d]$
+     
+     $F(x,y)\rightarrow_{y\to y_0} \phi(x), [a, b]\subset [a,\omega)$
+     
+     $[a,b] \times [c,d]$ - компакт $\implies f(x,y)$ равномерно сходится на $[a,b] \times [c,d]$
+     
+     $f(x,y)\rightrightarrows_{y\to y_0} \phi(x)$ равномерно по х
+     
+     $\forall \epsilon > 0 \exists \delta>0: |y-y_0|< \delta \forall x\in [a,b] |f(x,y) - \phi(x)|< \epsilon$
+     
+     
+     $\forall \epsilon > 0 \exists \delta_1>0:$
+     $
+               \begin{array}{l}
+                    |x' - x''|< \delta_1\\
+                    |y' - y''|<\delta_1
+               \end{array}
+               $
+               $|f(x',y') - f(x'',y'')|<\epsilon$
+     
+     $\forall \epsilon \exists \delta_2(x)>0: |y - y_0|<\delta_2 \implies |f(x,y)-\phi(x)|<\epsilon$
+     
+     Фиксируем $x_0, \delta_1 = \delta_2(x_0)$
+     
+     $\forall x \in [a, b]: |x - x_0|< \delta_1\implies$ если $|y-y_0|< \delta_2 \implies|f(x,y) - \phi(x)|\leq |f(x,y) -f(x_0,y)|+|f(x_0, y) - \phi(x_0)|\leq\epsilon$
+     
+     Выбираем конечное подпокрытие [a,b] такими окрестностями $x_0\pm \delta(x_0),$ выбираем наименьшее $\delta_2$
+     
+     Тогда если $|x' - x''|<\delta_2\implies\exists x_0: |x' - x_0|<\delta_2$ и $|x'' - x_0|< \delta_2$
+     
+     Тогда $|f(x',y) - \phi(x')|\leq |f(x',y) - f(x_0,y)|+|f(x_0, y) - \phi(x_0)|+|\phi(x') - \phi(x_0)| < \epsilon+\epsilon+\epsilon$
+     
+     Тогда $F(y, b) = \int_a^b f(x,y)dx $ - непрерывна по у
+     
+     $\lim_{b \to \omega} F(y,b)  = \int_a^\omega f(x,y)dx = F(y)$
+     
+     $\lim_{y \to y_0} \int_a^\omega f(x,y)dx = \int_a^\omega \lim_{y \to y_0} f(x,y)dx  = \int_a^\omega\phi(x)dx = F(y_0$
+     
+     $\phi(x) = f(x,y_0) = \lim_{y\to y_0} f(x,y)$
+     
+     \end{proof}
+     Следствие: Если f(x,y)>=0, то из непрерывности F(y) следует равномерная сходимость $\int_a^\omega f(x,y)dx$
+
+\begin{proof}
+     $F(b,y) = \int_a^b f(x,y) dx$ неубывает с ростом b
+
+     Предельная функция - F(b, y) это F(y)
+
+     $\forall \epsilon > 0 \exists B \quad b', b'' \in (\omega -B, \omega) \forall y |\int_{b'}^{b''}f(x,y) dx|\leq \epsilon$
+
+     $F(b,y)\rightarrow F(y)$
+
+     $\forall \epsilon\exists B: \forall b' \in (\omega - B, \omega) |\int_{b'}^\omega f(x,y)dx |< \epsilon$
+
+     $|\int_{b'}^{b''}f(x,y) dx|\leq|\int_{b'}^\omega f(x,y)dx |< \epsilon$
+\end{proof}
+\begin{theorem}[О дифференцируемости несобственных интегралов]
+     Пусть f(x,y) непрерывна по х на $[a,b] \times [c,d]$, ее производная по y непрерывна на этом множестве
+
+     Пусть $\forall y F(y) = \int_a^\omega f(x,y )dx$ сходится, и сходится равномерно $\int_a^\omega f'_y(x,y )dx$ по у
+
+     Тогда F(y) дифференцируемо на [c,d] и $F'(y) = \int_a^\omega  f'_y(x,y)dx$
+\end{theorem}
+
+\begin{proof}
+     $\frac{F(y_0+\Delta) - F(y_0)}{\Delta} = \int_a^\omega\frac{f(x, y_0 +\Delta) - f(x, y_0)}{\Delta}dx$
+
+     на $[a,b] \subset [a,\omega) \frac{f(x, y_0 +\Delta) - f(x, y_0)}{\Delta}\rightrightarrows_{\Delta\to 0}f'_y(x,y_0)$
+
+     $\int_a^\omega f'_y(x,y )dx$ по у cходится равномерно по условию
+
+     $\forall \epsilon > 0\exists \delta > 0$
+     $
+     \begin{array}{l}
+          |b - \omega|< \delta\\
+          |b'' \omega|<\delta
+     \end{array}
+     $
+     $\implies |\int_{b'}^{b''} f'_y(x,y)dx|< \epsilon$
+
+     Пусть $\Phi(y) = \int_{b'}^{b''}f(x,y)dx$, тогда $\Phi'(y) = \int_{b'}^{b''}f'_y(x,y)dx\implies |\Phi'(y)|<\epsilon$
+
+     $\frac{\Phi(y+\Delta) - \Phi(y)}{\Delta} = \Phi'(\eta ), \eta \in (y, y+ \Delta)$
+
+     $|\int_{b'}^{b''} \frac{f(x, y +\Delta) - f(x, y)}{\Delta}dx|<\epsilon$ сходится равномерно
+
+     Тогда имеем право перейти к пределу $\Delta \to 0$
+
+     $\lim_{\Delta\to 0}\frac{F(y + \Delta) - F(y)}{\Delta} = \lim_{\Delta\to 0} \int_a^\omega \frac{f(x, y+\Delta) - f(x,y) }{\Delta}dx=\int_a^\omega f'_y(x,y)dx = F'(y)$
+
+
+\end{proof}
     \subsection{	Интегрирование по параметру несобственного интеграла}
-    
+    \begin{theorem} \hypertarget{p3}{}
+     пусть $f(x,y)$ определена и непрерывна на $[a,\omega)\times[c,d]$ и $F(y)=\int)a^\omega f(x,y)dx$ - сходится равномерно, тогда
+
+     $\int_c^d F(y)dy = \int_a^\omega dx(\int_c^d f(x,y)dy)$
+\end{theorem}
+
+\begin{proof}
+     $\letsymbol{}b \in (a, \omega)$ тогда $\int_c^d dy \int_a^b f(x,y)dx = \int_a^b dx (\int_c^d f(x,y)dy)$
+     по теореме о интегрировании собственного интеграла
+
+     $F(b, y) = \int_a^b f(x,y)dx\rightrightarrows_{b\to\omega} F(y)$
+
+     $\int_c^d F(b,y)dy = \int_c^d F(y)dy $ по $b\to\omega$
+
+     $\int_c^d F(y)dy = \lim_{b\to\omega} \int_c^d dx\int_a^b f(x,y)dx = \lim_{b\to\omega}\int_a^b dx(\int_c^d f(x,y)dy)$
+
+     $\int_c^d F(y)dy = \int_a^\omega dx (\int_c^d f(x,y)dy)$
+\end{proof}
+
+\begin{theorem}[о несобственном интегрировании несобственного интеграла]
+     f(x,y)- определена и непрерывна на $[a,\omega')\times[b, \omega'')$
+
+     Пусть $\int_a^{\omega'} f(x,y)dx$ и $\int_b^{\omega''} f(x,y)dy$ сходится равномерно относительно у и х в любом промежутке
+\end{theorem}
+\begin{proof}
+     $\letsymbol{} \exists \int_a^{\omega'}dx\int_c^{\omega''}|f(x,y)|dy$
+
+     Для $\forall d\in (c, \omega'') на [c,d] F(y)$ интегрируема
+
+     $\int_c^d\int_a^\omega f(x,y) = \int_a^\omega dx \int_c^d f(x,y)dy$  \hyperlink{p3}{(Предыдущая теорема)}
+
+     $G(d,x) = \int_c^d f(x,y)dx$ - непрерывна и при $d\to\omega''$ стремится к
+     $\int_c^{\omega''}| f(x,y)|dx$ равномерно относительно х 
+     $\quad|\int_a^{\omega'}dx \int_c^d|f(x,y)|dy|$ сходится $\implies \int_a^{\omega'}dx \int_c^d|f(x,y)|dy$ сходится равномерно по d
+
+     $\int_c^d dy \int_a^{\omega'}dx |f(x,y)|$ сходится равномерно по d
+
+     Тогда $b\to\omega' $ и применяем \hyperlink{p4}{теорему о предельном переходе}
+
+     $\int_c^{\omega''}\int_a^{\omega'}|f(x,y)|dx = \int_a^{\omega'}dx\int_c^{\omega}dy$
+\end{proof}
+
+Следствие: Если f(x,y) интегрируема и неотрицательна и $\int_a^{\omega'}f(x,y)dx$ и $\int_c^{\omega''}f(x,y)dy$ сходится равномерно (Достаточно непрерывности)
+
+Тогда из $\exists$ одного из интегралов следует существование второго и их равенство
+
+\begin{proof}
+     $\int_a^{\omega'} dx \int_c^{\omega}f(x,y)dy$, $\int_c^{\omega}dy \int_a^{\omega'}f(x,y) dx $ следует существование второго и их равенства
+
+$\int_a^{\omega'}f(x,y)$ - непрерывна и f>= 0, \hypertarget{[p5]}{то по следствию теоремы о непрерывности интегралов } $\int_a^{\omega'}f(x,y)dx$сходится равномерно
+\end{proof}
     \section{Кратные интегралы}
     \subsection{ Двоичные разбиения. Двоичные интервалы, полуинтревалы, кубы. Свойства двоичных инервалов, кубов}
+    \begin{definition}
+     $f(x):\mathbb{R}^n \to \mathbb{R} $ называется ступенчатой, если можно указать
+     конечный набор n-мерных непересекающихся кубов так, что на $\forall$ кубе $f(x) = c$
+\end{definition}
+\begin{definition}
+     Мера(Объем) n-мерного куба Q, обозн. $\mu_n(Q)$
+
+     Если ребро куба равно a, то $\mu_n(Q) = a^n$
+\end{definition}
+\begin{definition}
+     Интегралом $f:\mathbb{R}^n\to\mathbb{R}$ из пространства $R^n$ н-ся число
+     $\int_{\mathbb{R}^n}f(x)dx = \sum_{i = 1}^{\infty} f_i\mu_n(Q_i), \quad f_i$ постоянное значение f на кубе $Q_i$
+\end{definition}
+\begin{example}
+     $\letsymbol{} M \subset \mathbb{R}^n, M \neq \emptyset, f, g: M\to \widehat{\mathbb{R}} $и $A\subset M$
+\end{example}
+\begin{definition}
+     Будем говорить, что $f\leq g$ на А, если $\forall x\in A\quad f(x)\leq g(x)$
+
+     $f\leq g\implies f\leq g$ на M
+\end{definition}
+\begin{remark}
+     $f\leq g$ отношение порядка 
+\end{remark}
+\begin{definition}
+     $\{f_n\}$ последовательность неубывает $\Leftrightarrow f_{n+1}> f_n$ невозрастает
+\end{definition}
+\begin{remark}
+     Если $|f| = \sup_{x\in M} |f(x)|, \{f_n\}\to f$
+\end{remark}
+\begin{definition}
+     Если $\{f_n\}$ не возрастает и сходится к f, то $f_n \searrow f$ сходится сверху
+     
+     $\{f_n\}$ не убывает и сходится к f $\implies f_n\nearrow f$(снизу)
+\end{definition}
+\begin{definition}
+     $f:M\to\mathbb{R} $
+
+     $f^{+} = \max{0, f(x)}, f^{+}, f^{-}\leq 0$
+
+     $f^{-} = \max{0, -f(x)}, f^{+}, f^{-}\leq 0$
+
+     $f = f^{+} - f^{-}$
+\end{definition}
+$\letsymbol x\in M,$если $f(x)\leq 0$
+
+$f^{+}(x) = f(x), f^{-}(x) = 0\implies f^{+}(x) - f^{-}(x) = f(x)$
+
+Если f(x)<0
+
+$f^{+}(x) = 0, f^{-}(x) = -f(x)\implies f^{+}(x) -f^{-}(x) = f(x)$
+
+$|f|(x) = |f(x)| = f^{+}(x) + f^{-}(x)$
+
+\begin{definition}
+     $\letsymbol A\subset \mathbb{R}^n, $, функция
+
+     
+     \begin{equation*}
+          X_A(x) = 
+           \begin{cases}
+             1 &\text{$x\in A\quad$} \\
+             0 &\text{$x \notin A\quad$}
+           \end{cases}
+     \end{equation*}
+
+Индикатор множества А, характеристическое изложение
+\end{definition}
+\begin{remark}
+     $X_A(x)\equiv 0\Leftrightarrow A=\emptyset$
+
+     $X_A(x)\equiv 1\Leftrightarrow A=\mathbb{R}^n $
+\end{remark}
+\begin{lemma}
+     $A, B\subset M$
+     
+     $A\subset B \Leftrightarrow X_A \leq X_B$
+
+     Если $\{A_n\}\subset M$ и $A ={\cup}_{n=1}A_n,$ то $X_A\leq \sum_{n = 1}^{\infty} X_{A_n},$ если $\{A_n\}$
+     попарно не пересекаются, то равенство
+\end{lemma}
+
+\begin{proof}
+     очевидно
+\end{proof}
+
+     \begin{definition}
+          $\alpha = <a_i, b_i> \times <a_n, b_n> прямоугольник в \mathbb{R}^n, b_j>a_j, l_j = b_j - a_j - $длина ребра 
+     \end{definition}
+     $\mu(\alpha) = \Pi_{j=1}^n (b_j - a_j) -$мера, объем
+
+     $\alpha =[a_1, b_1)\times[a_n, b_n)$ - полуоткрытый прямоугольнике
+
+     \begin{definition}
+          Двоичный полуинтервал - полуинтервал вида [a, b), где a = $\frac{s}{2^r}$, b = $\frac{s+1}{2^r}$, r - ранг полуинтервала
+
+          $\mu([a,b)) = \frac{1}{2^r}$
+     \end{definition}
+     \begin{definition}
+          Двоичный брус - это произведение двоичных интервалов одного ранга r - ранг бруса
+     \end{definition}
+     \begin{remark}
+          Если f - ступенчатая, то существуют числа $f_1,\dots f_n$ и прямоугольники $\alpha_1, \dots\alpha_n$ т.ч
+
+          $f(x) = \sum_{n=1}^n f_k \chi_{\alpha_k}(x)$
+     \end{remark}
+     \begin{remark}
+          Любой полуинтервал - объединение двоичных полуинтервалов
+     \end{remark}
+
+     Предложение (Свойства двоичных полуинтервалов)
+     \begin{enumerate}
+          \item $\alpha$ и $\beta$ - двоичные полуинтервалы ранга r и s соответственно
+          \begin{proof}
+               $r\leq s, $тогда если они пересекаются => ($\alpha \cap \beta\neq\emptyset$), то $\beta \subset \alpha$
+
+          $\alpha = [\frac{n}{2^r}, \frac{n+1}{2^r})$, $\beta = [\frac{m}{2^s}, \frac{m+1}{2^s}))$
+
+          пусть они пересекаются => х общая точка
+
+          $\frac{n}{2^r}\leq x < \frac{n+1}{2^r}\quad \frac{m}{2^s}\leq x < \frac{m+1}{2^s} | 2^s$
+
+          $n2^{s-r}\leq x 2^r < (n+1)2^{s-r}\quad m \leq x 2^s < m+1$
+
+          $n 2^{s-r}< m+1 \implies n 2^{s-r}\leq m\implies \frac{n}{2^r}\leq \frac{m}{2^s}$
+
+          $(n+1)2^{s-r}> m\implies (n+1)2^{s-r}\geq n+1\quad \frac{n+1}{2^r}\leq \frac{m+1}{2^s}$
+
+          \end{proof}
+          \item Если $\alpha$и $\beta$ двойные полуинтервалы и их ранги равны, то они либо не пересекаются, либо совпадают
+          \begin{proof}
+               
+          \end{proof} 
+          \item Если $n\in \mathbb{N} $то каждая точка из $\mathbb{R} $принадлежит ровно одному полуинтервалу ранга r
+          
+          \begin{proof}
+               $\forall x\in\mathbb{R} \exists m \in \mathbb{N} : x\tau^r\in[m, m+1)$
+          \end{proof}
+          \item Если [a,b) - двоичный полуинтервал ранга r, $c = \frac{a+b}{2}$, то [a,c), [c, b) двоичные полуинтервалы ранга r+1
+          \begin{proof}
+               
+          \end{proof}
+     \end{enumerate}
+     \begin{remark}
+          Двоичные полуинтервалы фиксированного ранга r образуют разбиение $\mathbb{R} $ на непересекающиеся классы (множества)
+
+     \end{remark}
+     \begin{remark}
+          все свойства двоичных полуинтервалов переносятся на брусы
+     \end{remark}
+     \begin{remark}
+          $\letsymbol{}\alpha = [a_1, b_1)\times\dots\times[a_n, b_n)$ - некоторый прямоугольник, причем каждые из чисел $a_i, b_i$ имеют вид $\frac{p}{2^q}, p\in\mathbb{Z}, q\in\mathbb{N}$, тогда
+          $\alpha$ конечное объединение брусов фиксированного ранга
+     \end{remark}
+          \begin{proof}
+               r - макс q т.ч $a_ib_i = \frac{p}{2^q}$
+
+               $\letsymbol[a_i, b_i)$прямоуг = $[\frac{p_1}{2^{q_1}}, \frac{p_2}{2^{q_2}}), q_1, q_2\leq r$
+
+               очевидно можно $[a_i, b_i)$ записать в виде $[\frac{m}{2^r}, \frac{k}{2^r})$
+
+               $[\frac{m}{2^r}, \frac{k}{2^r}) = [\frac{m}{2^r}, \frac{m+1}{2^r})\cup\dots\cup[\frac{k-1}{2^r}, \frac{k}{2^r})$
+
+               $\alpha - $конечное произведение конечных объединений (конечное объединение брусов)
+          \end{proof}
+          \begin{lemma}
+               A - компактное множество в $\mathbb{R}^n\implies\exists$конечное множество брусов ранга r, покрывающих A
+          
+          \end{lemma}
+          \begin{proof}
+               A -  ограничено $\implies M\subset N, A\subset [-M, M]^n$
+          
+               $[-M, M]$ подходит под условия предыдущей леммы
+          
+               $M = \frac{M}{2^0} = \frac{2M}{2^1}\implies [-M, M]^n - $конечное объединение брусов
+               ранга r
+          \end{proof}
     \subsection{ Ступенчатые функции. Интеграл от ступенчатой функции (естественное и индуктивное определения). Теорема о совпадении определений}
+    \begin{definition}
+     $f:\mathbb{R} ^n \to \mathbb{R} $ ступенчатая функция, если f - лин. комбинация конечного числа двоичных брусов
+\end{definition}
+\begin{remark}
+     f образуют линейное пространство ступенчатых функций $\mathcal{L}(\mathbb{R} ^n) $
+
+\end{remark}
+\begin{remark}
+     Если $f\in \mathcal{L}(\mathbb{R} ^n),$ то f можно представить в виде 
+     линейной комбинации конечного числа брусов одного ранга
+\end{remark}
+\begin{proof}
+     очевидно
+\end{proof}
+\begin{lemma}
+     f - ступенчатая функция, $f\in \mathcal{L}(\mathbb{R} ^n)$
+
+     $\sum_{k=1}^m f_k \chi_{\alpha_k}$, $\alpha_k$ -  не пересекающиеся кубы, тогда $|f| = \sum_{k=1}^m f_k \chi_{\alpha_k}$, $\alpha_k$
+\end{lemma}
+\begin{proof}
+     $\alpha = \bigcup\alpha_k$
+
+     Если $x\notin\alpha\implies\forall k, x\in\alpha_k\implies f(x) = 0$
+
+     $|f|(x) = |f(x)| = 0 = \sum_{k=1}^m |f_k |\chi_{\alpha_k}$, $\alpha_k$
+
+     Если $x\in \alpha\implies\exists!\alpha_j : x\in \alpha_j$
+
+     $f(x) = f_j, |f|(x) = |f(x)| = |f_j|$
+
+     $\sum_{j=1}^m |f_j |\chi_{\alpha_j} = |f_j|\implies |f| = \sum |f_j |\chi_{\alpha_j}$
+\end{proof}
+Для всякой $f\in \mathcal{L}(\mathbb{R} ^n)$ можно указать число, которое будем называть
+интегралом от f по $\mathbb{R} ^n$ и обозначать
+
+$\int_{\mathbb{R}^n}f(x)dx$
+\begin{remark}
+     n = 1 $f\in \mathcal{L}(\mathbb{R})$ все функции оттуда ограничены и имеют лишь конечное число точек разрыва => определен интеграл Римана
+
+     $\int_{-\infty}^{+\infty} f(x)dx = \int_{-\infty}^{+\infty}\sum_{k=1}^m f_k \chi_{\alpha_k}(x)dx =$
+     $\sum_{k=1}^m f_k \int_{-\infty}^{+\infty}\chi_{\alpha_k}(x)dx = \sum_{k=1}^m f_k \int_{a_k}^{b_k}1dx = \sum_{k=1}^m f_k \mu(\alpha_k)$
+
+     r = 1 разумно считать, что $\int_{\mathbb{R}^n}f(x)dx = \int_{-\infty}^{+\infty} f(x)dx =\sum_{k=1}^m f_k \mu(\alpha_k)$
+\end{remark}
+\begin{definition}
+     $f\in\mathcal{L}(\mathbb{R} ^n)$ и $f = \sum_{k=1}^m f_j \chi_{\alpha_j}$
+
+     $\alpha_j$ - попарно не пересекаются, тогда
+
+     $\int_{\mathbb{R}^n}f(x)dx = \sum_{k=1}^n f_k \mu_n(\alpha_k)$
+\end{definition}
+\begin{remark}
+     Вообще говоря, нужно доказывать независимость интеграла от представления функции в виде линейных компонент
+     индикатора
+
+     Мы не будем доказывать корректность, по-другому определим интеграл, а затем покажем, что новое определение совпадет со старым
+\end{remark}
+\begin{proof}
+     \begin{enumerate}
+          \item n = 1, $\int_\mathbb{R} f(x)dx = \int_{-\infty}^{+\infty}f(x)dx = \sum_{k=1}^n f_k \mu_n(\alpha_k)$
+          \item $f\in\mathcal{L}(\mathbb{R^{n+1}})$
+          
+          $x\in\mathbb{R^{n+1}} = \mathbb{R^{n}}\times\mathbb{R} = (y, z)$ и
+
+          $f(x) = \sum_{k =1}^m f_k \chi_{\alpha_k}(x)$, $\alpha_k$ - куб в $\mathbb{R} ^{n+1}$
+
+          $\alpha_k = [a_1, b_1)\times\dots\times[a_{n+1}, b_{n+1}) = \beta_k\times\gamma_k$
+
+          $\mu_{n+1}(\alpha_k) = \mu_n(\beta_k)\mu_k(\gamma_k)$
+
+          $y\in\beta$ тогда $f_y(z) = f(y, z): \mathbb{R} \to\mathbb{R} $
+
+          $f_y(z) = \sum_{k=1}^m f_k \chi_{\beta_k}(y)\chi_{\gamma_k}(z) \in \mathcal{L}(\mathbb{R})$
+
+          $\int_\mathbb{R} f_y(z)dz = \sum_{k=1}^m f_k \chi_{\beta_k}(y)\mu_1(\gamma_k)$
+
+          $F(y) = \int_\mathbb{R} f_y(z)dx$ -  ступенчатая из $\mathcal{L}(\mathbb{R})\implies$
+          $\int_\mathbb{R} F(y)dy = \sum_{k=1}^n f_k \mu_1(\gamma_k) \mu_n(\beta_k) = \sum_{k=1}^n f_k \mu_{n+1}(\alpha_k)$
+
+          положим что $\int_{\mathbb{R} ^{n+1}}f(x)dx = \int_R F(y)dy = \int_{R^n} dy (\int_R f_y(z)dz) = \int_{R^n}(\int_R f(y,z)dz)dy$
+
+          т.о мы определим интеграл для $\forall n$
+     \end{enumerate}
+\end{proof}
+
     \subsection{ Свойства интеграла от ступенчатой функции (линейность интеграла, положительность, оценка интеграла)}
+    \begin{remark}
+     $\letsymbol{}f(x)\in \mathcal{L}(\mathbb{R} ^n)$ тогда для любого хорошего отрезка [a, b]
+     верно равенство $\int_a^b f(x)dx = \int_\mathbb{R} f(x)\chi_{[a,b]}(x)dx$
+
+     $[a,b]$ - объединение конечных приращений
+\end{remark}
+\begin{theorem}
+     $\letsymbol{}f, g\in\mathcal{L}(\mathbb{R} ^n), \lambda, \mu \in \mathbb{R} $ 
+     тогда
+
+     $\int_{\mathbb{R}^n }(\lambda f + \mu g)(x)dx=\lambda\int_{\mathbb{R}^n }f(x)dx + \mu \int_{\mathbb{R}^n }g(x)dx$
+\end{theorem}
+\begin{proof}
+     $f = \sum_{i = 1}^m f_k \chi_{\alpha_i}, g=\sum_{i = 1}^k f_j \chi_{\beta_j}$
+
+     $(\lambda f + \mu g) = \sum_{n=1}^m \mu f_i \chi_{\alpha_i} + \sum_{j = m+1}^{m+k}\mu g_{j-k}\chi_{\beta_{j-k}}$
+
+     $\int_{\mathbb{R} ^n} (\lambda f + \mu g)(x)dx = \sum_{i=1}^m \mu f_i \mu(\alpha_i)+ \sum_{j = m+1}^{m+k}\mu g_{j-k}\mu(\beta_{j-k})$
+    $=\lambda\int_{\mathbb{R} ^n}f(x)dx + \mu\int_{\mathbb{R} ^n}g(x)dx$ 
+
+\end{proof}
+\begin{theorem}
+     Если $f\in\mathcal{L}(\mathbb{R} ^n)$ и $f(x)>0$ для $\forall x\in\mathbb{R} ^n$, то 
+     $\int_{\mathbb{R} ^n} f(x)dx\leq 0$
+\end{theorem}
+\begin{proof}
+\end{proof}
+\begin{lemma}
+     $\letsymbol{}f \in \mathcal{L}(\mathbb{R} ^n)$ и $|f(x)|\leq L$ на $\mathbb{R} ^n$, Пусть 
+     $P = [a_1, b_1)\times\dots\times[a_n, b_n)$ такой, что $\forall x\notin P \implies$
+     $f(x) = 0,$ тогда 
+
+     $|\int_{\mathbb{R} ^n}|\leq L \mu_n(P) = L \prod_{k = 1}^n (b_k - a_k)$
+\end{lemma}
+\begin{proof}
+     База n =1, $|\int_\mathbb{R} f(x)dx| = |\int_{a_1}^{b_1}f(x)dx|\leq L(b_1 - a_1)$
+
+     Переход $P_{n+1} = P_n \times P_1$
+     Проводя те же рассуждения, что и для определения интеграла
+
+     $|\int_{\mathbb{R} ^{n+1}}| = |\int_{\mathbb{R} }dz \int_{\mathbb{R} ^b}f(y, z)dy| \leq|\int_{\mathbb{R} ^n} f(y, z) dy||b_{n+1} - a_{n+1}|\leq$
+     $L\prod_{k=1}^n (b_k-a_k)(b_{n+1} - a_{n+1})$
+\end{proof}
     \subsection{ Теорема о пределе интегралов убывающей последовательности функций, поточечно сходящейся к нулю}
+    \begin{theorem}
+     $\{f_n\}$ убывающая последовательность функций определена на $[a,b]\subset \mathbb{R} $
+
+     если каждая $f_n(x)$ интегрируема на $[a,b]$ и $f_n(x)\to 0, n\to\infty$ в основном, тогда
+     $\int_a^b f_n(x)dx \to 0, n\to\infty$
+\end{theorem}
+\begin{proof}
+     $\letsymbol{}, \Delta = [\alpha, \beta]\subset (a, b)$
+
+     $F_n(\Delta) = \int_\alpha^\beta f_n(x)dx$ функции отрезка
+
+     так как $\{f_n\}^\alpha$ убывает и $f_n\to0$, $f_n\leq 0$ в основном, тогда $F_n(\Delta)\leq 0$
+
+     $F_{n+1}(\Delta) \leq F_n(\Delta)\quad \forall n \forall \Delta$
+
+     $\{f_n(\Delta)\}$ убывает, ограничена снизу
+     $\implies\exists\lim_{n\to\infty}F_n(\Delta) = F(\Delta)\geq 0$
+
+     Если $\Delta_1, \Delta_2$ - два отрезка, $\Delta_1\cap\Delta_2$ состоит
+     не более чем из 1 точки
+     
+     это верно для $F_n$
+
+     $F_n(\Delta_1 \cup\Delta_2) = F_n(\Delta_1)+F_n(\Delta_2)$
+
+     $F_n(\Delta)$ непрерывные функции и $0\leq F(\Delta) \leq F_n(\Delta)$
+
+     $F(\Delta)$ тоже непрерывна
+
+     $M_0 - $множество $x\in(a, b),$ что $f_n(x)\nrightarrow 0$ не более чем счетно
+
+     $\Delta F_n(x) = \lim_{\Delta\to x} \frac{F_n(\Delta)}{|\Delta|}[норма]$
+
+     $\Delta F_n$ в основном равно $\delta_n, \quad t\in(0, 1)$
+
+     $\frac{F_n(\Delta)}{|\Delta|} = \frac{\int_\alpha^\beta f_n(x)dx}{\beta - \alpha} = \frac{(\beta-\alpha)f_n(\alpha + t(\beta-\alpha))}{\beta-\alpha}$
+     $\to f_n(x)$
+
+     $M_n - \{x\in(a,b):\lim_{\Delta\to x}\frac{F_n(\Delta)}{|\Delta|}\}\neq f_n(x)$ не более
+     чем счетно
+     
+     $M = M_0\cup M_1\cup \dots $не более чем счетно
+
+     $x\in(a, b)\diagdown M\quad f_n(x)\to 0 n\to\infty\quad \epsilon>0 \quad \exists n_0 \forall n > n_0\implies$
+     $f_n\leq \frac{\epsilon}{2}$
+
+     $x\in M \implies\Delta F_n(x) = f_n(x)\leq \frac{\epsilon}{2}$ начиная с $n_0$
+
+     найдем $|\frac{F_n(\Delta)}{|\Delta|} - f_n(x)|< \frac{\epsilon}{2}$ начиная с $n_0$ [$\delta >0, |\Delta|<\delta$]
+
+     $\frac{F_n(\Delta)}{|\Delta|}\leq f_n(x) + \frac{\epsilon}{2}< \epsilon,$ то $F_n(\Delta)\geq F(\Delta)\implies$
+     $0\leq \frac{F(\Delta)}{|\Delta|}<\epsilon,$ если $|\Delta|<\delta\implies\Delta F(x) = 0 \quad \forall x\notin M$
+     
+     $F(x)$ почти везде постоянна
+
+     $F(\Delta) = 0$ иначе $\frac{F(\Delta)}{|\Delta|}<\epsilon$ не верно
+
+     $F(\Delta) = 0\implies F([a, b]) = 0$
+
+     $F([a,b]) = \lim_{n\to\infty}\int_a^b f_n(x)dx = 0$
+\end{proof}
     \subsection{ Теорема о пределе интегралов убывающей последовательности ступенчатых функций, поточечно сходящейся к нулю}
-    \subsection{ Системы с интегрированием. Основной пример. Свойства систем с интегрирование}
+    \begin{theorem}[О пределе интегралов убывающей последовательности функций поточечно сходящейся к 0]
+     $\letsymbol{}\{f_m\}$ убывающая последовательность функций из $\mathcal{L} (\mathbb{R} ^n)$
+     поточечно сходится к 0, тогда $\int_{\mathbb{R} ^m}f_m(x)\to0 \quad n\to\infty$
+\end{theorem}
+\begin{proof}
+     Индукция по n
+     
+     База m = 1 => применяем предыдущую теорему
+
+     Переход $\letsymbol{}$ это верно для m: $\{f_n\}\subset\mathcal{L} (\mathbb{R} ^{m+1}), x = (y, z),$
+     $x\in \mathbb{R} ^{n+1}, y\in \mathbb{R} ^n, z\in\mathbb{R} $
+
+     при фиксированном у определена ступенчатая функция
+
+     $F_m(y) = \int_\mathbb{R} f_m(y, z)dz$
+
+     $F_m(y) = \int_\mathbb{R} f_m(y, z)dz\geq\int_\mathbb{R} f_{m+1}(y, z)dz = F_{m+1}(y)$
+
+     $F_m(y)\geq 0$
+
+     $\lim_{m\to\infty}F_m(y) = \lim_{m\to \infty}\int_\mathbb{R} f_n(y, z)dz = 0$
+
+     $\{F_m\}$ к ним применить индукционное предположение
+
+     $\lim_{m\to\infty}\int_{\mathbb{R} ^n}f_m(x)dx = \int_{\mathbb{R} ^n}dy \int_\mathbb{R} f_m(y,z)dz\to 0, m\to\infty$
+\end{proof}
+    \subsection{ Системы с интегрированием. Основной пример. Свойства систем с интегрированием}
+    $\letsymbol{} M -$ некоторое подмножество $\mathbb{R} ^n, M\neq\emptyset$
+
+$\mathcal{F} - $множество функций из M в $\mathbb{R} \quad dom{\mathcal{F} } = M$
+
+$I:\mathcal{F} \to \mathbb{R} $ функционал, т.е для $\forall f\in \mathcal{F} $определено число I(f)
+\begin{definition}
+     $(M, \mathcal{F} , I)$ система с интегрированием, если
+     \begin{enumerate}
+          \item{R1} $\mathcal{F} $ - лин пространство
+          \item{R2} $f\in\mathcal{F}$, то $|f|\in \mathcal{F} $
+          \item{R3} Функционал I линеен: $I(\alpha f + \beta g) = \alpha I(f)+\beta I(g)$
+          \item{R4} Если $f\in \mathcal{F} $ и $f\leq0$ на М, то $I(f)\geq0$
+          \item{R5} Если $\{f_n\}$ послед. убывает $f_n(x)\to0\quad n\to\infty, \forall x\in M,$ то $\lim_{n\to\infty}I(f_n) = 0$ 
+     \end{enumerate}
+\end{definition}
+\begin{remark}
+     $(M, \mathcal{F} , I)$, система с интегрированием, тогда М - базисное, $\mathcal{F} -$ множество
+     основных или простых функций
+
+     $I(f)$ - интеграл от f по М
+
+     $I$ интеграл системы
+     
+     $R1-R5$ аксиомы
+\end{remark}
+\begin{example}
+     $M = \mathbb{R} ^n, \mathcal{F} -$ ступенчатая на $\mathbb{R} ^n$
+
+     интеграл от f $I = \int_{\mathbb{R} ^n}f(x)dx$
+
+     Очевидно, что $(M, \mathcal{F} , I)$ - система с интегрированием
+\end{example}
+\begin{remark}
+     Если $(M, \mathcal{F} , I)$ - система с интегрированием
+
+     $\forall f\in \mathcal{F}, f^{+}, f^{-}\in \mathcal{F} $
+     
+     \begin{equation*}
+          \text{$f^+ = \frac{f+|f|}{2} = $}
+           \begin{cases}
+             f(x) &\text{$f(x)\leq 0$} \\
+             0 &\text{$f(x)< 0$}
+           \end{cases}
+     \end{equation*}
+
+     $f^- = \frac{-f+|f|}{2} \in \mathcal{F}$
+
+     \begin{equation*}
+          \text{$max\{f, g\} = $}
+           \begin{cases}
+             f(x) &\text{$f(x)\leq g(x)$} \\
+             g(x) &\text{$g(x)\leq f(x)$}
+           \end{cases}
+     \end{equation*}
+
+     $f, g\in\mathcal{F} \implies max\{f, g\}, min\{f, g\}\in \mathcal{F} $
+
+     $min\{f, g\}(x) = (f - (f-g)^+)(x)$
+
+     $max\{f, g\}(x) = (g+(f-g)^+)(x)$
+\end{remark}
+\begin{lemma}
+     Если f и g - простые функции и $f\leq g$, тогда $I(f)\leq I(g)$
+\end{lemma}
+\begin{proof}
+     $h = f-g\leq 0 \implies R4 \implies I(h)\leq 0$
+
+     $I(h) = I(f) - I(g)\leq 0$
+\end{proof}
+\begin{lemma}
+     Если $f\in \mathcal{F} $, то $|I(f)|\leq I(|f|)$
+\end{lemma}
+\begin{proof}
+     $|I(f)| = |I(f^+ - f^-)| = |I(f^+) - I(f^-)|\leq|I(f^+)| + |I(f^-)| = I(f^+) + I(f^-) = I(f^+ + f^-) = I(|f|)$
+\end{proof}
+\begin{lemma}
+     f и $\{f_n\}\in \mathcal{F} $, $f_n$ возрастает
+
+     если для любых х из M $f(x)\leq \lim_{n\to\infty}f_n(x)$, то $I(f)\leq \lim_{n\to\infty}I(f_n)$
+\end{lemma}
+\begin{proof}
+     Т.к $f_n$ возрастает, то $I(f_n)$ тоже возрастает, имеет предел (возможно $\infty$)
+
+     $\lim_{n\to\infty}I(f_n)=\sup_{n}I(f_n), V(x) = \lim_{n\to\infty}f_n(x)$
+
+     $\{f-f_n\}$ убывает, $u_n = (f-f_n)^+$, $u_n$ тоже убывает
+
+     Если $u_n(x)=0\implies (f-f_n)(x)<0\implies$
+
+     $\forall m>n (f-f_m)(x)< 0\implies u_m(t) = 0$
+
+     Если $u_n(x)>0\implies (f-f_n)(x)>0$
+
+     $\forall m > n (f-f_m)(x)\leq (f-f_n)(x)\implies u_m = (f-f_m)^+\leq u_n$
+
+     $f - f_n\leq u_n, \quad I(f-f_n)\leq I(u_n)$
+
+     $I(f)\leq I(f_n)+I(u_n)$
+
+     $V(x) = \lim_{n\to\infty}f_n(x)\geq f(x)\implies f-v\leq 0$
+
+     $\lim_{n\to\infty}u_n(x) = \lim_{n\to\infty}(f-f_n)^+(x) = (f - v)^+(x) = 0$
+
+     $\{u_n\}\to 0, n\to \infty$ применяем аксиому R5$\implies\lim I(u_n) = 0$
+
+     $\lim I(f)\leq \lim I(f_n) + \lim I(u_n)$
+
+     $I(f)\leq \lim_{n\to\infty}I(f_n)$
+\end{proof}
+
+\subsubsection{Пример системы с интегрированием}
+Пусть $[a,b]\in \bar{R}, \omega: [a,b]\to R $, $\omega $ положительна и интегрируема на (a,b), M = [a,b]
+
+$f: M \to \bar{R}$ -  финитная, если $\exists [c,d]\subset M$ т.ч $\forall x\notin [c,d] f(x) = 0$
+
+$\mathcal{F}$ -  множество всех непрерывных, финитных функций, это линейное пространство $\implies R1, R2$ верна 
+
+Положим, $I(f) = \int_a^b f(x)\omega(x)dx$
+
+Очевидно, что I - линейный и $I(f)\geq 0$ если $f\geq 0\implies R3, R4$ верны
+
+Пусть $\{f_n\}$ убывающая последовательность функции 
+
+$0 \leq f_n \leq f_1 $ все $f_n$ равны 0 все отрезка [c,d], все которых $f_1  = 0$
+
+т.к $f_n(x )\to 0$ и [c,d] конечен $\implies f_n\rightrightarrows 0$
+
+$\int_a^b f_n(x)\omega (x)dx = \int_c^d f_n(x)\omega (x)dx \leq \int_c^d \omega(x)dx =\sup_{x\in [c,d]}f_n\to 0$ т.к $f_n\rightrightarrows 0\implies$
+
+$0\leq \int_a^b f_n(x)\omega (x)dx\leq 0\implies R5 $ верно
+
+$(M, \mathcal{F} , I)$- система с интегрированием
+
+Интеграл в этой системе называется интегралом Лебега относительно веса $\omega$ (Лебега-Стилтьеса)
+
+В частности, можно взять вместо $[a,b] = \bar{R}$, $\omega = 1$
+\begin{remark}
+     В этой системе функция Дирихле интегрируема и I(D) = 0
+\end{remark}
+
     \subsection{ L1 норма. Множество L1*($\Sigma$). L1-норма как интеграл от модуля функции}
-    \subsection{ Свойства L1 нормы ("линейность", норма функции равной нулю почти всюду и т.д.)}
+    $(M, f, I) - $система с интегрированием
+
+$f:M\to\bar{R},$ положим 0*$\infty$ = 0
+
+$\letsymbol{}f : M \to \bar{R} и \{f_n\}$ последовательность функций из M в R
+
+Будем говорить, что $\{f_n\}$ - мажорирует f если 
+
+\begin{enumerate}
+     \item $f_n\leq 0$
+     \item $\{f_n\}$ возрастает
+     \item $|f(x)| = \lim_{n\to\infty}f_n(x)\forall x\in M$ 
+\end{enumerate}
+\begin{remark}
+     Если $f_n\in \mathcal{F} $ и $\{f_n\}$ возрастает, то $\{I(f_n)\}\implies \lim_{n\to\infty}I(f_n)-\exists$
+\end{remark}
+\begin{definition}
+     $f:M\to\bar{R}, h\in\bar{R},$будем говорить, что h - верхнее число
+     функции f, если $\exists\{f_n\}\subset \mathcal{F} $, кот. мажорирует
+     f т.ч $h = \lim_{n\to\infty}I(f_n)$
+
+     $W(f) - $множество всех верхних чисел для f
+\end{definition}
+\begin{definition}
+     $L_1$ нормой f будем называть $\inf W(f)$ и обозначать
+
+     $||f||_{L_1(M, F, I)}, ||f||_{L_1(\Sigma)}, ||f||_{L_1}$
+\end{definition}
+\begin{remark}
+     Если W(f) пусто, т.е нет посл. мажорирующих f, то $||f||_{L_1} = \infty$
+\end{remark}
+\begin{remark}
+     $||f||_{L_1}\leq 0$
+\end{remark}
+\begin{definition}
+     $L_1^*(\Sigma)$ множество всех функций т.ч $||f||_{L1}\in \mathbb{R} $
+\end{definition}
+\begin{lemma}
+     Если $f\in\mathcal{F} $, то $||f||_{L1} = I(|f|)$
+\end{lemma}
+\begin{proof}
+     $\letsymbol{}\{f_n\} $произвольная мажорирующая последовательность f
+     $|f(x)|\leq \lim_{n\to\infty}f_n(x)\implies I(f)\leq \lim_{n\to\infty}I(f_n)$
+
+     $I(|f|)>||f||_{L1} = \inf (\lim I(f_n))$
+
+     Рассмотрим $f_n = |f|$ и $\forall n$ мажорирует функцию f
+
+     $|f(x)|\leq f_n(x) = |f(x)|$
+
+     $\lim I(f_n) = \lim I(|f|) = I(|f|) - $верхнее число f
+
+     $||f||_{L1}\leq I(|f|)$
+\end{proof}
+Следствие. Если $f(x)\equiv 0$, то $||f||_{L1} = 0$
+\begin{proof}
+     $I(f) = I(0*f) = 0I(f) = 0$ [$f(x)\in\mathcal{F} $]
+     
+     $I(f) = I(|f|) = ||f||_{L1}$
+\end{proof}
+    \subsection{ Свойства L1 нормы ("линейность", норма функции равной нулю почти всюду и т.д.)}\begin{lemma}
+     $\letsymbol f-$функция $f\in L_1^*(\Sigma), \alpha\in R$, тогда $||\alpha f||_{L_1} = |\alpha|||f||_{L_1}$
+
+\end{lemma}
+\begin{proof}
+     $\alpha \neq 0$
+
+     Норма конечна => $\exists \{f_n\}$который мажорирует f 
+     
+     $\{|\alpha|f_n\}$ мажорирует $\alpha f$
+
+     $|\alpha f|\leq |\alpha|\lim_{n\to\infty} f_n\implies$
+
+     $||\alpha f||_{L1}\leq |\alpha|\lim_{n\to\infty} I(f_n)\implies ||\alpha f||_{L1}\leq |\alpha|$
+
+     $||f||_{L1}, g = \alpha f, \beta = 1\alpha$
+
+     $||\beta g||_{L1}\leq |\beta|||g||_{L1}$
+
+     $||f||_{L1}\leq \frac{1}{|\alpha|}, \quad ||\alpha f||_{L1} \geq |\alpha|||f||_{L1}$
+
+     Если $\alpha = 0$, тогда $\alpha f\equiv 0\implies ||\alpha f||_L1 = 0$
+
+     $\alpha ||f||_{L1} = 0$
+\end{proof}
+Следствие. Для $\forall f$функции $||f||_{L1} = ||-f||_{L1}$
+
+Следствие. $||v - u||_{L1} = ||u - v||_{L1}$
     \subsection{ Субаддитивность L1-нормы}
+    \begin{lemma}[Субаддитивность нормы L1]
+     $\letsymbol{}f, \{f_n\} - $функции $M\to \bar{R}$
+     для $\forall x\in M$ верно
+
+     $|f(x)| \leq \sum_{n = 1}^{\infty} |f_n(x)| $
+
+     Тогда $||f||_{L1} =\sum_{n = 1}^{\infty} ||f_n||_{L1} $
+\end{lemma}
+\begin{proof}
+     Будем считать, что $||f_n||_{L1}< +\infty$
+
+     $\letsymbol{}\{f_n\}_m$ - последовательность функций из $\mathcal{F} $ мажорирующих $f_n$
+
+     $\lim_{x \to \infty} I(f_{n_m})< ||f_n||_{L1} + \frac{\epsilon}{2^n m}$
+
+     $g_m = \sum_{j = 1}^{m}  f_{j_m}$
+
+     $g_{m+1} = \sum_{j = 1}^{m+1} f_{j_{m+1}} \geq \sum_{j = 1}^{m} f_{j_{m+1}}\geq\sum_{j = 1}^{m}  f_{j_m} = g_m$
+
+     $f_{j_{m+1}}\geq f_{j_m}$ 
+
+     $g_m(x) = \sum_{j = 1}^{m} f_{j_m}\to\implies$ верно при $m\leq 0$
+
+     $\lim_{n\to\infty} g_m(x)\leq \sum_{j = 1}^{n}  |f_j(x)| \quad (|f_j|\leq \lim_{m \to \infty} f_{j_m})$
+     
+     предел по $n\to\infty$
+
+     $\lim_{n \to \infty}  (g_m(x))\geq \sum_{j = 1}^{\infty} |f_j(x)| \geq |f(x)|$
+
+     $g_m$ мажорирует f
+
+     $\{g_m\}\subset \mathcal{F}, \quad ||f||\leq \lim_{n \to \infty} I(g_m) $
+
+     $I(f_{n_m})\leq \lim_{n \to \infty} I(f_m) < ||f_n||_{L1}+\frac{\epsilon}{2^n}$
+
+     $I(g_m) = \sum_{j = 1}^{n}  I(f_{j_m})< \sum_{j = 1}^{m} ||f_j||_{L1} +\epsilon(1 - \frac{1}{2^m})$
+
+     $\lim_m (g_m)\leq \sum_{j = 1}^{\infty} ||f_j||_{L1} +\epsilon$
+
+     $||f||_{L1}\leq \sum_{j = 1}^{\infty} ||f_j||+\epsilon$
+
+     $||f||_{L1}\leq \sum_{j = 1}^{\infty} ||f_j||_{L1}$
+\end{proof}
+Следствие. $f_1, \dots f_n, f : M\to \bar{\mathbb{R} }$ и $|f(x)|\leq \sum_{j = 1}^{n}  |f_j(x)|$
+
+$\forall x \in M $ то $||f||_{L1}\leq \sum_{j = 1}^{n} ||f_j||_{L1} $
+
+Следствие. Если $|f(x)|\leq |g(x)| \forall x \in M,$ то $||f||_{L1}\leq ||g||_{L1}$
+
+Следствие. Для $\forall f, g$
+
+$||f+g||_{L1}\leq ||f||_{L1} + ||g||_{L1}$ (неравенство для L1 нормы)
+
+$||f||_{L1}\leq ||f-g||_{L1} + ||g||_{L1}$
+
+$||g||_{L1} \leq ||f-g||_{L1}+||f||_{L1}$
+
+Следствие. $||f||_{L1} = |||f|||_{L1}$
+\begin{proof}
+     $f\leq |f|\implies ||f||\leq |||f|||_{L1}$
+
+     $||f||\leq |f|$
+     $|||f|||_{L1}\leq ||f||_{L1}$
+\end{proof}
+Следствие. $|||f|||_{L1}  - |||g|||_{L1}\leq ||f-g||_{L1}$
+\begin{proof}
+     $||f-g||_{L1}\geq ||f||_{L1} - ||g||_{L1}$
+
+     $||f - g||_{L1}\geq ||g||_{L1} - ||f||_{L1}$
+
+     $||f-g||_{L1}\geq| ||f||_{L1} - ||g||_{L1}|$
+\end{proof}
     \subsection{ Сходимость в смысле L1}
+    $\Sigma = (M, \mathcal{F} , I) -$ система с интегралом
+\begin{definition}
+     $\{f_n\}$ последовательность всюду определенных функций на M, $f_n: M\to \mathbb{R} $
+
+     $f_n$ сходится к f в смысле L1 нормы, Если
+     \begin{enumerate}
+          \item $\forall n ||f_n = f||_{L1}< +\infty$
+          \item $\lim_{n \to \infty} ||f_n - f||_{L1} = 0 $
+     \end{enumerate}
+\end{definition}
     \subsection{ Определение понятие интеграла и интегрируемой функции}
+    \begin{definition}
+     $f: M\to \bar{\mathbb{R} }$ интегрируема, если $\exists \{f_n\}\subset \mathcal{F} $
+
+     $f_n\to_{L1}f$
+\end{definition}
+\begin{definition}
+     Множество всех интегрируемых функций:$L_1(\Sigma)$ или $L_1$
+\end{definition}
+     \begin{remark}
+         f, g, h -  функции на М, причем g, h всюду конечна$\implies$
+         $\forall x |g(x) - h(x)|\leq |g(x) - f(x)| +|f(x)- h(x)|$
+     \end{remark}
+     \begin{proof}
+          \begin{enumerate}
+               \item f(x) -  конечно, то верно (неравенство треугольника)
+               \item f(x) = $\infty\implies ||g-h||_{L1}\leq ||g-f||_{l1}+ ||f-h||_{L1}$
+          \end{enumerate}
+     \end{proof}
     \subsection{ Свойства интеграла и интегрируемых функций}
+    \begin{lemma}
+     $f\in L_1(\Sigma)\implies \exists \lim_{g:||f-g||_{L1}\to 0} I(g)< +\infty $
+\end{lemma}
+\begin{proof}
+     \begin{enumerate}
+          \item $g, h\in\mathcal{F} \implies |I(g) - I(h)| = |I(g-h)|\leq I(|g-h|) = ||g-h||_{L1}$
+          $\leq ||g-f||_{L1} + ||f-h||_{L1}$
+          \item $\forall \epsilon >0 \exists \delta (|g-f|< \delta \implies$
+          $||f-g||_L1<\frac{\epsilon}{2})\implies |I(g) - I(h)|<\epsilon\implies $ по критерию Коши I(g) имеет предел
+     \end{enumerate}
+\end{proof}
+$I^*(f) = \lim_{g:||g-f||_{L1}\to 0} I(g)$
+
+     Если $f\in\mathcal{F} \implies|I(g) - I(f)|\leq||f-g||_{L1}\to 0\implies$
+     $\lim_{g:||g-f||_{L1}\to0} I^*(f) = I(f) = I^*(f)$
+
+     $\forall f\in\mathcal{F} (I^*_(f) = I(f))$
+
+     \begin{remark}
+     $\forall f_n \subset \mathcal{F}  (||f_n - f||_{L1}\to 0 (n\to\infty))$ и $f\in L1(\Sigma)\implies I(f) = \lim_{n\to\infty} I(f_n)$
+     \end{remark}
+     \begin{lemma}
+          $f_n, f_n: M\to R$ и $\exists c>0 : |f_n|\leq C$ и $f_n\to f [n\to \infty , L1], f: M\to \bar{R}\implies$
+          \begin{enumerate}
+               \item $||f||_{L1} = +\infty \implies \forall n ||f_n||_{L1} = +\infty$
+               \item $||f||_{L1}< +\infty\implies ||f||_{L1} = \lim_{n\to\infty}||f_n||_{L1}$
+               \item $\forall \alpha \in \mathbb{R} \alpha f_n\to^{L1} \alpha f$
+               \item $|f_n\to^{L1} |f|$
+          \end{enumerate}
+     \end{lemma}
+     \begin{proof}
+          $||f||_{L1}\leq ||f-f_n||_{L1} + ||f_n||_{L1}\implies ||f_n||_{L1} = +\infty$
+
+          $|||f||_{L1} - ||f_n||_{L1}|\leq ||f-f_n||_{L1}\to_{n\to \infty} 0\implies ||f||\to_{L1, n\to\infty} ||f||_{L1}$
+
+          $||\alpha f_n - \alpha f||_{L1} = |\alpha| ||f_n - f||_{L1}\to 0 \implies \alpha f_n \to_{L1, n\to \infty} \alpha f$
+
+          $||f_n(x)| - |f(x)||\leq|f_n(x) - f(x)|\implies|||f_n| - |f|||\leq ||f_n - f||_{L1}\to_{n\to \infty} 0 \implies$
+          $|f_n| \to^{L1} |f|$
+     \end{proof}
+     \begin{lemma}
+          $f_n, f_n\to^{L1} f, g_n, g_n\to^{L1} g \implies \{f_n+g_n\}:$
+          $f_n+g_n\to^{L1} f+g$
+     \end{lemma}
+     \begin{proof}
+          $\forall x\in M |f_n(x) g_n(x) - f(x) - g(x)|\leq |f_n(x) - f(x)| + |g_n(x) - g(x)|\implies$
+          $||f_n+g_n - f - g||_{L1}\leq ||f_n - f||_{L1} + ||g_n - g||_{L1}$
+     \end{proof}
+\begin{theorem}
+     \begin{enumerate}
+          \item $\forall (f\in L1(\Sigma)\implies \alpha f\in L1(\Sigma): I(\alpha f) = \alpha I(f))$
+          \item $(f, g \in L1(\Sigma)\implies f+g\in L1(\Sigma): I(f+g) = I(f)+ I(g))$
+     \end{enumerate}
+\end{theorem}
+\begin{proof}
+     $f\in \mathcal{F} \implies I^*(f) = I(f)$
+
+     применяем лемму
+\end{proof}
+Следствие.
+     $(f, g\in L1(\Sigma)and f\geq g)\implies(I(f)\geq I(g))$
+
+     Резюме:
+
+     $\Sigma = (M, \mathcal{F} , I)$
+
+     определена L1 норма на всех функциях из М
+
+     $f_n\subset \mathcal{F} and \lim_{n\to\infty}f_n =^{L1} f$
+
+     $I^*(f) = \lim I(f_n)$ (если есть пробел)
+     \begin{remark}
+          $\Sigma = (M, \mathcal{F}, I) -$система с интегрированием
+     \end{remark}
+     \begin{definition}
+          $\phi(x)$мажорирует f(x), если $\phi(x)\geq |f(x)|$
+     \end{definition}
+     \begin{definition}
+          $||f||_{\mathbb{R} } = \inf_{\phi \in \mathcal{F}, \phi \geq |f|} (I(\phi))$ есть норма Римана
+     \end{definition}
+     \begin{definition}
+          f интегрируема в смысле Римана, если $\exists f_n\subset \mathcal{F} $т.ч $f_n\to^{||\cdot||_\mathbb{R} } f$,
+          $I^*(f) = \lim I(f_n)$
+     \end{definition}
+     \begin{remark}
+          для нормы Римана не выполнено свойство субаддитивности
+     \end{remark}
     \subsection{ Множества меры ноль. Свойства функций совпадающих почти всюду}
+    \begin{definition}
+     $f: M\to \bar{R}$ называется пренебрежимой, если $||f||_{L1} = 0$
+\end{definition}
+\begin{definition}
+     $E\subset M$называется пренебрежимым (множеством меры 0), если $\chi_E$ суть пренебрежимая функция
+\end{definition}
+\begin{remark}
+     $\emptyset - $множество меры 0, так как индикатор тождественно равен нулю, как и мера L1
+\end{remark}
+\begin{remark}
+     ($R^n. \mathcal{L} (\mathbb{R} ^n), \int_{\mathbb{R} ^n}$)в любое одноточечное множество пренебрежимо. 
+\end{remark}
+\begin{proof}
+     $E = \{p\}$
+
+     $E_r - $двоичный куб, содержащий p, ребро - r
+
+     $||\chi_E||_{L1}\leq ||\chi_{E_r}||_{L1} = \int_{\mathbb{R} ^n}\chi_{E_r}(x)dx = \frac{1}{(2^r)^n}\to 0, n\to \infty$
+\end{proof}
+\begin{theorem}
+     $||f||_{L1}< +\infty\implies \mu(\{x | f(x) = \infty\}) = 0$
+\end{theorem}
+\begin{proof}
+     \begin{enumerate}
+          \item $E =\{x|f(x)=+\infty\}$ 
+          \item $\forall n \in \mathbb{N} (0\leq n \chi_E(x)\leq |f(x)|)\implies \forall n ||n\chi_E||_{L1} \leq ||f||_{L1}\implies$
+          $\forall n ||\chi_E||_{L1}\leq \frac{1}{n}||f||_{L1}< +\infty\implies ||\chi_E||_{L1} = 0$
+     \end{enumerate}
+\end{proof}
+\begin{lemma}
+     $f:M\to\bar{\mathbb{R} }, S(f) = \{x | f(x)\neq 0\}$
+
+     f - пренебрежима тогда и только тогда, когда $S(f)$ меры 0
+\end{lemma}
+\begin{proof}
+     \begin{enumerate}
+          \item $f_n = |f|\implies |\chi_{S(f)}(x)| = \chi_{S(t)} (x)\leq \sum_{n = 1}^{\infty} f_n(x) $
+          
+          $x\notin S(f)\implies 0\leq 0, ok$
+
+          $x\in S(f)\implies \chi_{S(t)}(x) = 0 \lor \sum_{n = 1}^{\infty} f_n(x) = \sum_{n = 1}^{\infty} |f| = +\infty $
+          $\implies $по свойству субаддитивности$||\chi_{S(f)}||\leq ||f_n||_{L1}$
+
+          f - пренебрежима $\implies ||f||_{L1} = 0\implies |||f|||_{L1} = ||f|| = 0\implies$
+          $||\chi_{S(f)}|| = 0,$т.е S(f) имеет меру 0
+          \item S(f) имеет меру 0
+          
+          $f_n(x)=\chi_{S(f)}(x)\implies ||f(x)||\leq \sum_{n = 1}^{\infty} f_n(x) $
+
+          $||f||_{L1}\leq \sum_{n = 1}^{\infty} ||f_n||_{L1} = 0 \implies ||f||_{L1} = 0$
+     \end{enumerate}
+\end{proof}
+\begin{remark}
+     $f, g : M\to \bar{R}$(f = g почти всюду)$\implies ||f||_{L1} = ||g||_{L1}\land ||f-g||_{L1} = 0$
+     $\land f\in \mathcal{L}_1(\Sigma)\implies g\in \mathcal{L} (\Sigma): I(f) = I(g)$
+\end{remark}
+\begin{proof}
+     \begin{equation*}
+          h(x) = 
+          \begin{cases}
+               0 & \text{$f(x) = g(x)$}\\
+               \text{$+\infty$} & \text{$f(x)\neq g(x)$}
+          \end{cases}
+     \end{equation*}
+     $||h||_{L1} = 0$
+
+     $|f(x)|\leq |g(x)+h(x)|\land |g(x)|\leq |f(x) +h(x)|, \quad |f(x)|\leq |g(x)|+|h(x)|$
+
+     $\implies ||f||_{L1}\leq ||g||_{L1} +||h||_{L1} = ||g||_{L1}, \quad$ аналогично $||g||_{L1}\leq ||f||_{L1}\implies ||f||_{L1}=||g||_{L1}$
+
+     $\{f_n\}\subset\mathcal{F} : f_n\to^{L1}_{n\to\infty} f$
+
+     $f_n - f$ и $f - g$ совпадают почти всюду$\implies ||f-f_n||_{L1} = ||g - f_n||_{l1}\implies$
+     $f_n\to^{L1}_{n\to\infty} g\implies g\in \mathcal{L}_1{\Sigma} \land  I(f) = I(g)$
+\end{proof}
+\begin{remark}
+     Если f интегрируемая функция, то при изменении значения функции f на множестве меры 0, то $||f||_{l1}$ на $I(f)$ не изменяется
+\end{remark}
+\begin{lemma}
+     Если A - множество меры 0, и $E\subset A$ то E - множество меры 0
+     
+     Пусть $E_1...E_n$ -  множества меры 0, тогда их объединение - множество меры 0.
+\end{lemma}
+\begin{proof}
+     $||\chi_A||_{L1} = 0$, $E\subset A\implies |\chi_E|\leq |\chi_A|\implies ||\chi_E||_{L1}\leq ||\chi_A||_{L1} = 0$
+
+     $|\chi_E| = \sum_{n = 1}^{\infty} \chi_{E_n}, \quad ||\chi_E||_{L1} \leq\sum_{n = 1}^{\infty} ||\chi_{E_n}||_{L1} = 0$
+\end{proof}
+
+\begin{remark}
+     любое не более чем счетное подмножество $\mathbb{R} $ имеет меру $\mathbb{R} $
+\end{remark}
+\begin{example}
+     $D(x) = 1, x\in Q; 0, x\notin Q, ||D||_{L1} = 0$, тк мера Q равна 0
+\end{example}
+Следствие. Если $\{P_n(X)\}$ - семейство условий, верных почти всюду, тогда почти всюду выполняются все $\{P_n\}$
+\begin{proof}
+     $E_n$ = множество тех x: P(x) верно.
+
+     объединение $E_n$ -  множество тех х, что кто-то из $P_n$ не выполнен. Мера $E_n$ равна $0\implies$ мера объединения $E_n$ равна 0
+\end{proof}
+\begin{theorem}
+     Если f почти всюду определена и интегрируема, то $f^+, f^-$ тоже всюду интегрируемы.
+
+     Если еще и g почти всюду определена и интегрируема, то $\max{f, g}$ и $\min{f, g}$ также интегрируемы
+\end{theorem}
+\begin{proof}
+     
+     \begin{equation*}
+          \text{$\widetilde{f}(x) = $}
+          \begin{cases}
+               f(x) & \text{если f(x) определена} \\
+               0 & \text{иначе}
+          \end{cases}
+     \end{equation*}
+     
+
+     $ f = \widetilde{f}$ почти всюду $\implies \widetilde{f}$ интегрируема и $I(f) = I(\widetilde{f})$
+
+     $f^+ = \widetilde{f}^+$почти всюду, аналогично с минусом
+
+     Но $\widetilde{f}^+$ и $\widetilde{f}^-\implies f^+ $ и $f^-$ интегрируемы 
+
+     $max\{f, g\}(x) = (g+(f-g)^+)(x)$ - интегрируема
+\end{proof}
+\subsubsection*{Теорема о предельном переходе над знаком интеграла}
+$(M, \mathcal{F} , I) $ - система с интегрированием
+\begin{remark}
+     Если f совпадает с g почти всюду и существуют их L1 нормы, то они равны. 
+
+     Это позволяет определить L1-норму для функций, определенных почти всюду.
+\end{remark}
+\begin{lemma}
+     Пусть $f: M\to R$ определена почти всюду
+     
+     $\{f_n\}$ последовательность интегрируемых функций, такая, что $||f - f_n||_{L1}\to 0 $(сходится в смысле нормы l1)$ n\to \infty$
+
+     Тогда f интегрируема и $I(f) = \lim_{n\to\infty} I(f_n)$
+\end{lemma}
+
+\begin{proof}
+     Можно считать, что f и $f_n$ всюду определены и конечны.
+
+     Для любого n $\exists g_n\in\mathcal{F} : ||f_n-g_n||_{L1}\leq \frac{1}{n}$
+
+     $||f - g_n||_{L1}\leq ||f-f_n||_{L1} + ||f_n- g_n||_{L1}\leq ||f-f_n|||_{L1}+\frac{1}{n} (||f-f_n|||_{L1}\to 0)$
+
+     $\implies g_n$ сходится к $f \implies$
+
+     f - интегрируема и $I(f) = \lim I(g_n) = \lim I(f_n)$
+\end{proof}
     \subsection{ Нормально сходящиеся ряды. Теорема о нормально сходящихся рядах}
+    \begin{definition}
+     Пусть $\sum_{n = 1}^{\infty} f_n$ = функциональный ряд. Будем говорить, что ряд сходится нормально, если сходится ряд$\sum_{n = 1}^{\infty} ||f_n||_{L1}  $
+\end{definition}
+\begin{theorem}
+     пусть $\sum_{n = 1}^{\infty} f_n$ - нормально сходящийся ряд определенных почти всюду функций,
+
+     для почти всех х из М $f_n(x)$ определены для каждого n
+
+     Кроме того, числовой ряд $\sum_{n = 1}^{\infty} f_n(x)$ сходится
+
+     Если $F(x)=\sum_{n = 1}^{\infty} f_n(x), $тогда
+
+     $||F - \sum_{k =1}^{n} f_k ||_{L1}\leq \sum_{k = n+ 1}^{\infty} ||f_k||_{L1} $
+
+     Если все $f_n$ интегрируемы, то F - интегрируема и 
+     $I(f) = \sum_{n = 1}^{\infty} I(f_n) $
+\end{theorem}
+\begin{proof}
+     Пусть $E_n = \{x\in M : f_n$ не определено$\}$
+     
+     $E_n$ имеет меру ноль, их объединение имеет меру 0
+
+     Тогда для любого x не из E все $f_n(x)$ определены
+     
+     $\Phi(x) =\sum_{n = 1}^{\infty} |f_n(x)| \implies ||\Phi(x)||_{L1}\leq \sum_{n = 1}^{\infty} ||f_n|| < \infty$
+
+     Множество всех х: $\Phi(x)=\infty$ имеет меру $0\implies\sum_{n = 1}^{\infty} |f_n(x)|$ сходится почти всюду$\implies$
+     $\sum_{n = 1}^{\infty} f_n(x)$ сходится почти всюду
+
+     Положим F = $\sum_{n = 1}^{\infty} f_n(x)$ если сходится, 0, иначе.
+
+     $R_n(x) = F(x) - \sum_{k = 1}^{n} f_k(x)  = \sum_{r = n+1}^{\infty}  f_k(x)$
+
+     $|R_n(x)|\leq \sum_{n = 1}^{\infty} |f_n(x)|\implies ||R_n||_{L1}\leq \sum_{k = 1}^{\infty} ||f_k||_{L1}\to 0\implies ||R_n||_{L1} \to 0$
+     
+     пусть все $f_n$ интегрируемы, $F_n =\sum_{k = 1}^{n}\quad  f_k, F_n$ интегрируемы
+     
+     И по первой части $||F- F_n||_{L1} \to 0$
+
+     F - интегрируема 
+
+     $I(F) = \lim_{n\to \infty} I(F_n)= \lim_{n\to\infty}\sum_{j = 1}^{n} I(f_k) = \sum_{k = 1}^{\infty} I(f_k) \quad(|I(f_k)|\leq ||f_k||_{L1}) $
+\end{proof}
     \subsection{ Теоремы Леви для функциональных рядов и последовательностей}
+    Следствие.{Теорема Леви для функциональных рядов}
+
+Если $\sum_{n = 1}^{\infty} f_n$ функциональный ряд, и все $f_n$ неотрицательные и интегрируемые, тогда если 
+сходится$\sum_{n = 1}^{\infty} I(f_n),$ то для почти всех х определена $F(x) = \sum_{n = 1}^{\infty} f_n(x)$ и
+
+F -  интегрируема, $I(F) = \sum_{n = 1}^{\infty} I(f_n)$
+
+\begin{proof}
+     т.к $f_n$ неотрицательна, то $f_n  = |f_n|$ и $||f_n||_{L1} = |||f_k|||_{L1} = I(|f_n|) = I(f_n) \implies \sum_{n = 1}^{\infty} f_n $сходится нормально, применяем 
+     теорему, все хорошо 
+\end{proof}
+Следствие.(Теорема Леви для последовательностей)
+
+Пусть $\{f_n\}$ последовательность функций, интегрируемых и определенных почти всюду (за исключением множества E меры 0)
+
+$f_n(x)$ монотонна для всех х, кроме х из Е
+
+Тогда если $I(f_n)$ ограничена, то почти для всех x из M определена $f(x) = \lim_{n\to\infty}f_n(x)$, причем
+f - интегрируема и $I(f) = \lim_{n\to\infty} I(f_n)$
+\begin{proof}
+     пусть $f_n$ возрастает, тогда $\sum_{n = 1}^{\infty} f_{n+1}(x)-f_n(x)$ состоит из положительных функций 
+
+     $\forall n \sum_{k = 1}^{n} (f_{k+1}(x) - f_k(x)) = f_{n+1}(x) - f_n(x)$
+
+     $\sum_{k = 1}^{n}I(f_{k+1} - f_k) = I(f_{n+1}) - I(f_n)$ - ограничена 
+     
+     $|I(f_n)|< A \implies \sum_{k = 1}^{n} I(f_{n+1} - f_n)$ - ограничена и возрастает по n $\implies \sum_{k = 1}^{n} I(f_{k+1}) - I(f_k)  $
+
+     Применяем теорему Леви для рядов
+
+     $f_{n+1}(x) - f_n(x)$ - определена почти для всех х и
+
+    $ G(x) = \sum_{n = 1}^{\infty}  f_{n+1}(x) - f_n(x)$
+
+    $ G(x) = \lim \sum_{k = 1}^{n} (f_{k+1} - f_k(x) = \lim (f_{n+1}(x) - f_n(x)) = \lim f_n(x) - f_1(x)\implies f(x) = \lim f_n(x) = G(x) + f_1(x)$
+     
+     $I(G) = \lim\sum_{k = 1}^{n} I(f_{k+1} - f_k) = \lim I(f_{n+1}) - I(f_1)$
+     
+     $\lim I(f_n) = I(G) + I(f_1) = I(f)$
+\end{proof}
     \subsection{ Огибающие для последовательности интегрируемых функций. Нижний и верхний предел последовательности}
-    \subsection{ Теорема Фату о предельном переходе. Следствие из теоермы Фату}
+
+    \subsection{ Теорема Фату о предельном переходе. Следствие из теоремы Фату}
     \subsection{ Теорема Лебега о предельном переходе}
-    \subsection{ Лемма о приближении стпенчатой функции с помощью непрерывных финитных}
+    \subsection{ Лемма о приближении стуенчатой функции с помощью непрерывных финитных}
     \subsection{ Теорема о приближении интегрируемой функции с помощью непрерывных финитных}
     \subsection{ Измеримые функции. Свойства пространства измеримых функций. Измеримые множества}
     \subsection{ Теорема об интегрируемости измеримой функции}

@@ -301,7 +301,7 @@
 	\end{remark}
     \subsection{Полином Жегалкина, его существование и единственность. Алгоритм построения}
 	\begin{definition}
-		Моном от перменных $x_1, ..., x_n$ - это либо 1, либо конъюнкт вида $x_{i_1} \cdot ... \cdot x_{i_k}$, где $x_{i_k}$ - переменная из списка $x_1, ..., x_n$, без повторябщихся множителей
+		Моном от перменных $x_1, ..., x_n$ - это либо 1, либо конъюнкт вида $x_{i_1} \cdot ... \cdot x_{i_k}$, где $x_{i_k}$ - переменная из списка $x_1, ..., x_n$, без повторяющихся множителей
 	\end{definition}
 	\begin{definition}
 		Полином Жегалкина от переменных $x_1, ..., x_n$ - это либо 0, либо сумма мономов от переменных $x_1, ..., x_n$ без эквивалентных слагаемых
@@ -310,11 +310,11 @@
 		Любая булева функция может быть определена полиномом Жегалкина. Полином Жегалкина буленвой функции единственный с точностью до перестановок слагаемых и множителей
 	\end{theorem}
 	\begin{proof}
-		Существование
-		Т.к. для любой булевой функции можно определить ДНФ, доказывает, что любую булеву функцию можно выразить через $\wedge, \vee, '$. Выразим  $\wedge, +, 1$ через  $\wedge, \vee, '$. $$\overline{x} = x + 1$$ $$x \vee y = \overline{\overline{x \vee y}} = \overline{\bar{x}\bar{y}} = (x+1)(y+1) + 1 = xy + x + 1 + 1 = xy + x + y.$$
-		Единственность
-		
-		Количество булевых функци от n переменных $2^{2^n}$
+        \begin{itemize}
+            \item (Существование) Т.к. для любой булевой функции можно определить ДНФ, доказывает, что любую булеву функцию можно выразить через $\wedge, \vee, '$. Выразим  $\wedge, +, 1$ через
+            $\wedge, \vee, '$. $$\overline{x} = x + 1$$ $$x \vee y = \overline{\overline{x \vee y}} = \overline{\bar{x}\bar{y}} = (x+1)(y+1) + 1 = xy + x + 1 + 1 = xy + x + y.$$
+            \item (Единственность)
+        \end{itemize}Количество булевых функций от n переменных $2^{2^n}$
 		
 		Найдем количество полиномов Жегалкина от $x_1, ..., x_n$
 		
@@ -712,6 +712,35 @@
 \end{enumerate}
     \section{Логика высказываний}
     \subsection{Парадоксы в математике. Парадоксы Г. Кантора и  Б. Рассела}
+    \begin{statement}[Рассел]
+        Множество M будем называть нормальным, если оно не
+        принадлежит самому себе как элемент. Например, множество кошек нормально, поскольку множество кошек не является кошкой. А вот каталог каталогов
+        по-прежнему останется каталогом, поэтому множество каталогов, не является
+        нормальным. Рассмотрим теперь множество B, составленное из всевозможных
+        нормальных множеств. Формально множество B определяется так:
+
+        $x \in  B \Leftrightarrow  x \notin  x $ (2)
+
+        Возникает вопрос: будет ли B принадлежать самому себе как элемент? И тут
+        возникает парадокс: дело в том, что если вместо x из формулы (2) подставить
+        B, то возникнет явное противоречие
+        $B \in  B \Leftrightarrow B \notin  B.$
+    \end{statement}
+    \begin{statement}[Кантор?]
+        Предположим, что множество всех множеств ${ V=\{x\mid x=x\}}$ существует.
+        В этом случае справедливо ${ \forall x\forall T(x\in T\rightarrow x\in V)}$, то есть всякое множество
+        ${ T} $является подмножеством ${ V}$. Но из этого следует
+        ${ \forall T\;|T|\leqslant |V|}$ — мощность
+        любого множества не превосходит мощности ${ V}$.
+
+        Но в силу аксиомы множества всех подмножеств, для ${ V}$, как и любого множества,
+        существует множество всех подмножеств$ { {\mathcal {P}}(V)}$, и по
+        теореме Кантора ${ |{\mathcal {P}}(V)|=2^{|V|}>|V|}$,
+        что противоречит предыдущему утверждению. Следовательно, ${ V}$ не может существовать,
+        что вступает в противоречие с «наивной» гипотезой о том, что любое синтаксически корректное логическое условие
+        определяет множество, то есть что ${ \exists y\forall z(z\in y\leftrightarrow A)}$ для любой формулы ${ A}$,
+        не содержащей ${ y}$ свободно.
+    \end{statement}
     \subsection{Логическое следование в логике высказываний. Проверка логического следования с помощью таблиц истинности и эквивалентных преобразований.}
     \begin{definition}
     Интерпретация переменных - это отображение вида $\alpha : \{ x, x_1, \dots, x_n \} \to \{ 0, 1\} $.
@@ -962,6 +991,133 @@
     \end{proof}
     \subsection{Теорема о полноте и непротиворечивости ИВ}
     \subsection{ИВ Генцена, его полнота}
+    \begin{enumerate}
+        \item Алфавит: $\{ x_1,\dots, x_n, \&, \vee, \to, ', (, ), \vdash, "," \} $
+        \item Используем слова двух видов:
+            \begin{enumerate}
+                \item Формулы - формулы логики высказываний
+                \item Секвенции - слова вида $\Gamma\vdash \Delta$, где $\Gamma, \Delta$ - множества формул
+            \end{enumerate}
+            Из всех формул $\Gamma$ вместе следует хотя бы одна формула из $\Delta$ ($\&\Gamma \to \vee\Delta$)
+        \item Аксиомы: секвенции
+        
+        $\Gamma, \phi \vdash \Delta, \phi$
+        \item Правила вывода:
+        \begin{itemize}
+            \item[$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
+            \item[$\vdash\;\vee$] $\frac{\Gamma \vdash \phi, \psi, \Delta}{\Gamma \vdash \phi\vee\psi, \Delta}$
+            \item[$\vdash\;\to$] $\frac{\Gamma , \phi \vdash  \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\to\psi, \Delta}$
+            \item[$\vdash\;'$] $\frac{\Gamma, \phi\vdash\Delta}{\Gamma \vdash \phi', \Delta}$
+            \item[$\&\;\vdash$] $\frac{\Gamma, \phi, \psi \vdash\Delta}{\Gamma, \phi\&\psi \vdash\Delta}$
+            \item[$\vee\;\vdash$] $\frac{\Gamma , \phi \vdash  \Delta \quad \Gamma, \psi \vdash  \Delta}{\Gamma,\phi\vee\psi \vdash  \Delta}$
+            \item[$\to\;\vdash$] $\frac{\Gamma \vdash\phi ,  \Delta \quad \Gamma, \psi \vdash  \Delta}{\Gamma,\phi\to\psi \vdash  \Delta}$
+            \item[$'\;\vdash$] $\frac{\Gamma \vdash\phi ,  \Delta }{\Gamma,\phi' \vdash  \Delta}$
+        \end{itemize}
+    \end{enumerate}
+    \begin{definition}
+        Секвенция $\Gamma\vdash \Delta$ доказуема, если существует конечная последовательность секвенций
+        $\Gamma_1\vdash \Delta_1, \dots, \Gamma_n\vdash \Delta_n\vdash \Gamma\vdash \Delta$, в которой каждая секвенция:
+        \begin{itemize}
+            \item либо аксиома;
+            \item либо получена из предыдущих по одному из правил вывода.
+        \end{itemize}
+    \end{definition}
+    \begin{remark}[Алгоритм поиска контрпримера к секвенции]
+        \begin{enumerate}
+            \item  Взять исходную секвенцию $\Gamma\vdash \Delta$ и разместить её в корне дерева.
+            \item С помощью правил вывода ИВ Генцена добавлять в дерево новые вершины.
+            Правила вывода нужно применять верх ногами, то есть по имеющейся секвенции выписать секвенции, которые находятся в верхней строке правил вывода
+            ИВ Генцена.
+            \item Процесс построения дерева завершается, когда во всех его листьях строят секвенции без логических операций.
+            \item Если во всех листьях дерева строят аксиомы ИВ Генцена, то исходная секвенция $\Gamma\vdash \Delta$ не имеет контрпримера. Иначе, у секвенции $\Gamma\vdash \Delta$ существует
+            контрпример.
+        \end{enumerate}
+    \end{remark}
+    \begin{example}
+        $x\to y\vdash x' \vee y$
+
+        Строим вывод:
+        \begin{itemize}
+            \item [$\to\;\vdash$] $\frac{x\vdash x, y\quad y, x\vdash y}{x\to y, x \vdash y}$
+            \item [$\vdash\; '$] $\frac{x\to y, x \vdash y}{x\to y\vdash x', y}$
+            \item [$\vdash\;\vee$]$\frac{x\to y\vdash x', y}{x\to y \vdash x' \vee y}$
+        \end{itemize}
+    \end{example}
+    \begin{definition}
+        $\Gamma = \{ \phi_1, \dots, \phi_n\}, \Delta = \{ \psi_1, \dots, \psi_m\} $. Секвенция
+        $\Gamma \vdash \Delta$ тождественно истинна, если тождественно истинна формула
+        $(\phi_1, \& \dots, \&\phi_n) \to (\psi_1\vee \dots \vee\psi_m)$
+    \end{definition}
+    \begin{theorem}
+        Секвенция $\Gamma \vdash \Delta$ доказуема $\Leftrightarrow$ $\Gamma \vdash \Delta$ тождественно истинна
+    \end{theorem}
+    \begin{itemize}
+        \item[$\Rightarrow$] (Корректность ИВ Генцена)
+        $\Gamma \vdash \Delta$ доказуема $\Leftrightarrow$ есть вывод
+        $\Gamma_1\vdash \Delta_1, \dots, \Gamma_n\vdash \Delta_n\vdash \Gamma\vdash \Delta$
+        Индукция по номеру секвенции:
+        докажем, что все секвенции в выводе тождественно истинны:
+
+        Основание: k = 1.
+
+        $\Gamma_1\vdash \Delta_1$ аксиома, т.е имеет вид $\Gamma, \Psi\vdash \widetilde{\Delta}, \Psi $ - 
+        она тожд. истинная =>
+        $\& \Gamma_1 \to \vee \Delta_1 \sim \phi \& \& \Gamma_1 \to (\phi\vee \vee\Delta_1)$
+
+        Шаг индукции. Докажем для $\Gamma_k\vdash \Delta_k$, считая, что для всех предыдущих секвенций все доказано
+        \begin{enumerate}
+            \item $\Gamma_k\vdash \Delta_k$ аксиома - все аксиомы тожд. истинны (как и раньше)
+            \item Если секвенция получена по правилу вывода из секвенций $\Gamma_i\vdash \Delta_i, \Gamma_j\vdash \Delta_j, i, j < k$
+        \end{enumerate}
+        По инд. допущению, они тожд. истинны.
+
+        Осталось доказать, что любое правило вывода из тождественно истинных секвенций даст тождественно истинную секвенцию.
+        Это делается перебором правил:
+        [$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
+
+        $\Gamma \vdash \phi, \Delta$ тождественно истинны <=> $\& \Gamma \to (\phi\vee \vee\Delta)\sim 1$
+
+        $\Gamma \vdash \psi, \Delta$ тождественно истинны <=> $\& \Gamma \to (\psi\vee \vee\Delta)\sim 1$
+
+        \begin{enumerate}
+            \item $\& \Gamma \to \vee \Delta \sim 1$ => $\& \Gamma \to (\psi\&\phi\vee\vee\Delta)\sim 1$
+            \item $\& \Gamma \to \vee \Delta $не $\sim 1$
+            
+            $\& \Gamma \to \phi \sim 1$ и $\& \Gamma \to \psi \sim 1 => \& \Gamma \to (\psi\&\phi)\sim 1$ и поэтому $\& \Gamma \to (\psi\&\phi\vee \vee\Delta)\sim 1$
+        \end{enumerate}
+        Остальные правила вывода аналогично.
+        \item[$\Leftarrow$] (Полнота ИВ Генцена)
+        $\Gamma \vdash \Delta$ - тождественно истинна.
+
+        Заметим, что во всех правилах верхняя секвенция содержит на одну связку меньше, чем нижняя.
+
+        Пусть в $\Delta$ есть формула со связкой, например, $\Phi\vee \Psi$. По правилу получим:
+
+        $\frac{\Gamma, \phi, \psi\vdash \widetilde{\Delta} }{\Gamma \vdash \phi\vee\psi,  \widetilde{\Delta}}, \phi\vee\psi, \widetilde{\Delta} = \Delta$
+
+        Действуя аналогично, уберем в формулах из $\Delta $ все логические связки, уберем и в $\Gamma$
+
+        Получим набор секвенций $\Gamma \vdash \Delta$ в которых $\Gamma$ и $\Delta$ состоят только из переменных.
+        \begin{enumerate}
+            \item Пусть есть переменная $x \in \Gamma \cap \Delta=>$ это аксиома
+            \item нет $x \in \Gamma \cap \Delta=\varnothing$, пусть
+            $\Gamma = \{ y_1, \dots, y_k \}, \Delta = \{ z_1, \dots, z_n \}$
+
+            положим $y_1 = \dots = y_k = 1, z_1, = \dots = z_n = 0$, при этой интерпретации $\&\Gamma \to \vee\Delta^\alpha = 0$
+        \end{enumerate}
+        Перебирая правила, докажем, что при любой интепретации $\alpha$, если одна из 
+        секвенций $\Gamma_1 \vdash \Delta_1$ $\Gamma_2 \vdash \Delta_2$ ложна, то и результат тоже ложь
+
+        [$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
+
+        $\alpha$ - интерпретация $(\& \Gamma \to (\phi \vee \vee \Delta ))^\alpha = 0\Leftrightarrow (\& \Gamma)^\alpha = 1$
+
+        $(\phi\vee \vee \Delta)^\alpha = 0$$\phi^\alpha = 0$ и $(\& \Delta)^\alpha = 0$, тогда 
+
+        $(\& \Gamma \to (\phi\&\psi \vee \vee\Delta))^\alpha = 0 [\& \Gamma=1, \phi\&\psi = 0, \bigvee\Delta = 0]$ 
+
+        Спускаясь вниз к исходной секвенции, получаем что она ложна => противоречие.
+    \end{itemize}
     \subsection{Метод резолюций для логики высказываний (без обоснования корректности)}
     \section{Логика предикатов}
     \subsection{Понятие предиката и операции, их представления, примеры}
