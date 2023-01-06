@@ -1685,6 +1685,46 @@
         в системе $\mathfrak{a}$ истинны все формулы из $\Gamma$, то истинна и $\phi(a_1, \dots, a_n)$.
     \end{definition}
     \subsection{Исчисление предикатов (ИП)  Гильберта. Свойства выводов}
+	\begin{definition}
+		Подстановка терма t в формулу $\phi$ вместо переменной x корректна, если никакая переменная терма t после подстановки не попадает в область действия квантора по этой переменной
+	\end{definition}
+	\begin{definition}
+		ИП Гильберта. 
+		Зафиксируем сигнатуру $\sigma$. Исчисление предикатов сигнатуры $\sigma$ состоит из следующий элементов.
+		\begin{enumerate}
+			\item Алфавит. $A = \sigma \cup \{x_1, ..., x_2, ..., \rightarrow, \neg, \forall, \exists, (, ), <,> , =\}$
+			\item Формулы исчисления предиктов - это формулы логики предикатов
+			\item Аксиомы ИП
+			\begin{enumerate}
+				\item $\phi \rightarrow (\psi \rightarrow)$
+				\item $(\phi \rightarrow (\psi \rightarrow \theta)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \theta))$
+				\item $(\neg \psi \rightarrow \neg \phi) \rightarrow ((\neg \psi \rightarrow \phi) \rightarrow \psi)$
+				\item $(\forall x \phi(x)) \rightarrow \phi(t)$
+				\item $\phi(t) \rightarrow (\exists x \phi(x))$
+				\begin{remark}
+					Здесь t - терм, подскановка которого в формулу $\phi$ вместо переменной x корректна
+				\end{remark}
+				\item $\forall x = x$
+				\item $\forall x\forall y (x = y \rightarrow y = x$
+				\item $\forall x \forall y \forall z (x = y \& y = z \rightarrow x = z$
+				\item Для предикатного символа $P^{(n)} \in \sigma$: $$\forall x_1, ..., \forall x_n \forall y_1, ..., \forall y_n [x_1 = y_1 \& ... \& x_n = y_n \& P(x_1, ..., x_n) \rightarrow P(y_1, ..., y_n)]$$
+				\item Для функционального символа $f^{(n)} \in \sigma$: $$\forall x_1, ..., \forall x_n \forall y_1, ..., \forall y_n [x_1 = y_1 \& ... \& x_n = y_n \& f(x_1, ..., x_n) = f(y_1, ..., y_n)]$$
+			\end{enumerate}
+			\item Правила вывода ИП
+
+				modus ponens $$\frac{\phi, \phi \rightarrow \psi}{\psi}$$
+
+				правила П. Бернайса $$\frac{\phi \rightarrow \psi(x)}{\phi \rightarrow (\forall x \psi(x))}$$ $$\frac{\psi(x) \rightarrow \phi}{(\exists x \psi(x)) \rightarrow \phi}$$
+		\end{enumerate}
+	\end{definition}
+	\begin{statement}[Свойства выводов]
+		В любой формальной системе выполнены следующие утверждения.
+		\begin{enumerate}
+			\item Если $Г \vdash \phi$, то существует конечное помножество $Г_0 \subset Г$ такое, что $Г_0 \vdash \phi$
+			\item Если $Г \vdash \phi$ и $Г \subset \Delta$, то и $\Delta \vdash \phi$
+			\item Если для каждой формулы $\phi \in \Delta$ выполнено $Г \vdash \phi$ и $\Delta \vdash \psi$, то и $Г \vdash \psi$
+		\end{enumerate}
+	\end{statement}
     \subsection{Теория. Модель теории}
     \begin{definition}
         Теория сигнатуры $\sigma$ - это произвольное множество замкнутых формул сигнатуры  $\sigma$.
