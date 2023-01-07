@@ -42,8 +42,8 @@
     \end{remark}
     \begin{proof}
         Каждая булева функция определяется своим столбцом значений.
-         Столбец является булевым вектором длины $m=2n$, где n - число аргументов функции.
-          Число различных векторов длины m (а значит и число булевых функций, зависящих от n переменных) равно $2^m=2^{2^n}$
+        Столбец является булевым вектором длины $m=2^n$, где n - число аргументов функции.
+        Число различных векторов длины m (а значит и число булевых функций, зависящих от n переменных) равно $2^m=2^{2^n}$
     \end{proof}
     \subsection{Булевы функции одной и двух переменных (их таблицы, названия)}
         Булевы функции одной переменной:
@@ -69,8 +69,8 @@
         \item $\leftarrow$ -  антиимпликация
         \item $\rightarrow$ - импликация
         \item $\vee$ - дизъюнкция
-        \item | - штрих Шеффера
-        \item $\downarrow$ - стрелка Пирса
+        \item | - штрих Шеффера (не И)
+        \item $\downarrow$ - стрелка Пирса (не ИЛИ)
         \item + -  взаимоисключающее или, сложение по модулю 2 (XOR)
     \end{enumerate}
     \subsection{Формулы логики высказываний. Представление БФ формулами}
@@ -94,9 +94,28 @@
 
     Это булева функция, определенная таблицей истинности
     формулы $\Phi$.
+
+    \begin{definition}
+        Подформула формулы $\phi$ - это подслово, которое само является
+    формулой.
+    \end{definition}
+    \begin{definition}
+        Пусть $\Phi$ - формула, $\alpha$ - интерпретация.
+        Определим значение формулы при данной интепретации $(\Phi^\alpha)$
+        \begin{enumerate}
+            \item Если $\Phi = x_i$, то $\Phi^\alpha = \alpha(x_i)$
+            \item Если $\Phi = 0$, то $\Phi^\alpha = 0$ (аналогично единица)
+            \item Если $\Phi = (\Phi_1 \& \Phi_2)$, и т.д., то значение $\Phi^\alpha$
+            определяется по значениям $\Phi_1^\alpha$ и $\Phi_2^\alpha$ по таблицам для логических связок.
+        \end{enumerate}
+    \end{definition}
+    \begin{remark}
+        Любая формула $\Phi$ использует только конечный набор переменных $x_1, \dots x_n$. Поэтому $\Phi^\alpha$ зависит только от конечного
+        набора значений этих переменных: $\alpha(x_1), \dots, \alpha(x_n)$. Поэтому вместо $\Phi^\alpha$ пишут $\Phi(\alpha(x_1), \dots, \alpha(x_n))$.
+    \end{remark}
     \subsection{Эквивалентные формулы. Основные эквивалентности теории булевых функций}
 	\begin{definition}
-		Формулы логики высказываний 	$\Phi$($x_1$, $x_2$, \dots , $x_n$) и $\Psi$($x_1$, $x_2$, \dots , $x_n$) эквивалетные, если для всех наборов значений $a_1$, \dots , $a_n\in\{$0, 1$\}$
+		Формулы логики высказываний 	$\Phi$($x_1$, $x_2$, \dots , $x_n$) и $\Psi$($x_1$, $x_2$, \dots , $x_n$) эквивалентные, если для всех наборов значений $a_1$, \dots , $a_n\in\{$0, 1$\}$
 		$\Phi$($a_1$, \dots , $a_n$) = 1 $\Leftrightarrow \Psi$($a_1$, \dots , $a_n$) = 1
 	\end{definition}
     \begin{theorem}[Об эквивалентных формулах]
@@ -104,14 +123,20 @@
 
         \begin{enumerate}
            	\item Если $\Phi(x_1, \dots , x_n) \equiv \Psi(x_1, \dots , x_n)$ и $\theta_i(x_1, \dots , x_k)$, i = 1, \dots , n, - формулы логики высказываний, то $\Phi(\theta_1, \dots , \theta_n) \equiv \Psi(\theta_1, \dots , \theta_n)$
-		\item Если в формуле $\Phi$ заменить подформулу $\Psi$ на эквивалетную формулу $\Theta$, то результат замены эквивалентен $\Phi.$
+		\item Если в формуле $\Phi$ заменить подформулу $\Psi$ на эквивалентную формулу $\Theta$, то результат замены эквивалентен $\Phi.$
         \end{enumerate}
 	\begin{proof}
 		\begin{enumerate}
-			\item После подстановки в $\Phi(x_1, \dots , x_n)$ формул $\theta_i(x_1, \dots , x_k)$ получим формулу от k переменных: $$\Phi(\theta_1, \dots , \theta_n)(x_1, \dots , x_k) = \Phi(\theta_i(x_1, \dots , x_k), \dots , \theta_n(x_1, \dots , x_k))$$ и аналогично для $\Psi.$ Выберем произвольный набор элементов $a_1, \dots , a_k \in \{0, 1\}$ и подставим: $$\Phi(\theta_1(a_1, \dots , a_k), \dots , \theta_n(a_1, \dots , a_k)) = \Phi(b_1, \dots , b_n), где b_i = \theta_i(a_1, \dots , a_k),$$ $$\Psi(\theta_1(a_1, \dots , a_k), \dots , \theta_n(a_1, \dots , a_k), \dots , \theta_n(a_1, \dots , a_k)) = \Psi(b_1, \dots , b_n).$$ Т.к. $\Phi \equiv \Psi, то \Phi(b_1, \dots , b_n) = 1 \leftrightarrow \Psi(b_1, \dots , b_n) = 1$, значит и $\Phi(\theta_1, \dots , \theta_n)(a_1, \dots , a_k) = 1 \leftrightarrow \Psi(\theta_1, \dots , \theta_n)(a_1, \dots , a_k)$, т.е. $\Phi(\theta_1, \dots , \theta_n) \equiv \Psi(\theta_1, \dots , \theta_n).$
+			\item После подстановки в $\Phi(x_1, \dots , x_n)$ формул $\theta_i(x_1, \dots , x_k)$ получим формулу от k переменных: $$\Phi(\theta_1, \dots , \theta_n)(x_1, \dots , x_k) = \Phi(\theta_i(x_1, \dots , x_k), \dots , \theta_n(x_1, \dots , x_k))$$ и аналогично для $\Psi.$ 
+            Выберем произвольный набор элементов $a_1, \dots , a_k \in \{0, 1\}$ и подставим:
+            $$\Phi(\theta_1(a_1, \dots , a_k), \dots , \theta_n(a_1, \dots , a_k)) = \Phi(b_1, \dots , b_n), где b_i = \theta_i(a_1, \dots , a_k),$$ 
+            $$\Psi(\theta_1(a_1, \dots , a_k), \dots , \theta_n(a_1, \dots , a_k)) = \Psi(b_1, \dots , b_n).$$ 
+            Т.к. $\Phi \equiv \Psi, то \Phi(b_1, \dots , b_n) = 1 \Leftrightarrow \Psi(b_1, \dots , b_n) = 1$, значит и 
+            $\Phi(\theta_1, \dots , \theta_n)(a_1, \dots , a_k) = 1 \Leftrightarrow \Psi(\theta_1, \dots , \theta_n)(a_1, \dots , a_k)$, т.е. 
+            $\Phi(\theta_1, \dots , \theta_n) \equiv \Psi(\theta_1, \dots , \theta_n).$
 			\item По условию $\Psi \equiv \Theta$. Обозначим результат замены в формуле $\Phi$ подформулы $\Psi$ на $\Theta$ через $\Phi[\Psi/\Theta].$
 
-				Индукцию по числу логических связанок в формуле $\Phi$. Пусть k - число связок в подфомруле $\Psi$.
+				Индукцию по числу логических связок в формуле $\Phi$. Пусть k - число связок в подфомруле $\Psi$.
 
 				Заметим, что, если формула $\Phi$ содержит менее k связок, то в ней нет подформулы $\Psi$. А если формула $\Phi$ имеет ровно k связок, то единственный случай, когда она содержит подформулу $\Psi$ - это $\Phi = \Psi$
 
@@ -128,14 +153,13 @@
 
 				Рассмотрим случай конъюнкции(остальные аналогично). Выберем набор элементов $a_1, \dots , a_n \in \{0, 1\}$ и подставим в формулы: $$\Phi(a_1, \dots , a_n) = \Phi_1(a_1, \dots , a_n) \wedge \Phi_2(a_1, \dots , a_n),$$
 				$$\Phi[\Psi/\Theta](a_1, \dots , a_n) = \Phi_1[\Psi/\Theta](a_1, \dots , a_n) \wedge \Phi_2[\Psi/\Theta](a_1, \dots , a_n).$$
-				По индукционному допущению формулы $\Phi_1 \equiv \Phi_1[\Psi/\Theta]$ аналогично для $\Phi_2$ Поэтому $$\Phi(a_1, \dots , a_n) = \Phi_1(a_1, \dots , a_n) \wedge \Phi_2(a_1, \dots  , a_n),$$
-				$$\Phi[\Psi/\Theta](a_1, \dots , a_n) = \Phi_1[\Psi/\Theta](a_1, \dots , a_n) \wedge \Phi_2[\Psi/\Theta](a_1, \dots , a_n),$$ т.е. $\Phi \equiv \Phi[\Psi/\Theta]$
+				По индукционному допущению формулы $\Phi_1 \equiv \Phi_1[\Psi/\Theta]$ аналогично для $\Phi_2$... Поэтому $$\Phi \equiv \Phi[\Psi/\Theta].$$
 		\end{enumerate}
 	\end{proof}
     \end{theorem}
 	\begin{theorem}
-		Справедливы следующие эквивалетности
-        \begin{multicols*}{2}
+		Справедливы следующие эквивалентности
+        % \begin{multicols*}{2}
             \begin{enumerate}
                 \item a $\vee$ b $\equiv$ b $\vee$ a  \textbf{симметричность}
                 \item a $\wedge$ b $\equiv$ b $\wedge$ a
@@ -164,7 +188,7 @@
                 \item $a | b \equiv \overline{a \wedge b}$
                 \item $a \downarrow b \equiv \overline{a \vee b}$
             \end{enumerate}
-        \end{multicols*}
+        % \end{multicols*}
 	\end{theorem}
     \begin{proof}
         Доказательство сводится к построению таблиц истинности для левой и правой частей каждой эквивалентности
@@ -211,6 +235,55 @@
 			\item Применять свойство дистрибутивности, пока это возможно
 		\end{enumerate}
 	\end{remark}
+    \begin{theorem}[Теорема о разложении булевой функции, Шеннон]
+        \begin{enumerate}
+            $f(x_1, \dots, x_n)$ - БФ. Тогда
+            \item 
+            $f = \bigvee\limits_{(a_1, \dots, a_n)\in \{0, 1\}^n} f(a_1, \dots, a_n) \cdot x_1^{a_1} \dots \cdot x_n^{a_n}$
+            \item 
+            $f = \bigwedge\limits_{(a_1, \dots, a_n)\in \{0, 1\}^n} (f(a_1, \dots, a_n) \vee x_1^{1-a_1} \dots \vee x_n^{1 -a_n})$
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        $\Phi = \bigvee\limits_{(a_1, \dots, a_n)\in \{0, 1\}^n} f(a_1, \dots, a_n) \cdot x_1^{a_1} \dots \cdot x_n^{a_n}$
+
+        Докажем, что $$\forall (a_1, \dots, a_n)\in \{0, 1\}^n: \quad f(a_1, \dots, a_n) = 1 \Leftrightarrow \Phi(a_1, \dots, a_n) = 1$$
+        Пусть $f(a_1, \dots, a_n) = 1.$ Выберем в дизъюнкции слагаемое,
+        соответствующее этому набору:
+        $$f(a_1, \dots, a_n) x \cdot x_1^{a_1} \dots \cdot x_n^{a_n}$$
+        Подставим значения $(a_1, \dots, a_n), x^a = 1 \Leftrightarrow x = a$,
+        получаем $\Phi(a_1, \dots, a_n) = 1$.
+
+        Обратно, $\Phi(a_1, \dots, a_n) = 1$, тогда в дизъюнкции есть истинное слагаемое
+        $$f(b_1, \dots, b_n) \cdot a_1^{b_1}\dots a_n^{b_n}\implies$$
+        $$b_i = a_i \implies f(b_1, \dots b_n) = f(a_1, ... , a_n)$$ 
+    \end{proof}
+    \begin{remark}
+        Есть более общее разложение К. Шеннона по k переменным $1 \leq k \leq n:$
+        $$f = \bigvee\limits_{(a_1, \dots, a_k)\in \{0, 1\}^k} f(a_1, \dots, a_k, x_{k+1}, \dots, x_n) \cdot x_1^{a_1} \dots \cdot x_k^{a_k}$$
+        (аналогично для конъюнкции)
+    \end{remark}
+    \begin{statement}[Следствие из разложения]
+        $ $\\
+        \begin{enumerate}
+            \item Если $f(x_1, \dots, x_n) \neq 0 \implies f = \mathop{\bigvee\limits_{(a_1, \dots, a_n)\in \{0, 1\}^n}}\limits_{f(a_1, \dots, a_n)=1}x_1^{a_1}\dots x_n^{a_n}$
+            \item Если $f(x_1, \dots, x_n) \neq 1 \implies f = \mathop{\bigwedge\limits_{(a_1, \dots, a_n)\in \{0, 1\}^n}}\limits_{f(a_1, \dots, a_n)=0}x_1^{1 - a_1}\dots x_n^{1 - a_n}$
+        \end{enumerate}
+    \end{statement}
+    \begin{proof}
+        Для первого пункта: если $f(a_1, \dots, a_n) = 0$, то все слагаемое равно 0, а в дизъюнкциях
+        такие слагаемые можно не писать. Т.е можно оставить только слагаемые с $f(a_1, \dots, a_n) = 1$.
+        Но тогда множитель $f(a_1, \dots, a_n)$ в конъюнктах можно опустить.
+
+        Второй пункт - аналогично.
+    \end{proof}
+
+    \textbf{Следствие}. Любая булева функция может быть представлена как в виде ДНФ, так и в виде КНФ.
+    \begin{proof}
+        Если функция $f\neq 0$, то она представима в виде ДНФ. Функцию $f = 0$ можно записать как $xx'$
+
+        Для $f\neq 1$ формула из следствия является КНФ, а $f = 1$ можно записать как $x\vee x'$.
+    \end{proof}
     \subsection{СДНФ и СКНФ, теоремы существования и единственности, алгоритмы приведения}
 	\begin{definition}
 		Совершенный конъюнкт от переменных $x_1, \dots , x_n$ - это конъюнкт вида $x_1^{a_1} \wedge\dots \wedge x_n^{a_n},$ где $(a_1, \dots , a_n) \in \{0, 1\}^n.$
@@ -234,7 +307,8 @@
 		Совершенная конъюктивная нормальная форма(СКНФ) от переменных $x_1, \dots , x_n$ - это конъюнкция совершенных дизъюнктов от $x_1, \dots , x_n$, в которой нет попарно эквивалентных слагаемых.
 	\end{definition}
 	\begin{theorem}[о существовании и единственности СДНФ]
-		Любая булева функция $f(x_1, \dots , x_n) \neq 0$ определяется формулой, находящейся в СЛНФ, причем эта СДНФ единственная с точностью до перестановок слагаемых и множителей в слагаемых
+		Любая булева функция $f(x_1, \dots , x_n) \neq 0$ определяется формулой, 
+        находящейся в СДНФ, причем эта СДНФ единственная с точностью до перестановок слагаемых и множителей в слагаемых
 		\begin{proof}
 			\begin{enumerate}
 				\item Существование. По следствию к теореме о разложении получаем для $f(x_1, \dots , x_n) \neq 0$
@@ -253,10 +327,19 @@
 		\begin{enumerate}
             \item Пусть $\Phi(x_1, \dots , x_n) =  x_1^{a_1}\dots x_n^{a_n}$ - совершенный конъюнкт. 
             Тогда для любого набора значений $(b_1, \dots , b_n) \in \{0, 1\}^n$ $$ \Phi(b_1, \dots , b_n) = 1 \leftrightarrow (b_1, \dots , b_n) = (a_1, \dots , a_n).$$
-            \item Два совершенных конъюнкта от перменных $x_1, \dots , x_n$ эквивалентны 
+            \item Два совершенных конъюнкта от переменных $x_1, \dots , x_n$ эквивалентны 
             тогда и только тогда, когда они равны с точностью до перестановки литер.
         \end{enumerate}
 	\end{remark}
+    \begin{proof}
+        \begin{enumerate}
+            \item следует из свойства литер $x^a =1\Leftrightarrow x = a$
+            \item $\Phi(x_1, \dots, x_n) = x_1^{a_1}\dots x_n^{a_n}$ и $\Psi(x_1, \dots, x_n) = x_1^{b_1}\dots x_n^{b_n}$ эквивалентны
+            
+            по п.1 $\Phi(c_1, \dots, c_n) = c_1^{a_1}\dots c_n^{a_n} = 1 \Leftrightarrow (c_1, \dots , c_n) = (a_1, \dots, a_n)$ и
+            $\Psi(b_1, \dots, b_n) = c_1^{b_1}\dots c_n^{b_n} = 1 \Leftrightarrow (c_1, \dots , c_n) = (b_1, \dots, b_n)$
+        \end{enumerate}
+    \end{proof}
 	\begin{remark}
 		Рассуждая двойственным образом, можно получить теорему о СКНФ
 	\end{remark}
@@ -306,6 +389,18 @@
 	\begin{definition}
 		Полином Жегалкина от переменных $x_1, \dots , x_n$ - это либо 0, либо сумма мономов от переменных $x_1, \dots , x_n$ без эквивалентных слагаемых
 	\end{definition}
+    \begin{lemma}
+        Два монома эквивалентны тогда и только тогда, когда они состоят из одних и тех же переменных.
+    \end{lemma}
+    \begin{proof}
+        $ $\\
+        \begin{itemize}
+            \item[$\Rightarrow$] Пусть мономы $M_1$ и $M_2$ эквивалентны, причем моном $M_1$ содержит переменную у,
+            которой нет в мономе $M_2$. Положим y = 0, а остальные переменные равны 1. Тогда $M_1 = 0, M_2 = 1$.
+            Противоречие.
+            \item[$\Leftarrow$] Если мономы состоят из одних и тех же переменных, то они эквивалентны в силу коммутативности конъюнкции.
+        \end{itemize}
+    \end{proof}
 	\begin{theorem}[о существовании и единственности полинома Жегалкина]
 		Любая булева функция может быть определена полиномом Жегалкина. Полином Жегалкина буленвой функции единственный с точностью до перестановок слагаемых и множителей
 	\end{theorem}
@@ -743,7 +838,7 @@
     \end{statement}
     \subsection{Логическое следование в логике высказываний. Проверка логического следования с помощью таблиц истинности и эквивалентных преобразований.}
     \begin{definition}
-    Интерпретация переменных - это отображение вида $\alpha : \{ x, x_1, \dots, x_n \} \to \{ 0, 1\} $.
+    Интерпретация переменных - это отображение вида $\alpha : \{x_1, \dots, x_n \} \to \{ 0, 1\} $.
     Задать интерпретацию - приписать j-той переменной значение 0, 1
     \end{definition}
     Если $\Phi$ - формула, а $\alpha$ - интерпретация, то $\Phi^\alpha$ - значение формулы, когда вместо $x_i$ подставили $\alpha (x_i)$
@@ -1145,8 +1240,8 @@
     \subsection{Метод резолюций для логики высказываний (без обоснования корректности)}
 	\begin{remark}[Метод резолюций]
 		\begin{enumerate}
-			\item Формируем множество Г = $\{A_1, ..., A_m, \neg B\}$
-			\item Все ФЛВ из Г приводим к КНФ. Получится набор дизъюнктов: $D_1, ..., D_k$
+			\item Формируем множество Г = $\{A_1, \dots, A_m, \neg B\}$
+			\item Все ФЛВ из Г приводим к КНФ. Получится набор дизъюнктов: $D_1, \dots, D_k$
 			\item Все дизъюнкты $D_1, .., D_k$ выписываем в столбик
 			\item  Будем получать новые дизъюнкты по следующему правилу. Пусть имеется 2 дизъюнкта вида: $$x_i \vee P$$ $$\neg x_i \vee Q$$
 			где $x_i$ - переменная P, Q - некоторые выражения. Тогда выписываем новый дизъюнкт: $$P \vee Q$$
@@ -1660,17 +1755,17 @@
 			Нормальная форма Сколема - если это ПНФ только с универсальными кванторами первого порядка
 		\end{definition}
 		\begin{remark}
-			Сколемизация. Пусть формула $\Phi$ находима в ПНФ $Q_1x_1 Q_2x_2...Q_nx_n\phi$, где $\phi$ - бесквантооная формула $Q_i \in \{\forall, \exists\}$ и пусть $\exists x_i$ - самый левый квантор $\exists$ в префиксе. Необходимо произвести следующие операции:
+			Сколемизация. Пусть формула $\Phi$ находима в ПНФ $Q_1x_1 Q_2x_2 \dots Q_nx_n\phi$, где $\phi$ - бесквантопная формула $Q_i \in \{\forall, \exists\}$ и пусть $\exists x_i$ - самый левый квантор $\exists$ в префиксе. Необходимо произвести следующие операции:
 			\begin{enumerate}
 				\item Если левее $\exists x_i$ ничего нет, то все вхождения $x_i$ заменяются на новый константный символ c не принадлежащий сигнатуре. При этом константный символ с добавляется в сигнатуру.
-				\item Если левее $\exists x_i$ стоят кванторы $\forall x_1, \forall x_2, ..., \forall x_k$ то все вхождения $x_i$ в $\phi$ заменяются на новый k-местный функциональный символ $f(x_1, x_2, ..., x_k)$ не принадлежащий сигнатуре. При этом функциональный символ $f$ добавляется в сигнатуру.
+				\item Если левее $\exists x_i$ стоят кванторы $\forall x_1, \forall x_2, \dots, \forall x_k$ то все вхождения $x_i$ в $\phi$ заменяются на новый k-местный функциональный символ $f(x_1, x_2, \dots, x_k)$ не принадлежащий сигнатуре. При этом функциональный символ $f$ добавляется в сигнатуру.
 				\item После выполнения указанных выше замен выражение $\exists x_i$ $\forall x_i$ удаляется из кванторного префикса.
 			\end{enumerate}
 		\end{remark}
     \subsection{Проверка существования вывода методом резолюций (алгоритм)}
 	\begin{remark}[Алгоритм]
 		\begin{enumerate}
-			\item Сформировать множество Г = $\{\psi_1, ..., \psi_n, \neg \phi\}$
+			\item Сформировать множество Г = $\{\psi_1, \dots, \psi_n, \neg \phi\}$
 			\item Привести все формулы из Г к ПНФ, а их бескванторные части - к КНФ.
 			\item Сколемизировать все формулы из Г (о сколемизация позже)
 			\item Составить список дизъюнктов
@@ -1692,7 +1787,7 @@
 		ИП Гильберта. 
 		Зафиксируем сигнатуру $\sigma$. Исчисление предикатов сигнатуры $\sigma$ состоит из следующий элементов.
 		\begin{enumerate}
-			\item Алфавит. $A = \sigma \cup \{x_1, ..., x_2, ..., \rightarrow, \neg, \forall, \exists, (, ), <,> , =\}$
+			\item Алфавит. $A = \sigma \cup \{x_1, \dots, x_2, \dots, \rightarrow, \neg, \forall, \exists, (, ), <,> , =\}$
 			\item Формулы исчисления предиктов - это формулы логики предикатов
 			\item Аксиомы ИП
 			\begin{enumerate}
@@ -1707,8 +1802,8 @@
 				\item $\forall x = x$
 				\item $\forall x\forall y (x = y \rightarrow y = x$
 				\item $\forall x \forall y \forall z (x = y \& y = z \rightarrow x = z$
-				\item Для предикатного символа $P^{(n)} \in \sigma$: $$\forall x_1, ..., \forall x_n \forall y_1, ..., \forall y_n [x_1 = y_1 \& ... \& x_n = y_n \& P(x_1, ..., x_n) \rightarrow P(y_1, ..., y_n)]$$
-				\item Для функционального символа $f^{(n)} \in \sigma$: $$\forall x_1, ..., \forall x_n \forall y_1, ..., \forall y_n [x_1 = y_1 \& ... \& x_n = y_n \& f(x_1, ..., x_n) = f(y_1, ..., y_n)]$$
+				\item Для предикатного символа $P^{(n)} \in \sigma$: $$\forall x_1, \dots, \forall x_n \forall y_1, \dots, \forall y_n [x_1 = y_1 \& \dots \& x_n = y_n \& P(x_1, \dots, x_n) \rightarrow P(y_1, \dots, y_n)]$$
+				\item Для функционального символа $f^{(n)} \in \sigma$: $$\forall x_1, \dots, \forall x_n \forall y_1, \dots, \forall y_n [x_1 = y_1 \& \dots \& x_n = y_n \& f(x_1, \dots, x_n) = f(y_1, \dots, y_n)]$$
 			\end{enumerate}
 			\item Правила вывода ИП
 
