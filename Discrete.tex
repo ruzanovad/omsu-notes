@@ -113,6 +113,85 @@
         Любая формула $\Phi$ использует только конечный набор переменных $x_1, \dots x_n$. Поэтому $\Phi^\alpha$ зависит только от конечного
         набора значений этих переменных: $\alpha(x_1), \dots, \alpha(x_n)$. Поэтому вместо $\Phi^\alpha$ пишут $\Phi(\alpha(x_1), \dots, \alpha(x_n))$.
     \end{remark}
+    \begin{definition}
+        Двойственной функцией к булевой функции $f(x_1, ..., x_n)$ назовем функцию 
+        $f^*(x_1, ..., x_n) = f'(x_1', ..., x_n')$.
+    \end{definition}
+    \begin{remark}
+        Отрицание двойственно само к себе. Других пар двойственных
+друг к другу связок нет.
+    \end{remark}
+    \begin{statement}[Свойства двойственных функций]
+        \begin{enumerate}
+            \item $f^{**} = f$;
+            \item $(f(f_1, \dots, f_k))^* = f^*(f_1^*, \dots, f_k^*)$
+        \end{enumerate}
+    \end{statement}
+    \begin{proof}
+        \begin{enumerate}
+            \item получается двойное отрицание
+            \item $$(f(f_1, \dots, f_k))^* = (f(f_1(x_1', \dots, x_n'), \dots, f_k(x_1', \dots, x_n')))'$$
+            
+            $$f^*(f_1^*, \dots, f_k^*) = \dots$$
+
+            Отрицание навешивается на $(x_1, \dots, x_n)$ один раз, а на $f_1, \dots f_k$ - два раза (считаем за переменные). Равенство получено
+        \end{enumerate}
+    \end{proof}
+    \begin{definition}
+        Пусть $\Phi$ - формула, не содержащая импликаций.
+        Двойственной формулой к формуле $\Phi$ называется формула $\Phi^*$,
+        полученной из $\Phi$ заменой каждой связки на двойственную связку.
+    \end{definition}
+    \begin{remark}
+        Понятия двойственной функции и двойственной
+        формулы разные.
+    \end{remark}
+    \begin{theorem}[Принцип двойственности]
+        $\Phi, \Psi$ - формулы без импликаций.
+        \begin{enumerate}
+            \item $(f_\Phi)^* = f_{\Phi^*}$ (если формула $\Phi$ определяет булеву функцию f, то формула $\Phi^*$ определяет двойственную функцию $f^*$)
+            \item $\Phi\sim\Psi\implies\Phi^\alpha\sim\Psi^\alpha$
+        \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+        \begin{enumerate}
+            \item Индукция по числу связок в формуле $\Phi$.
+            
+            База индукции. $\Phi$ содержит 0 связок, т.е это либо переменная, либо константа.
+
+            \begin{tabular}{cccc}
+                $\Phi$ & $f_\Phi$ & $\Phi^*$ & $f_{\Phi^*}$ \\
+                $x_i$ & $x_i$ & $x_i$ & $x_i$ \\
+                0 & 0 & 1 & 1 \\
+                1 & 1 & 0 & 0 \\
+            \end{tabular}
+
+            Шаг индукции. Рассмотрим формулу $\Phi$ с k+1 связкой, считая, что для формул с меньшим числом
+            связок утверждение доказано.
+            Выделим внешнюю связку в формуле.
+            \begin{enumerate}
+                \item $\Phi = \Psi'$, тогда $\Phi^* = \Psi'^*$
+                Если $\Psi$ определяет $f_\Psi$, а $g(x) = x'$, то $$f_\Phi=g(f_\Psi),\: f_{\Phi^*} = (g(f_\Psi))^*$$
+                По свойствам двойственных функций $$f_\Phi^*=(g(f_\Psi))^* = g^*(f_\Psi^*)$$
+
+                Но отрицание двойственно само себе, и по индукционному допущению $f_\Psi^* = f_{\Psi^*}$:
+                $$f_\Phi^* = (g(f_\Psi))^* = g^*(f_\Psi^*) = g(f_{\Psi^*}) = f_{\Psi^*}' = f_{\Phi^*}$$
+                \item $\Phi$ получена из формул $\Psi_1$ и $\Psi_2$ с помощью бинарной связки,
+                например, $\Phi$ = $\Psi_1$ \& $\Psi_2$. Пусть $g(x, y) = x \& y$, тогда:
+                $$f_\Phi = g(f_{\Psi_1}, f_{\Psi_2}), \quad f_{\Phi^*} = (g(f_{\Psi_1}, f_{\Psi_2}))^* \text{и}$$
+                $$f_{\Phi^*} = (g(f_{\Psi_1}, f_{\Psi_2}))^* = g^*(f_{\Psi_1}^*, f_{\Psi_2}^*)$$
+
+                Для формул $\Psi_i$ применимо индукционное допущение, тогда $f_{\Psi_i}^* = f_{\Psi_i^*}.$ С учетом
+                того, что $g^* = x\vee y$ получаем
+
+                $$f_{\Phi}^* = (g(f_{\Psi_1}, f_{\Psi_2}))^*= g^*(f_{\Psi_1}^*, f_{\Psi_2}^*) = f_{\Psi_1^*}\vee f_{\Psi_2^*} = f_{\Phi^*}$$
+                Остальные связки аналогично.
+            \end{enumerate}
+            \item $\Phi \sim \Psi \Leftrightarrow f_\Phi = f_\Psi \Leftrightarrow f_\Phi^* = f_\Psi^*$
+            
+            По пункту 1 получаем, что $f_\Phi^* = f_\Psi^* \Leftrightarrow f_{\Phi^*} = f_{\Psi^*}\Leftrightarrow \Phi^* \sim \Psi^*$
+        \end{enumerate}
+    \end{proof}
     \subsection{Эквивалентные формулы. Основные эквивалентности теории булевых функций}
 	\begin{definition}
 		Формулы логики высказываний 	$\Phi$($x_1$, $x_2$, \dots , $x_n$) и $\Psi$($x_1$, $x_2$, \dots , $x_n$) эквивалентные, если для всех наборов значений $a_1$, \dots , $a_n\in\{$0, 1$\}$
@@ -548,7 +627,7 @@
         Следовательно, $F^*(x_1, \dots, x_n) = \neg g(\neg g_1(x_1, \dots, x_n), \dots, \neg g_k (x_1, \dots, x_n))$.\\
         Так как $g\in S$, то $\neg g(\neg g_1(x_1, \dots, x_n), \dots, \neg g_k (x_1, \dots, x_n))$
         $= (g_1(x_1, \dots, x_n), \dots, g_k(x_1, \dots, x_n))$
-        $\implies f^*(x_1, \dots, x_n) = F(x_1, \dots, x_n)$
+        $\implies F^*(x_1, \dots, x_n) = F(x_1, \dots, x_n)$
     \end{proof}
     \subsection{Класс монотонных функций}
     \begin{definition}
@@ -640,7 +719,7 @@
             b_1 = 1 \\
             a_i = b_i
         \end{align*}
-        $\sphericalangle g(x, a_2, \dots, a_n) \in [f, 0, 1]$\\
+        $\sphericalangle g(x) = f(x, a_2, \dots, a_n) =  \in [f, 0, 1]$\\
         $g(0) = f(a) = 1\quad, g(1) = f(b) = 0 \implies g \equiv x'$
     \end{proof}
     \begin{lemma}[О нелинейной функции]
@@ -650,21 +729,21 @@
         $f(x_1, \dots, x_n) \notin L\implies$ полином Жегалкина функции f содержит конъюнкцию двух переменных $x_1$ и $x_2$
     
         $\implies f(x_1, \dots, x_n)=$
-        $x_1x_2h_{12}(x_3, \dots x_n) + x_1h_1(x_3, \dots x_n) + h_0(x_3, \dots x_n)$
+        $x_1x_2h_{12}(x_3, \dots x_n) + x_1h_1(x_3, \dots x_n) + x_2 h_2 (x_3, \dots, x_n) + h_0(x_3, \dots x_n)$
         
         $f\notin L \implies h_{12}\neq 0 \implies \exists (a_3, \dots a_n) h_{12} (a_3, \dots a_n) = 1$
 
         Подставим этот набор в ПЖ $f$:
 
         $g(x_1, x_2) = f(x_1, x_2, a_3\dots  a_n) = $
-        $x_1x_2h_{12}(a_3, \dots a_n) + x_1h_1(a_3, \dots a_n) + h_0(a_3, \dots a_n)$
+        $x_1x_2h_{12}(a_3, \dots a_n) + x_1h_1(a_3, \dots a_n) + x_2 h_2 (a_3, \dots, a_n) + h_0(a_3, \dots a_n)$
 
-        $h_i\in \{0, 1\}\implies \exists 8$ вариантов того, как выглядит полином Жегалкина
+        $h_i\in \{0, 1\}\implies \exists 8 =2^3$ вариантов того, как выглядит полином Жегалкина
 
         \begin{enumerate}
-            \item Система функций $[g, \neg, 0, 1]$ полна и содержит конъюнкцию
-            \item g - конъюнкция
-            \item $xy = g(x, y') \vee xy = g(x', y)\implies xy \in $замыкание
+            \item Система функций $[g, \neg, 0, 1]$ полна и содержит конъюнкцию \textbf{получаем бинарные связки после преобразований ПЖ, варианты: штрих, ИЛИ, импликация}
+            \item g - конъюнкция ($\forall h_i = 0$)
+            \item $xy = g(x, y') \vee xy = g(x', y)\implies xy \in $замыкание $[g(x_1, x_2) = x_1 x_2 \oplus x_1$ или $g(x_1, x_2) = x_1 x_2 \oplus x_2]$ 
         \end{enumerate}
         Т.к $g$ выражается через $f(x_1, \dots x_n), 0, 1$, то конъюнкция также лежит в замыкании $[f, \neg, 0, 1]$
 
@@ -704,6 +783,7 @@
                 1 & 0 & $g_0 \equiv 1, g_1 \equiv 0$\\
                 1 & 1 & $g_0 \equiv 1, g_1 \equiv \neg x$\\
             \end{tabular}
+            \textbf{перебираем различные варианты функций, которые могут получиться из замыкания с не сохраняющими 0/1}
             \begin{enumerate}
                 \item $[G]\ni \neg x, 0, 1$ по лемме о нелинейной функции
                 содержит $xy$
@@ -852,15 +932,18 @@
     \end{definition}
     \subsubsection*{Свойства логического следования}
     \begin{enumerate}
-        \item $\Phi \models \Psi, \Psi \models \Theta \implies \Phi \models \Theta$
-        \item $\Gamma, \Delta $ - множество формул, $\Phi$ - формула. Если $\forall \psi\in\Delta$ $\Gamma\models\psi$ $[\Gamma \models \Delta]$ $\&\Delta\models\Phi$, то $\Gamma\models\Phi$
-        \item Если $\Gamma \models \Phi, \Gamma \subseteq \Delta, \implies \Delta \models \Phi$
-        \item $\models \Phi \implies \Phi \equiv 1$
+        \item $\Phi \models \Psi, \Psi \models \Theta \implies \Phi \models \Theta$ \textbf{Транзитивность следования для формул}
+        \item $\Gamma, \Delta $ - множество формул, $\Phi$ - формула. Если
+        $\forall \psi\in\Delta$ $\Gamma\models\psi$ $[\Gamma \models \Delta]$ $\&\Delta\models\Phi$, 
+        то $\Gamma\models\Phi$ \textbf{Транзитивность следования для множеств формул}
+        \item Если $\Gamma \models \Phi, \Gamma \subseteq \Delta, \implies \Delta \models \Phi$ \textbf{Увеличение множества $\Gamma$ сохраняет следование}
+        \item $\models \Phi \implies \Phi \equiv 1$ \textbf{Следование из пустого множества - получаем тавтологию}
         \item $\Phi_1, \dots, \Phi_n\models \Phi_1,\& \dots,\& \Phi_n$ \& 
         
-        $\Phi_1,\& \dots,\& \Phi_n\models\Phi_1 \dots \Phi_n$
-        \item $\Gamma, \Phi\models \Psi\Leftrightarrow \Gamma \models \Phi \to \Psi$
+        $\Phi_1,\& \dots,\& \Phi_n\models\Phi_1 \dots \Phi_n$ \textbf{Из конъюнкции формул следуют все формулы и наоборот}
+        \item $\Gamma, \Phi\models \Psi\Leftrightarrow \Gamma \models \Phi \to \Psi$ \textbf{Почти теорема о дедукции, но для лог. следования}
         \item Если $\Gamma = \{\Phi_1, \dots, \Phi_n \}$ - конечное, то $\Gamma \models \Phi \Leftrightarrow \Phi_1,\& \dots,\& \Phi_n\to \Phi \equiv 1$
+        \textbf{Микс 4, 5, 6 свойств}
     \end{enumerate}
     \begin{proof}
         \begin{enumerate}
@@ -873,14 +956,16 @@
 
             $\implies \Gamma \models \Phi$
 
-            [тупо пишем условие]
+            \textbf{тупо пишем условие}
             \item $\Gamma \models \Phi\implies \Phi: \forall \alpha [(\forall \Psi \in \Gamma \quad \Psi^\alpha = 1)\implies \Phi^\alpha = 1]$
             
             $\Gamma \subseteq \Delta: \forall\Psi\in\Delta \quad \Psi^\alpha = 1\implies \forall\Psi\in\Gamma \quad \Psi^\alpha = 1\implies \Phi^\alpha = 1$
+            \textbf{когда истинны все из дельта, истинны и из гамма}
             \item $\models \Phi \Leftrightarrow \forall \alpha (\forall \Psi \in \varnothing\quad \Psi^\alpha = 1)\to \Phi^\alpha = 1 \implies \forall \alpha \quad \Phi^\alpha = 1\implies \Phi \equiv 1$
+            \textbf{что то выполняется для пустого множества всегда}
             \item $\alpha$ - инт., тогда $(\forall \Psi \in \{ \Phi_1, \dots, \Phi_n\} \Psi^\alpha = 1)\Leftrightarrow (\Phi_1, \dots, \Phi_n)^\alpha = 1\implies$
             $\Phi_1, \dots, \Phi_n\models \Phi_1,\& \dots,\& \Phi_n$.
-            Обратное аналогично.
+            Обратное аналогично. \textbf{когда истинны все, истинна и конъюнкция}
             \item \begin{itemize}
                 \item[$\Rightarrow$]
                     \begin{equation}
@@ -891,7 +976,7 @@
                         \item $\Phi^\alpha= 1$, тогда из (*) $\Psi^\alpha = 1 (\Phi\to \Psi)^\alpha = 1$
                         \item $\Phi^\alpha = 0\implies (\Phi\to\Psi) = 1\implies$
                     \end{enumerate}     
-                    $(\Phi\to \Psi)^\alpha = 1$
+                    $(\Phi\to \Psi)^\alpha = 1$ \textbf{истинно следствие, значит импликация истинна независимо от посылки}
                 \item[$\Leftarrow$] $\Gamma \models \Phi\to \Psi:$
                 
                 $\alpha: (\forall \theta \in \Gamma \quad \theta^\alpha = 1)\implies (\Phi\to \Psi)^\alpha = 1$
@@ -911,12 +996,12 @@
     Это утверждение может быть справедливым, и тогда оно называется теоремой, \textbf{обратной} для теоремы $X\to Y$, которая, 
     в свою очередь, называется \textbf{прямой} теоремой.
 
-    Для теоремы, сформулированной в виде импликации $X\to Y$, кроме обратного утверждения $Y\to X$
-    можно сформулировать противоположное утверждение. Им называется утверждение вида $\lnot X\to\lnot Y$.
+    Для теоремы, сформулированной в виде импликации $X\to Y$, кроме \textbf{обратного} утверждения $Y\to X$
+    можно сформулировать \textbf{противоположное} утверждение. Им называется утверждение вида $\lnot X\to\lnot Y$.
     Утверждение, противоположное данной теореме, может быть также теоремой, т. е. быть истинным высказыванием,
     но может таковым и не быть. 
 
-    Теорема, обратная противоположной: $\lnot X\to\lnot Y$ (контрапозиция).
+    Теорема, \textbf{обратная противоположной}: $\lnot X\to\lnot Y$ \textbf{(контрапозиция)}.
     \begin{statement}
         $A\to B \models B' \to A'$
 
@@ -965,9 +1050,12 @@
         $ $\\
         \begin{enumerate}
             \item Если $\Gamma \vdash \phi$, то существует конечное подмножество $\Gamma_0 \subseteq \Gamma$ такое, что $\Gamma_0 \vdash \phi$.
-            \item Если $\Gamma \vdash \phi$ и $\Gamma \subseteq \Delta$, то $\psi \vdash \Delta$.
-            \item (транзитивность выводимости) Если $\Gamma \vdash \Delta$ (т.е. все формулы из $\Delta$ выводятся из $\Gamma$) и 
+            \textbf{выделение конечного подмножества}
+            \item Если $\Gamma \vdash \phi$ и $\Gamma \subseteq \Delta$, то $\Delta\vdash \psi $.
+            \textbf{увеличение множества гипотез}
+            \item  Если $\Gamma \vdash \Delta$ (т.е. все формулы из $\Delta$ выводятся из $\Gamma$) и 
             $\Delta \vdash \phi$, то и $\Gamma \vdash \phi$.
+            \textbf{транзитивность выводимости)}
         \end{enumerate}
     \end{statement}
     \begin{proof}
@@ -997,8 +1085,8 @@
             \item (схемы аксиом) аксиомы ИВ:
             \begin{itemize}
                 \item[$A_1$] $A\rightarrow (B\rightarrow A)$ 
-                \item[$A_2$] $(A\rightarrow (B\rightarrow C))\rightarrow ((A\rightarrow B)\rightarrow (A \rightarrow C))$ 
-                \item[$A_3$] $(B'\rightarrow A')\rightarrow((B'\rightarrow A)\rightarrow B)$
+                \item[$A_2$] $(A\rightarrow (B\rightarrow C))\rightarrow ((A\rightarrow B)\rightarrow (A \rightarrow C))$ \textbf{а-ля дистрибутивность}
+                \item[$A_3$] $(B'\rightarrow A')\rightarrow((B'\rightarrow A)\rightarrow B)$ \textbf{убрали отрицание с А, вылезло B}
             \end{itemize}
             \item силлогизм: $\frac{A, A\rightarrow B}{B}$ \textbf{modus ponens}
         \end{enumerate}
@@ -1031,7 +1119,7 @@
         \begin{itemize}
             \item[$\Leftarrow$]$\Gamma \vdash A\rightarrow B$, строим $\Gamma, A\vdash B$
             
-            $\Gamma,  A\vdash A, A\rightarrow B$ и $A, A\rightarrow B \vdash B (MP)$,
+            $$\Gamma,  A\vdash A, A\rightarrow B \quad\text{добавили A}$$ и $$A, A\rightarrow B \vdash B (MP) \quad\text{пример выше},$$
             По транзитивности получаем требуемое.
             \item[$\Rightarrow$] 
             доказывается индукцией по длине вывода B из $\Gamma$, A.
@@ -1089,20 +1177,24 @@
 		$\vdash A$ тогда и только тогда, когда A - тавтология
 	\end{theorem}
 	\begin{proof}
-		=> Если формула А выводится из аксиом($\vdash$), то A является тавтологией
-		<= Пусть A - тавтология. Тогда $\bar{A}$ - тождественно ложная. Докажем что множество Г = $\{\bar{A}\}$ является противоречивым. Если оно непротиворечиво , то по лемме 7.6 существует полное непротиворечивое множество $\bar{Г} \supset Г$. По лемме 7.7 для множества $\bar{Г}$ существует набор значений переменных $\bar{a}$, на котором все формулы из $\bar{Г}$ (в том числе и $\neg A$) принимают значение 1. Мы приходим к противоречию, поскольку формула $\neg A$ тождественно ложна. В соответсвии с теоремой ИВ Гильберта из множества Г выводится абсолютно любая формула в том числе и формула А.
+        \begin{itemize}
+            ;;
+            \item[=>] Если формула А выводится из аксиом($\vdash$), то A является тавтологией
+            \item[<=] Пусть A - тавтология. Тогда $\bar{A}$ - тождественно ложная. Докажем что множество Г = $\{\bar{A}\}$ является противоречивым. Если оно непротиворечиво , то по лемме 7.6 существует полное непротиворечивое множество $\bar{Г} \supset Г$. По лемме 7.7 для множества $\bar{Г}$ существует набор значений переменных $\bar{a}$, на котором все формулы из $\bar{Г}$ (в том числе и $\neg A$) принимают значение 1. Мы приходим к противоречию, поскольку формула $\neg A$ тождественно ложна. В соответсвии с теоремой ИВ Гильберта из множества Г выводится абсолютно любая формула в том числе и формула А.
 
-		$\neq A \vdash A$. По теорема дедукции это означает, что формула $\neg A \rightarrow A$ выводится из аксиом ИВ Гильберта, то есть $\vdash \neg A \rightarrow A$. Напишем такой вывод.
-		\begin{enumerate}
-			\item $(\neg A \rightarrow A) \rightarrow ((\neg\neg A \rightarrow A) \rightarrow A)$
-			\item $\neg A \rightarrow A$
-			\item $(\neg\neg A \rightarrow A) \rightarrow A$ MP(1, 2)
-			\item $\neg\neg A \rightarrow A$
-			\item A MP(3, 4)
-		\end{enumerate}
-
-		Построенный вывод показывает, что формула А является теоремой ИВ Гильберта, то есть $\vdash A$. 
-	\end{proof}
+            $\neq A \vdash A$. По теорема дедукции это означает, что формула $\neg A \rightarrow A$ выводится из аксиом ИВ Гильберта, то есть $\vdash \neg A \rightarrow A$. Напишем такой вывод.
+            \begin{enumerate}
+                \item $(\neg A \rightarrow A) \rightarrow ((\neg\neg A \rightarrow A) \rightarrow A)$
+                \item $\neg A \rightarrow A$
+                \item $(\neg\neg A \rightarrow A) \rightarrow A$ MP(1, 2)
+                \item $\neg\neg A \rightarrow A$
+                \item A MP(3, 4)
+            \end{enumerate}
+    
+            Построенный вывод показывает, что формула А является теоремой ИВ Гильберта, то есть $\vdash A$. 
+       
+        \end{itemize}
+		 \end{proof}
 	\begin{remark}
 		Лемма 7.6 Для каждого непротиворечивого мноэества формул Г существует полное непротиворечивое множество $Г' \supset Г$
 	\end{remark}
