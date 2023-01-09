@@ -1173,21 +1173,125 @@
         \end{itemize}
     \end{proof}
     \subsection{Теорема о полноте и непротиворечивости ИВ}
+    \begin{definition}
+        Множество $\Gamma$ называется непротиворечивым, если не существует
+        такой формулы А, что $\Gamma \vdash A$ и $\Gamma \vdash \neg A$
+    \end{definition}
+    \begin{definition}
+        Множество $\Gamma$ полно, если для любой формулы А либо ее отрицание, либо она сама содержится в $\Gamma$
+    \end{definition}
+    \begin{statement}[\hypertarget{Вывод 15}{Вывод 15}]
+        $$A\to B, B\to C\vdash A\to C$$
+        \textbf{транзитивность импликации}
+        $$\sim A\to B, B\to C, A\vdash C $$
+        \begin{enumerate}
+            \item пишем все гипотезы по порядку
+            \item[4] B (MP 1, 2)
+            \item[5] C (MP 3, 4)
+        \end{enumerate}
+    \end{statement}
+    \begin{statement}[\hypertarget{Вывод 17}{Вывод 17}]
+        $$\vdash \neg \neg B \to B \Leftrightarrow \neg \neg B\vdash B$$
+        \begin{enumerate}
+            \item $(\neg B\to \neg \neg B)\to ((\neg B \to \neg B)\to B)$ (A3 при $A:=\neg B$)
+            \item $\neg B \to \neg B$ вывод $\vdash A\to A$ из теоремы дедукции
+            \item $(\neg B\to \neg \neg B) \to B$ (к строкам 1, 2 применяем 16 при $А:=\neg B \to \neg \neg B, B:=\neg B \to \neg B, C:=B$)
+            \item $\neg \neg B \to (\neg B \to \neg \neg B) $ А1 для $A := \neg \neg B, B := \neg B$
+            \item $\neg \neg B \to B$ к строкам 3, 4 применяем \hyperlink{Вывод 15}{15} при $A = \neg \neg B, B = \neg B \to \neg \neg B, C :=B$
+        \end{enumerate}
+    \end{statement}
+    \begin{statement}[\hypertarget{Вывод 18}{Вывод 18}]
+        $$\vdash B\to \neg \neg B$$
+        аналогично \hyperlink{Вывод 17}{выводу 17}
+    \end{statement}
+    \begin{statement}[\hypertarget{Вывод 21}{Вывод 21}] 
+        $$\vdash \neg A \to (A\to B)$$
+        Применяем два раза теорему дедукции
+        $$A, \neg A\vdash B$$
+        \begin{enumerate}
+            \item $\neg A$ гипотеза
+            \item $A$ гипотеза
+            \item $A\to (\neg B \to A)$ (аксиома А1 для $B := \neg B$)
+            \item $\neg A \to (\neg B \to \neg A)$ (аксиома А1 для $B := \neg B$, $A := \neg A$)
+            \item $\neg B \to A$ MP 2, 3
+            \item $\neg B \to \neg A$ MP 1, 4
+            \item $(\neg B \to \neg A) \to ((\neg B \to A) \to B)$ аксиома А3
+            \item $(\neg B \to A)\to B$ MP 6, 7
+            \item B MP 5, 8
+        \end{enumerate}
+    \end{statement}
+    \begin{statement}[\hypertarget{Вывод 22}{Вывод 22}]
+        $$\vdash (\neg B \to \neg A) \to (A\to B)$$
+        По теореме дедукции 
+        $$\neg B\to \neg A, A\vdash B$$
+        \begin{enumerate}
+            \item $\neg B\to \neg A$ гипотеза
+            \item A гипотеза
+            \item $(\neg B \to \neg A)\to ((\neg B \to A) \to B)$ (А3)
+            \item $A\to (\neg B \to A)$ (A1, $B := \neg B$)
+            \item $(\neg B \to A) \to B$ (MP 1, 3)
+            \item $A\to B$ \hyperlink{Вывод 15}{(Вывод 15, транзитивность импликаций)}
+            \item B (MP 2, 6)
+        \end{enumerate}
+    \end{statement}
+    \begin{statement}[\hypertarget{Вывод 23}{Вывод 23}] 
+        $$\vdash (A \to B) \to (\neg B\to \neg A)$$
+        \hyperlink{Вывод 22}{аналогично выводу 22}
+    \end{statement}  
+    \begin{statement}[\hypertarget{Вывод 24}{Вывод 24}] 
+        $$\vdash A\to (\neg B \to \neg (A\to B)) \Leftrightarrow A, \neg B \vdash \neg (A \to B)$$
+        Очевидно, что применение MP для произвольных формул дает $A, A → B \vdash B$, по теореме дедукции имеет место выводимость
+        $\vdash A → ((A → B) → B)$
+        \begin{enumerate}
+            \item $((A\to B)\to B)\to (\neg B \to \neg (A\to B))$  \hyperlink{Вывод 23}{вывод 23 при $A:= A\to B$}
+            \item $A\to ((A\to B) \to B)$ (только что доказали выше)
+            \item $A\to (\neg B \to \neg (A\to B))$ строки 1, 2 по \hyperlink{Вывод 15}{(выводу 15, транзитивность импликаций)}
+        \end{enumerate}
+    \end{statement}
+    \begin{statement}[Вывод 26]
+        $$\vdash (A\to B)\to ((\neg \to B) \to B)$$
+        По теореме дедукции
+        $$A\to B, \neg A \to B \vdash B$$
+        \begin{enumerate}
+            \item $A\to B$ гипотеза
+            \item $\neg A\to B$ гипотеза
+            \item $(A\to B) \to (\neg B \to \neg A)$ \hyperlink{Вывод 23}{(вывод 23)}
+            \item $\neg B \to \neg A$ (MP 1, 3)
+            \item $(\neg A \to B)\to (\neg B \to \neg \neg A)$ \hyperlink{Вывод 23}{(вывод 23, $A := \neg A$)}
+            \item $\neg B \to \neg \neg A$ MP(2, 5)
+            \item $(\neg B \to \neg\neg A) \to ((\neg B \to \neg A) \to B)$ (Аксиома А3 при $А = \neg \neg A$)
+            \item $(\neg B \to \neg A) \to B$ MP(6, 7);
+            \item B (MP 4, 8)
+        \end{enumerate}
+    \end{statement}
 	\begin{theorem}[Теорема о полноте ИВ]
 		$\vdash A$ тогда и только тогда, когда A - тавтология
 	\end{theorem}
 	\begin{proof}
         \begin{itemize}
-            ;;
-            \item[=>] Если формула А выводится из аксиом($\vdash$), то A является тавтологией
-            \item[<=] Пусть A - тавтология. Тогда $\bar{A}$ - тождественно ложная. Докажем что множество Г = $\{\bar{A}\}$ является противоречивым. Если оно непротиворечиво , то по лемме 7.6 существует полное непротиворечивое множество $\bar{Г} \supset Г$. По лемме 7.7 для множества $\bar{Г}$ существует набор значений переменных $\bar{a}$, на котором все формулы из $\bar{Г}$ (в том числе и $\neg A$) принимают значение 1. Мы приходим к противоречию, поскольку формула $\neg A$ тождественно ложна. В соответсвии с теоремой ИВ Гильберта из множества Г выводится абсолютно любая формула в том числе и формула А.
+            \item[$\Rightarrow$] Если формула А выводится из аксиом($\vdash$), то A является тавтологией
+            \textbf{все аксиомы ИВ т. истинны, правило MP из т. истинных формул дает истинные формулы, проверка через таблицы истинности}
+            \item[$\Leftarrow$] Пусть A - тавтология. Тогда $\neg{A}$ - тождественно ложная. 
+            
+            Докажем что множество Г = $\{\neg{A}\}$ является противоречивым. Если оно непротиворечиво , то по 
+            лемме 7.6 существует полное непротиворечивое множество $\Gamma' \supseteq \Gamma$. 
+            По лемме 7.7 для множества ${\Gamma}'$ существует набор значений переменных $\bar{a}$, на котором 
+            все формулы из $\Gamma'$ (в том числе и $\neg A$) принимают значение 1. Мы приходим к противоречию, 
+            поскольку формула $\neg A$ тождественно ложна.
+            Множество Г противоречиво. 
+            
+            Из множества Г выводится абсолютно любая формула, в том числе и формула А. (\hyperlink{Вывод 21}{вывод 21})
 
-            $\neq A \vdash A$. По теорема дедукции это означает, что формула $\neg A \rightarrow A$ выводится из аксиом ИВ Гильберта, то есть $\vdash \neg A \rightarrow A$. Напишем такой вывод.
+            $$\vdash \neg A \to (A \to B)$$
+            $$\neg A \vdash A \to B$$
+            $$A, \neg A \vdash B\implies$$
+
+            $\neg A \vdash A$. По теореме дедукции это означает, что формула $\neg A \rightarrow A$ выводится из аксиом ИВ Гильберта, то есть $\vdash \neg A \rightarrow A$. Напишем такой вывод.
             \begin{enumerate}
-                \item $(\neg A \rightarrow A) \rightarrow ((\neg\neg A \rightarrow A) \rightarrow A)$
-                \item $\neg A \rightarrow A$
+                \item $(\neg A \rightarrow A) \rightarrow ((\neg\neg A \rightarrow A) \rightarrow A)$ (если в \hyperlink{Вывод 26}{выводе 26} положить $A:=\neg A, B :=A$)
+                \item $\neg A \rightarrow A$ показано выше
                 \item $(\neg\neg A \rightarrow A) \rightarrow A$ MP(1, 2)
-                \item $\neg\neg A \rightarrow A$
+                \item $\neg\neg A \rightarrow A$ \hyperlink{Вывод 17}{вывод 17 для $B:= A$}
                 \item A MP(3, 4)
             \end{enumerate}
     
@@ -1195,12 +1299,82 @@
        
         \end{itemize}
 		 \end{proof}
+    \begin{remark}
+        Лемма 7.5 Пусть $\Gamma$ - непротиворечивое множество формул, и А - произвольная формула ИВ Гильберта.
+        Тогда хотя бы одно из множеств $\Gamma \cup \{A\}, \Gamma \cup \{\neg A\}$ также непротиворечиво.
+    \end{remark}
+    \begin{proof}
+        Пусть они противоречивы. Тогда из них можно вывести абсолютно любую формулу:
+
+        $$\Gamma, A \vdash \neg A, \quad \Gamma, \neg A \vdash A \implies$$
+        $$\Gamma \vdash A \to\neg A, \quad \Gamma \vdash \neg A \to A$$
+        Построим вывод из множества гипотез $\Gamma:$
+        \begin{enumerate}
+            \item $(A\to \neg A)\to ((\neg A \to \neg A)\to \neg A)$ \hyperlink{Вывод 26}{если в 26 положить $B:=\neg A$}
+            \item $A\to \neg A$ (как показано выше, эта формула следует из $\Gamma$)
+            \item $(\neg A \to \neg A)\to \neg A$ MP 1, 2
+            \item $\neg A \to \neg A$ (было доказано в теореме дедукции, что формула выводится из пустого множества, но здесь $A := \neg A$)
+            \item $\neg A$ MP 3,4
+        \end{enumerate}
+        $\implies \Gamma \vdash \neg A$
+        \begin{enumerate}
+            \item $(\neg A\to A)\to ((\neg\neg A \to  A)\to A)$ \hyperlink{Вывод 26}{если в 26 положить $B:=A, A:= \neg A$}
+            \item $\neg A\to A$ (как показано выше, эта формула следует из $\Gamma$)
+            \item $(\neg \neg A \to  A)\to A$ MP 1, 2
+            \item $\neg \neg A \to A$ (было доказано в теореме дедукции, что формула выводится из пустого множества, но здесь $B := A$)
+            \item $A$ MP 3,4
+        \end{enumerate}
+        $\implies \Gamma \vdash A\implies\Gamma$противоречиво - противоречие с условием леммы
+    \end{proof}
 	\begin{remark}
-		Лемма 7.6 Для каждого непротиворечивого мноэества формул Г существует полное непротиворечивое множество $Г' \supset Г$
+		Лемма 7.6 Для каждого непротиворечивого множества формул Г существует полное непротиворечивое множество $\Gamma' \supseteq \Gamma$
 	\end{remark}
+    \begin{proof}
+        Нумеруем множество всех формул ИВ Гильберта(для простоты рассматриваем формулы с не более чем счетным множеством переменных)
+
+        Будем двигаться по этому списку слева направо и параллельно строить расширение $\Gamma'$ для $\Gamma$.
+
+        Вначале $\Gamma' = \Gamma.$ Возьмем энную формулу (предполагая, что предыдущие уже обработаны)
+        и делаем следующие операции:
+        \begin{enumerate}
+            \item Если $\Gamma' \cup \{A_n\}$ непротиворечиво, то $\Gamma' \cup= \{A_n\}$
+            \item Если $\Gamma' \cup \{\neg A_n\}$ непротиворечиво, то $\Gamma' \cup= \{\neg A_n\}$
+        \end{enumerate}
+        По лемме 7.5 хотя бы одно из полученных непротиворечиво, поэтому добавляем либо A либо ее отрицание.
+        Обработаем все, построим непротиворечивое множество, а оно еще и полное по построению.
+    \end{proof}
 	\begin{remark}
-		Лемма 7.7 Для любого непротиворечивого полного множества формул Г сущесвует набор переменных, на которых все формулы множества Г истинны.
+		Лемма 7.7 Для любого непротиворечивого полного множества формул Г существует набор переменных,
+        на которых все формулы множества Г истинны.
 	\end{remark}
+    \begin{proof}
+        Пусть все формулы множества Г имеют переменные из множества $X = {x_1, \dots}$ - мб бесконечность
+
+        Переменная тоже формула, поэтому либо она, либо отрицание в полном множестве $\Gamma$.
+        Принадлежность задает набор значений (битмаска) $a = (a_1, \dots, a_n)$ - 1 если $x_i в \Gamma$
+
+        Докажем, что значения произвольной формулы на наборе а удовлетворяют соотношениям:
+        \begin{enumerate}
+            \item если формула A истинна на наборе a, то $\Gamma \vdash A$
+            \item если ложна, то $\Gamma \vdash \neg A$
+        \end{enumerate}
+        По индукции - сложность формулы А. Если $A = x_i$ - переменная, то свойства выполнены в соответствии с выбором набора.
+
+        Пусть теперь $A = \neg B$, для B выполнены свойства. Случаи
+        \begin{enumerate}
+            \item $A(a) = 1 \implies B(a) = 0\implies \Gamma \vdash \neg B\implies \Gamma \vdash A$
+            \item $A(a) = 0 \implies B(a)= 1\implies \Gamma \vdash B\implies$ по \hyperlink{Вывод 18}{выводу 18}
+            $\Gamma \vdash \neg \neg B\Leftrightarrow \Gamma \vdash \neg A, \neg A = \neg \neg B$
+        \end{enumerate}
+        Теперь рассмотрим импликацию $A = B\to C$, для B, C выполнены свойства.
+        \begin{enumerate}
+            \item $A(a) = 0\implies B(a) = 1, C(a) = 0\implies \Gamma \vdash B, \neg C\implies$ по \hyperlink{Вывод 24}{выводу 24} $\implies \Gamma \vdash \neg (B\to C)$
+            \item $A(a) = 1, B(a) = 0\implies \Gamma \vdash \neg B$ \textbf{по индукции} $ \neg B \vdash B\to C$ 
+            (\hyperlink{Вывод 21}{почти вывод 21, но равносильный по теореме дедукции})
+            $\implies \Gamma \vdash B \to C\implies \Gamma \vdash A$
+            \item $A(a) = 1, C(a) = 1 \implies \Gamma \vdash C.$ По А1 $C\to (B\to C)$, примнеяем MP и получаем $\Gamma \vdash B\to C\implies \Gamma\vdash A$
+        \end{enumerate}
+    \end{proof}
     \subsection{ИВ Генцена, его полнота}
     \begin{enumerate}
         \item Алфавит: $\{ x_1,\dots, x_n, \&, \vee, \to, ', (, ), \vdash, "," \} $
@@ -1329,6 +1503,9 @@
 
         Спускаясь вниз к исходной секвенции, получаем что она ложна => противоречие.
     \end{itemize}
+    \begin{proof}[теорема: ИВ Генцена непротиворечиво]
+        Для всех выводимых секвенций $\vdash A$ формула А тождественно истинна. Поэтому из аксиом нельзя вывести как A, так и $\neg A$
+    \end{proof}
     \subsection{Метод резолюций для логики высказываний (без обоснования корректности)}
 	\begin{remark}[Метод резолюций]
 		\begin{enumerate}
@@ -1477,26 +1654,28 @@
             \item Пусть $\phi$ имеет вид $(\phi_1 \& \phi_2), (\phi_1 \vee \phi_2), (\phi_1 \rightarrow \phi_2), (\phi_1 \leftrightarrow \phi_2), \neg\phi_1$. Тогда истинность формулы 
             $\phi$ определяется по значениям $\phi_1(a_1, \dots a_n)$ и $\phi_2(a_1, \dots a_n)$ по таблицам истинности логических 
             связок.
-            \item Пусть $\phi(x_1 \dots, x_n)$ имеет вид $(\forall x \phi(x, x_1, \dots x_n))$. Тогда $A \models \phi(a_1, \dots a_n) \Leftrightarrow$ для всех элементов 
-            $b \in A$ выполнено $A \models \phi (b, a_1, \dots a_n)$.
-            \item Пусть $\phi(x_1 \dots, x_n)$ имеет вид $(\exists x \phi(x, x_1, \dots x_n))$. Тогда $A \models \phi(a_1, \dots a_n) \Leftrightarrow$ для некоторого 
-            элемента $b \in A$ выполнено $A \models \phi (b, a_1, \dots a_n)$.
+            \item Пусть $\phi(x_1 \dots, x_n)$ имеет вид $(\forall x \psi(x, x_1, \dots x_n))$. Тогда $A \models \phi(a_1, \dots a_n) \Leftrightarrow$ для всех элементов 
+            $b \in A$ выполнено $A \models \psi (b, a_1, \dots a_n)$.
+            \item Пусть $\phi(x_1 \dots, x_n)$ имеет вид $(\exists x \psi(x, x_1, \dots x_n))$. Тогда $A \models \phi(a_1, \dots a_n) \Leftrightarrow$ для некоторого 
+            элемента $b \in A$ выполнено $A \models \psi (b, a_1, \dots a_n)$.
         \end{enumerate}
     \end{definition}
     \subsection{Изоморфизм систем. Теорема о сохранении значений термов и формул в изоморфных системах. Автоморфизм}
     \begin{definition}
         АС $\mathfrak{a} = <A, \sigma>, \mathfrak{b} = <B, \sigma>$ сигнатуры $\sigma$ изоморфны, если существует отображение
         $F : A \to B$ со свойствами:
-        1. F - биекция между основными множествами A и B;
-        2. $F(c_A) = c_B$ , где $c_A, c_B$ интерпретации константного символа c $\in$ $\sigma$ в АС
-        $\mathfrak{a}$ и $\mathfrak{b}$ соответственно (биекция F должна переводить константы одной АС в
-        константы другой АС);
-        3. $F(f_A(x_1, \dots , x_n)) = f_B(F(x_1), \dots F(x_n))$, где $f_A, f_B$ интерпретации функционального символа 
-        $f \in \sigma$ в АС $\mathfrak{a}$ и $\mathfrak{b}$ соответственно (говорят, что биекция
-        F сохраняет значение функции f);
-        4. $P_A(x1, \dots , xn) = 1 \Leftrightarrow P_B(F(x1), \dots , F(xn)) = 1$, где $P_A, P_B$ интерпретации предикатного 
-        символа $P \in \sigma$ в АС $\mathfrak{a}$ и $\mathfrak{b}$ соответственно (то есть биекция F отображает отображает область 
-        истинности предиката $P_A$ на область истинности предиката $P_B$).
+        \begin{enumerate}
+            \item F - биекция между основными множествами A и B;
+            \item $F(c_A) = c_B$ , где $c_A, c_B$ интерпретации константного символа c $\in$ $\sigma$ в АС
+            $\mathfrak{a}$ и $\mathfrak{b}$ соответственно (биекция F должна переводить константы одной АС в
+            константы другой АС);
+            \item $F(f_A(x_1, \dots , x_n)) = f_B(F(x_1), \dots F(x_n))$, где $f_A, f_B$ интерпретации функционального символа 
+            $f \in \sigma$ в АС $\mathfrak{a}$ и $\mathfrak{b}$ соответственно (говорят, что биекция
+            F сохраняет значение функции f);
+            \item $P_A(x_1, \dots , x_n) = 1 \Leftrightarrow P_B(F(x_1), \dots , F(x_n)) = 1$, где $P_A, P_B$ интерпретации предикатного 
+            символа $P \in \sigma$ в АС $\mathfrak{a}$ и $\mathfrak{b}$ соответственно (то есть биекция F отображает отображает область 
+            истинности предиката $P_A$ на область истинности предиката $P_B$).
+        \end{enumerate}
     \end{definition}
     \begin{definition}
         Алгебраические системы A и B изоморфны (обозначение: A $\cong$ B), если существует 
@@ -1566,7 +1745,7 @@
     \begin{theorem}
         Конечные АС изоморфны $\Leftrightarrow$ элементарно эквивалентны.
     \end{theorem}
-    \begin{proof} [$A\cong B <= A\equiv B$]
+    \begin{proof}
         Построим формулу, которая кодирует операции, предикаты и константы на $\mathfrak{A} : \phi_\mathfrak{A}$
         
         $\sigma = P\cup f\cup c, |a| = n, x_1, \dots, x_n - $ пронумерованные элементы A
