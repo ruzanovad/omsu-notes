@@ -581,7 +581,7 @@
         \hline
         0 & + & - & - & + & +\\
         1 & - & + & - & + & + \\
-        x & + & + & - & + & +\\
+        x & + & + & + & + & +\\
         $\neg x$ & - & - & +  & - & +\\
         $xy$ & + & + & - & + & -\\
         $x \vee y$ & + & + & - & + & -\\
@@ -1190,17 +1190,30 @@
             \item[5] C (MP 3, 4)
         \end{enumerate}
     \end{statement}
+    \begin{statement}[\hypertarget{Вывод 16}{Вывод 16}]
+        $$A \to (B \to C), B \vdash A \to C \Leftrightarrow A \to (B \to C), B, A \vdash C$$ 
+        \textbf{B в качестве гипотезы убирает импликацию, типа транзитивность}
+        \begin{enumerate}
+            \item A
+            \item B
+            \item $A \to (B \to C)$
+            \item $B \to C$ MP (1, 3)
+            \item C MP(2, 4)
+        \end{enumerate}
+    \end{statement}
     \begin{statement}[\hypertarget{Вывод 17}{Вывод 17}]
         $$\vdash \neg \neg B \to B \Leftrightarrow \neg \neg B\vdash B$$
+        \textbf{Из двойного отрицания следует отсутствие отрицания}
         \begin{enumerate}
             \item $(\neg B\to \neg \neg B)\to ((\neg B \to \neg B)\to B)$ (A3 при $A:=\neg B$)
             \item $\neg B \to \neg B$ вывод $\vdash A\to A$ из теоремы дедукции
-            \item $(\neg B\to \neg \neg B) \to B$ (к строкам 1, 2 применяем 16 при $А:=\neg B \to \neg \neg B, B:=\neg B \to \neg B, C:=B$)
+            \item $(\neg B\to \neg \neg B) \to B$ (к строкам 1, 2 применяем \hyperlink{Вывод 16}{16} при $А:=\neg B \to \neg \neg B, B:=\neg B \to \neg B, C:=B$)
             \item $\neg \neg B \to (\neg B \to \neg \neg B) $ А1 для $A := \neg \neg B, B := \neg B$
             \item $\neg \neg B \to B$ к строкам 3, 4 применяем \hyperlink{Вывод 15}{15} при $A = \neg \neg B, B = \neg B \to \neg \neg B, C :=B$
         \end{enumerate}
     \end{statement}
     \begin{statement}[\hypertarget{Вывод 18}{Вывод 18}]
+        \textbf{Из отсутствия отрицания следует двойное отрицание}
         $$\vdash B\to \neg \neg B$$
         аналогично \hyperlink{Вывод 17}{выводу 17}
     \end{statement}
@@ -1208,6 +1221,7 @@
         $$\vdash \neg A \to (A\to B)$$
         Применяем два раза теорему дедукции
         $$A, \neg A\vdash B$$
+        \textbf{Из высказывания и его отрицания можно вывести любое высказывание}
         \begin{enumerate}
             \item $\neg A$ гипотеза
             \item $A$ гипотеза
@@ -1224,6 +1238,7 @@
         $$\vdash (\neg B \to \neg A) \to (A\to B)$$
         По теореме дедукции 
         $$\neg B\to \neg A, A\vdash B$$
+        \textbf{Из контрапозиции выводится прямое}
         \begin{enumerate}
             \item $\neg B\to \neg A$ гипотеза
             \item A гипотеза
@@ -1235,13 +1250,15 @@
         \end{enumerate}
     \end{statement}
     \begin{statement}[\hypertarget{Вывод 23}{Вывод 23}] 
+        \textbf{Из прямого выводится контрапозиция}
         $$\vdash (A \to B) \to (\neg B\to \neg A)$$
         \hyperlink{Вывод 22}{аналогично выводу 22}
     \end{statement}  
     \begin{statement}[\hypertarget{Вывод 24}{Вывод 24}] 
+        \textbf{Из А и не Б следует отрицание прямого}
         $$\vdash A\to (\neg B \to \neg (A\to B)) \Leftrightarrow A, \neg B \vdash \neg (A \to B)$$
-        Очевидно, что применение MP для произвольных формул дает $A, A → B \vdash B$, по теореме дедукции имеет место выводимость
-        $\vdash A → ((A → B) → B)$
+        Очевидно, что применение MP для произвольных формул дает $A, A \to B \vdash B$, по теореме дедукции имеет место выводимость
+        $\vdash A \to ((A \to B) \to B)$
         \begin{enumerate}
             \item $((A\to B)\to B)\to (\neg B \to \neg (A\to B))$  \hyperlink{Вывод 23}{вывод 23 при $A:= A\to B$}
             \item $A\to ((A\to B) \to B)$ (только что доказали выше)
@@ -1252,6 +1269,7 @@
         $$\vdash (A\to B)\to ((\neg \to B) \to B)$$
         По теореме дедукции
         $$A\to B, \neg A \to B \vdash B$$
+        \textbf{Из импликации и импликации с отрицанием посылки выводится следствие}
         \begin{enumerate}
             \item $A\to B$ гипотеза
             \item $\neg A\to B$ гипотеза
@@ -1375,138 +1393,144 @@
             \item $A(a) = 1, C(a) = 1 \implies \Gamma \vdash C.$ По А1 $C\to (B\to C)$, примнеяем MP и получаем $\Gamma \vdash B\to C\implies \Gamma\vdash A$
         \end{enumerate}
     \end{proof}
-    \subsection{ИВ Генцена, его полнота}
-    \begin{enumerate}
-        \item Алфавит: $\{ x_1,\dots, x_n, \&, \vee, \to, ', (, ), \vdash, "," \} $
-        \item Используем слова двух видов:
-            \begin{enumerate}
-                \item Формулы - формулы логики высказываний
-                \item Секвенции - слова вида $\Gamma\vdash \Delta$, где $\Gamma, \Delta$ - множества формул
-            \end{enumerate}
-            Из всех формул $\Gamma$ вместе следует хотя бы одна формула из $\Delta$ ($\&\Gamma \to \vee\Delta$)
-        \item Аксиомы: секвенции
+    % \subsection{ИВ Генцена, его полнота}
+    % \begin{enumerate}
+    %     \item Алфавит: $\{ x_1,\dots, x_n, \&, \vee, \to, ', (, ), \vdash, "," \} $
+    %     \item Используем слова двух видов:
+    %         \begin{enumerate}
+    %             \item Формулы - формулы логики высказываний
+    %             \item Секвенции - слова вида $\Gamma\vdash \Delta$, где $\Gamma, \Delta$ - множества формул
+    %         \end{enumerate}
+    %         Из всех формул $\Gamma$ вместе следует хотя бы одна формула из $\Delta$ ($\&\Gamma \to \vee\Delta$)
+    %     \item Аксиомы: секвенции
         
-        $\Gamma, \phi \vdash \Delta, \phi$
-        \item Правила вывода:
-        \begin{itemize}
-            \item[$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
-            \item[$\vdash\;\vee$] $\frac{\Gamma \vdash \phi, \psi, \Delta}{\Gamma \vdash \phi\vee\psi, \Delta}$
-            \item[$\vdash\;\to$] $\frac{\Gamma , \phi \vdash  \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\to\psi, \Delta}$
-            \item[$\vdash\;'$] $\frac{\Gamma, \phi\vdash\Delta}{\Gamma \vdash \phi', \Delta}$
-            \item[$\&\;\vdash$] $\frac{\Gamma, \phi, \psi \vdash\Delta}{\Gamma, \phi\&\psi \vdash\Delta}$
-            \item[$\vee\;\vdash$] $\frac{\Gamma , \phi \vdash  \Delta \quad \Gamma, \psi \vdash  \Delta}{\Gamma,\phi\vee\psi \vdash  \Delta}$
-            \item[$\to\;\vdash$] $\frac{\Gamma \vdash\phi ,  \Delta \quad \Gamma, \psi \vdash  \Delta}{\Gamma,\phi\to\psi \vdash  \Delta}$
-            \item[$'\;\vdash$] $\frac{\Gamma \vdash\phi ,  \Delta }{\Gamma,\phi' \vdash  \Delta}$
-        \end{itemize}
-    \end{enumerate}
-    \begin{definition}
-        Секвенция $\Gamma\vdash \Delta$ доказуема, если существует конечная последовательность секвенций
-        $\Gamma_1\vdash \Delta_1, \dots, \Gamma_n\vdash \Delta_n\vdash \Gamma\vdash \Delta$, в которой каждая секвенция:
-        \begin{itemize}
-            \item либо аксиома;
-            \item либо получена из предыдущих по одному из правил вывода.
-        \end{itemize}
-    \end{definition}
-    \begin{remark}[Алгоритм поиска контрпримера к секвенции]
-        \begin{enumerate}
-            \item  Взять исходную секвенцию $\Gamma\vdash \Delta$ и разместить её в корне дерева.
-            \item С помощью правил вывода ИВ Генцена добавлять в дерево новые вершины.
-            Правила вывода нужно применять верх ногами, то есть по имеющейся секвенции выписать секвенции, которые находятся в верхней строке правил вывода
-            ИВ Генцена.
-            \item Процесс построения дерева завершается, когда во всех его листьях строят секвенции без логических операций.
-            \item Если во всех листьях дерева строят аксиомы ИВ Генцена, то исходная секвенция $\Gamma\vdash \Delta$ не имеет контрпримера. Иначе, у секвенции $\Gamma\vdash \Delta$ существует
-            контрпример.
-        \end{enumerate}
-    \end{remark}
-    \begin{example}
-        $x\to y\vdash x' \vee y$
+    %     $\Gamma, \phi \vdash \Delta, \phi$
+    %     \item Правила вывода:
+    %     \begin{itemize}
+    %         \item[$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
+    %         \item[$\vdash\;\vee$] $\frac{\Gamma \vdash \phi, \psi, \Delta}{\Gamma \vdash \phi\vee\psi, \Delta}$
+    %         \item[$\vdash\;\to$] $\frac{\Gamma , \phi \vdash  \psi, \Delta}{\Gamma \vdash \phi\to\psi, \Delta}$
+    %         \item[$\vdash\;'$] $\frac{\Gamma, \phi\vdash\Delta}{\Gamma \vdash \phi', \Delta}$
+    %         \item[$\&\;\vdash$] $\frac{\Gamma, \phi, \psi \vdash\Delta}{\Gamma, \phi\&\psi \vdash\Delta}$
+    %         \item[$\vee\;\vdash$] $\frac{\Gamma , \phi \vdash  \Delta \quad \Gamma, \psi \vdash  \Delta}{\Gamma,\phi\vee\psi \vdash  \Delta}$
+    %         \item[$\to\;\vdash$] $\frac{\Gamma \vdash\phi ,  \Delta \quad \Gamma, \psi \vdash  \Delta}{\Gamma,\phi\to\psi \vdash  \Delta}$
+    %         \item[$'\;\vdash$] $\frac{\Gamma \vdash\phi ,  \Delta }{\Gamma,\phi' \vdash  \Delta}$
+    %     \end{itemize}
+    % \end{enumerate}
+    % \begin{definition}
+    %     Секвенция $\Gamma\vdash \Delta$ доказуема, если существует конечная последовательность секвенций
+    %     $\Gamma_1\vdash \Delta_1, \dots, \Gamma_n\vdash \Delta_n\vdash \Gamma\vdash \Delta$, в которой каждая секвенция:
+    %     \begin{itemize}
+    %         \item либо аксиома;
+    %         \item либо получена из предыдущих по одному из правил вывода.
+    %     \end{itemize}
+    % \end{definition}
+    % \begin{remark}[Алгоритм поиска контрпримера к секвенции]
+    %     \begin{enumerate}
+    %         \item  Взять исходную секвенцию $\Gamma\vdash \Delta$ и разместить её в корне дерева.
+    %         \item С помощью правил вывода ИВ Генцена добавлять в дерево новые вершины.
+    %         Правила вывода нужно применять верх ногами, то есть по имеющейся секвенции выписать секвенции, которые находятся в верхней строке правил вывода
+    %         ИВ Генцена.
+    %         \item Процесс построения дерева завершается, когда во всех его листьях строят секвенции без логических операций.
+    %         \item Если во всех листьях дерева строят аксиомы ИВ Генцена, то исходная секвенция $\Gamma\vdash \Delta$ не имеет контрпримера. Иначе, у секвенции $\Gamma\vdash \Delta$ существует
+    %         контрпример.
+    %     \end{enumerate}
+    % \end{remark}
+    % \begin{example}
+    %     $x\to y\vdash x' \vee y$
 
-        Строим вывод:
-        \begin{itemize}
-            \item [$\to\;\vdash$] $\frac{x\vdash x, y\quad y, x\vdash y}{x\to y, x \vdash y}$
-            \item [$\vdash\; '$] $\frac{x\to y, x \vdash y}{x\to y\vdash x', y}$
-            \item [$\vdash\;\vee$]$\frac{x\to y\vdash x', y}{x\to y \vdash x' \vee y}$
-        \end{itemize}
-    \end{example}
-    \begin{definition}
-        $\Gamma = \{ \phi_1, \dots, \phi_n\}, \Delta = \{ \psi_1, \dots, \psi_m\} $. Секвенция
-        $\Gamma \vdash \Delta$ тождественно истинна, если тождественно истинна формула
-        $(\phi_1, \& \dots, \&\phi_n) \to (\psi_1\vee \dots \vee\psi_m)$
-    \end{definition}
-    \begin{theorem}
-        Секвенция $\Gamma \vdash \Delta$ доказуема $\Leftrightarrow$ $\Gamma \vdash \Delta$ тождественно истинна
-    \end{theorem}
-    \begin{itemize}
-        \item[$\Rightarrow$] (Корректность ИВ Генцена)
-        $\Gamma \vdash \Delta$ доказуема $\Leftrightarrow$ есть вывод
-        $\Gamma_1\vdash \Delta_1, \dots, \Gamma_n\vdash \Delta_n\vdash \Gamma\vdash \Delta$
-        Индукция по номеру секвенции:
-        докажем, что все секвенции в выводе тождественно истинны:
+    %     Строим вывод:
+    %     \begin{itemize}
+    %         \item [$\to\;\vdash$] $\frac{x\vdash x, y\quad y, x\vdash y}{x\to y, x \vdash y}$
+    %         \item [$\vdash\; '$] $\frac{x\to y, x \vdash y}{x\to y\vdash x', y}$
+    %         \item [$\vdash\;\vee$]$\frac{x\to y\vdash x', y}{x\to y \vdash x' \vee y}$
+    %     \end{itemize}
+    % \end{example}
+    % \begin{definition}
+    %     $\Gamma = \{ \phi_1, \dots, \phi_n\}, \Delta = \{ \psi_1, \dots, \psi_m\} $. Секвенция
+    %     $\Gamma \vdash \Delta$ тождественно истинна, если тождественно истинна формула
+    %     $(\phi_1, \& \dots, \&\phi_n) \to (\psi_1\vee \dots \vee\psi_m)$
+    % \end{definition}
+    % \begin{theorem}
+    %     Секвенция $\Gamma \vdash \Delta$ доказуема $\Leftrightarrow$ $\Gamma \vdash \Delta$ тождественно истинна
+    % \end{theorem}
+    % \begin{itemize}
+    %     \item[$\Rightarrow$] (Корректность ИВ Генцена)
+    %     $\Gamma \vdash \Delta$ доказуема $\Leftrightarrow$ есть вывод
+    %     $\Gamma_1\vdash \Delta_1, \dots, \Gamma_n\vdash \Delta_n\vdash \Gamma\vdash \Delta$
+    %     Индукция по номеру секвенции:
+    %     докажем, что все секвенции в выводе тождественно истинны:
 
-        Основание: k = 1.
+    %     Основание: k = 1.
 
-        $\Gamma_1\vdash \Delta_1$ аксиома, т.е имеет вид $\Gamma, \Psi\vdash \widetilde{\Delta}, \Psi $ - 
-        она тожд. истинная =>
-        $\& \Gamma_1 \to \vee \Delta_1 \sim \phi \& \& \Gamma_1 \to (\phi\vee \vee\Delta_1)$
+    %     $\Gamma_1\vdash \Delta_1$ аксиома, т.е имеет вид $\Gamma, \Psi\vdash \widetilde{\Delta}, \Psi $ - 
+    %     она тожд. истинная =>
+    %     $\& \Gamma_1 \to \vee \Delta_1 \sim \phi \& \& \Gamma_1 \to (\phi\vee \vee\Delta_1)$
 
-        Шаг индукции. Докажем для $\Gamma_k\vdash \Delta_k$, считая, что для всех предыдущих секвенций все доказано
-        \begin{enumerate}
-            \item $\Gamma_k\vdash \Delta_k$ аксиома - все аксиомы тожд. истинны (как и раньше)
-            \item Если секвенция получена по правилу вывода из секвенций $\Gamma_i\vdash \Delta_i, \Gamma_j\vdash \Delta_j, i, j < k$
-        \end{enumerate}
-        По инд. допущению, они тожд. истинны.
+    %     Шаг индукции. Докажем для $\Gamma_k\vdash \Delta_k$, считая, что для всех предыдущих секвенций все доказано
+    %     \begin{enumerate}
+    %         \item $\Gamma_k\vdash \Delta_k$ аксиома - все аксиомы тожд. истинны (как и раньше)
+    %         \item Если секвенция получена по правилу вывода из секвенций $\Gamma_i\vdash \Delta_i, \Gamma_j\vdash \Delta_j, i, j < k$
+    %     \end{enumerate}
+    %     По инд. допущению, они тожд. истинны.
 
-        Осталось доказать, что любое правило вывода из тождественно истинных секвенций даст тождественно истинную секвенцию.
-        Это делается перебором правил:
-        [$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
+    %     Осталось доказать, что любое правило вывода из тождественно истинных секвенций даст тождественно истинную секвенцию.
+    %     Это делается перебором правил:
+    %     [$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
 
-        $\Gamma \vdash \phi, \Delta$ тождественно истинны <=> $\& \Gamma \to (\phi\vee \vee\Delta)\sim 1$
+    %     $\Gamma \vdash \phi, \Delta$ тождественно истинны <=> $\& \Gamma \to (\phi\vee \vee\Delta)\sim 1$
 
-        $\Gamma \vdash \psi, \Delta$ тождественно истинны <=> $\& \Gamma \to (\psi\vee \vee\Delta)\sim 1$
+    %     $\Gamma \vdash \psi, \Delta$ тождественно истинны <=> $\& \Gamma \to (\psi\vee \vee\Delta)\sim 1$
 
-        \begin{enumerate}
-            \item $\& \Gamma \to \vee \Delta \sim 1$ => $\& \Gamma \to (\psi\&\phi\vee\vee\Delta)\sim 1$
-            \item $\& \Gamma \to \vee \Delta $не $\sim 1$
+    %     \begin{enumerate}
+    %         \item $\& \Gamma \to \vee \Delta \sim 1$ => $\& \Gamma \to (\psi\&\phi\vee\vee\Delta)\sim 1$
+    %         \item $\& \Gamma \to \vee \Delta $не $\sim 1$
             
-            $\& \Gamma \to \phi \sim 1$ и $\& \Gamma \to \psi \sim 1 => \& \Gamma \to (\psi\&\phi)\sim 1$ и поэтому $\& \Gamma \to (\psi\&\phi\vee \vee\Delta)\sim 1$
-        \end{enumerate}
-        Остальные правила вывода аналогично.
-        \item[$\Leftarrow$] (Полнота ИВ Генцена)
-        $\Gamma \vdash \Delta$ - тождественно истинна.
+    %         $\& \Gamma \to \phi \sim 1$ и $\& \Gamma \to \psi \sim 1 => \& \Gamma \to (\psi\&\phi)\sim 1$ и поэтому $\& \Gamma \to (\psi\&\phi\vee \vee\Delta)\sim 1$
+    %     \end{enumerate}
+    %     Остальные правила вывода аналогично.
+    %     \item[$\Leftarrow$] (Полнота ИВ Генцена)
+    %     $\Gamma \vdash \Delta$ - тождественно истинна.
 
-        Заметим, что во всех правилах верхняя секвенция содержит на одну связку меньше, чем нижняя.
+    %     Заметим, что во всех правилах верхняя секвенция содержит на одну связку меньше, чем нижняя.
 
-        Пусть в $\Delta$ есть формула со связкой, например, $\Phi\vee \Psi$. По правилу получим:
+    %     Пусть в $\Delta$ есть формула со связкой, например, $\Phi\vee \Psi$. По правилу получим:
 
-        $\frac{\Gamma, \phi, \psi\vdash \widetilde{\Delta} }{\Gamma \vdash \phi\vee\psi,  \widetilde{\Delta}}, \phi\vee\psi, \widetilde{\Delta} = \Delta$
+    %     $\frac{\Gamma, \phi, \psi\vdash \widetilde{\Delta} }{\Gamma \vdash \phi\vee\psi,  \widetilde{\Delta}}, \phi\vee\psi, \widetilde{\Delta} = \Delta$
 
-        Действуя аналогично, уберем в формулах из $\Delta $ все логические связки, уберем и в $\Gamma$
+    %     Действуя аналогично, уберем в формулах из $\Delta $ все логические связки, уберем и в $\Gamma$
 
-        Получим набор секвенций $\Gamma \vdash \Delta$ в которых $\Gamma$ и $\Delta$ состоят только из переменных.
-        \begin{enumerate}
-            \item Пусть есть переменная $x \in \Gamma \cap \Delta=>$ это аксиома
-            \item нет $x \in \Gamma \cap \Delta=\varnothing$, пусть
-            $\Gamma = \{ y_1, \dots, y_k \}, \Delta = \{ z_1, \dots, z_n \}$
+    %     Получим набор секвенций $\Gamma \vdash \Delta$ в которых $\Gamma$ и $\Delta$ состоят только из переменных.
+    %     \begin{enumerate}
+    %         \item Пусть есть переменная $x \in \Gamma \cap \Delta=>$ это аксиома
+    %         \item нет $x \in \Gamma \cap \Delta=\varnothing$, пусть
+    %         $\Gamma = \{ y_1, \dots, y_k \}, \Delta = \{ z_1, \dots, z_n \}$
 
-            положим $y_1 = \dots = y_k = 1, z_1, = \dots = z_n = 0$, при этой интерпретации $\&\Gamma \to \vee\Delta^\alpha = 0$
-        \end{enumerate}
-        Перебирая правила, докажем, что при любой интепретации $\alpha$, если одна из 
-        секвенций $\Gamma_1 \vdash \Delta_1$ $\Gamma_2 \vdash \Delta_2$ ложна, то и результат тоже ложь
+    %         положим $y_1 = \dots = y_k = 1, z_1, = \dots = z_n = 0$, при этой интерпретации $\&\Gamma \to \vee\Delta^\alpha = 0$
+    %     \end{enumerate}
+    %     Перебирая правила, докажем, что при любой интепретации $\alpha$, если одна из 
+    %     секвенций $\Gamma_1 \vdash \Delta_1$ $\Gamma_2 \vdash \Delta_2$ ложна, то и результат тоже ложь
 
-        [$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
+    %     [$\vdash\;\&$] $\frac{\Gamma \vdash \phi, \Delta \quad \Gamma \vdash \psi, \Delta}{\Gamma \vdash \phi\&\psi, \Delta}$
 
-        $\alpha$ - интерпретация $(\& \Gamma \to (\phi \vee \vee \Delta ))^\alpha = 0\Leftrightarrow (\& \Gamma)^\alpha = 1$
+    %     $\alpha$ - интерпретация $(\& \Gamma \to (\phi \vee \vee \Delta ))^\alpha = 0\Leftrightarrow (\& \Gamma)^\alpha = 1$
 
-        $(\phi\vee \vee \Delta)^\alpha = 0$$\phi^\alpha = 0$ и $(\& \Delta)^\alpha = 0$, тогда 
+    %     $(\phi\vee \vee \Delta)^\alpha = 0$$\phi^\alpha = 0$ и $(\& \Delta)^\alpha = 0$, тогда 
 
-        $(\& \Gamma \to (\phi\&\psi \vee \vee\Delta))^\alpha = 0 [\& \Gamma=1, \phi\&\psi = 0, \bigvee\Delta = 0]$ 
+    %     $(\& \Gamma \to (\phi\&\psi \vee \vee\Delta))^\alpha = 0 [\& \Gamma=1, \phi\&\psi = 0, \bigvee\Delta = 0]$ 
 
-        Спускаясь вниз к исходной секвенции, получаем что она ложна => противоречие.
-    \end{itemize}
-    \begin{proof}[теорема: ИВ Генцена непротиворечиво]
-        Для всех выводимых секвенций $\vdash A$ формула А тождественно истинна. Поэтому из аксиом нельзя вывести как A, так и $\neg A$
-    \end{proof}
-    \subsection{Метод резолюций для логики высказываний (без обоснования корректности)}
+    %     Спускаясь вниз к исходной секвенции, получаем что она ложна => противоречие.
+    % \end{itemize}
+    % \begin{proof}[теорема: ИВ Генцена непротиворечиво]
+    %     Для всех выводимых секвенций $\vdash A$ формула А тождественно истинна. Поэтому из аксиом нельзя вывести как A, так и $\neg A$
+    % \end{proof}
+    \subsection{Метод резолюций для логики высказываний}
+    Правило резолюции: $\frac{x \vee \phi, \quad x' \vee \phi}{\phi \vee \psi}$, $(x, x')$ - контрарная пара
+
+    Частный случай - $\frac{x, \quad x'}{\square}$ - пустой дизъюнкт
+    \begin{theorem}
+		$\Gamma \vdash \phi \Leftrightarrow \Gamma \cup \{\phi'\}$ противоречиво
+	\end{theorem}
 	\begin{remark}[Метод резолюций]
 		\begin{enumerate}
 			\item Формируем множество Г = $\{A_1, \dots, A_m, \neg B\}$
@@ -1523,6 +1547,69 @@
 			\item Если появился пустой дизъюнкт, то логическое следование есть. Если же новые дизъюнкты не появляются, а пустой идзъюнкт так и не был получен, то логического следования нет.
 		\end{enumerate}
 	\end{remark}
+    \begin{remark}
+        Правило резолюции помогает убрать только одну контрарную пару
+    \end{remark}
+    \begin{remark}[2]
+        Тождественно истинные формулы в выводе $\square$ не используются
+    \end{remark}
+    \begin{lemma}
+        $A_1, \dots, A_n \models B\Leftrightarrow \{A_1, \dots, A_n, \neg B\}$ - несовместно
+    \end{lemma}
+    \begin{proof}
+        Пусть $\{A_1, \dots, A_n, B\}$ - совместно, то есть существует такой набор значений переменных
+        $a = (a_1, \dots, a_n)$, что $A_1(a) =\dots = A_n(a) = 1, \neg B(a) = 1$. получаем что B не следует из ашек.
+
+        Достаточность. Пусть B не следует из множества. Это означает, что существует набор значений переменных 
+        $a = (a_1, \dots, a_n)$ такой, что $A_1(a) =\dots = A_n(a) = 1, B(a) = 0$. Последнее равенство дает совместность множества
+        $\{A_1, \dots, A_n, \neg B\}$
+    \end{proof}
+    \begin{lemma}
+        $x \vee P, \neg x\vee Q\models P\vee Q$
+    \end{lemma}
+    \begin{theorem}
+        Для $\{A_1, \dots, A_n, B\}$ метод резолюций получает пустой дизъюнкт тогда и только тогда,
+        когда $A_1, \dots, A_n\models B$
+    \end{theorem}
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Rightarrow$] Получен пустой дизъюнкт - была получена пара дизъюнктов $x_i, x_i'$.
+            По пред. лемме это означает, что $A_1, \dots, A_n, \neg B\models x_i, x_i'\implies$
+            $\{A_1, \dots, A_n, B\}$ несовместно $\implies$ имеет место быть логическое следование в условии.
+            \item[$\Leftarrow$]
+            ММИ по числу переменных, входящих в $\{A_1, \dots, A_n, B\}$
+
+            База. n = 1, тогда множество дизъюнктов D $\{A_1, \dots, A_n, \neg B\}$
+            содержится во множестве $\{x_i, x_i '\}$. Из логического следования следует несовместность D, поэтому
+            D = $\{x_i, x_i '\}$. Тогда получаем пустой дизъюнкт.
+
+            Пусть верно для всех чисел не больше n. Докажем для $A_1, \dots, A_n, B$, зависящих от n переменных.
+
+            D =  множество дизъюнктов. Разобъем его на две части $D = D^+\cup D^-$
+            ($D^+$ - не содержит отрицания x, $D^-$ аналогично, могут пересекаться, так как есть д. не зависящие ни от x, ни от x')
+
+            Пусть множество $D++(D--)$ получено из множества $D+(D-)$ удалением вхождений переменной $x_i (x_i')$
+
+            $D^{++}, D^{--}$ зависят от переменных $x_1, \dots, x_{n-1}$
+            
+            Пусть множество $D^{++}$ совместно, то есть существует набор$(a_1, \dots, a_{n-1}, a_n)$, на котором все формулы истинны.
+            
+            Рассмотрим набор $(a_1, \dots, a_{n-1}, 0)$. На нем будут истинны все диз. из D+,
+            (они либо содержат $x_n$, либо этот дизъюнкт из $D++$)
+
+            На этом же наборе истинны все д. из $D^-$ аналогично.
+
+            Этот набор делает все дизъюнкты множества D истинными. Так как каждая формула из множества Г ДНФ, то
+            все формулы истинны. Противоречие, $D^+$ несовместно.
+
+            Аналогично $D^-$ несовместно.
+
+            Для $D^{++}, D^{--}$ несовместны и зависят от n-1 переменных, для них выполнено предположение индукции.
+            Для данных множеств существует вывод пустого дизъюнкта. Если восстановить во множествах $D^{++}, D^{--}$
+            вхождения $x_n, \neg x_n$, то мы получим, что из $D^+$ существует вывод диз. $x_i$, а Из
+            $D^- - \neg x_n$. Тогда из D выводятся и x, и отрицание, поэтому из D выводится пустой дизъюнкт.
+        \end{itemize}
+    \end{proof}
     \section{Логика предикатов}
     \subsection{Понятие предиката и операции, их представления, примеры}
     \begin{definition}
@@ -1702,7 +1789,9 @@
         \end{enumerate}
     \end{theorem}
     \begin{proof}
-        Индукция по построению термов. Основание: const/переменная
+        \begin{enumerate}
+            \item
+            Индукция по построению термов. Основание: const/переменная
 
         \begin{enumerate}
             \item $t(x_1, \dots, x_n) = x_i\implies \alpha (t_A(a_1, \dots, a_n)) = \alpha(a_i) = t_B (\alpha(a_1), \dots, \alpha(a_n))$
@@ -1712,11 +1801,68 @@
         Шаг индукции
 
         Пусть утверждение теоремы доказано для термов $t_1(x_1, \dots, x_n), \dots, t_k (x_1, \dots, x_n)$
+        Докажем для терма $t(x_1, \dots, x_n) = f(t_1(x_1, \dots, x_n), \dots, t_k(x_1, \dots, x_n))$
+
+        $$\alpha (t_\mathfrak{a}(a_1, \dots, a_n)) = \alpha (f_\mathfrak{a}(t_{1\mathfrak{a}}(a_1, \dots, a_n), \dots, t_{k\mathfrak{a}}(a_1, \dots, a_n)))=$$
+        $$=f_\mathfrak{b}(\alpha(t_{1\mathfrak{a}}(a_1, \dots, a_n)), \dots, \alpha(t_{k\mathfrak{a}}(a_1, \dots, a_n)))=$$
+        по индукционному допущению для термов $t_1, \dots, t_k$
+        $$=f_\mathfrak{b}(t_{1\mathfrak{b}}(\alpha(a_1), \dots, \alpha(a_n)), \dots, t_{k\mathfrak{b}}(\alpha(a_1), \dots, \alpha(a_n)))=$$
+        $$t_\mathfrak{b}(\alpha(a_1), \dots, \alpha(a_n))$$
+            \item 
+            Индукция по построению формулы $\phi$
+
+            Основание: 
+            \begin{enumerate}
+                \item $t_1 = t_2$
+
+                $\mathfrak{a} \models \phi(a_1, \dots, a_n)\Leftrightarrow t_{1\mathfrak{a}}(a_1, \dots, a_n) = t_{2\mathfrak{a}}(a_1, \dots, a_n) $
+                $$(\alpha(t_{1\mathfrak{a}}(a_1, \dots, a_n)) = \alpha(t_{2\mathfrak{a}}(a_1, \dots, a_n)))\quad\text{так как}\;\alpha\;\text{биекция}$$
+                $$\alpha(t_{1\mathfrak{a}}(a_1, \dots, a_n)) = t_{1\mathfrak{b}}(\alpha(a_1), \dots, \alpha(a_n))$$
+                $$\alpha(t_{2\mathfrak{a}}(a_1, \dots, a_n)) = t_{2\mathfrak{b}}(\alpha(a_1), \dots, \alpha(a_n))\implies$$
+                $\mathfrak{b}\models \phi(\alpha(a_1), \dots, \alpha(a_n)) \Leftrightarrow t_{1\mathfrak{b}}(\alpha(a_1), \dots, \alpha(a_n)) = t_{2\mathfrak{b}}(\alpha(a_1), \dots, \alpha(a_n))$
+                \item $\phi = P(t_1, \dots, t_n)$
+
+                $$\mathfrak{a}\models \phi(a_1, \dots, a_n)\leftrightarrow P_{\mathfrak{a}}(t_{1\mathfrak{a}}(a_1, \dots, a_n), \dots, t_{k\mathfrak{a}}(a_1, \dots, a_n))=1$$
+                По опр. изоморфизм $P_{\mathfrak{b}} (\alpha(t_{1\mathfrak{a}}(a_1, \dots, a_n)), \dots, \alpha(t_{k\mathfrak{a}}(a_1, \dots, a_n))) = 1 =$
+                
+                по пункту о термах
+                $$= P_{\mathfrak{b}}(t_{1\mathfrak{a}}(\alpha(a_1), \dots, \alpha(a_n)), \dots, t_{k\mathfrak{a}}(\alpha(a_1), \dots, \alpha(a_n)))$$
+                $$\mathfrak{b} \models \phi(\alpha(a_1), \dots, \alpha(a_n))$$
+            \end{enumerate}
+            Шаг индукции:
+            \begin{enumerate}
+                \item
+                $\phi = \phi_1 \& \phi_2$, причем для $\phi_1, \phi_2$ утв верно.
+                $$\mathfrak{a}\models \phi(a_1, \dots, a_n)\Leftrightarrow \phi_1(a_1, \dots, a_n)\& \phi_2(a_1, \dots, a_n)\leftrightarrow$$
+                $\mathfrak{a}\models \phi_1(a_1, \dots, a_n)$ и $\mathfrak{a}\models \phi_2(a_1, \dots, a_n) \leftrightarrow$ по инд. допущению
+
+                $\mathfrak{b} \models \phi_1(\alpha(a_1), \dots, \alpha(a_n))$ и $\mathfrak{b} \models \phi_2(\alpha(a_1), \dots, \alpha(a_n))\leftrightarrow$
+
+                $\mathfrak{b}\models (\phi_1 \& \phi_2)(\alpha(a_1), \dots, \alpha(a_n)) \leftrightarrow \mathfrak{b}\models \phi(\alpha(a_1), \dots, \alpha(a_n))$
+                \item
+                $\phi = \neg \psi$
+                $$\mathfrak{a}\models \phi(a_1, \dots, a_n)\Leftrightarrow \mathfrak{a} \not\models \psi(a_1, \dots, a_n)\Leftrightarrow \;\text{по инд. допущению}\;\mathfrak{b}\not\models \psi(\alpha(a_1), \dots, \alpha(a_n))\Leftrightarrow \mathfrak{b} \models \phi(\alpha(a_1), \dots, \alpha(a_n))$$
+                т.к $\{\neg, \&\}$ - базис, то все хорошо
+                \item 
+                $\phi(a_1, \dots, a_n) = \exists y \psi(y, x_1, \dots, x_n)$
+
+                $$\mathfrak{a} \models \phi(a_1, \dots, a_n)\Leftrightarrow \exists y \psi(y, x_1, \dots, x_n)\Leftrightarrow$$
+                Для некот. $b\in A\quad \mathfrak{a}\models \psi(b, a_1, \dots, a_n)$ инд доп $\Leftrightarrow$
+
+                Для некот. $b\in A\quad \mathfrak{b}\models \psi(\alpha(b), \alpha(a_1), \dots, \alpha(a_n))\implies$
+
+                Для некот. $c\in B [c = \alpha(b)]\quad \mathfrak{b}\models \psi(c, \alpha(a_1), \dots, \alpha(a_n))\Leftrightarrow$
+
+                $$\mathfrak{b}\models \exists y \psi(y, \alpha(a_1), \dots, \alpha(a_n))\Leftrightarrow \mathfrak{b}\models \phi(\alpha(a_1), \dots, \alpha(a_n))$$
+
+                Т.к $\forall y \psi (y)\sim \exists y \neg \psi(y)$, утверждение теоремы доказано для $\forall y \psi(y, a_1, \dots, a_n)$
+            \end{enumerate}
+        \end{enumerate}
     \end{proof}
     \subsection{Элементарная теория алгебраической системы. Элементарная эквивалентность систем. Связь понятий изоморфизма и элементарной эквивалентности}
     \begin{definition}
         Пусть $\mathfrak{A}$ АС сигнатуры $\sigma$. Множество всех замкнутых формул
-        сигнатуры $\sigma$, истинных на A называется теорией АС $\mathfrak{A}$ и обозначается Th($\mathfrak{A}$).
+        сигнатуры $\sigma$, истинных на A называется элементарной теорией АС $\mathfrak{A}$ и обозначается Th($\mathfrak{A}$).
         Более формально,
         $Th(\mathfrak{a}) = \{\phi|\mathfrak{a} \models \phi\}$
     \end{definition}
@@ -2059,30 +2205,41 @@
 		Зафиксируем сигнатуру $\sigma$. Исчисление предикатов сигнатуры $\sigma$ состоит из следующий элементов.
 		\begin{enumerate}
 			\item Алфавит. $A = \sigma \cup \{x_1, \dots, x_2, \dots, \rightarrow, \neg, \forall, \exists, (, ), <,> , =\}$
-			\item Формулы исчисления предиктов - это формулы логики предикатов
+			\item Формулы исчисления предиктов - это формулы логики предикатов, использующие только $\to, \neg$
 			\item Аксиомы ИП
 			\begin{enumerate}
-				\item $\phi \rightarrow (\psi \rightarrow)$
-				\item $(\phi \rightarrow (\psi \rightarrow \theta)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \theta))$
-				\item $(\neg \psi \rightarrow \neg \phi) \rightarrow ((\neg \psi \rightarrow \phi) \rightarrow \psi)$
-				\item $(\forall x \phi(x)) \rightarrow \phi(t)$
-				\item $\phi(t) \rightarrow (\exists x \phi(x))$
+				\item (Аксиомы ИВ) $\phi \rightarrow (\psi \rightarrow\phi)$ A1
+				\item $(\phi \rightarrow (\psi \rightarrow \theta)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \theta))$ A2
+				\item $(\neg \psi \rightarrow \neg \phi) \rightarrow ((\neg \psi \rightarrow \phi) \rightarrow \psi)$ A3
+				\item (Аксиомы кванторов) $(\forall x \phi(x)) \rightarrow \phi(t)$ B1
+				\item $\phi(t) \rightarrow (\exists x \phi(x))$ B2
 				\begin{remark}
 					Здесь t - терм, подскановка которого в формулу $\phi$ вместо переменной x корректна
 				\end{remark}
-				\item $\forall x = x$
-				\item $\forall x\forall y (x = y \rightarrow y = x$
-				\item $\forall x \forall y \forall z (x = y \& y = z \rightarrow x = z$
-				\item Для предикатного символа $P^{(n)} \in \sigma$: $$\forall x_1, \dots, \forall x_n \forall y_1, \dots, \forall y_n [x_1 = y_1 \& \dots \& x_n = y_n \& P(x_1, \dots, x_n) \rightarrow P(y_1, \dots, y_n)]$$
-				\item Для функционального символа $f^{(n)} \in \sigma$: $$\forall x_1, \dots, \forall x_n \forall y_1, \dots, \forall y_n [x_1 = y_1 \& \dots \& x_n = y_n \& f(x_1, \dots, x_n) = f(y_1, \dots, y_n)]$$
+                \begin{definition}
+                    Подстановка терма t вместо x корректная, если переменные терма t после подстановки не становятся связанными
+                \end{definition}
+				\item (Аксиомы равенства) $\forall x x = x$
+				\item $\forall x\forall y (x = y \rightarrow y = x)$
+				\item $\forall x \forall y \forall z (x = y \& y = z \rightarrow x = z)$
+				\item Для предикатного символа $P^{(n)} \in \sigma$: $$\forall x_1, \dots, \forall x_n \forall y_1, \dots, \forall y_n [x_1 = y_1 \& \dots \& x_n = y_n \& P(x_1, \dots, x_n) \leftrightarrow P(y_1, \dots, y_n)]$$
+				\item Для функционального символа $f^{(n)} \in \sigma$: $$\forall x_1, \dots, \forall x_n \forall y_1, \dots, \forall y_n [x_1 = y_1 \& \dots \& x_n = y_n \to f(x_1, \dots, x_n) = f(y_1, \dots, y_n)]$$
 			\end{enumerate}
 			\item Правила вывода ИП
 
 				modus ponens $$\frac{\phi, \phi \rightarrow \psi}{\psi}$$
 
-				правила П. Бернайса $$\frac{\phi \rightarrow \psi(x)}{\phi \rightarrow (\forall x \psi(x))}$$ $$\frac{\psi(x) \rightarrow \phi}{(\exists x \psi(x)) \rightarrow \phi}$$
+				правила П. Бернайса(x не входит свободно $\phi$) $$\frac{\phi \rightarrow \psi(x)}{\phi \rightarrow (\forall x \psi(x))}$$ $$\frac{\psi(x) \rightarrow \phi}{(\exists x \psi(x)) \rightarrow \phi}$$
 		\end{enumerate}
 	\end{definition}
+    \begin{lemma}[\hypertarget{Лемма 1}{Лемма 1}]
+        Пусть $\Phi_1(x_1, \dots, x_k), \dots, \Phi_n(x_1, \dots, x_k)$ - вывод в ИВ ($x_i$ - булевая переменная)
+
+        $\phi_1, \dots, \phi_k$ - формулы ИП $\implies \Phi_1(\phi_1, \dots, \phi_k), \dots \Phi_n(\phi_1, \dots, \phi_k)$ - вывод в ИП
+    \end{lemma}
+    \begin{proof}
+        Индукция по построению исходного вывода
+    \end{proof}
 	\begin{statement}[Свойства выводов]
 		В любой формальной системе выполнены следующие утверждения.
 		\begin{enumerate}
@@ -2096,35 +2253,155 @@
         Теория сигнатуры $\sigma$ - это произвольное множество замкнутых формул сигнатуры  $\sigma$.
     \end{definition}
     \begin{definition}
-        Модель теории T — это алгебраическая система A, в которой истинны одновременно все 
+        Модель теории T — это алгебраическая система A, в которой истинны одновременно все формулы из Т $(\mathfrak{a}\models T)$
     формулы теории T.
     \end{definition}
+    \begin{remark}
+        $T\models \phi$ - $\phi$ истинна во всех моделях теории Т.
+    \end{remark}
     \subsection{Непротиворечивая теория. Полная теория. Свойства непротиворечивых и полных теорий}
     \begin{definition}
         Теория T противоречивая, если существует формула $\phi$ такая, что одновременно 
     $T \models \phi$ и $T \models \neg\phi$. В противном случае теория T непротиворечивая.
     \end{definition}
+    \begin{definition}
+        Непротиворечивая теория T полна (в данной сигнатуре), если для любой замкнутой формулы 
+        $\phi$ этой сигнатуры либо формула $\phi$, либо её отрицание ¬$\phi$ выводится из T.
+    \end{definition}
+    \begin{lemma}[\hypertarget{Лемма 2}{Лемма 2}]
+        Теория противоречива $\Leftrightarrow \forall \phi T\vdash \phi$
+    \end{lemma}
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Leftarrow$] $\phi$ - произвольная формула, $T\vdash \phi$. Так как $\forall \phi T\vdash \neg \phi\implies$ противоречива
+            \item[$\Rightarrow$] $\exists \phi: T\vdash\phi, T\vdash \neg \phi$
+            
+            В ИВ есть вывод $A, \neg A \vdash B$ для $\forall$ формулы ИВ В по \hyperlink{Лемма 1}{лемме 1} $\phi, \neg \phi \vdash \psi$ для любых формул ИП:
+            $$\forall \phi T\vdash \phi$$
+        \end{itemize}
+    \end{proof}
+    \begin{lemma}[\hypertarget{Лемма 3}{Лемма 3}]
+        $T\vdash \phi, \mathfrak{a}\models T \implies \mathfrak{a}\models \phi$
+    \end{lemma}
+    \begin{proof}
+        Индукция по построению вывода $\phi$ из T
+
+        1 - либо аксиома, либо гипотеза
+
+        Схема доказательства - все аксиомы тождественно истинны,
+        
+        если $\phi$ - гипотеза, то по определению теории, модели она также истинна,
+
+        все правила вывода сохраняют истинность формул
+    \end{proof}
     \subsection{Теорема о существовании модели (без доказательства)}
     \begin{theorem}[Теорема о существовании модели]
         Каждая непротиворечивая теория имеет модель. 
     \end{theorem}
     \subsection{Теорема о связи выводимости и противоречивости}
 	\begin{theorem}
-		Пусть Т - теория. $\phi$ - замкнутая формула. Тогда $T \vdash \phi \leftrightarrow$ теория $T \cup \{\neg\phi\}$ противоречива
+		Пусть Т - теория. $\phi$ - замкнутая формула. Тогда $T \vdash \phi \Leftrightarrow$ теория $T \cup \{\neg\phi\}$ противоречива
 	\end{theorem}
+    \begin{proof}
+        \item[$\Rightarrow$] очевидно
+        \item[$\Leftarrow$] $T\cup \{\neg\phi\}$,
+        
+        по лемме из противоречимой теории выводится любая формула
+        $$T\cup\{\neg\phi\}\vdash \phi \implies T\vdash \neg \phi \to \phi$$
+        Строим вывод $\neg \phi\to \phi \vdash \phi$
+        \begin{enumerate}
+            \item $(\neg \phi \to \neg \phi)\to ((\neg \phi \to \phi)\to \phi)$ (A3)
+            \item $\neg \phi\to \neg \phi$ вывод из теоремы о дедукции
+            \item $((\neg \phi \to \phi)\to \phi)$ MP 1, 2
+            \item $\neg \phi\to \phi$ гипотеза
+            \item $\phi$ MP 3, 4
+        \end{enumerate}
+    \end{proof}
     \subsection{Теоремы о корректности и полноте ИП}
 	\begin{theorem}
-		$T \vdash \phi \leftrightarrow T \models \phi$ 
+        T - множество замкнутых формул сигнатуры $\sigma, \phi$ - формула сигнатуры $\sigma$. Тогда  
+		$T \vdash \phi \Leftrightarrow T \models \phi$ 
 	\end{theorem}
+    \begin{theorem}[Корректность ИП]
+        T - множество замкнутых формул сигнатуры $\sigma, \phi$ - формула сигнатуры $\sigma$. Тогда  
+		$T \vdash \phi \Rightarrow T \models \phi$ 
+	\end{theorem}
+    \begin{proof}
+        $T\models \phi \Leftrightarrow\phi$ - истинна во всех моделях теории Т.
+
+        $\mathfrak{a}\models T$, по \hyperlink{Лемма 3}{Л3} $\mathfrak{a}\models \phi$
+    \end{proof}
+    \begin{statement}[Следствие]
+        Если у теории T есть модель, то T непротиворечивая
+    \end{statement}
+    \begin{proof}
+        Если $\mathfrak{a}\models T.$
+
+        Докажем, что $\exists \phi: \quad T\vdash \phi, T\vdash \neg \phi$
+        
+        По \hyperlink{Лемма 3}{лемме 3}
+        $T\models \phi, T\models \neg\phi\implies \mathfrak{a}\models \phi, \mathfrak{a}\models \neg\phi$ - противоречие
+    \end{proof}
+    \begin{theorem}[Полнота ИП]
+        T - множество замкнутых формул сигнатуры $\sigma, \phi$ - формула сигнатуры $\sigma$. Тогда  
+		$T \vdash \phi \Leftarrow T \models \phi$ 
+	\end{theorem}
+    \begin{proof}
+        $T\cup \{\neg \phi\}$, допустим, что оно непротиворечиво, по теореме о существовании модели
+        $\exists \mathfrak{a}\models T\cup \{\neg \phi\}\implies \mathfrak{a}\models T$
+
+        у нас $T\models \phi \Leftrightarrow$ в любой модели T
+        истинна $\phi: \mathfrak{a}\models \phi$ и $\mathfrak{a}\models \neg\phi$ - противоречие
+    \end{proof}
     \subsection{Теорема компактности}
     \begin{theorem}[Теорема компактности]
         Теория имеет модель $\Leftrightarrow$ каждая ее конечная подтеория имеет модель. 
     \end{theorem}
-    \subsection{Аксиоматизируемые и конечно аксиоматизируемые классы. Конечно аксиоматизируемые теории}
+    \begin{proof}
+        \begin{itemize}
+            \item[$\Rightarrow$] $\mathfrak{a}\models T$, пусть $T_0\subseteq T\implies \mathfrak{a}\models T_0$ 
+            \item[$\Leftarrow$] пусть все конечные $T_0\subseteq T$ имеют модель
+            $\implies$ каждая $T_0$ - непротиворечивая
+
+            Допустим, что $T$ противоречива: $\exists \phi: T\vdash \neg \phi$
+
+            По свойствам вывода:
+            $\exists T_1$(конечная)$\subseteq T: T_1\vdash \phi$
+            $\exists T_2$(конечная)$\subseteq T: T_2\vdash \neg\phi$
+            $$T_1 \cup T_2\vdash \phi, \neg \phi$$
+            $\implies$ мы нашли конечную подтеорию $\subseteq T$, которая противоречива, а это противоречие.
+        \end{itemize}
+    \end{proof}
+    \begin{lemma}[\hypertarget{Лемма 4}{Лемма 4}]
+        $\mathfrak{b}\models Th (\alpha)\implies \mathfrak{a}\equiv \mathfrak{b}$
+    \end{lemma}
+    \begin{proof}
+        Надо доказать, что $Th \mathfrak{a}= Th \mathfrak{b}$
+
+        Из того, что $\mathfrak{b}\models Th \mathfrak{a}\implies Th \mathfrak{a} \subseteq Th \mathfrak{b} $
+        
+        Докажем, что $Th \mathfrak{b} \not \subseteq Th \mathfrak{a} \implies$
+        $\exists \phi \in Th \mathfrak{b}\quad \phi \notin Th \mathfrak{a}\Leftrightarrow \mathfrak{a}\not\models \phi\implies \mathfrak{a}\models \neg \phi \implies$
+        $\neg \phi \in Th \mathfrak{b}\subseteq Th \mathfrak{b}\implies \mathfrak{b}\models \phi, \mathfrak{b}\models \neg \phi\implies$ противоречие
+    \end{proof}
     \subsection{Обоснование нестандартного анализа (построение алгебраической системы, элементарно эквивалентной полю вещественных чисел, содержащей бесконечно малые элементы)}
-    \subsection{Метод резолюций для логики предикатов (без доказательства корректности)}
+    Существует ли алгебраическая система, похожая на $\mathbb{R}$, но с бесконечно малыми элементами? 
+    \begin{theorem}[А. Робинсон]
+        Существует алгебраическая система $\mathbb{R}^*$ с бесконечно малым элементами, эквивалентная системе
+        $R = <\mathbb{R}, +, \cdot, -, /, 0, 1, <>$ - гипервещественные числа
+    \end{theorem}
+    \begin{proof}
+        пусть $T = Th R \cup \{с\leq \frac{1}{n} \& 0 < c | n\in \mathbb{N}\}$, c - некоторый константный символ
 
+        Модель теории T - нужная нам система
 
+        Берем конечные подтеории $T_0\subseteq T$
+
+        $T_0\subseteq Th R \cup \{c > 0\} \cup \{c \frac{1}{h_1}, \dots, c \frac{1}{h_k}\}\implies$
+        $\exists T_0 - R,$ в которой c интерпретируется как $\frac{1}{\max{h_1, \dots, h_k}+1}\implies$
+        
+        по теореме компактности у T есть модель
+    \end{proof}
 % \end{multicols*}
 
 \end{document}
