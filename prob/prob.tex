@@ -1,0 +1,152 @@
+\documentclass[a4paper]{article}
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{xcolor}
+
+\newcommand\letsymbol{\mathord{\sqsupset}}
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem*{axiom}{Аксиома}
+\theoremstyle{definition}
+\newtheorem*{definition}{Определение}
+\newtheorem*{statement}{Утверждение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+\tableofcontents
+\section{Вероятностное пространство}
+
+\begin{definition}[Алгебра]
+    Семейство $\mathcal{A}$ подмножеств множества $\Omega$ называется
+    алгеброй, если выполнены след. аксиомы:
+    \begin{enumerate}
+        \item $\varnothing \in \mathcal{A}$
+        \item $A\in\mathcal{A} \implies \overline{A}\in \mathbb{A}$
+        \item (аддитивность) $A_1, \dots, A_n \in \mathbb{A} \implies A_1 \cup \dots \cup A_n\in \mathbb{A}$ 
+    \end{enumerate}
+\end{definition}
+\begin{definition}[$\sigma$-алгебра]
+    Алгебра называется $\sigma$-алгеброй, если 
+    \[A_1, \dots, A_n \in \mathcal{A} \implies \bigcup\limits_{k = 1}^\infty  A_k \in \mathcal{A}\]
+\end{definition}
+\begin{definition}[мера]
+    $\mu: \mathcal {A} \to [0; \infty)$ - мера, если 
+    \[A_1, ..., A_n \in \mathcal{A}, A_i\cap A_j = \varnothing, i\neq j: \quad \mu(\bigcup\limits_{n = 1}^\infty  A_n) = \sum\limits_{n = 1}^\infty \mu (A_n)\quad \text{счетная аддитивность}\]
+
+    Мера конечная, если $\mu(\Omega) < \infty$
+
+    Мера вероятностная, если $\mu (\Omega) = 1$
+\end{definition}
+\begin{definition}[Вероятностное пространство]
+    Тройка $(\Omega, \mathcal{A}, P)$, где 
+    \begin{enumerate}
+        \item $\Omega$ - пространство элементарных событий;
+        \item $\mathcal{A}$ - $\sigma-$алгебра подмножеств $\Omega$ (события);
+        \item P - вероятностная счетно-аддитивная мера на $\mathcal{A}$ (вероятность);
+        называется вероятностным пространством.
+    \end{enumerate}
+\end{definition}
+Все элементарные исходы равновозможны
+\begin{multicols*}{2}
+    \begin{definition}[Классическая вероятность]
+        Модель вероятностного пространства (A - событие)
+        \begin{enumerate}
+            \item $\Omega = \{\omega_1, \dots, \omega_n\}$ - конечное пространство
+            \item $\mathcal{A}$ все подмножества $\Omega$
+            \item $P(A) = \sum\limits_{\omega\in A}p_\omega = \frac{|A|}{|\Omega|}$
+        \end{enumerate}
+    \end{definition}
+    \vfill\null\columnbreak
+    \begin{definition}[Геометрическая вероятность]  
+        $V\in \mathbb{R}^n$
+        \begin{enumerate}
+            \item $\Omega = V$
+            \item $\mathcal{A}$ - борелевская $\sigma-$алгебра 
+            (минимальная $\sigma-$алгебра, содержащая все компакты) подмножеств $V$
+            \item $P(A) = \frac{\mu(A)}{\mu(V)}$
+        \end{enumerate}
+    \end{definition}
+\end{multicols*}
+
+\subsection{Некоторые следствия аксиоматики}
+\begin{enumerate}
+    \item \begin{axiom}[Аксиома непрерывности]
+        Если $A_1\supset A_2, \dots, \supset A_n \supset \mathcal{A}, \bigcap\limits_{i = 1}^\infty A_i = \varnothing$, то
+        \[\lim\limits_{n\to \infty} P(A_n) = 0\]
+    \end{axiom}
+    \begin{proof}
+        Пусть $B_n\downarrow \varnothing$. Тогда обозначим $A_n = B_n \setminus B_{n+1}, n = 1, \dots, .$. $A_n$ попарно несовместны и 
+        \[B_1  =    \sum\limits_{n = 1}^\infty A_n \quad B_n  =  \sum\limits_{k = n}^\infty A_k, \]
+        поэтому из счетной аддитивности меры следует сходимость ряда \[P(B_1)=\sum\limits_{n = 1}^\infty P(A_n),\] и сумма остатка ряда \[P(B_n) =  \sum\limits_{k = n}^\infty P(A_k) = 0.\] 
+    \end{proof}
+    \item (Формула включений и исключений)
+    \[P(\bigcup\limits_{k = 1}^\infty A_k)  = \sum_{k = 1}^n P(A_k) - \sum_{i < j}^n P(A_i \cap A_j) + \dots + {(-1)}^{n-1} P(A_1 \cap ... \cap A_n)\]
+    \begin{proof}
+        Выводится через обычную формулу включений и исключений для множеств по индукции \[P(A \cup B) = P(A) + P(B) - P(AB)\]+ 
+        \[\begin{cases}
+            A \cup B = A + (B\setminus AB) \\ 
+            \text{Счетная аддитивность} \\ 
+            P(B \setminus AB) = P(B) - P(AB) (\text{также по счетной аддитивности})
+        \end{cases}
+        \]
+    \end{proof}
+\end{enumerate}
+\subsubsection{Индикатор}
+\begin{definition}
+    Индикатор события А - это функция $I_A(\omega) = \begin{cases}
+        1,  & \omega \in A \\
+        0,  & \omega \notin A
+        \end{cases}$
+\end{definition}
+\paragraph{Свойства индикатора}
+\begin{enumerate}
+    \item $I_{\bar{A}} = 1 - I_A$
+    \item $I_{A_1 \cap A_2} = I_{A_1}I_{A_2}$
+    \item $I_{A_1\cup\dots\cup A_n} = 1 - I_{\bar{A_1} \cap \dots\cap \bar{A_n}} = 1  -  I_{\bar{A_1}}\dots I_{\bar{A_n}} = 1 - (1 - I_{A_1})\dots(1 - I_{A_n})$
+\end{enumerate}
+\section{Условные вероятности и независимость}
+\section{Случайные величины}
+\begin{definition}[Случайная величина]
+    Случайной величиной (СВ) $X(\omega)$ называется функция элементарного события $\omega$ с областью определения $\Omega$
+и областью значений $\mathbb{R}$ такая, что событие $\{\omega : X(\omega) \leq x\}$ принадлежит $\sigma$ -алгебре $\mathcal{F}$ при любом действительном $x \in \mathbb{R}$ . Значения x функции $X(\omega)$ называются реализациями СВ $X(\omega)$.    
+\end{definition}
+\begin{definition}[Закон распределения]
+    Любое правило (таблица, функция), позволяющее находить вероятности всех возможных событий, связанных со случайной величиной.
+\end{definition}
+\paragraph*{Примеры законов распределения}
+\begin{definition}[Математическое ожидание]
+    Математическое ожидание случайной величины $\xi = xi(\omega)$ обозначается $M\xi$ и определяется как сумма
+    \[M\xi = \sum_{\omega \in \Omega} \xi(\omega) p(\omega)\]
+\end{definition}
+\paragraph*{Свойства мат. ожидания}
+\begin{enumerate}
+    \item $M I_A = P(A)$
+    \begin{proof}
+    \[M I_A = \sum_{\omega \in \Omega} I_A(\omega) p (\omega) = \sum_{\omega \in A} p(\omega)  = P(A)\]
+    \end{proof}
+    \item Аддитивность: $M(\xi + \eta) = M\xi + M\eta$
+    \begin{proof}
+        
+    \end{proof}
+    Из этого также следует конечная аддитивность.
+    \item Для любой константы C \[M(C\xi) = cM\xi,\quad MC = C\]
+    \item Математическое ожидание $\xi$ выражается через закон распределения случайной величины $\xi$ формулой
+    \[M\xi = \sum_{i = 1}^k x_k P \{\xi = x_i\}\]
+\end{enumerate}
+Подставляя в числовую функцию случайную величину, мы также получаем случайную величину. Например, если $\eta = g(\xi)$, то \[M\eta  = M g(\xi)  = \sum_{i = 1}^k g(x_i) P\{\xi = x_i\}\]
+При этом \[g(x_i) = \sum_{i = 1}^k g(x_i) I_{\xi = x_i}\]
+\end{document}
