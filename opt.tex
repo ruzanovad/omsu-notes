@@ -118,9 +118,6 @@ $    \begin{cases}
 \begin{theorem}[Вторая теорема эквивалентности]
     Для любой ЗЛП существует эквивалентная ей симметрическая ЗЛП.
 \end{theorem}
-\begin{theorem}[Критерий разрешимости]
-    Если целевая функция задачи ЛП ограничена сверху (снизу), на непустом множестве допустимых решений, то задача максимизации (минимизации) имеет оптимальное решение
-\end{theorem}
 \subsection{Каноническая задача ЗЛП. Базисные решения}
 \begin{definition}[Базисное решение]
     Пусть $\overline{x}$ - решение $Ax = B$. Тогда вектор $\overline{x}$ называется базисным решением СЛАУ, если система вектор-столбцов матрицы А, соответствующая компонентам вектора $\overline{x}$, ЛНЗ
@@ -210,7 +207,7 @@ $    \begin{cases}
 \begin{theorem}[Основное неравенство двойственности]
     $$\forall x\in D_I, \forall y\in D_{II}, f(x)\leq g(y)$$
 \end{theorem}
-\paragraph*{Теоремы двойственности}
+\subsection{Теоремы двойственности}
 \begin{lemma}[основная лемма]
     Пусть $\forall x\in D_I \neq \varnothing, f(x)\leq M < +\infty\implies \exists y \in D_{II}\, g(y)\leq M$
 \end{lemma}
@@ -225,4 +222,32 @@ $    \begin{cases}
 \begin{theorem}[Вторая теорема двойственности]
     $x^* \in D_I, y^*\in D_{II}.$ оптимальны в задачах I, II тогда и только тогда, когда они удовлетворяют УДН.
 \end{theorem}
+\subsection{Критерий разрешимости ЛП}
+\begin{definition}[Точная верхняя грань функции]
+    $M^*$ называется точной верхней гранью функции f(x) на множестве D, если \begin{enumerate}
+        \item $\forall x \in D \quad f(x) \leq M^*$
+        \item $\forall M < M^* \quad \exists x\in D \quad f(x)> M$
+    \end{enumerate}
+\end{definition}
+\begin{lemma}[О точной верхней грани функции g(y) на $D_{II}$]
+    $M^*< +\infty$ - точная верхняя грань $f(x)$ на $D_{I}$, тогда $\forall y \in D_{II} \quad g(y) \geq M^*$
+\end{lemma}
+\begin{theorem}[Критерий разрешимости]
+    Целевая функция задачи ЛП ограничена сверху (снизу) на непустом множестве допустимых решений тогда и только тогда, когда задача максимизации (минимизации) разрешима
+\end{theorem}
+\subsection{Классификация пар двойственных задач}
+\begin{theorem}[Малая теорема двойственности]
+    Если $D_I \neq \varnothing, D_{II} \neq \varnothing\implies$ обе задачи точно разрешимы
+\end{theorem}
+\begin{theorem}[О причинах неразрешимости ЗЛП]
+    $D_{I}\neq \varnothing$, целевая функция неограничена сверху на $D_I$ тогда и только тогда, когда II неразрешима, так как $D_{II}=\varnothing$
+\end{theorem}
+\paragraph*{Классификация}
+\begin{enumerate}
+    \item $D_I\neq \varnothing, D_{II} \neq \varnothing$ обе задачи разрешимы, т.к $f(x^*) = g(y^*)$
+    \item $D_I\neq \varnothing, D_{II} = \varnothing$ обе неразрешимы, т.к $f(x)$ неограничена, $D_{II}=\varnothing$
+    \item $D_I = \varnothing, D_{II} \neq \varnothing$ обе неразрешимы, т.к  $D_I = \varnothing, g\to +\infty$ на $D_{II}$
+    \item $D_I = \varnothing, D_{II} = \varnothing$ обе неразрешимы
+\end{enumerate}
+
 \end{document}
