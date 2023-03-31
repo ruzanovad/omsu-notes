@@ -3,8 +3,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T2A]{fontenc}
 \usepackage{amsfonts}
+
 \usepackage{amsmath, amsthm}
 \usepackage{amssymb}
+\usepackage{mathrsfs}
 \usepackage{hyperref}
 \usepackage{multicol}
 \usepackage{xcolor}
@@ -119,6 +121,31 @@
     \item $I_{A_1\cup\dots\cup A_n} = 1 - I_{\bar{A_1} \cap \dots\cap \bar{A_n}} = 1  -  I_{\bar{A_1}}\dots I_{\bar{A_n}} = 1 - (1 - I_{A_1})\dots(1 - I_{A_n})$
 \end{enumerate}
 \section{Условные вероятности и независимость}
+\begin{definition}[Условная вероятность]
+    Пусть $P(B)>0$. Условной вероятностью $P(A|B)$ события А при условии, что произошло событие B (или просто: при условии B), назовем отношение
+    $$P(A|B) = \frac{P(AB)}{P(B)}$$
+    Применяется также обозначение $P_B(A)$
+\end{definition}
+\begin{theorem}[Теорема умножения]
+    Пусть события $A_1, \dots, A_n$ таковы, что $P(A_1, \dots, A_{n-1)}>0$. Тогда $$P(A_1, \dots, A_n) = P(A_1)P_{A_1}(A_2)\dots P_{A_1, \dots, A_{n-1}}(A_n)$$
+\end{theorem}
+\begin{proof}
+    Из условия теоремы вытекает, что существуют все условные вероятности из формулы.
+    
+    База индукции $P(AB) = P(B)P_B(A)$.
+
+    Переход: $B=A_1, \dots, A_{n-1}, A = A_n$, применим формулу выше
+\end{proof}
+\begin{definition}[Разбиение]
+    Систему событий $A_1, \dots, A_n$ будем называть конечным разбиением (в дальнейшем - просто разбиением),
+    если они попарно несовместны и 
+    \[A_1+\dots A_n = \Omega\]
+\end{definition}
+\begin{theorem}[Формула полной вероятности]
+    Если $A_1, \dots, A_n$ - разбиение и все $P(A_k)>0$, то для любого события B имеет
+    место формула
+    \[P(B) = \sum_{k = 1}^n P(A_k)P(B|A_k)\]
+\end{theorem}
 \section{Случайные величины}
 \begin{definition}[Случайная величина]
     Случайной величиной (СВ) $X(\omega)$ называется функция элементарного события $\omega$ с областью определения $\Omega$
@@ -128,6 +155,11 @@
     Любое правило (таблица, функция), позволяющее находить вероятности всех возможных событий, связанных со случайной величиной.
 \end{definition}
 \paragraph*{Примеры законов распределения}
+\begin{enumerate}
+    \item Биномиальный закон
+    \item Гипергеометрическое распределение
+    \item Равномерное распределение
+\end{enumerate}
 \begin{definition}[Математическое ожидание]
     Математическое ожидание случайной величины $\xi = xi(\omega)$ обозначается $M\xi$ и определяется как сумма
     \[M\xi = \sum_{\omega \in \Omega} \xi(\omega) p(\omega)\]
@@ -149,4 +181,72 @@
 \end{enumerate}
 Подставляя в числовую функцию случайную величину, мы также получаем случайную величину. Например, если $\eta = g(\xi)$, то \[M\eta  = M g(\xi)  = \sum_{i = 1}^k g(x_i) P\{\xi = x_i\}\]
 При этом \[g(x_i) = \sum_{i = 1}^k g(x_i) I_{\xi = x_i}\]
+\begin{definition}[n-ый момент случайной величины]
+    Математическое ожидание $M\xi^n$ называется n-ым моментом (или моментом n-ого порядка) случайной величины $\xi$ (или ее закона распределения).
+\end{definition}
+\begin{definition}[Абсолютный n-ый момент]
+    Математическое ожидание $M {|\xi|}^n$.
+\end{definition}
+\begin{definition}[Центральный момент n-ого порядка]
+    $M(\xi-M\xi)^n$
+\end{definition}
+\begin{definition}[Абсолютный центральный момент n-ого порядка]
+    $M|\xi-M\xi|^n$
+\end{definition}
+\begin{definition}[Дисперсия]
+    $D\xi = M(\xi - M\xi)^2$
+\end{definition}
+\begin{definition}[Среднее квадратическое отклонение (стандартное отклонение)]
+    $\sqrt(D\xi)$
+\end{definition}
+\paragraph*{Свойства дисперсии}
+\begin{enumerate}
+    \item $D\xi = M\xi^2 - (M\xi)^2$
+    \item $D\xi\leq 0$ и $D\xi = 0$ тогда и только тогда, когда существует такая константа c, что $P\{\xi = c\} = 1$
+    \item Для любой константы c $D(c\xi) = c^2 D\xi, \quad D(\xi +c) = D\xi$
+\end{enumerate}
+\begin{theorem}[Неравенство Иенсена]
+    Если числовая функция $g(x)$, то для любой случайной величины $\xi$
+    \[Mg(\xi)\leq g(M\xi)\]
+\end{theorem}
+\begin{theorem}[Неравенство Ляпунова]
+    Для любых положительных $\alpha \leq \beta$
+    \[(M|\xi|^\alpha)^{1/ \alpha}\leq (M|\xi|^\beta)^{1/ \beta}\]
+\end{theorem}
+\begin{theorem}[Неравенство Коши-Буняковского]
+    
+\end{theorem}
+\subsection{Многомерные законы распределения}
+\subsection{Независимость случайных величин}
+\begin{definition}[Независимость случайных величин]
+    $\xi_1, \dots, \xi_n$ называются независимыми, если порожденные ими алгебры \[\mathcal{A}_{\xi_1}, \dots, \mathcal{A}_{\xi_n}\] независимы.
+\end{definition}
+\begin{theorem}[Неравенство Чебышева]
+    Для любого $x>0$ имеют место неравенства:
+    \[P\{|\xi|\geq x\} \leq \frac{M|\xi|}{x}\]
+    \[P\{|\xi - M\xi| \geq x\} \leq \frac{D \xi}{x^2}\]
+\end{theorem}
+\subsection{Случайные величины (общий случай)}
+\begin{definition}
+    Числовая функция $\xi = \xi (\omega)$ от элементарного события $\omega \in \Omega$ называется случайной величиной, если для любого числа x
+    % \[\{\xi \leq x\}=\{\omega : \xi(\omega)\leq x\} \in \mathscr{A}\]
+\end{definition}
+\begin{definition}[Функция распределения случайной величины $\xi$]
+    
+\end{definition}
+\begin{theorem}[Свойства функции распределения]
+    Функция распределения $F(x)$
+\end{theorem}
+\begin{definition}[Борелевская $\sigma$-алгебра]
+    $\sigma$-алгебра $\mathcal{A}$ числовых множеств, порожденная всевозможными интервалами вида $x_1<x\leq x_2$, называется борелевской; множества A, входящие в $\mathcal{A}$, называются борелевскими.
+\end{definition}
+\paragraph*{Примеры дискретных распределений}
+\begin{enumerate}
+    \item Биномиальное
+    \item Пуассоновское
+    \item Геометрическое
+\end{enumerate}
+\begin{theorem}
+    Если $\xi$ - случайная величина, а $g(x)$ - борелевская функция, то $\eta = g(\xi)$ есть случайная величина
+\end{theorem}
 \end{document}
