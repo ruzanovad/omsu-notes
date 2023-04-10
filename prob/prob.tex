@@ -151,15 +151,25 @@
     Случайной величиной (СВ) $X(\omega)$ называется функция элементарного события $\omega$ с областью определения $\Omega$
 и областью значений $\mathbb{R}$ такая, что событие $\{\omega : X(\omega) \leq x\}$ принадлежит $\sigma$ -алгебре $\mathcal{F}$ при любом действительном $x \in \mathbb{R}$ . Значения x функции $X(\omega)$ называются реализациями СВ $X(\omega)$.    
 \end{definition}
+\begin{definition}[Алгебра, порожденная случайной величиной]
+    Пусть $x_1< \dots< x_k$ - значения, принимаемые случайной величиной $\xi$. Каждая такая
+    величина определяет разбиение из событий $A_i = \{\omega : \xi(\omega) = x_i\}$.
+    Т.к $x_i\neq x_j$, то $A_i A_j = \varnothing$. Сумма - достоверное событие $\Omega$.
+
+    Разбиение порождает алгебру событий \[\{\xi \in B =\} = \{\omega: \xi (\omega) \in B\} \],
+    B - числовое множество. 
+\end{definition}
 \begin{definition}[Закон распределения]
     Любое правило (таблица, функция), позволяющее находить вероятности всех возможных событий, связанных со случайной величиной.
 \end{definition}
+
 \paragraph*{Примеры законов распределения}
 \begin{enumerate}
     \item Биномиальный закон
     \item Гипергеометрическое распределение
     \item Равномерное распределение
 \end{enumerate}
+
 \begin{definition}[Математическое ожидание]
     Математическое ожидание случайной величины $\xi = xi(\omega)$ обозначается $M\xi$ и определяется как сумма
     \[M\xi = \sum_{\omega \in \Omega} \xi(\omega) p(\omega)\]
@@ -216,29 +226,93 @@
 \begin{theorem}[Неравенство Коши-Буняковского]
     
 \end{theorem}
+\paragraph*{Джентльменский набор}
+\begin{enumerate}
+    \item Равномерное дискретное распределение
+    \[P\{\xi=k\} = \frac{1}{N}, \quad M\xi = \frac{1+N}{2}, \quad D\xi = \frac{N^2-1}{12}\]
+    \item Биномиальное (распределение Бернулли)
+    \[P\{n=k\}=C_n^k p^k (1-p)^{n-k}, \quad M\xi = np, \quad D\xi = np(1-p)\]
+    \item Геометрическое распределение
+    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{(1-p)^2}\]
+    \item Распределение Пуассона
+    \[P\{n=k\}=\frac{\lambda^k}{k!}e^{-\lambda}, \quad M\xi = \lambda, \quad D\xi = \lambda\]
+    
+\end{enumerate} 
 \subsection{Многомерные законы распределения}
 \subsection{Независимость случайных величин}
 \begin{definition}[Независимость случайных величин]
     $\xi_1, \dots, \xi_n$ называются независимыми, если порожденные ими алгебры \[\mathcal{A}_{\xi_1}, \dots, \mathcal{A}_{\xi_n}\] независимы.
 \end{definition}
+\begin{definition}[Независимость случайных величин]
+    $\xi_1, \dots, \xi_n$ называются независимыми, если для любых $x_{1_{j_1}}\dots, x_{x_{j_n}}$
+    \[P\{\xi_1 = x_{1_{j_1}}, \xi_n = x_{1_{j_n}}\} = \prod_{i = 1}^n P\{\xi_i = x_{1_{j_i}}\}\]
+\end{definition}
+\begin{theorem}
+    Если случайные величины \(\xi_1, \dots \xi_n\) независимы, а \(g_i(x)\) - числовые функции, то случайные величины \(\eta_1 = g_1(\xi_1), \dots \eta_n = g_n(\xi_n) \) также независимы.
+\end{theorem}
+\begin{theorem}[Мультипликативное свойство математических ожиданий]
+    Если случайные величины \(\xi_1, \dots \xi_n\) независимы, то 
+    \[M \xi_1, \dots, \xi_n = \prod_{i = 1}^n M \xi_i\]
+\end{theorem}
+\begin{theorem}[Аддитивное свойство дисперсии]
+    Если случайные величины \(\xi_1, \dots \xi_n\) независимы, то 
+    \[D(\xi_1 + \cdots + \xi_n) = D\xi_1 + \cdots + D\xi_n\]
+\end{theorem}
+\paragraph*{Евклидово пространство случайных величин}
+Условное мат. ожидание $M (\xi | \eta)$- ортогональная проекция $\xi$ на линейное подпространство $\eta$
+\paragraph*{Условные математические ожидания}
+\begin{definition}[Условная вероятность]
+    Условная вероятность \(P(B|\mathscr{A}(\alpha))\) относительно \(\mathscr{A}(\alpha)\) как случайную величину, которая принимает значение \(P(B|A_k)\) при \(\omega \in A_k\).
+\end{definition}
+\begin{definition}[Условный закон распределения]
+    Условный закон распределения $\eta $ при заданном значении $\xi = x_k$ назовем набор условных вероятностей
+    \[P\{\eta = y_t | \xi = x_k\} = \frac{P(\eta = y_t, \xi = x_k)}{P(\xi = x_k)}, \quad t = 1, \dots, m\]
+\end{definition}
+\begin{definition}[Условное мат.ожидание]
+    Условное мат.ожидание $\eta$ при заданном значении $\xi = x_k$
+    \[M\{\eta | \xi = x_k\} = \sum_{t = 1}^{m} P\{\eta = y_t| \xi = x_k\} = \frac{\sum_{t = 1}^{m}y_t P(\eta = y_t, \xi = x_k)}{P(\xi = x_k)}\]
+\end{definition}
+Условное мат.ожидание является функцией от $\eta$. Случайная величина $M(\eta | \xi)$ - условное мат.ожидание при заданном $\xi$
+\begin{definition}
+    \[M[M(\eta | \xi)] = \sum_{k = 1}^{n} P\{\xi  = x_k\}M\{\eta | \xi = x_k\}\]
+\end{definition}
+\begin{theorem}
+    \[M[M(\eta | \xi)] = M\eta\]
+\end{theorem}
 \begin{theorem}[Неравенство Чебышева]
     Для любого $x>0$ имеют место неравенства:
     \[P\{|\xi|\geq x\} \leq \frac{M|\xi|}{x}\]
     \[P\{|\xi - M\xi| \geq x\} \leq \frac{D \xi}{x^2}\]
 \end{theorem}
-\subsection{Случайные величины (общий случай)}
+\section{Случайные величины (общий случай)}
 \begin{definition}
     Числовая функция $\xi = \xi (\omega)$ от элементарного события $\omega \in \Omega$ называется случайной величиной, если для любого числа x
-    % \[\{\xi \leq x\}=\{\omega : \xi(\omega)\leq x\} \in \mathscr{A}\]
+    \[\{\xi \leq x\}=\{\omega : \xi(\omega)\leq x\} \in \mathscr{A}\]
 \end{definition}
 \begin{definition}[Функция распределения случайной величины $\xi$]
-    
+    \[F(x) = F_\xi (x) = P \{\xi \le x\}\], определенная при всех $x\in R$
 \end{definition}
+При помощи этой функции можно выразить вероятность попадания $\xi$ в интервалы.
+\[P(x_1 < \xi \le x_2) = F(x_2) - F(x_1)\]
+\[\{\xi < x\}: \quad \sum_{n=1}^{\infty} \{x - \frac{1}{n-1}<\xi \le x - \frac{1}{n}\} \]
+\[P({\xi = x}) = F(x) - F(x - 0)\]
+\[P({x_1 \le \xi \le x_2}) = F(x_2) - F(x_1 - 0)\]
+\[P({x_1 < \xi < x_2}) = F(x_2 - 0 )  - F(x_1)\]
+\[P (x_1 \le \xi < x_2) = F(x_2 - 0) - F(x_1 - 0)\]
 \begin{theorem}[Свойства функции распределения]
-    Функция распределения $F(x)$
+    Функция распределения $F(x)$ обладает следующими свойствами:
+    \begin{enumerate}
+        \item F(x) не убывает
+        \item F(x) непрерывна справа
+        \item $F(+\infty) = 1$
+        \item $F(-\infty) = 0$
+    \end{enumerate}
 \end{theorem}
 \begin{definition}[Борелевская $\sigma$-алгебра]
     $\sigma$-алгебра $\mathcal{A}$ числовых множеств, порожденная всевозможными интервалами вида $x_1<x\leq x_2$, называется борелевской; множества A, входящие в $\mathcal{A}$, называются борелевскими.
+\end{definition}
+\begin{definition}[$\sigma-$алгебра, порожденная случайной величиной $\xi$]
+    Совокупность $\xi^{-1}(B)$ для всех борелевских множеств борелевской алгебры.
 \end{definition}
 \paragraph*{Примеры дискретных распределений}
 \begin{enumerate}
@@ -249,4 +323,63 @@
 \begin{theorem}
     Если $\xi$ - случайная величина, а $g(x)$ - борелевская функция, то $\eta = g(\xi)$ есть случайная величина
 \end{theorem}
+\begin{definition}[Распределение вероятностей]
+    $P_\xi(B)$, определенная для всех $B\in \mathscr{B}$, называется распределением вероятностей случайной величины $\xi$
+\end{definition}
+\begin{definition}[величина с дискретным распределением]
+    величина имеет дискретное распределение, если в точках разрыва
+    функции распределения вероятности таковы, что их сумма $\sum_{k = 1}^{\infty} p_k  = 1$
+
+\end{definition}
+% \begin{theorem}[Каратеодори]
+    
+% \end{theorem}
+\begin{definition}[Плотность распределения]
+    $p(x) = p_\xi(x)$ - плотность распределения случайной величины $\xi$, если для любых $x_1 < x_2$
+    \[P\{x_1 < \xi < x_2\} = \int_{x_1}^{x_2}p_\xi (x)dx\]
+\end{definition}
+\paragraph*{Свойства}
+\[p(x)\le 0, \int_{-\infty}^{\infty} p(x)dx = 1\]
+\section{Математическое ожидание}
+\begin{definition}[Простая случайная величина]
+    Случайная величина простая, если она представима в виде
+    \[\xi = \xi (\omega) = \sum_{j = 1}^m x_j I_{A_j}(\omega)\]
+    где события $A_1, \dots, A_m$ составляют разбиение, т.е $A_i A_j = \varnothing$ при $i \neq j$ и $\sum_{j = 1}^m A_i = \Omega$
+\end{definition}
+\begin{definition}[Мат. ожидание простой случайной величины]
+    \[M\xi = \sum_{j = 1}^m x_j P(A_j)\]
+\end{definition}
+\begin{definition}[Мат. ожидание неотрицательной случайной величины]
+    \[M\xi = \lim_{n\to \infty} M\xi^n\]
+\end{definition}
+\begin{definition}[Мат. ожидание в общем случае]
+    \[\xi = \xi^+ - \xi^-,\] где \(\xi^+ = \xi I_{\{\xi\geq 0\}}\), \(\xi^+ = |\xi| I_{\{\xi< 0\}}\)
+\end{definition}
+\paragraph*{Свойства мат. ожидания}
+\begin{enumerate}
+    \item Свойство линейности
+    \item Свойство положительности
+    \item Свойство конечности
+\end{enumerate}
+\section{Производящие функции}
+\begin{definition}[Целочисленная случайная величина]
+    Дискретная случайная величина $\xi$, принимающая только целые неотрицательные значения.
+
+    Закон распределения: \[p_n = P\{\xi = n\}, n = 0, 1\dots, \quad \sum_{n = 0}^{\infty} p_n = 1\]
+\end{definition}
+\begin{definition}[Производящая функция]
+    \[\phi_\xi(s) = M s^\xi = \sum_{n = 0}^{\infty} p_n s^n\]
+    Ряд абсолютно сходится при $|s|\le 1$
+\end{definition}
+\paragraph*{Джентльменский набор}
+\begin{enumerate}
+    \item Равномерное дискретное распределение
+    \[P\{\xi=k\} = \frac{1}{N}, \quad M\xi = \frac{1+N}{2}, \quad D\xi = \frac{N^2-1}{12}, \quad \phi(s) = \sum_{n=1}^{\infty} \frac{s^n}{n}=-\ln(1-s)\]
+    \item Биномиальное (распределение Бернулли)
+    \[P\{n=k\}=C_n^k p^k {(1-p)}^{n-k}, \quad M\xi = np, \quad D\xi = np(1-p), \quad \phi(s) = \sum_{m = 0}^{\infty} C_n^m p^m {(1-p)}^{n-m} = {(ps +1-p)}^n\]
+    \item Геометрическое распределение
+    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{{(1-p)}^2}, \quad \phi(s) = \sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{p}{1-(1-p)s} \]
+    \item Распределение Пуассона
+    \[P\{n=k\}=\frac{\lambda^k}{k!}e^{-\lambda}, \quad M\xi = \lambda, \quad D\xi = \lambda, \quad \phi(s) = \sum_{n = 0}^{\infty} \frac{\lambda^n s^n}{n!}e^{-\lambda}=e^{\lambda (s-1)}\]
+\end{enumerate} 
 \end{document}
