@@ -276,3 +276,7 @@ TSWLatexianTemp*
 *.lpz
 
 *.exe
+
+
+.idea
+.vscode
