@@ -9,6 +9,7 @@ from tabulate import tabulate
 def read(file):
     number_of_variables = int(file.readline())
     number_of_restrictions = int(file.readline())
+    # todo regex split (много пробелов +)
     function = Function(file.readline().split())
     restrictions = []
     soft_restrictions = []
@@ -104,6 +105,18 @@ class Problem:
 
         for soft_restriction in self.soft_restrictions:
             flag &= soft_restriction == Inequality.GREATEREQ
+        return flag
+    
+    def is_primarly_feasible(self) -> bool:
+        flag = True
+        for i in range(len(self.restrictions)):
+            flag &= self.restrictions[i].b >= 0
+        return flag
+    
+    def is_dual_feasible(self)->bool:
+        flag = True
+        for i in range(len(self.function.array)):
+            flag &= self.function.array[i] <= 0
         return flag
 
     def make_canon(self, log: bool):
@@ -229,8 +242,10 @@ class Problem:
         # temp_list = copy.deepcopy(self.restrictions)
         list_of_basis = []
         # vector_of_nonbasis = function.array
+        candidates = []
         for i in range(len(self.function.array)):
             if self.function.array[i] == 0:
+                candidate = [i, -1]
                 null = 0
                 basis = 0
                 index_of_basis = -1
@@ -239,29 +254,29 @@ class Problem:
                     basis += self.restrictions[j].coefs[i] == 1
                     if self.restrictions[j].coefs[i] == 1:
                         index_of_basis = j
-                if basis != 1 or null != len(self.restrictions) - 1:
-                    return False
-                list_of_basis.append(index_of_basis)  # iтая переменная, index oj basis - номер ограничения
+                if basis == 1 and null == len(self.restrictions) - 1:
+                    candidate[-1] = index_of_basis
+                    candidates.append(candidate) # iтая переменная, index oj basis - номер ограничения
+                    list_of_basis.append(index_of_basis)
         list_of_basis.sort()
-        if len(list_of_basis) == 0 or list_of_basis[0] != 0 or list_of_basis[-1] != len(list_of_basis) - 1:
+        if len(list_of_basis) != len(problem.restrictions):
             return False
         return True
 
     def check_special(self):
         if not self.check_reduced():
             return False
-        flag = True
-        for i in range(len(self.restrictions)):
-            flag &= self.restrictions[i].b >= 0
-        return flag
+        return self.is_primarly_feasible()
 
     def get_basis(self):
         if not self.check_reduced():
             return []
+
+        # vector_of_nonbasis = function.array
         list_of_basis = []
-        vector_of_nonbasis = list(map(lambda x: x != 0, self.function.array))
-        for i in range(len(vector_of_nonbasis)):
-            if not vector_of_nonbasis[i]:
+        for i in range(len(self.function.array)):
+            if self.function.array[i] == 0:
+                candidate = [i, -1]
                 null = 0
                 basis = 0
                 index_of_basis = -1
@@ -270,11 +285,12 @@ class Problem:
                     basis += self.restrictions[j].coefs[i] == 1
                     if self.restrictions[j].coefs[i] == 1:
                         index_of_basis = j
-                if basis != 1 or null != len(self.restrictions) - 1:
-                    return None
-                if len(list(filter(lambda x: x[1] == index_of_basis, list_of_basis))) == 0:
-                    list_of_basis.append((i, index_of_basis))  # iтая переменная, index of basis - номер ограничения
+                if basis == 1 and null == len(self.restrictions) - 1:
+                    candidate[-1] = index_of_basis
+                    list_of_basis.append(candidate) # iтая переменная, index oj basis - номер ограничения
         list_of_basis.sort(key=lambda x: x[1])
+        if len(list_of_basis) != len(problem.restrictions):
+            return None
         return list_of_basis
 
     def check_vector(self, vector: list[Fraction]):
@@ -330,9 +346,15 @@ class Problem:
 
 class SimplexTable:
     @staticmethod
-    def simplex_method(problem: Problem, func: str, full_table=True, artificial=False):
-        if not problem.check_special():
-            print("задача имеет отрицательные элементы в столбце правых частей")
+    def simplex_method(problem: Problem, func: str, full_table=True, artificial=False, dual=False):
+        if not dual and not problem.check_special():
+            print("таблица не прямо допустимая")
+            return None
+        elif dual and (not problem.check_reduced() or not problem.is_dual_feasible()):
+            print("таблица не двойственно допустимая")
+            return None
+        if dual and artificial:
+            print("метод искусственного базиса не используется с двойственным симплекс методом")
             return None
         table = []
 
@@ -355,7 +377,7 @@ class SimplexTable:
                 print("Итерация №%d" % count)
 
                 print("Проверка на оптимальность")
-                if all([table[1][i + 2] >= 0 for i in range(len(problem.function.array))]):
+                if not dual and all([table[1][i + 2] >= 0 for i in range(len(problem.function.array))]) or dual and all([table[i+2][1] >= 0 for i in range(len(problem.restrictions))]):
                     d = {problem.variables[i]: 0 for i in range(len(problem.variables))}
                     for i in range(len(problem.restrictions)):
                         d[table[i + 2][0]] = table[i + 2][1]
@@ -368,29 +390,53 @@ class SimplexTable:
                         return table
                     return list(d.values()), table[1][1]
                 print("Проверка на неразрешимость")
-                if any([all([table[j + 1][i + 2] < 0 for j in range(len(problem.restrictions) + 1)]) for i in
-                        range(len(problem.variables))]):
-                    print("Задача ЛП неразрешима, т.к f(x) не ограничена сверху на множестве допустимых решений D_I")
-                    return None
-                print("Выбор ведущего столбца")
-                q = -1
-                max_q = 0
-                for i in range(len(problem.variables)):
-                    if table[1][i + 2] < 0 and table[1][i + 2] < max_q:
-                        max_q = table[1][i + 2]
-                        q = i
-                print("Столбец %s является ведущим" % problem.variables[q])
+                if dual:
+                    if any([table [i+2][1] and all([table[i+2][j+2] >= 0 for j in range(len(problem.variables))]) for i in range(len(problem.restrictions))]):
+                        print("Задача ЛП неразрешима, т.к множество допустимых решений D_I пусто")
+                        return None
+                    print("Выбор ведущей строки")
+                    p = -1
+                    max_p = 0
+                    for i in range(len(problem.restrictions)):
+                        if table[i+2][1] < 0 and table[i+2][1] < max_p:
+                            max_p = table[i+2][1]
+                            p = i
+                    print("Строка %s является ведущей" % problem.variables[basis[p][0]])
 
-                print("Выбор ведущей строки")
-                p = -1
-                min_p = max([table[i + 2][1] for i in range(len(problem.restrictions))])
-                possible_p = []
-                for i in range(len(problem.restrictions)):
-                    if table[i + 2][q + 2] > 0:
-                        possible_p.append((table[i + 2][1] / table[i + 2][q + 2], i))
-                possible_p.sort(key=lambda x: x[0])
-                p = possible_p[0][1]
-                print("Строка %s является ведущей" % problem.variables[basis[p][0]])
+
+                    print("Выбор ведущего столбца")
+                    q = -1
+                    possible_q = []
+                    for i in range(len(problem.variables)):
+                        if table[p+2][i +2] < 0:
+                            possible_q.append((table[1][i+2]/table[p+2][i +2], i))
+                    possible_q.sort(key=lambda x: x[0])
+                    q = possible_q[-1][1]
+                    print("Столбец %s является ведущим" % problem.variables[q]) # todo а тут нумерация столбцов сбивается, так как не берем базисные!!!
+                else:
+                    if any([all([table[j + 1][i + 2] < 0 for j in range(len(problem.restrictions) + 1)]) for i in
+                            range(len(problem.variables))]):
+                        print("Задача ЛП неразрешима, т.к f(x) не ограничена сверху на множестве допустимых решений D_I")
+                        return None
+                    print("Выбор ведущего столбца")
+                    q = -1
+                    max_q = 0
+                    for i in range(len(problem.variables)):
+                        if table[1][i + 2] < 0 and table[1][i + 2] < max_q:
+                            max_q = table[1][i + 2]
+                            q = i
+                    print("Столбец %s является ведущим" % problem.variables[q])
+
+                    print("Выбор ведущей строки")
+                    p = -1
+                    # min_p = max([table[i + 2][1] for i in range(len(problem.restrictions))])
+                    possible_p = []
+                    for i in range(len(problem.restrictions)):
+                        if table[i + 2][q + 2] > 0:
+                            possible_p.append((table[i + 2][1] / table[i + 2][q + 2], i))
+                    possible_p.sort(key=lambda x: x[0])
+                    p = possible_p[0][1]
+                    print("Строка %s является ведущей" % problem.variables[basis[p][0]])
                 print("Преобразование...")
 
                 table[p + 2][0] = table[0][q + 2]
@@ -433,41 +479,66 @@ class SimplexTable:
                 print("Итерация №%d" % count)
 
                 print("Проверка на оптимальность")
-                if all([table[1][i + 2] >= 0 for i in range(len(problem.function.array) - len(basis))]):
-                    d = {problem.variables[i]: 0 for i in range(len(problem.variables))}
-                    for i in range(len(problem.restrictions)):
-                        d[table[i + 2][0]] = table[i + 2][1]
-                    # solution = [0 if table[0][i + 2] not in [table[j + 2][0] for j in range(len(problem.restrictions))] else
-                    #         table[1][i + 2] for i in range(len(problem.variables))]
-                    print("Базисное решение (%s) оптимально." % (', '.join([str(i) for i in list(d.values())])))
-                    assert table[1][1] == problem.function.value(list(d.values()))
-                    if artificial:
-                        return table
-                    return list(d.values()), table[1][1]
+                if dual and all([table[i+2][1] >= 0 for i in range(len(problem.restrictions))]) or not dual and all([table[1][i + 2] >= 0 for i in range(len(problem.function.array) - len(basis))]):
+                        d = {problem.variables[i]: 0 for i in range(len(problem.variables))}
+                        for i in range(len(problem.restrictions)):
+                            d[table[i + 2][0]] = table[i + 2][1]
+                        # solution = [0 if table[0][i + 2] not in [table[j + 2][0] for j in range(len(problem.restrictions))] else
+                        #         table[1][i + 2] for i in range(len(problem.variables))]
+                        print("Базисное решение (%s) оптимально." % (', '.join([str(i) for i in list(d.values())])))
+                        assert table[1][1] == problem.function.value(list(d.values()))
+                        if artificial:
+                            return table
+                        return list(d.values()), table[1][1]
                 print("Проверка на неразрешимость")
-                if any([all([table[j + 1][i + 2] < 0 for j in range(len(problem.restrictions) + 1)]) for i in
-                        range(len(problem.variables) - len(basis))]):
-                    print("Задача ЛП неразрешима, т.к f(x) не ограничена сверху на множестве допустимых решений D_I")
-                    return None
-                print("Выбор ведущего столбца")
-                q = -1
-                max_q = 0
-                for i in range(len(problem.variables) - len(basis)):
-                    if table[1][i + 2] < 0 and table[1][i + 2] < max_q:
-                        max_q = table[1][i + 2]
-                        q = i
-                print("Столбец %s является ведущим" % problem.variables[q])
+                if not dual:
+                    if any([all([table[j + 1][i + 2] < 0 for j in range(len(problem.restrictions) + 1)]) for i in
+                            range(len(problem.variables) - len(basis))]):
+                        print("Задача ЛП неразрешима, т.к f(x) не ограничена сверху на множестве допустимых решений D_I")
+                        return None
+                    print("Выбор ведущего столбца")
+                    q = -1
+                    max_q = 0
+                    for i in range(len(problem.variables) - len(basis)):
+                        if table[1][i + 2] < 0 and table[1][i + 2] < max_q:
+                            max_q = table[1][i + 2]
+                            q = i
+                    print("Столбец %s является ведущим" % problem.variables[q])
 
-                print("Выбор ведущей строки")
-                p = -1
-                min_p = max([table[i + 2][1] for i in range(len(problem.restrictions))])
-                possible_p = []
-                for i in range(len(problem.restrictions)):
-                    if table[i + 2][q + 2] > 0:
-                        possible_p.append((table[i + 2][1] / table[i + 2][q + 2], i))
-                possible_p.sort(key=lambda x: x[0])
-                p = possible_p[0][1]
-                print("Строка %s является ведущей" % problem.variables[basis[p][0]])
+                    print("Выбор ведущей строки")
+                    p = -1
+                    # todo убрать сортировку, сделать обычное сравнение как выше
+                    min_p = max([table[i + 2][1] for i in range(len(problem.restrictions))])
+                    possible_p = []
+                    for i in range(len(problem.restrictions)):
+                        if table[i + 2][q + 2] > 0:
+                            possible_p.append((table[i + 2][1] / table[i + 2][q + 2], i))
+                    possible_p.sort(key=lambda x: x[0])
+                    p = possible_p[0][1]
+                    print("Строка %s является ведущей" % problem.variables[basis[p][0]])
+                else:
+                    if any([table [i+2][1]<0 and all([table[i+2][j+2] >= 0 for j in range(len(problem.variables) - len(basis))]) for i in range(len(problem.restrictions))]):
+                        print("Задача ЛП неразрешима, т.к множество допустимых решений D_I пусто")
+                        return None
+                    print("Выбор ведущей строки")
+                    p = -1
+                    max_p = 0
+                    for i in range(len(problem.restrictions)):
+                        if table[i+2][1] < 0 and table[i+2][1] < max_p:
+                            max_p = table[i+2][1]
+                            p = i
+                    print("Строка %s является ведущей" % problem.variables[basis[p][0]])
+
+
+                    print("Выбор ведущего столбца")
+                    q = -1
+                    possible_q = []
+                    for i in range(len(problem.variables) - len(basis)):
+                        if table[p+2][i +2] < 0:
+                            possible_q.append((table[1][i+2]/table[p+2][i +2], i))
+                    possible_q.sort(key=lambda x: x[0])
+                    q = possible_q[-1][1]
+                    print("Столбец %s является ведущим" % problem.variables[q]) # todo а тут нумерация столбцов сбивается, так как не берем базисные!!!
                 print("Преобразование...")
 
                 table[p + 2][0], table[0][q + 2] = table[0][q + 2], table[p + 2][0]
@@ -578,52 +649,45 @@ class SimplexTable:
             second_phase_problem = SimplexTable.problem_from_table(table, full_table)
             return second_phase_problem
 
-    def dual_simplex(self, problem: Problem):
-        pass
-
-
-# def artifictial_basis():
-
-
 if __name__ == '__main__':
-    # with open("input.txt") as file:
-    #     problem = Problem(*read(file))
-    #     assert not problem.check_canon()
-    #     print(problem)
-    #     problem.make_canon(True)
-    #     assert problem.check_canon()
-    #     print(problem)
-    #     assert not problem.check_reduced()
-    # with open("input1.txt") as file:
-    #     problem = Problem(*read(file))
-    #     assert not problem.check_canon()
-    #     print(problem)
-    #     problem.make_canon(False)
-    #     assert problem.check_canon()
-    #     print(problem)
-    #     assert problem.check_reduced()
-    #     print("Базис: %s" % (problem.get_basis()))
-    #     x, y = SimplexTable.simplex_method(problem, "f")
-    #     assert x == [2, 2, 0, 0, 4]
-    #     assert y == 12
-    # with open("input2.txt") as file:
-    #     problem = Problem(*read(file))
-    #     assert not problem.check_canon()
-    #     problem.make_canon(False)
-    #     print(problem)
-    #     assert problem.check_special()
-    #     x, y = SimplexTable.simplex_method(problem, "f", False)  # == [3, 2, 0, 0, 4, 2], 17
-    #     # assert SimplexTable.simplex_method(problem, False) == [3, 2, 0, 0, 4, 2], 17
-    #
-    #     assert x == [3, 2, 0, 0, 4, 2]
-    #     assert y == 17
-    # with open("input3.txt") as file:
-    #     problem = Problem(*read(file))
-    #     print(problem)
-    #     assert not problem.check_special()
-    #     IIphase = SimplexTable.artificial_basis(problem, False)
-    #     print(IIphase)
-    #     # assert IIphase.check_special()
+    with open("input.txt") as file:
+        problem = Problem(*read(file))
+        assert not problem.check_canon()
+        print(problem)
+        problem.make_canon(True)
+        assert problem.check_canon()
+        print(problem)
+        assert not problem.check_reduced()
+    with open("input1.txt") as file:
+        problem = Problem(*read(file))
+        assert not problem.check_canon()
+        print(problem)
+        problem.make_canon(False)
+        assert problem.check_canon()
+        print(problem)
+        assert problem.check_reduced()
+        print("Базис: %s" % (problem.get_basis()))
+        x, y = SimplexTable.simplex_method(problem, "f")
+        assert x == [2, 2, 0, 0, 4]
+        assert y == 12
+    with open("input2.txt") as file:
+        problem = Problem(*read(file))
+        assert not problem.check_canon()
+        problem.make_canon(False)
+        print(problem)
+        assert problem.check_special()
+        x, y = SimplexTable.simplex_method(problem, "f", False)  # == [3, 2, 0, 0, 4, 2], 17
+        # assert SimplexTable.simplex_method(problem, False) == [3, 2, 0, 0, 4, 2], 17
+    
+        assert x == [3, 2, 0, 0, 4, 2]
+        assert y == 17
+    with open("input3.txt") as file:
+        problem = Problem(*read(file))
+        print(problem)
+        assert not problem.check_special()
+        IIphase = SimplexTable.artificial_basis(problem, False)
+        print(IIphase)
+        # assert IIphase.check_special()
     with open("max.txt") as file:
         problem = Problem(*read(file))
         IIphase = SimplexTable.artificial_basis(problem, False)
@@ -639,3 +703,21 @@ if __name__ == '__main__':
             if problem.check_vector(i):
                 print("f(%s) = %s" % (i, problem.function.value(i)))
         print(problem.get_dual())
+    with open("input4.txt") as file:
+        problem = Problem(*read(file))
+        assert not problem.check_canon()
+        problem.make_canon(False)
+        print(problem)
+        assert problem.check_special()
+        x, y = SimplexTable.simplex_method(problem, "f", False)
+        print(*x)
+        print(y)
+    with open("input5.txt") as file:
+        problem = Problem(*read(file))
+        assert problem.check_canon()
+        print(problem)
+        assert problem.is_dual_feasible()
+        x, y = SimplexTable.simplex_method(problem, "f", False, dual=True)
+        assert x == [2, 1, 6, 1, 0, 0, 0, 0]
+        assert y == 8
+
