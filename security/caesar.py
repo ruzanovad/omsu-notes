@@ -21,5 +21,14 @@ def encode(plaintext: str, offset: int) -> str:
 def decode(ciphertext: str, offset: int) -> str:
     return encode(ciphertext, -offset)
 
+print("ABC")
+print(encode("ABC", 2), "со сдвигом 2")
+assert decode(encode("ABC", 2), 2) == "ABC"
+print("abc")
+print(encode("abc", -2), "со сдвигом -2")
+assert decode(encode("abc", -2), -2) == "abc"
+print("Syntax error")
+print(encode("Syntax error", 1), "со сдвигом 1")
+assert decode(encode("Syntax error", 1), 1) == "Syntax error"
 
-print(decode(encode("ABC", 2), 2))
+

@@ -23,6 +23,7 @@ namespace affine {
             throw std::invalid_argument("Cannot find modular inverse of a");
         }
 
+
         auto phi = [](unsigned long long n) -> unsigned long long {
             unsigned long long result = n;
             for (int i = 2; i * i <= n; i++) {
@@ -61,16 +62,17 @@ namespace affine {
             throw std::invalid_argument("Cannot find modular inverse of a");
         }
 
-        std::string ciphertext = std::move(plaintext);
+        std::string ciphertext(plaintext);
         char first_low = tolower(alphabet[0]);
         char first_up = toupper(first_low);
 
         for (auto &x: ciphertext) {
-            if (islower(x)) {
-                x = first_low + (a * (int) (x - first_low) + b) % alphabet.size();
-            } else {
-                x = first_up + (a * (int) (x - first_up) + b) % alphabet.size();
-            }
+            if (isalpha(x))
+                if (islower(x)) {
+                    x = first_low + (a * (int) (x - first_low) + b) % alphabet.size();
+                } else {
+                    x = first_up + (a * (int) (x - first_up) + b) % alphabet.size();
+                }
         }
         return ciphertext;
     }
@@ -80,16 +82,17 @@ namespace affine {
             throw std::invalid_argument("Cannot find modular inverse of a");
         }
         int a_inv = modularInverse(a, alphabet.size());
-        std::string plaintext = std::move(ciphertext);
+        std::string plaintext(ciphertext);
         char first_low = tolower(alphabet[0]);
         char first_up = toupper(first_low);
 
         for (auto &x: plaintext) {
-            if (islower(x)) {
-                x = first_low + (a_inv * (int(x - first_low) - b)) % alphabet.size();
-            } else {
-                x = first_up + (a_inv * (int(x - first_up) - b)) % alphabet.size();
-            }
+            if (isalpha(x))
+                if (islower(x)) {
+                    x = first_low + (a_inv * (int(x - first_low) - b)) % alphabet.size();
+                } else {
+                    x = first_up + (a_inv * (int(x - first_up) - b)) % alphabet.size();
+                }
         }
         return plaintext;
     }
@@ -107,6 +110,13 @@ signed main() {
         std::string C = affine::encodeAffine(P, loweralpha, 3, 1);
         std::cout << C << '\n';
         std::string decode = affine::decodeAffine(C, upperalpha, 3, 1);
+        std::cout << decode << '\n';
+    }
+    {
+        std::string P = "ABC";
+        std::string C = affine::encodeAffine(P, loweralpha, 0, 1);
+        std::cout << C << '\n';
+        std::string decode = affine::decodeAffine(C, upperalpha, 0, 1);
         std::cout << decode << '\n';
     }
 }
