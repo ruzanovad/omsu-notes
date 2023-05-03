@@ -1,0 +1,60 @@
+\documentclass[a4paper]{article}
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{xcolor}
+
+\newcommand\letsymbol{\mathord{\sqsupset}}
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem*{axiom}{Аксиома}
+\theoremstyle{definition}
+\newtheorem*{definition}{Определение}
+\newtheorem*{statement}{Утверждение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+\begin{enumerate}
+    \item Равномерное дискретное распределение
+    \[P\{\xi=k\} = \frac{1}{N}, \quad M\xi = \frac{1+N}{2}, \quad D\xi = \frac{N^2-1}{12}, \quad \phi(s) = \sum_{n=1}^{\infty} \frac{s^n}{n}=-\ln(1-s)\]
+    \item Биномиальное (распределение Бернулли)
+    \[P\{n=k\}=C_n^k p^k {(1-p)}^{n-k}, \quad M\xi = np, \quad D\xi = np(1-p), \quad \phi(s) = \sum_{m = 0}^{\infty} C_n^m p^m {(1-p)}^{n-m} = {(ps +1-p)}^n\]
+    \item Геометрическое распределение
+    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{{(1-p)}^2}, \quad \phi(s) = \sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{p}{1-(1-p)s} \]
+    \item Распределение Пуассона
+    \[P\{n=k\}=\frac{\lambda^k}{k!}e^{-\lambda}, \quad M\xi = \lambda, \quad D\xi = \lambda, \quad \phi(s) = \sum_{n = 0}^{\infty} \frac{\lambda^n s^n}{n!}e^{-\lambda}=e^{\lambda (s-1)}\]
+\end{enumerate} 
+\begin{center}
+    \begin{tabular}{ |c c c c| }
+        \hline
+        $p_\xi(x)$ & $F_\xi(x)$ & $M(\xi)$ & $D(\xi)$ \\ 
+        \hline
+        $\frac1{\sqrt{2\pi}\sigma} e^{-\frac{(x-a)^2}{2\sigma^2}}$ & $\frac12 [1 + erf(\frac{x-a}{\sqrt{2\sigma^2}})]$ & a  & $\sigma^2$\\ 
+        
+        ${\displaystyle\left\{{\begin{matrix}{\dfrac {1}{b-a}},&x\in [a,b]\\0,&x\not \in [a,b]\end{matrix}}\right..}$ &
+        ${\displaystyle \left\{{\begin{matrix}0,&x<a\\{\dfrac {x-a}{b-a}},&a\leqslant x<b\\1,&x\geqslant b\end{matrix}}\right..}$ &
+        $\frac{a+b}2$ & $\frac{{(b-a})^2}{12}$ \\
+
+
+        $\displaystyle\left\{{\begin{matrix}x^{{\alpha-1}}{\frac  {e^{{-x\lambda }}}{\lambda ^{-\alpha}\,\Gamma (\alpha)}},&x\geq 0\\0,&x<0\end{matrix}}\right.$ & $\dots$ & $\alpha \lambda^{-1}$ & $\alpha \lambda^{-2}$ \\
+        
+     \hline
+    \end{tabular}
+    \end{center}
+    \[\operatorname {erf}\,x={\frac  {2}{{\sqrt  {\pi }}}}\int \limits _{0}^{x}e^{{-t^{2}}}\,{\mathrm  d}t.\]
+\end{document}
