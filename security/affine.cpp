@@ -6,8 +6,8 @@
 #include <utility>
 #include <iostream>
 
-std::string upperalpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-std::string loweralpha = "abcdefghijklmnopqrstuvwxyz";
+const std::string upperalpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const std::string loweralpha = "abcdefghijklmnopqrstuvwxyz";
 
 namespace affine {
     unsigned long long modularInverse(unsigned long long a, unsigned long long mod);

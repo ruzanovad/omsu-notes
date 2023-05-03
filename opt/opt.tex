@@ -514,4 +514,143 @@ $\sphericalangle $ задачу (1)-(4)
 \begin{theorem}
     Локальный минимум выпуклой функции на выпуклом множестве совпадает с глобальным минимумом
 \end{theorem}
+\begin{proof}
+    Пусть $f(x)$ выпукла на $D$
+    $x^*$ - локальный минимум $f(x)$, то есть существует такая окрестность $O_{x^*}\subseteq D$ такая, что $\forall x\in O_{x^*}\quad f(x) \ge f(x^*).$ Докажем, что $x^*$ - точка глобального минимума функции $f(x)$ на D, т.е $\forall x \in D\quad f(x^*)\le f(x)$
+
+    \textsubscript{от противного} пусть $\exists x' \in D: f(x') < f(x^*).$ Рассмотрим отрезок $x^* x'$
+    \[\forall \lambda \in (0,1) \quad f((1-\lambda)x^* + x'){\le}^{\textsubscript{выпуклость}} (1 - \lambda )f(x^*) + \lambda f(x')< (1-\lambda)f(x^*)+ \lambda f(x^*) = f(x^*)\]
+    но существует такое $\lambda$, что \[x^\lambda  = (1-\lambda)x^* + \lambda x' \in O_{x^*}\implies f(x^\lambda) \ge f(x^*)\implies \textsubscript{противоречие}\]
+\end{proof}
+\subsection{Задача выпуклого программирования (ВП)}
+\begin{definition}[Задача ВП]:
+\begin{center}
+    \(f(x) \to \min\) \\
+    \(\phi_i(x) \le 0, i = 1, \dots, m\)\\
+    \(x \in G\)
+\end{center}
+Здесь $\phi_i, f$ - выпуклые в G функции,
+G - выпуклое замкнутое множество ($\mathbb{R}^n,\mathbb{R}_+^n $)
+    
+\end{definition}
+Рассмотрим задачу ВП. Будем предполагать выполненным условие Слейтера \textbf{(УС)}
+\[\exists \overline{x}\in G, \phi_i(\overline{x})<0.\]
+\[D = \{x\in G|\phi_i \le 0, i = 1, \dots, m\} - \textbf{множество допустимых решений задачи ВП.}\]
+УС гарантирует существование внутренних точек множества D.
+\begin{lemma}[Утверждение]
+    Множество доп. решений ЗВП является выпуклым
+\end{lemma}
+\begin{proof}
+    \[D_i = \{x\in G | \phi_i(x)\le 0\}\implies D = \cap_{i = 1}^m D_i\]
+    Докажем, что $D_i$ выпукло $i = 1, \dots, m$
+    \[x^1, x^2 \in D_i\quad \forall \lambda \in (0, 1) \quad(1-\lambda )x^1 +\lambda x^2 \in D_i\]
+    \[\phi_i((1-\lambda)x^1 +\lambda x^2){\le}_{\phi_i}^{\textsubscript{вып для}}(1-\lambda)\phi_i(x^1) +\lambda \phi_i(x^2)\le 0\implies\]
+    $D_i$ - выпукло для всех i, поэтому D также выпукло (по свойствам выпуклых множеств)
+\end{proof}
+\begin{example}[Задача размещения магазина]
+    m точек - пункты размещения магазинов.
+
+    $\{P_1, \dots, P_m\}$ - множество точек.
+    
+    $P_i(x_i, y_i), \quad i = 1, \dots, m$
+
+    требуется найти точку P, суммарное расстояние которой до заданных точек минимально
+    \[\begin{cases}
+        \sum_{i = 1}^{m}\sqrt{(x-x_i)^2 + (y - y_i)^2}\to \min \\
+        (x, y)\in R^2
+    \end{cases}\]
+\end{example}
+\paragraph*{Основные подходы к решению задач ВП}
+\begin{enumerate}
+    \item Модификация численных методов для задач безусловной оптимизации
+
+    Градиентный метод
+    \item Обобщение метода множителей Лагранжа
+    \item Метод штрафных функций
+    \item Методы линеаризации
+\end{enumerate}
+\subsection{Свойства градиента. Идея градиентных методов}
+\begin{definition}
+    Функция $f(x_1, \dots, x_n)$, определенная в некоторой окрестности
+    $O_{x^0}$ называется дифференцируемой в точке $x^0$,
+    если $\exists$ $\nabla f(x^0)$
+    \[f(x) = f(x^0) + (\nabla f(x^0), x-x_0)+ o (\left\lVert x-x_0\right\rVert )\]
+    \[\nabla f(x^0) = (\frac{\partial f}{\partial x_1}(x^0), \dots, \frac{\partial f}{\partial x_n}(x^0)) - \textbf{градиент}\]
+
+\end{definition}
+\begin{definition}
+    Рассмотрим функцию $f(x)$ и $z\in \mathbb{R}^n$
+
+    Производной функции $f(x)$ в точке $x_0$ по направлению z называется 
+    \[\lim_{\lambda \to 0+0} \frac{f(x^0+\lambda z) - f(x^0)}{\lambda},\]
+    если он существует.
+\end{definition}
+\begin{theorem}[О градиенте и производной по направлению]
+    Если $f(x)$ дифференцируема в точке $x^0$, то 
+    предел 
+    \[\lim_{\lambda \to 0+0} \frac{f(x^0+\lambda z) - f(x^0)}{\lambda},\] существует и равен
+    \[f_z'(x^0) = (\nabla f(x^0), z)\]
+\end{theorem}
+Из определения градиента следует:
+\begin{enumerate}
+    \item Если $(\nabla f(x^0), z)>0$, то при достаточно малом шаге вдоль этого направления z $f(x)$ увеличивается
+    \item Если $(\nabla f(x^0), z)0<$, то $f(x)$ уменьшается
+\end{enumerate}
+\paragraph*{Идея градиентных методов}
+    $x^0\in D$ начинаем с допустимой точки
+    Выбираем направление z, составляющее тупой угол с $\nabla f(x^0)$ и вдоль этого направления делаем достаточно малый шаг h:
+    \begin{enumerate}
+        \item $x^1 = x^0 + hz\in D$
+        \item $f(x^1)< f(x^0)$
+    \end{enumerate}
+    далее действия совершаются с $x^1$ и так далее.
+\subsection{Возможные и прогрессивные направления}
+Задача ВП:
+\begin{equation}
+    f(x) \to \min
+\end{equation}
+\begin{equation}
+    \phi_i(x) \le 0, i = 1, \dots, m
+\end{equation}
+\begin{equation}
+    x \in \mathbb{R}^n
+\end{equation}
+$\phi_i, f$- выпуклые и непрерывные дифференцируемые функции в $R^n$, выполнено УС.
+\begin{quotation}
+    \textsubscript{На границе возникают проблемы...}
+\end{quotation}
+Пусть задана точка $x_0\in D$.
+$I_0 = \{i \; | \; \phi_i(x^0) = 0\}$ - множество индексов \textit{активных} ограничений
+\begin{definition}
+    Направление z называется возможным (допустимым) в $x^0$, если $(\nabla \phi_i(x^0), z)<0 \quad \forall i \in I_0$ 
+\end{definition}
+\begin{remark}
+    Если z - возможное направление в $x^0$, то сделав достаточно малый шаг в направлении z, мы останемся в области.
+
+    Если $I_0 = \varnothing$, но любое направление является возможным.
+\end{remark}
+\begin{definition}
+    Направление z называется прогрессивным в точке $x^0$, если
+    \[\begin{cases}
+        (\nabla \phi_i(x^0), z)<0 \quad \forall i \in I_0 \\
+        (\nabla f(x^0), z)<0 
+    \end{cases}\]
+\end{definition}
+\begin{remark}
+    Если направление z прогрессивно, то сделав достаточно малый шаг h из $x^0$ вдоль z, получаем:
+    $x^1 = x^0 + hz$, 
+    \begin{enumerate}
+        \item $x^1 \in D$
+        \item $f(x^1) < f(x^0)$
+    \end{enumerate}
+\end{remark}
+\subsection{Критерий оптимальности}
+\begin{theorem}[Критерий оптимальности]
+    $x^* \in D$ - оптимальное решение задачи ВП $\Leftrightarrow$
+    в точке $x^*$ нет прогрессивного направления, т.е не существует $z\in R^n$: 
+    \[\begin{cases}
+        (\nabla \phi_i(x^0), z)<0 \quad \forall i \in I_0 \\
+        (\nabla f(x^0), z)<0 
+    \end{cases}\]
+\end{theorem}
 \end{document}
