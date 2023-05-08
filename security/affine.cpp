@@ -23,7 +23,7 @@ namespace affine {
             throw std::invalid_argument("Cannot find modular inverse of a");
         }
 
-
+        // оптимизация через решето 
         auto phi = [](unsigned long long n) -> unsigned long long {
             unsigned long long result = n;
             for (int i = 2; i * i <= n; i++) {
