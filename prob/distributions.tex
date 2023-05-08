@@ -29,29 +29,48 @@
 \textheight 250mm
 
 \begin{document}
+% \begin{center}
+%     \begin{tabular}{|c|c c c c c|}
+%         \hline
+%         $ $ & $P\{\xi=k\}$ & $M(\xi)$ & $D(\xi)$ & $\phi(s)$ & $f_xi(t)$\\ 
+%         \hline
+%         Равномерное дискретное & $\frac{1}{N}$ & $\frac{1+N}{2}$ & $\frac{N^2-1}{12}$ & $\sum_{n=1}^{\infty} \frac{s^n}{n}=-\ln(1-s)$ & $ $ \\
+%         \hline
+%         Биномиальное (распределение Бернулли) & $C_n^k p^k {(1-p)}^{n-k}$ & $np$ & $np(1-p)$ & $\sum_{m = 0}^{\infty} C_n^m p^m {(1-p)}^{n-m} = {(ps +1-p)}^n$ & $ $ \\
+%         \hline
+%         Геометрическое & $(1-p)p^k$ & $\frac{p}{1-p}$ & $\frac{p}{{(1-p)}^2}$ & $\sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{p}{1-(1-p)s}$ & $ $ \\
+%         \hline
+%         Пуассоновское & $\frac{\lambda^k}{k!}e^{-\lambda}$ & $\lambda$ & $\lambda$ & $\sum_{n = 0}^{\infty} \frac{\lambda^n s^n}{n!}e^{-\lambda}=e^{\lambda (s-1)}$ & $ $ \\ 
+%         \hline
+%     \end{tabular}
+% \end{center}
 \begin{enumerate}
     \item Равномерное дискретное распределение
-    \[P\{\xi=k\} = \frac{1}{N}, \quad M\xi = \frac{1+N}{2}, \quad D\xi = \frac{N^2-1}{12}, \quad \phi(s) = \sum_{n=1}^{\infty} \frac{s^n}{n}=-\ln(1-s)\]
+    \[P\{\xi=k\} = \frac{1}{N}, \quad M\xi = \frac{1+N}{2}, \quad D\xi = \frac{N^2-1}{12}, \quad \phi(s) = \sum_{n=1}^{\infty} \frac{s^n}{n}=-\ln(1-s), \quad f_\xi (t) = -\ln (1-e^{it})\]
     \item Биномиальное (распределение Бернулли)
-    \[P\{n=k\}=C_n^k p^k {(1-p)}^{n-k}, \quad M\xi = np, \quad D\xi = np(1-p), \quad \phi(s) = \sum_{m = 0}^{\infty} C_n^m p^m {(1-p)}^{n-m} = {(ps +1-p)}^n\]
+    \[P\{n=k\}=C_n^k p^k {(1-p)}^{n-k}, \quad M\xi = np, \quad D\xi = np(1-p), \quad \phi(s) = \sum_{m = 0}^{\infty} C_n^m p^m {(1-p)}^{n-m} = {(ps +1-p)}^n,\]
+    \[f_\xi (t) = {(pe^{it} +1-p)}^n\]
     \item Геометрическое распределение
-    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{{(1-p)}^2}, \quad \phi(s) = \sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{p}{1-(1-p)s} \]
+    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{{(1-p)}^2}, \quad \phi(s) = \sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{p}{1-(1-p)s}, \quad f_\xi (t) = \frac{p}{1-(1-p)e^{it}}\]
     \item Распределение Пуассона
-    \[P\{n=k\}=\frac{\lambda^k}{k!}e^{-\lambda}, \quad M\xi = \lambda, \quad D\xi = \lambda, \quad \phi(s) = \sum_{n = 0}^{\infty} \frac{\lambda^n s^n}{n!}e^{-\lambda}=e^{\lambda (s-1)}\]
+    \[P\{n=k\}=\frac{\lambda^k}{k!}e^{-\lambda}, \quad M\xi = \lambda, \quad D\xi = \lambda, \quad \phi(s) = \sum_{n = 0}^{\infty} \frac{\lambda^n s^n}{n!}e^{-\lambda}=e^{\lambda (s-1)}, \quad f_\xi (t) = e^{\lambda (e^{it}-1)}\]
 \end{enumerate} 
+\begin{remark}[Вырожденное распределение]
+    \[P\{\xi = C\} = 1, \quad f_\xi (t) = e^{itC}\]
+\end{remark}
 \begin{center}
-    \begin{tabular}{ |c c c c| }
+    \begin{tabular}{ | c |c c c c c| }
         \hline
-        $p_\xi(x)$ & $F_\xi(x)$ & $M(\xi)$ & $D(\xi)$ \\ 
+        $ $ & $p_\xi(x)$ & $F_\xi(x)$ & $M(\xi)$ & $D(\xi)$ & $f_\xi(t)$\\ 
         \hline
-        $\frac1{\sqrt{2\pi}\sigma} e^{-\frac{(x-a)^2}{2\sigma^2}}$ & $\frac12 [1 + erf(\frac{x-a}{\sqrt{2\sigma^2}})]$ & a  & $\sigma^2$\\ 
+        гауссовское(нормальное) & $\frac1{\sqrt{2\pi}\sigma} e^{-\frac{(x-a)^2}{2\sigma^2}}$ & $\frac12 [1 + erf(\frac{x-a}{\sqrt{2\sigma^2}})]$ & a  & $\sigma^2$ & $\exp (ita - \sigma^2 t^2/2)$\\ 
         
-        ${\displaystyle\left\{{\begin{matrix}{\dfrac {1}{b-a}},&x\in [a,b]\\0,&x\not \in [a,b]\end{matrix}}\right..}$ &
+        равномерное & ${\displaystyle\left\{{\begin{matrix}{\dfrac {1}{b-a}},&x\in [a,b]\\0,&x\not \in [a,b]\end{matrix}}\right..}$ &
         ${\displaystyle \left\{{\begin{matrix}0,&x<a\\{\dfrac {x-a}{b-a}},&a\leqslant x<b\\1,&x\geqslant b\end{matrix}}\right..}$ &
-        $\frac{a+b}2$ & $\frac{{(b-a})^2}{12}$ \\
+        $\frac{a+b}2$ & $\frac{{(b-a})^2}{12}$ & $ \frac{e^{ita} - e^{itb}}{it (b-a)}$ \\
 
 
-        $\displaystyle\left\{{\begin{matrix}x^{{\alpha-1}}{\frac  {e^{{-x\lambda }}}{\lambda ^{-\alpha}\,\Gamma (\alpha)}},&x\geq 0\\0,&x<0\end{matrix}}\right.$ & $\dots$ & $\alpha \lambda^{-1}$ & $\alpha \lambda^{-2}$ \\
+        гамма распределение & $\displaystyle\left\{{\begin{matrix}x^{{\alpha-1}}{\frac  {e^{{-x\lambda }}}{\lambda ^{-\alpha}\,\Gamma (\alpha)}},&x\geq 0\\0,&x<0\end{matrix}}\right.$ & $\dots$ & $\alpha \lambda^{-1}$ & $\alpha \lambda^{-2}$ & $ (1-it)^{-\alpha} \; \forall \alpha \in \mathbb{Q}$\\
         
      \hline
     \end{tabular}

@@ -42,18 +42,39 @@
         \item (аддитивность) $A_1, \dots, A_n \in \mathbb{A} \implies A_1 \cup \dots \cup A_n\in \mathbb{A}$ 
     \end{enumerate}
 \end{definition}
+Т.е алгебра является замкнутой относительно замыкания и объединения
 \begin{definition}[$\sigma$-алгебра]
     Алгебра называется $\sigma$-алгеброй, если 
     \[A_1, \dots, A_n \in \mathcal{A} \implies \bigcup\limits_{k = 1}^\infty  A_k \in \mathcal{A}\]
 \end{definition}
 \begin{definition}[мера]
     $\mu: \mathcal {A} \to [0; \infty)$ - мера, если 
-    \[A_1, ..., A_n \in \mathcal{A}, A_i\cap A_j = \varnothing, i\neq j: \quad \mu(\bigcup\limits_{n = 1}^\infty  A_n) = \sum\limits_{n = 1}^\infty \mu (A_n)\quad \text{счетная аддитивность}\]
+    \[A_1, \dots , A_n \in \mathcal{A}, A_i\cap A_j = \varnothing, i\neq j: \quad \mu(\bigcup\limits_{n = 1}^\infty  A_n) = \sum\limits_{n = 1}^\infty \mu (A_n)\quad \text{счетная аддитивность}\]
 
     Мера конечная, если $\mu(\Omega) < \infty$
 
     Мера вероятностная, если $\mu (\Omega) = 1$
 \end{definition}
+Короче говоря, вероятностная мера:
+\begin{enumerate}
+    \item неотрицательность 
+    \item нормированность 
+    \item счетная аддитивность (иногда счетная аддитивность заменяется на аддитивность и непрерывность)
+\end{enumerate}
+\subsection{Свойства P из учебника}
+\begin{enumerate}
+    \item $A\subseteq B \implies P(B\setminus A) = P(B) - P(A) \ge 0$
+    \[\text{представить B как } B = A + (B\setminus A), а потом аддитивность\]
+    \item $A\subseteq B \implies P(A)\le P(B)$
+    \item $\forall A \in \mathscr{A}\quad 0 \le P(A) \le 1$
+    \item $P(\overline{A}) = 1 - P(A)$
+    \item $P(\varnothing) = 0$
+    \item Конечная аддитивность (следует из счетной)
+    \item \[P(\bigcup\limits_{k = 1}^n A_k)  \le \sum_{k = 1}^n P(A_k) \]
+    \item \[B_k = A_k \setminus (A_1 \cup A_2 \dots  \cup A_{k-1}) \implies \bigcup\limits_{k = 1}^n A_k = \sum_{k=1}^n  B_k \implies P (\bigcup\limits_{k = 1}^n A_k) = P(\sum_{k=1}^n  B_k) | P(B_k) \le P(A_k)|\]
+    \item \[\forall A, B \quad P(A \cup B) = P(A) + P(B) - P(AB)\]
+    раздробить объединение через минус + аддитивность + 1 свойство
+\end{enumerate}
 \begin{definition}[Вероятностное пространство]
     Тройка $(\Omega, \mathcal{A}, P)$, где 
     \begin{enumerate}
@@ -64,6 +85,11 @@
     \end{enumerate}
 \end{definition}
 Все элементарные исходы равновозможны
+\begin{enumerate}
+    \item Размещение (упорядоченный набор) $ A^n_N = \frac{N!}{(N-n)!}$
+    \item Перестановка (частный случай размещения при N = n)
+    \item Сочетание (подмножество) $C^n_N = \frac{A^n_N}{n!} = \frac{N!}{n! (N-n)!}$
+\end{enumerate}
 \begin{multicols*}{2}
     \begin{definition}[Классическая вероятность]
         Модель вероятностного пространства (A - событие)
@@ -84,7 +110,6 @@
         \end{enumerate}
     \end{definition}
 \end{multicols*}
-
 \subsection{Некоторые следствия аксиоматики}
 \begin{enumerate}
     \item \begin{axiom}[Аксиома непрерывности]
@@ -97,7 +122,7 @@
         поэтому из счетной аддитивности меры следует сходимость ряда \[P(B_1)=\sum\limits_{n = 1}^\infty P(A_n),\] и сумма остатка ряда \[P(B_n) =  \sum\limits_{k = n}^\infty P(A_k) = 0.\] 
     \end{proof}
     \item (Формула включений и исключений)
-    \[P(\bigcup\limits_{k = 1}^\infty A_k)  = \sum_{k = 1}^n P(A_k) - \sum_{i < j}^n P(A_i \cap A_j) + \dots + {(-1)}^{n-1} P(A_1 \cap ... \cap A_n)\]
+    \[P(\bigcup\limits_{k = 1}^n A_k)  = \sum_{k = 1}^n P(A_k) - \sum_{i < j}^n P(A_i \cap A_j) + \dots + {(-1)}^{n-1} P(A_1 \cap \dots  \cap A_n)\]
     \begin{proof}
         Выводится через обычную формулу включений и исключений для множеств по индукции \[P(A \cup B) = P(A) + P(B) - P(AB)\]+ 
         \[\begin{cases}
@@ -139,7 +164,7 @@
 \end{proof}
 \begin{definition}[Разбиение]
     Систему событий $A_1, \dots, A_n$ будем называть конечным разбиением (в дальнейшем - просто разбиением),
-    если они попарно несовместны и 
+    если они попарно несовместны ($A_i A_j = \varnothing, i\neq j$) и 
     \[A_1+\dots A_n = \Omega\]
 \end{definition}
 \begin{theorem}[Формула полной вероятности]
@@ -147,6 +172,156 @@
     место формула
     \[P(B) = \sum_{k = 1}^n P(A_k)P(B|A_k)\]
 \end{theorem}
+\begin{proof}
+    \[B = B\Omega = B A_1 + B A_2 + \dots + B A_n\]
+    сумма попарно несовместных событий. Тогда
+    \[P(B) = P(B\Omega = B A_1 + B A_2 + \dots + B A_n) = \sum_{k = 1}^{n} P (B A_k)\]
+    \[P(B A_k) = P(A_k) P_{A_k}(B) = P(A_k) P(B|A_k)\]
+\end{proof}
+\subsection{Формулы Байеса}
+\begin{theorem}[Формулы Байеса]
+    Если $A_1, \dots, A_n$ - разбиение и все $P(A_k)>0$, то для любого события B ($P(B)> 0$) имеют место формулы:
+    \[P(A_k | B) = \frac{P(A_k)P(B | A_k)}{\sum_{i=1}^{n}P(A_i)P(B|A_i)}\]
+\end{theorem}
+\begin{proof}
+    \[P(A_k B) = P(A_k) P (B | A_k) = P(B) P(A_k | B) \implies P (A_k | B) = \frac{P(A_k)P(B|A_k)}{P(B)}\]
+    Применяем к $P(B)$ формулу полной вероятности.
+\end{proof}
+\begin{enumerate}
+    \item $P(A_k)$ - априорные вероятности (до опыта)
+    \item $P(A_k | B)$ - апостериорные вероятности (после опыта)
+\end{enumerate}
+\subsection{Независимость событий}
+\begin{definition}[независимость 2 событий]
+    A и B - независимы, если \[P(AB) = P(A)P(B),\]иначе зависимы
+\end{definition}
+\begin{definition}[независимость n событий (в совокупности)]
+    $A_1, \dots, A_n$ называются независимыми, если для любых $1 \le i_1 < i_2 < \dots < i_m \le n, 2 \le m \le n$
+    \[P(A_{i_1}A_{i_2}\dots A_{i_m}) = P(A_{i_1})P(A_{i_2})\dots  P(A_{i_m}),\] иначе зависимы.
+\end{definition}
+\begin{theorem}
+    Если $A_1, \dots, A_n$ независимы, $i_1, \dots, i_r, j_1, \dots, j_s$ - индексы все различны, вероятность $P(A_{i_1}\dots A_{i_r}) > 0$, тогда
+    \[P(A_{j_1}\dots A_{j_s}| A_{i_1}\dots A_{i_r}) = P(A_{j_1}\dots A_{j_s})\]
+\end{theorem}
+\begin{proof}
+    $A_1, \dots, A_n$ независимы, поэтому
+    \[P (A_{i_1}\dots A_{i_r}) = P(A_{i_1})\dots P(A_{i_r})\]
+    \[P (A_{j_1}\dots A_{j_s}) = P(A_{j_1})\dots P(A_{j_s})\]
+    \[P(A_{j_1}\dots A_{j_s} A_{i_1}\dots A_{i_r}) = P(A_{i_1})\dots P(A_{i_r}) P(A_{j_1})\dots P(A_{j_s})\]
+    поэтому \[P(A_{j_1}\dots A_{j_s} \cap A_{i_1}\dots A_{i_r}) = P(A_{i_1}\dots A_{i_r})\times P(A_{j_1}\dots A_{j_s}) \]
+    + формула условной вероятности
+\end{proof}
+\subsection{Независимость разбиений, алгебр/$\sigma$-алгебр}
+\begin{definition}[Порожденная алгебра]
+    $\gamma$ - система множеств. Наименьшая алгебра множеств $\mathscr{A}(\gamma)$, содержащая $\gamma$, называется \textbf{алгеброй, порожденной системой $\gamma$}.
+\end{definition}
+\begin{definition}[Порожденная $\sigma$-алгебра]
+    Аналогично.
+\end{definition}
+\begin{remark}
+    Алгебра, порожденная разбиением, является конечной, состоит из пустого множества и множеств вида
+    \[A_{i_1} + A_{i_2}+ \dots A_{i_m}\]
+\end{remark}
+\begin{theorem}
+    Каждая конечная алгебра множеств порождается некоторым разбиением
+\end{theorem}
+\begin{proof}
+    $\mathscr{B}$ - конечная алгебра событий. Обозначим $\mathscr{B}_w$ - совокупность событий B из $\mathscr{B}$, для которых w из B.
+
+    Для каждого $w \in \Omega$ введем $B_w = \bigcap_{B \in \mathscr{B}_w} B$
+
+    Покажем, что для двух $\omega \neq \omega '$ 
+        \[\left[
+            \begin{gathered}
+            B_{\omega} =  B_{\omega'}\\
+            B_{\omega} \cap B_{\omega'} = \varnothing \\
+        \end{gathered}
+        \right.\]
+    
+    Для любых $\omega \in \Omega$ и $B \in \mathscr{B}$ истинно свойство: если $\omega \in B, $ то $B_\omega \subseteq B$ (т.к $B_\omega$ - пересечение всех таких B из алгебры, в которых лежит $\omega$)
+
+    Пусть теперь $\omega \in B_{\omega'}$, тогда $B_\omega \subseteq B_{\omega '}$ (транзитивность $B_\omega \subseteq B \subseteq B_{\omega'}$) 
+    
+    Далее если $\omega' \in B_\omega, $ то $B_{\omega'} \subseteq B_{\omega}$ и, следовательно, $B_{\omega'} = B_{\omega}$
+
+    Случай $\omega'\in \overline{B_{\omega}}$ невозможен, так как противоречие $B_{\omega'} \subseteq \overline{B_\omega}$ (а уже было доказано, что $B_\omega \subseteq B_{\omega '}$)
+
+    Выберем среди $B_\omega$ разные множества $B_1, \dots, B_r$. Это разбиение, т.к $B_1 + \dots + B_r = \Omega$ и $B_i B_j = \varnothing$ при $i\neq j$.
+
+    Так как $\forall B \in \mathscr{B}$ представимо в виде $B = \bigcup_{\omega \in B} B_\omega$, то это разбиение порождает алгебру $\mathscr{B}$.
+
+\end{proof}
+\begin{definition}[Независимые разбиения]
+    $\alpha_k : A_{k1}+\dots+A_{kr_k} = \Omega, k = 1, \dots, n$
+    независимые, если для любых $i_k, 1\le i_k \le r_k, k = 1, \dots, n$
+    \[P(A_{1i_1}A_{2i_2}\dots A_{n i_n}) = P(A_{1i_1})P(A_{2i_2})\dots P(A_{n i_n})\]
+\end{definition}
+По-русски: есть n разбиений, они могут быть разной мощности.
+Берем по любому событию из каждого разбиения. (всего получается n событий)  (то есть вариантов формулы всего $|\alpha_1| \times\dots\times |\alpha_n|$)
+\begin{definition}[Независимые алгебры ($\sigma$-алгебры)]
+    $\mathscr{A_1}, \dots, \mathscr{A_n}$ - независимы, если $\forall A_i\in \mathscr{A_i}$
+    \[P(A_1 A_2 \dots A_n) = P(A_1) \dots P(A_n)\]
+\end{definition}
+\begin{theorem}
+    Конечные алгебры $\mathscr{A_1}, \dots, \mathscr{A_n}$ независимы тогда и только тогда, когда независимы порождающие их разбиения $\alpha_1, \dots, \alpha_n$
+\end{theorem}
+\begin{proof}
+    $\implies$ Разбиение есть подсистема порожденной алгебры. Из независимости алгебр следует независимость разбиений.
+    \begin{lemma}
+        \begin{enumerate}
+            \item Если события A и B независимы, то $\bar{A}$ и B также независимы
+            \item Если $A_1$ и B независимы и $A_2$ и B независимы, а $A_1 A_2 = \varnothing$, то $A_1 + A_2$ и B независимы.
+        \end{enumerate}
+        \begin{proof}
+            \begin{enumerate}
+                \item A и B независимы, тогда 
+                \[P(B \bar{A}) = P(B \setminus AB) = P(B) - P(AB) = P(B) - P(A)P(B) = P(B)(1- P(A)) = P(B)P(\bar{A})\]
+                \item $A_i$ и B независимы: $P(A_i B) = P(A_i)P(B)$
+                \[P((A_1+A_2)B) = P(A_1)P(B) + P(A_2)P(B) = P(B)(P(A_1)+ P(A_2)) = P(B)P(A_1+A_2)\]
+            \end{enumerate}
+            
+        \end{proof}
+    \end{lemma}
+    
+    $\impliedby$ Каждое событие из алгебры - сумма попарно несовместных событий из соответствующего разбиения.
+    
+    Обратный вывод по лемме.
+\end{proof}
+\begin{remark}
+    Каждое событие A порождает разбиение $A + \bar{A} = \Omega$, порождающее алгебру $\mathscr{A}(A)$. Из леммы вытекает, что независимость событий $A_1, \dots, A_n$ и независимость порожденных ими алгебр $\mathscr{A} (A_1), \dots,\mathscr{A} (A_n)$ эквивалентны.
+\end{remark}
+\subsection{Независимые испытания}
+Если имеем n независимых испытаний, то можно построить одно большое вероятностное пространство, элементы которого являются прямыми произведениями соответствующих $\Omega_i$ и тд.
+
+Подалгебры должны быть независимы, тогда такое пространство всегда можно построить 
+
+Прямое произведение вероятностей:
+\[\omega = (\omega_1, \dots, \omega_n), p(\omega) = p_1(\omega_1)\dots p_n(\omega_n), \quad P(A) = \sum_{\omega\in A} p(\omega)\]
+\[P = P_1 \times \dots \times P_n\]
+
+События являются "прямоугольниками":
+\[A = A_1 \times \dots \times A_n\]
+состоит из векторов $\omega = (\omega_1, \dots, \omega_n), \omega_i\in A_i\in \mathscr{A_i}$ 
+
+Вероятность A:
+\[P(A) = \sum_{\omega\in A} p(\omega) = \sum_{\omega\in A_1} p_1(\omega_1)\dots \sum_{\omega\in A_n} p_n(\omega_n) = \prod_{k = 1}^{n}P_k(A_k)\]
+Пусть $\mathscr{A_k'}$ - подалгебра $\mathscr{A}$, где все $A_i =\Omega_i$ для всех компонент прямоугольника ($i\neq k$)
+
+События из этой алгебры ($A_i'$) изоморфны событиям из $A_i$.
+
+\[P(A_i') = P_i(A_i)\]
+
+Событие A является пересечением событий $A_k', k = 1, \dots, n$
+\[P(\bigcap_{k = 1}^n A_k') = \prod_{k = 1}^{n}P(A_k')\]
+Поэтому алгебры $A_j'$ независимы.
+\subsubsection{Схема Бернулли}
+n испытаний, в котором либо успех, либо неудача (неуспех) (в каждом испытании вероятность успеха и неудачи равны), тогда вероятность элементарного события (вектора из событий каждого испытания, он булев, так как каждое $\omega_i$ либо 0, либо 1) 
+\[p(\omega) = \prod_{i = 1}^{n}p^{\omega_i}q^{1 - \omega_i}\]
+Обозначим $B_k = \{\omega: \omega_1 + \dots + \omega_n = k\}$
+
+Для $\omega \in B_k$ $p(\omega) = p^k q^{n-k}$
+\[P(B_k) = C_n^k p^k q^{n-k}, k = 1, \dots n - \textbf{Биномиальное распределение}\]
+Еще есть полиномиальноая схема. там не по 2 исхода, а по r.
 \section{Случайные величины}
 \begin{definition}[Случайная величина]
     Случайной величиной (СВ) $X(\omega)$ называется функция элементарного события $\omega$ с областью определения $\Omega$
@@ -157,17 +332,19 @@
     величина определяет разбиение из событий $A_i = \{\omega : \xi(\omega) = x_i\}$.
     Т.к $x_i\neq x_j$, то $A_i A_j = \varnothing$. Сумма - достоверное событие $\Omega$.
 
-    Разбиение порождает алгебру событий \[\{\xi \in B =\} = \{\omega: \xi (\omega) \in B\} \],
+    Разбиение порождает алгебру событий \[\{\xi \in B \} = \{\omega: \xi (\omega) \in B\} \],
     B - числовое множество. 
 \end{definition}
 \begin{definition}[Закон распределения]
     Любое правило (таблица, функция), позволяющее находить вероятности всех возможных событий, связанных со случайной величиной.
 \end{definition}
 
-\paragraph*{Примеры законов распределения}
+\subsection{Примеры законов распределения}
 \begin{enumerate}
     \item Биномиальный закон
-    \item Гипергеометрическое распределение
+    \item Гипергеометрическое распределение:
+    распределение числа белых шаров $\xi$ в выборке без возвращения объема n из урны, содержащей M белых и N-M черных шаров 
+    \[P \{\xi = m\} = \frac{C^m_M C^{n-m}_{N-M}}{C_M^n}, m = 0, 1, \dots \min(n, M)\]
     \item Равномерное распределение
 \end{enumerate}
 
@@ -175,7 +352,8 @@
     Математическое ожидание случайной величины $\xi = xi(\omega)$ обозначается $M\xi$ и определяется как сумма
     \[M\xi = \sum_{\omega \in \Omega} \xi(\omega) p(\omega)\]
 \end{definition}
-\paragraph*{Свойства мат. ожидания}
+\textsubscript{среднее значение $\xi$}
+\subsection{Свойства мат. ожидания}
 \begin{enumerate}
     \item $M I_A = P(A)$
     \begin{proof}
@@ -187,8 +365,11 @@
     \end{proof}
     Из этого также следует конечная аддитивность.
     \item Для любой константы C \[M(C\xi) = cM\xi,\quad MC = C\]
+    \item Если $\xi \ge \eta$, то $M \xi \ge M \eta$.
+    $\xi \ge 0 \& M\xi = 0\implies P\{\xi = 0\} = 1$
     \item Математическое ожидание $\xi$ выражается через закон распределения случайной величины $\xi$ формулой
     \[M\xi = \sum_{i = 1}^k x_k P \{\xi = x_i\}\]
+
 \end{enumerate}
 Подставляя в числовую функцию случайную величину, мы также получаем случайную величину. Например, если $\eta = g(\xi)$, то \[M\eta  = M g(\xi)  = \sum_{i = 1}^k g(x_i) P\{\xi = x_i\}\]
 При этом \[g(x_i) = \sum_{i = 1}^k g(x_i) I_{\xi = x_i}\]
@@ -210,7 +391,7 @@
 \begin{definition}[Среднее квадратическое отклонение (стандартное отклонение)]
     $\sqrt(D\xi)$
 \end{definition}
-\paragraph*{Свойства дисперсии}
+\subsection{Свойства дисперсии}
 \begin{enumerate}
     \item $D\xi = M\xi^2 - (M\xi)^2$
     \item $D\xi\leq 0$ и $D\xi = 0$ тогда и только тогда, когда существует такая константа c, что $P\{\xi = c\} = 1$
@@ -227,7 +408,7 @@
 \begin{theorem}[Неравенство Коши-Буняковского]
     
 \end{theorem}
-\paragraph*{Джентльменский набор}
+\subsection{Джентльменский набор}
 \begin{enumerate}
     \item Равномерное дискретное распределение
     \[P\{\xi=k\} = \frac{1}{N}, \quad M\xi = \frac{1+N}{2}, \quad D\xi = \frac{N^2-1}{12}\]
@@ -259,9 +440,9 @@
     Если случайные величины \(\xi_1, \dots \xi_n\) независимы, то 
     \[D(\xi_1 + \cdots + \xi_n) = D\xi_1 + \cdots + D\xi_n\]
 \end{theorem}
-\paragraph*{Евклидово пространство случайных величин}
+\subsection{Евклидово пространство случайных величин}
 Условное мат. ожидание $M (\xi | \eta)$- ортогональная проекция $\xi$ на линейное подпространство $\eta$
-\paragraph*{Условные математические ожидания}
+\subsection{Условные математические ожидания}
 \begin{definition}[Условная вероятность]
     Условная вероятность \(P(B|\mathscr{A}(\alpha))\) относительно \(\mathscr{A}(\alpha)\) как случайную величину, которая принимает значение \(P(B|A_k)\) при \(\omega \in A_k\).
 \end{definition}
@@ -315,7 +496,7 @@
 \begin{definition}[$\sigma-$алгебра, порожденная случайной величиной $\xi$]
     Совокупность $\xi^{-1}(B)$ для всех борелевских множеств борелевской алгебры.
 \end{definition}
-\paragraph*{Примеры дискретных распределений}
+\subsection{Примеры дискретных распределений}
 \begin{enumerate}
     \item Биномиальное
     \item Пуассоновское
@@ -339,7 +520,7 @@
     $p(x) = p_\xi(x)$ - плотность распределения случайной величины $\xi$, если для любых $x_1 < x_2$
     \[P\{x_1 < \xi < x_2\} = \int_{x_1}^{x_2}p_\xi (x)dx\]
 \end{definition}
-\paragraph*{Свойства}
+\subsection{Свойства}
 \[p(x)\le 0, \int_{-\infty}^{\infty} p(x)dx = 1\]
 \section{Математическое ожидание}
 \begin{definition}[Простая случайная величина]
@@ -356,13 +537,13 @@
 \begin{definition}[Мат. ожидание в общем случае]
     \[\xi = \xi^+ - \xi^-,\] где \(\xi^+ = \xi I_{\{\xi\geq 0\}}\), \(\xi^+ = |\xi| I_{\{\xi< 0\}}\)
 \end{definition}
-\paragraph*{Свойства мат. ожидания}
+\subsection{Свойства мат. ожидания}
 \begin{enumerate}
     \item Свойство линейности
     \item Свойство положительности
     \item Свойство конечности
 \end{enumerate}
-\paragraph*{Джентльменский набор абсолютно непрерывных распределений}
+\subsection{Джентльменский набор абсолютно непрерывных распределений}
 \begin{enumerate}
     \item Нормальное (гауссово распределение)
     \begin{definition}
@@ -432,16 +613,17 @@
     \[\phi_\xi(s) = M s^\xi = \sum_{n = 0}^{\infty} p_n s^n\]
     Ряд абсолютно сходится при $|s|\le 1$
 \end{definition}
-\paragraph*{Джентльменский набор}
+\subsection{Джентльменский набор}
 \begin{enumerate}
     \item Равномерное дискретное распределение
-    \[P\{\xi=k\} = \frac{1}{N}, \quad M\xi = \frac{1+N}{2}, \quad D\xi = \frac{N^2-1}{12}, \quad \phi(s) = \sum_{n=1}^{\infty} \frac{s^n}{n}=-\ln(1-s)\]
+    \[P\{\xi=k\} = \frac{1}{N}, \quad M\xi = \frac{1+N}{2}, \quad D\xi = \frac{N^2-1}{12}, \quad \phi(s) = \sum_{n=1}^{\infty} \frac{s^n}{n}=-\ln(1-s), \quad f_\xi (t) = -\ln (1-e^{it})\]
     \item Биномиальное (распределение Бернулли)
-    \[P\{n=k\}=C_n^k p^k {(1-p)}^{n-k}, \quad M\xi = np, \quad D\xi = np(1-p), \quad \phi(s) = \sum_{m = 0}^{\infty} C_n^m p^m {(1-p)}^{n-m} = {(ps +1-p)}^n\]
+    \[P\{n=k\}=C_n^k p^k {(1-p)}^{n-k}, \quad M\xi = np, \quad D\xi = np(1-p), \quad \phi(s) = \sum_{m = 0}^{\infty} C_n^m p^m {(1-p)}^{n-m} = {(ps +1-p)}^n,\]
+    \[f_\xi (t) = {(pe^{it} +1-p)}^n\]
     \item Геометрическое распределение
-    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{{(1-p)}^2}, \quad \phi(s) = \sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{p}{1-(1-p)s} \]
+    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{{(1-p)}^2}, \quad \phi(s) = \sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{p}{1-(1-p)s}, \quad f_\xi (t) = \frac{p}{1-(1-p)e^{it}}\]
     \item Распределение Пуассона
-    \[P\{n=k\}=\frac{\lambda^k}{k!}e^{-\lambda}, \quad M\xi = \lambda, \quad D\xi = \lambda, \quad \phi(s) = \sum_{n = 0}^{\infty} \frac{\lambda^n s^n}{n!}e^{-\lambda}=e^{\lambda (s-1)}\]
+    \[P\{n=k\}=\frac{\lambda^k}{k!}e^{-\lambda}, \quad M\xi = \lambda, \quad D\xi = \lambda, \quad \phi(s) = \sum_{n = 0}^{\infty} \frac{\lambda^n s^n}{n!}e^{-\lambda}=e^{\lambda (s-1)}, \quad f_\xi (t) = e^{\lambda (e^{it}-1)}\]
 \end{enumerate} 
 \section{Характеристические функции}
 129-137 
@@ -514,7 +696,10 @@ $\xi = C $ с вероятностью 1
     \[f_\xi (t) = (1-it)^{-\alpha}\]
     \textsubscript{многозначная функция - нужно выделять ветвь}
 \end{enumerate}
-\paragraph*{Абсолютно непрерывный случай}
+\subsection{Абсолютно непрерывный случай}
 \[f_\xi(t) = \int_{-\infty}^{\infty} e^{itx}p_\xi(x)dx \quad \textsubscript{Преобразование Фурье}\]
 \[p_\xi(x) = \frac1{2x} \int_{-\infty}^{\infty} e^{-itx}f_{\xi}(t) dt\quad \textsubscript{Обратное преобразование Фурье}\]
+\begin{remark}[Вырожденное распределение]
+    \[P\{\xi = C\} = 1, \quad f_\xi (t) = e^{itC}\]
+\end{remark}
 \end{document}
