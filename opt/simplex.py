@@ -720,4 +720,22 @@ if __name__ == '__main__':
         x, y = SimplexTable.simplex_method(problem, "f", False, dual=True)
         assert x == [2, 1, 6, 1, 0, 0, 0, 0]
         assert y == 8
+    with open("input6.txt") as file:
+        problem = Problem(*read(file))
+        assert problem.check_canon()
+        print(problem)
+        assert problem.is_primarly_feasible()
+        x, y = SimplexTable.simplex_method(problem, "f", False)
+    with open("input7.txt") as file:
+        problem = Problem(*read(file))
+        problem.make_canon(False)
+        x, y = SimplexTable.simplex_method(problem, "f", False)
+    with open("input8.txt") as file:
+        problem = Problem(*read(file))
+
+        x, y = SimplexTable.simplex_method(problem, "f", False, dual=True)
+    with open("input9.txt") as file:
+        problem = Problem(*read(file))
+        problem.make_canon(False)
+        x, y = SimplexTable.simplex_method(problem, "f", False)
 
