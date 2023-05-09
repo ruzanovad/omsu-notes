@@ -546,7 +546,7 @@ n испытаний, в котором либо успех, либо неуда
 \subsection{Джентльменский набор абсолютно непрерывных распределений}
 \begin{enumerate}
     \item Нормальное (гауссово распределение)
-    \begin{definition}
+    \begin{definition}[гауссово распределение]
         Случайная величина $\xi$ имеет нормальное распределение с параметрами $(a, \sigma)$, $-\infty < a < \infty, \sigma > 0$, если она имеет плотность
         \[p_\xi(x) = \frac1{\sqrt{2\pi}\sigma} e^{-\frac{(x-a)^2}{2\sigma^2}}\]
         Нормальное распределение с параметрами (0, 1) называется стандартным.
@@ -555,7 +555,7 @@ n испытаний, в котором либо успех, либо неуда
         \[\int_{-\infty}^{\infty}p(x) dx = \frac1{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{-\frac{x^2}2}dx = |t = \frac{x}{\sqrt{2}}|= \frac1{\sqrt{\pi}} \int_{-\infty}^{\infty}  e^{-t^2}dt = |\text{гауссов интеграл}| = 1\]
     \end{definition}
     \item Равномерное распределение
-    \begin{definition}
+    \begin{definition}[равномерное распределение]
         Случайная величина $\xi$ имеет равномерное распределение на отрезке [a, b] если ее плотность имеет вид:
         \[p_\xi (x) = \begin{cases}
             C & \text{при } a \le x \le b \\
@@ -629,7 +629,7 @@ n испытаний, в котором либо успех, либо неуда
 129-137 
 \[\xi(t) = \xi_1(t)+ i\xi_2(t)\]
 \[|M\xi| \le M |\xi|\]
-\begin{definition}
+\begin{definition}[характеристическая функция]
     Функция $f_\xi(t)$ называется характеристической функцией случайной величины $\xi$, если она имеет вид
     \[f_\xi(t)  = Me^{it\xi}\]
 \end{definition}
@@ -689,17 +689,50 @@ $\xi = C $ с вероятностью 1
 \begin{enumerate}
     \item Стандартное распределение
     \[f_\xi(t) = e^{-t^2/2}\]
+    \paragraph*{Мучаемся}
+        \[f(t) = \frac1{\sqrt{2 \pi}}\int_{-\infty}^{\infty} e^{itx - x^2/2}dx\]
+        дифференцируем.
+        \[f'(t) = \frac{i}{\sqrt{2 \pi}}\int_{-\infty}^{\infty} xe^{itx - x^2/2}dx = \]
+        \[u = e^{itx}, du = it e^{itx}dx, dv = \frac{xdx}{e^{x^2/2}} = \frac{d(x^2/2)}{e^{x^2/2}}= - d(-x^2/2)e^{-x^2/2} = -d(e^{-x^2/2}), v = -e^{-x^2/2}\implies\]
+        \[ =\frac{i}{\sqrt{2 \pi}} (uv - \int_{-\infty}^{\infty} vdu)=\frac{i}{\sqrt{2 \pi}} ({-e^{itx}e^{-x^2/2}|_{-\infty}^{\infty} } + it\int_{-\infty}^{\infty} e^{itx - x^2/2}dx) = \frac{i^2 t}{\sqrt{2\pi}}\int_{-\infty}^{\infty} e^{itx - x^2/2}dx = -tf(t) \]
+        \[f'(t) + tf(t) = 0,\] \[\text{уравнение с разделяющимися перем. с начальным условием} f(0) = 1 \text{(по свойству хар.функции)}\]
+        \[f(t) = e^{-t^2/2}\]
     можно получить нормальное при помощи 3 свойства.
+    \[f(t) = e^{ita} f_\xi(\sigma t) = e^{ita - (\sigma t)^2 /2} \]
     \item равномерное на [a, b]:
+    \[f(t) = \frac1{b - a}\int_{a}^{b}e^{itx}dx\]
     \[f_\xi = \frac{e^{itb} - e^{ita}}{it(b-a)}\]
     \item Гамма распределение с параметром $\alpha$
+    \[p(x) = \frac{x^{\alpha-1}}{\Gamma(\alpha)e^{-x}}\]
     \[f_\xi (t) = (1-it)^{-\alpha}\]
     \textsubscript{многозначная функция - нужно выделять ветвь}
 \end{enumerate}
-\subsection{Абсолютно непрерывный случай}
-\[f_\xi(t) = \int_{-\infty}^{\infty} e^{itx}p_\xi(x)dx \quad \textsubscript{Преобразование Фурье}\]
-\[p_\xi(x) = \frac1{2x} \int_{-\infty}^{\infty} e^{-itx}f_{\xi}(t) dt\quad \textsubscript{Обратное преобразование Фурье}\]
 \begin{remark}[Вырожденное распределение]
     \[P\{\xi = C\} = 1, \quad f_\xi (t) = e^{itC}\]
 \end{remark}
+\begin{definition}[свертка]
+    Свертка двух функций на прямой (обозначается $f \ast  g$) - это функция
+
+$$f \ast  g : y \mapsto 
+\int f(x)g(y - x)dx.$$
+\end{definition}
+
+
+\subsection{Абсолютно непрерывный случай}
+\begin{definition}[L1-пространство]
+    Пространством $L_1$ называется нормированное пространство, элементами которого служат классы эквивалентных между собой суммируемых функций; сложение элементов в $L_1$ и умножение их на числа определяются как обычное сложение и умножение функций, а норма задается формулой 
+    \[\left\lVert f\right\rVert = \int |f(x)|d\mu \]
+\end{definition}
+\[f_\xi(t) = \int_{-\infty}^{\infty} e^{itx}p_\xi(x)dx \quad f_\xi (t) \textsubscript{ преобразование Фурье функции }p_\xi(x)\]
+\[p_\xi(x) = \frac1{2\pi} \int_{-\infty}^{\infty} e^{-itx}f_{\xi}(t) dt\quad \textsubscript{Обратное преобразование Фурье}\]
+имеют смысл для функций из $L_1(-\infty, -\infty)$, т.е. с конечным интегралом $\int_{-\infty}^{\infty} |f(t)|dt$
+
+\begin{theorem}
+    Пусть $f(t)$ - характеристическая функция и $F(x)$ - соответствующая функция распределения. Тогда, если x-l и x+l являются точками непрерывности функции $F(x)$, то 
+    \[F(x+l) - F(x-l) = \lim_{\sigma\to 0}\frac1{\pi} \int_{-\infty}^\infty e^{-ixt}f(t)\frac{\sin{tl}}{t}e^{-\sigma^2t^2/2}dt\]
+\end{theorem}
+\begin{theorem}
+    Каждой хар.функции соответствует только одна функция распределения.
+\end{theorem}
+
 \end{document}
