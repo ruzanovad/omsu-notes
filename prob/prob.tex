@@ -23,6 +23,7 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Замечание}
 \newtheorem*{example}{Пример}
+\newtheorem*{corollary}{Следствие}
 
 \setlength{\topmargin}{-0.5in}
 \setlength{\oddsidemargin}{-0.5in}
@@ -440,8 +441,79 @@ n испытаний, в котором либо успех, либо неуда
     Если случайные величины \(\xi_1, \dots \xi_n\) независимы, то 
     \[D(\xi_1 + \cdots + \xi_n) = D\xi_1 + \cdots + D\xi_n\]
 \end{theorem}
+
 \subsection{Евклидово пространство случайных величин}
+\begin{enumerate}
+    \item зададим евклидово пространство случайных величин - векторов $(\xi(\omega_1), \dots, \xi(\omega_n))$ с 
+    \begin{enumerate}
+        \item скалярное произведение \[(\xi, \eta) = \sum_{\omega}\xi(\omega)\eta(\omega)p(\omega)=  M\xi\eta\]
+        \item норма \[\left\lVert \xi\right\rVert =\sqrt{(\xi, \xi)}\]
+        \item расстояние \[d(\xi, \eta) = \sqrt{M(\xi-\eta)^2} = \left\lVert \xi-\eta\right\rVert\]
+    \end{enumerate}
+    Рассмотрим прямую констант $l_0 = \{\xi | \xi(\omega_1) = \dots = \xi(\omega_n)\}$ и найдем проекцию $m_\xi$ случайной величины на прямую 
+    \[d(\xi, m_\xi) = \min_{c\in l}d(\xi, c)\]
+    При любой константе 
+    \[M(\xi-c)^2 = M(\xi - M\xi)^2 + (M\xi -c)^2 \ge D\xi\]
+    Значит $\sqrt{D\xi} = \min_{c\in l}d(\xi, c) = d(\xi, m_\xi) $ и $m_\xi = M\xi$.
+    
+    Проекция случайной величины - ее матожидание, $\xi - M\xi$ ортогональнально прямой констант. 
+    \[(1, \xi - M\xi) = 0\]
+    \item Рассмотрим две случайных величины $\xi, \eta$.
+    \[\begin{cases}
+        \xi = M\xi +\xi_1 \\
+        \eta = M\eta +\eta_1 \\
+    \end{cases}\]
+
+    \begin{definition}[Коэффициент корелляции]
+        \[\rho(\xi, \eta) = \cos \phi_{\xi_1, \eta_1} = \frac{(\xi_1, \eta_1)}{\left\lVert  \xi_1 \right\rVert \left\lVert \eta_1 \right\rVert } = \frac{(\xi - M\xi, \eta - M\eta)}{\left\lVert \xi - M\xi \right\rVert \left\lVert \eta - M\eta \right\rVert } = \frac{M(\xi - M\xi)(\eta - M\eta)}{\sqrt{D\xi D\eta}}\] - коэффициент корелляции между $\xi$ и $\eta$
+    \end{definition}
+    \begin{definition}[Ковариация]
+        \[\mathop{Cov} (\xi, \eta) = M(\xi - M\xi)(\eta - M\eta)\]
+    \end{definition}
+    \[\rho(\xi, \eta) = \frac{\mathop{Cov} (\xi, \eta) }{\sqrt{D\xi D\eta}}\]
+    \begin{itemize}
+        \item По неравенству Коши-Буняковского $(M \xi_1 \eta_1)^2 \le M \xi_1^2 M \eta_1^2\implies |\rho(\xi, \eta)|\le 1$
+        \item Если $\xi, \eta$ независимы, то Cov$(\xi, \eta) = 0, \rho(\xi, \eta) = 0$
+        \begin{proof}
+            $M(\xi - M\xi)(\eta - M\eta) = M(\xi - M\xi)M(\eta - M\eta) = 0$
+        \end{proof}
+    \end{itemize}
+    \begin{definition}[некореллированные случайные величины]
+        Если $\rho(\xi, \eta) = 0, $ то $\xi_1 \perp \eta_1$ и случайные величины $eta, \xi$- некореллированные
+    \end{definition}
+    При $\alpha_1 \alpha_2\neq 0$
+    \[\rho(\alpha_1 \xi +\beta_1, \alpha_2 \eta + \beta_2) = \frac{\alpha_1}{|\alpha_1|} \frac{\alpha_2}{|\alpha_2|}\rho(\xi, \eta)\]
+    Спроектируем вектор $\eta$ на плоскость, в которой лежат прямая констант $l_0$ и $\xi$. Проекция $\eta = \alpha \xi + \beta$ определяется константами $\alpha, \beta$, при которых 
+    \[\begin{cases}
+        \eta - \alpha \xi - \beta \perp 1 \\
+        \eta - \alpha \xi - \beta \perp \xi \\
+    \end{cases}\]
+    (вектор-высота)
+    \[\begin{cases}
+        M(\eta - \alpha \xi - \beta ) \cdot 1  = 0\\
+        M(\eta - \alpha \xi - \beta ) \cdot \xi  = 0\\
+    \end{cases}\]
+    \[\begin{cases}
+        \alpha M \xi + \beta = M \eta \\
+        \alpha M \xi ^2 + \beta M \xi = M \xi \eta
+    \end{cases}\]
+    Получаем 
+    \[\begin{cases}
+        \alpha = \rho \frac{\sigma_\eta}{\sigma_\xi} \\
+        \beta = M\eta - \rho \frac{M\xi}{\sigma_\xi}\sigma_\eta \\
+    \end{cases}\]
+    $\sigma_\xi^2 = D\xi, \sigma_\eta^2 = D\eta, \rho = \rho(\xi, \eta)$
+\end{enumerate}
+Если случайные величины зависимы, то
+\begin{theorem}
+    \[D(\xi_1 + \cdots + \xi_n) = \sum_{k = 1}^n  D \xi_k + 2\sum_{1 \le k < l \le n} Cov (\xi_k, \xi_l)\]
+\end{theorem}
+\begin{proof}
+    \[D(\xi+\eta) = M ((\xi - M\xi) + (\eta - M\eta))^2 = M (\xi - M \xi)^2 + M (\eta - M\eta)^2 + 2M(\xi - M\xi)(\eta - M\eta) =  D\xi + D\eta + 2 Cov(\xi, \eta)\]
+\end{proof}
+
 Условное мат. ожидание $M (\xi | \eta)$- ортогональная проекция $\xi$ на линейное подпространство $\eta$
+
 \subsection{Условные математические ожидания}
 \begin{definition}[Условная вероятность]
     Условная вероятность \(P(B|\mathscr{A}(\alpha))\) относительно \(\mathscr{A}(\alpha)\) как случайную величину, которая принимает значение \(P(B|A_k)\) при \(\omega \in A_k\).
@@ -461,10 +533,43 @@ n испытаний, в котором либо успех, либо неуда
 \begin{theorem}
     \[M[M(\eta | \xi)] = M\eta\]
 \end{theorem}
+\begin{proof}
+    \[M[M(\eta | \xi)] = \sum_{k = 1}^{n} P\{\xi  = x_k\}M\{\eta | \xi = x_k\} = \sum_{k = 1}^{n} P\{\xi  = x_k\}\sum_{t = 1}^{m} P\{\eta = y_t| \xi = x_k\} = \sum_{k = 1}^{n} P\{\xi  = x_k\}\frac{\sum_{t = 1}^{m}y_t P(\eta = y_t, \xi = x_k)}{P(\xi = x_k)}=\]
+    \[=\sum_{k = 1}^{n}\sum_{t = 1}^{m}y_t P(\eta = y_t, \xi = x_k)=\sum_{k = 1}^{n}\sum_{t = 1}^{m}y_t P(\eta = y_t, \xi = x_k) = \sum_{l = 1}^m y_l P\{\eta = y_l\} = M \eta\]
+\end{proof}
+\subsection{Неравенство Чебышева. Закон больших чисел}
 \begin{theorem}[Неравенство Чебышева]
     Для любого $x>0$ имеют место неравенства:
-    \[P\{|\xi|\geq x\} \leq \frac{M|\xi|}{x}\]
-    \[P\{|\xi - M\xi| \geq x\} \leq \frac{D \xi}{x^2}\]
+    \begin{equation}
+        P\{|\xi|\geq x\} \leq \frac{M|\xi|}{x}
+    \end{equation}
+    \begin{equation}
+        P\{|\xi - M\xi| \geq x\} \leq \frac{D \xi}{x^2}
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    (1)\[|\xi| = |\xi|I_{|\xi|\ge x}+|\xi|I_{|\xi|< x}\ge |\xi| I_{|\xi| \ge x} \ge x I_{|\xi|\ge x}\]
+    \[M|\xi| \ge xM I_{|\xi|\ge x} = x P \{|\xi|\ge x\}\]
+    (2)\[\eta = (\xi - M\xi)^2\]
+    \[M\eta = D\xi\]
+\end{proof}
+\paragraph*{Закон больших чисел}
+\begin{theorem}[Теорема Чебышева]
+    Если $\xi_1, \dots, \xi_n$ независимы и существует такая константа $c > 0$, что $D\xi_n\le c, n = 1, \dots, $ то при любом $\varepsilon > 0$
+    \[\lim_{n\to \infty} P\{\left\lvert \frac{\xi_1+\cdots + \xi_n}{n} - \frac{M \xi_1 + \cdots + M \xi_n}{n}\right\rvert  > \varepsilon\} = 1\]
+\end{theorem}
+\begin{corollary}
+    Если $\xi_1, \dots$ независимы и одинаково распределены,
+
+    $M\xi_n = a, D\xi_n = \sigma^2< \infty$
+
+    то при любом $x>0$
+    \[\lim_{n\to \infty} P\{\left\lvert \frac{\xi_1+\cdots + \xi_n}{n} - a \right\rvert  < x\} = 1\]
+\end{corollary}
+Закон больших чисел утверждает, что с вероятностью, приближающейся при $n\to \infty$ к 1, среднее арифметическое сумм независимых слагаемых при определенных условиях становится близким к константе.
+\paragraph*{Закон больших чисел в схеме Бернулли}
+\begin{theorem}[Теорема Бернулли]
+    
 \end{theorem}
 \section{Случайные величины (общий случай)}
 \begin{definition}
@@ -705,7 +810,22 @@ $\xi = C $ с вероятностью 1
     \item Гамма распределение с параметром $\alpha$
     \[p(x) = \frac{x^{\alpha-1}}{\Gamma(\alpha)e^{-x}}\]
     \[f_\xi (t) = (1-it)^{-\alpha}\]
-    \textsubscript{многозначная функция - нужно выделять ветвь}
+    Рассмотрим плотности гамма распределений с параметрами альфа и бета, плотность гамма распределения с параметром (альфа + бета) вычисляется через свертку:
+    \[p_{\alpha + \beta}(x) = \int_{0}^{x}p_\beta(x-y)p_\alpha(y)dy = \frac{e^{-x}}{\Gamma(\alpha)\Gamma(\beta)}\int_{0}^{x}y^{\alpha - 1}(x-y)^{\beta - 1}dy = \] 
+    \[ = \frac{e^{-x}}{\Gamma(\alpha)\Gamma(\beta)}\int_{0}^{x}\frac{y^{\alpha - 1}(x-y)^{\beta - 1}}{x^{\alpha-1}x^{\beta-1}}x^{\alpha-1}x^{\beta-1}dy = \left\lvert z = y/x, dz = dy/x, dy = xdz\right\rvert\] 
+    \[ = \frac{e^{-x}x^{\alpha+\beta - 1}}{\Gamma(\alpha)\Gamma(\beta)}\int_{0}^{1} z^{\alpha-1}(1-z)^{\beta-1}dz = \frac{x^{\alpha+\beta-1}}{\Gamma(\alpha+\beta)}e^{-x}, x\ge 0\]
+    определили независимость
+
+    По 4 свойству \[f_{\alpha+\beta}(t) = f_{\alpha}(t) f_{\beta}(t)\]
+    \[f_1(x) = \int_{0}^{\infty}e^{itx}p_1(x)dx = \int_{0}^{\infty}e^{itx-x}dx = \left\lvert du = e^{-x}dx, u = -e^{-x}, v = e^{itx}, dv = it e^{itx}\right\rvert \]
+    \[= - e^{itx-x}\lvert_{0}^{\infty} + it \int_{0}^{\infty}e^{itx-x}dx = 1 + it f_1(t)\]
+    \[f_1(t) = \frac1{1-it}\]
+    \[f_n(t) = \frac1{(1-it)^n}\]
+    \[f_{1/n} = (1-it)^{-1/n}\]
+    \[f_{m/n} = (1-it)^{-m/n}\]
+    Формула работает для рациональных чисел.
+    Но можно сделать предельный переход и формула будет работать для всех положительных альфа. 
+    \textsubscript{многозначная функция - нужно выделять ветвь $f_\alpha(0) = 1$}
 \end{enumerate}
 \begin{remark}[Вырожденное распределение]
     \[P\{\xi = C\} = 1, \quad f_\xi (t) = e^{itC}\]
