@@ -626,17 +626,18 @@ $I_0 = \{i \; | \; \phi_i(x^0) = 0\}$ - множество индексов \tex
 \begin{definition}
     Направление z называется возможным (допустимым) в $x^0$, если $(\nabla \phi_i(x^0), z)<0 \quad \forall i \in I_0$ 
 \end{definition}
+
 \begin{remark}
     Если z - возможное направление в $x^0$, то сделав достаточно малый шаг в направлении z, мы останемся в области.
 
     Если $I_0 = \varnothing$, но любое направление является возможным.
-\end{remark}
 
-\begin{wrapfigure}{R}{0.3\textwidth}
-    \includegraphics[width=0.25\textwidth]{2023-05-08 153256.png}
-    \caption{Какая-то пикча}
-    \label{fig:pic}
-\end{wrapfigure}
+\end{remark}
+% \begin{wrapfigure}[5]{r}{0.25\textwidth}
+%     \centering
+%     \includegraphics[width=0.25\textwidth]{2023-05-08 153256.png}
+% \end{wrapfigure}
+
 \begin{definition}
     Направление z называется прогрессивным в точке $x^0$, если
     \[\begin{cases}
@@ -652,6 +653,7 @@ $I_0 = \{i \; | \; \phi_i(x^0) = 0\}$ - множество индексов \tex
         \item $f(x^1) < f(x^0)$
     \end{enumerate}
 \end{remark}
+
 \subsection{Критерий оптимальности}
 \begin{theorem}[Критерий оптимальности]
     $x^* \in D$ - оптимальное решение задачи ВП $\Leftrightarrow$
@@ -661,4 +663,108 @@ $I_0 = \{i \; | \; \phi_i(x^0) = 0\}$ - множество индексов \tex
         (\nabla f(x^0), z)<0 
     \end{cases}\]
 \end{theorem}
+\begin{proof}
+    \begin{lemma}
+        пусть $f(x)$ выпукла на D и дифференцируема в точке $x^*\implies (\nabla f(x^*), x - x^*)\le\Delta f(x^*) = f(x) - f(x^*)$ 
+    \end{lemma}
+    \begin{proof}
+        Пусть $z = x - x^*$.
+        \[(\nabla f(x^*), z) = f_z'(x^*)=\lim_{\lambda \to 0+0} \frac{f(x^* +\lambda z) - f(x^*)}{\lambda} = \lim_{\lambda \to 0+0}\frac{f(x^* +\lambda (x-x^*)) - f(x^*)}{\lambda}=\]
+        \[=\lim_{\lambda\to 0+0}\frac{f((1-\lambda)x^* +\lambda x) - f(x^*)}{\lambda} \le \lim_{\lambda \to 0+0} \frac{(1-\lambda) f(x^*)+\lambda f(x) - f(x^*)}{\lambda} = \lim_{\lambda \to 0+0}\frac{\lambda (f(x) - f(x^*))}{\lambda} = f(x) - f(x^*)\]
+    \end{proof}
+    $\Rightarrow$ От противного. Если в $x^* \exists$ прогрессивное направление, то в силу зам. 2, сделав достаточно малый шаг в направлении z, мы получим точку с меньшим значением целевой функции.
+    
+    $\Leftarrow$ Пусть в точке $x^*$ нет прогрессивного направления. Докажем, что $x^*$ оптимальное решение. 
+    
+    Предположим, что это не так и существует $x'\in D$ $f(x')< f(x^*)$
+
+    В силу непрерывности функции $f(x)$ существует окрестность $O_{x'} : \forall x\in O_{x'}$ $f(x) < f(x^*)$
+
+    Рассмотрим $(.) \bar{x}$ - точка Слейтера, т.е. $\forall \phi_i(\bar{x}) < 0 \forall i$ и рассмотрим $[x', \bar{x}]$
+    
+    Любая точка этого отрезка записывается как $x^\lambda = (1- \lambda)x' + \lambda \bar{x}\lambda \in (0,1)$
+
+    Для некоторого $\lambda_0$ соответствует точка 
+    \[x^{\lambda_0} = (1-\lambda_0)x' + \lambda_0\bar{x}\in O_{x'},\]
+    т.е $f(x^{\lambda_0})< f(x^*)$
+
+    Докажем, что $x^{\lambda_0}$ является внутренней точкой D.
+    \[\forall i \phi_i(x^{\lambda_0}) = \phi_i((1-\lambda_0)x' + \lambda_0\bar{x})\le^{\text{выпуклость}} (1-\lambda_0)\phi_i(x')_{\le 0} + \lambda_0\phi_i(\bar{x})_{< 0} < 0\implies\]
+    $x^{\lambda_0}$ внутренняя точка
+
+    Пусть $z = x^{\lambda_0} - x^*$ 
+    Докажем, что z - прогрессивное направление в $x^*$
+    
+    \[I_0 = \{i | \phi_i(x^*) = 0\}\]
+    \[\forall i\in I_0 (\nabla \phi_i(x^*), z) = (\nabla \phi_i(x^*), x^{\lambda_0}-x^*)\le^{\text{лемма}} \phi_i(x^{\lambda_0} - \phi_i(x^*)) < 0 \implies\]
+    z - возможное направление \[\leq (\nabla f(x^*), x^{\lambda_0} - x^*) \le^{\text{лемма}} f(x^{\lambda_0})_{<0} - f(x^*)_{\ge 0} < 0\implies\]
+    z  - прогрессивное направление, противоречие
+\end{proof}
+    \subsection{Каноническая задача ВП}
+    \begin{definition}
+        Канонической задачей ВП называется задача ВП с линейной целевой функцией, т.е $f(x) = (c, x)\to \min$
+    \end{definition}
+    \paragraph*{Свойства}
+    \begin{enumerate}
+        \item $\nabla f = c = const$
+        \item оптимальное значение функции достигается на границе
+    \end{enumerate}
+
+\begin{theorem}[эквивалентности]
+    Для любой задачи ВП, $\exists$ эквивалентная ей каноническая ЗВП
+\end{theorem}
+Идея:
+\[f(x) \to min \quad x_{n+1} \to \min\]
+\[\phi_i(x)\le 0 , i = 1, \dots, m \quad f(x) - x_{n+1} \le 0, \phi_i(x)\le 0 , i = 1, \dots, m\]
+\[x\in G = R^n \quad x\in G = R^{n+1}\]
+
+\newpage
+\subsection{Метод возможных направлений(модификация Зойтендейка)}
+Рассмотрим каноническую задачу ВП (I)
+\begin{center}
+    \(f(x) = (c, x) \to \min\) \\
+    \(\phi_i(x) \le 0, i = 1, \dots, m\)\\
+    \(x \in R^n\)
+\end{center}
+$\phi_i - $выпуклая, непрерывно дифф.
+Выполнено условие Слейтера, $x^0$- начальная допустимая точка $\in D$
+
+Задаем начальный уровень допустимой близости к границе $\delta^0>0$
+
+\[I_0 = \{i | \phi_i(x^0) = 0\}\]
+
+\[I_\delta = \{i | -\delta^0<\phi_i(x^0) \leq 0\}\]
+Выпишем одну итерацию алгоритма.
+\begin{enumerate}
+    \item[шаг 0] (проверка близости $x_0$ к границе D)
+
+    Определяем для текущих $x^0, \delta^0$ множества $I_0, I_{\delta_0}$
+    \item[шаг 1] Нахождение прогрессивного направления z в $x^0$
+
+    Составляем вспомогательную задачу ЛП:
+    \[y\to \min\]
+    \[(\nabla \phi_i(x^0), z)\le y ,\forall i \in I_\delta\]
+    \[(c, z)\le y\]
+    \[|z_j|\le 1, j = 1, \dots, n - \text{условие нормировки, зам 1}\]
+    \[y \le 0, \text{зам 2}\]
+    Решаем задачу ЛП (она везде разрешима, замечание 3)
+
+    Возможны следующие случаи.
+    \begin{enumerate}
+        \item \begin{enumerate}
+            \item $y^0 = y^* < -\delta^0\implies z^0$ - прогрессивное направление и на следующей итерации полагаем $\delta^1 = \delta^0$
+            \item $-\delta^0 \le y^0 < 0 \implies z^0$ - также прогрессивное, но на след итерации $\delta^1 = \delta^0/2$($y^0$ характеризует скорость убывания)
+        \end{enumerate}
+        Переходим на шаг 2
+        \item Если $y^0 = y^* = 0, $ то строим аналогичную задачу ЛП, только индексы i из $I_0$. Если и в этом случае $y^* = 0$, то прогрессивного направления нет и текущая точка оптимальна, \textbf{СТОП}
+
+        Если же $y^* < 0\implies$ соотв. z - прогрессивное направление и на след. итерацию $\delta^1 = \delta^0 /2$, шаг 2
+    \end{enumerate}
+    \item[шаг 2](Поиск величины шага в прогрессивном направлении)
+
+    \[x^1 = x^0 + zh\]
+    h надо найти, величина шага определяется как наименьший положительный корень уравнений $\phi_i(x^0 +zh) = 0, \forall i = 1, \dots, m$
+
+    Далее выполняем шаг величины h в направлении z, $f(x^1) < f(x^0)$, т.к шаг делает в прогрессивном направлении $\implies x^1, \delta^1$ - вход для следующей итерации, переходим к ней.
+\end{enumerate}
 \end{document}
