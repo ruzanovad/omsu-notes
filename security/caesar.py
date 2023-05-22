@@ -1,7 +1,7 @@
 import typing
 import string
 
-
+# 2.21 from Stallings
 def encode(plaintext: str, offset: int) -> str:
     offset %= 26
     alphabet_lower = string.ascii_lowercase

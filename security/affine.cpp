@@ -1,5 +1,5 @@
 //"https://cp-algorithms.com/algebra/module-inverse.html"
-
+// 2.22 from Stallings
 #include <iostream>
 #include <exception>
 #include <string>

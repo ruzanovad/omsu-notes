@@ -10,7 +10,7 @@
 #else
 #define LOG(x) ...
 #endif
-
+// 2.25 from Stallings
 namespace hill {
     unsigned long long modularInverse(unsigned long long a, unsigned long long mod);
 
