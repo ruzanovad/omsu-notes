@@ -1,0 +1,212 @@
+\documentclass[a4paper]{article}
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+\newcommand\letsymbol{\mathord{\sqsupset}}
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\theoremstyle{definition}
+\newtheorem*{example}{Пример}
+\newtheorem*{definition}{Определение}
+\newtheorem*{statement}{Утверждение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+\section{I}
+\begin{definition}[Общая задача ЛП]
+	$    \begin{cases}
+			f(x) = c_0 + \sum_{j = 1}^n c_j x_j \to \max (\min)   \\
+			\sum_{j = 1}^{n} a_{ij}x_j \# b_i, \, i = 1, \dots, m \\
+			x_j \geq 0, j \in J\subseteq \{1, \dots, n\}
+		\end{cases}$, где \(x = (x_1, ..., x_n)\in \mathbb{R}^n\) -  вектор переменных
+
+	Матричная запись:
+
+	$\begin{cases}
+			f(x) = (c, x) \to \max(\min) \\
+			Ax \# b                      \\
+			x_j \geq 0, j \in J\subseteq \{1, \dots, n\}
+		\end{cases}$, $x = \begin{pmatrix}
+			x_1 \\ \vdots \\ x_n
+		\end{pmatrix}, b = \begin{pmatrix}
+			b_1 \\ \vdots \\ b_m
+		\end{pmatrix},
+		A = \begin{pmatrix}
+			a_{11} & \dots  & a_{1n} \\
+			\vdots & \ddots & \vdots \\
+			a_{m1} & \dots  & a_{mn}
+		\end{pmatrix}$
+\end{definition}
+\begin{definition}[Эквивалентные ЗЛП (ЗМП)]
+	Две задачи ЛП $P_1, P_2$ называются \textit{эквивалентными}, если любому допустимому решению задачи $P_1$ соответствует некоторое допустимое решение задачи $P_2$ и наоборот, причем оптимальному решению одной задачи соответствует оптимальное решение другой задачи.
+\end{definition}
+\begin{theorem}[Первая теорема эквивалентности]
+	Для любой ЗЛП существует эквивалентная ей каноническая ЗЛП.
+\end{theorem}
+\begin{theorem}[Вторая теорема эквивалентности]
+	Для любой ЗЛП существует эквивалентная ей симметрическая ЗЛП.
+\end{theorem}
+\begin{definition}[Система с базисом]
+	СЛАУ - СЛАУ с базисом, если в каждом уравнении имеется переменная с коэффициентом +1, отсутствующая в других уравнениях. Такие переменные будем называть базисными, остальные не базисными
+\end{definition}
+\begin{definition}[ПЗЛП]
+	КЗЛП называется приведенной, если
+	\begin{enumerate}
+		\item СЛАУ $Ax = B$ является системой с базисом
+		\item Целевая функция выражена через небазисные переменные
+	\end{enumerate}
+\end{definition}
+\begin{definition}[Прямо допустимая симплексная таблица]
+	СТ называется прямо допустимой, если $a_{i0}\geq 0, i = 1, \dots, m$ (bшки)
+\end{definition}
+\begin{definition}[Двойственно допустимая симплексная таблица]
+	СТ называется двойственно допустимой, если $a_{0j}\geq 0, i = 1, \dots, n+m$ (cшки)
+\end{definition}
+\begin{theorem}[Критерий разрешимости]
+    Целевая функция задачи ЛП ограничена сверху (снизу) на непустом множестве допустимых решений тогда и только тогда, когда задача максимизации (минимизации) разрешима
+\end{theorem}
+\begin{definition}[Двойственная задача]
+    Для ЗЛП I двойственной задачей II является ЗЛП вида:
+        $$f(x) = \sum_{j = 1}^n c_j x_j \to \max \leftrightarrow g(y) = \sum_{i = 1}^m b_i y_i\to \min,$$
+        $$\sum_{j = 1}^n a_{ij} x_j \leq b_i, i = 1, \dots, l \leftrightarrow y_i\geq 0, i = 1...l,$$
+        $$\sum_{j = 1}^n a_{ij} x_j = b_i, i = l+1, \dots m \leftrightarrow y_i\in \mathbb{R}, i = l+1, \dots, m,$$
+        $$x_j\geq 0, i = 1, \dots p\leftrightarrow \sum_{i = 1}^m a_{ij} y_i \leq c_j, j = 1, \dots, p$$
+        $$x_j \in \mathbb{R}, j = p+1, \dots n \leftrightarrow \sum_{i = 1}^m a_{ij} y_i \leq c_j, j = p+1, \dots, n$$
+        Задачу I называют прямой, а II - двойственной. Стрелки соответствуют сопряженным ограничениям
+\end{definition}
+\begin{theorem}[Первая теорема двойственности]
+    Если одна из пары двойственных задач разрешима, то разрешима и другая, причем оптимальное значение целевых функций совпадает, т.е $f(x^*) = g(y^*)$, где $x^*, y^*$ - оптимальные решения задач I, II соответственно
+\end{theorem}
+\begin{theorem}[Первый критерий оптимальности]
+    Вектор $x^* \in D_I$ является оптимальным решением задачи 
+    I $\Leftrightarrow \exists y^* \in D_{II}$ т.ч  $g(y^*) = f(x^*)$    
+\end{theorem}
+\begin{definition}[Условия дополняющей нежесткости]
+    Будем говорить, что $x\in D_I, y \in D_{II}$ удовлетворяют УДН, если при подстановке в любую пару сопряженных неравенств хотя бы одно из них обращается в равенство. Это означает, что следующие характеристические произведения обращаются в 0:
+    \[(\sum_{j = 1}^n a_{ij}x_j - b_i)y_i = 0, i  = 1, \dots m\]
+    \[x_i (\sum_{i = 1}^m a_{ij}y_i - c_j) = 0, j = 1, \dots n\]
+\end{definition}
+\begin{theorem}[Вторая теорема двойственности]
+    $x^* \in D_I, y^*\in D_{II}.$ оптимальны в задачах I, II тогда и только тогда, когда они удовлетворяют УДН.
+\end{theorem}
+\begin{theorem}[Второй критерий оптимальности (следствие)]
+    \(x^* \in D_I\) является оптимальным решением I \(\Leftrightarrow\)
+    \(\exists y^* \in D_{II}\) т.ч. \(x^*\) и \(y^*\) удовлетворяют УДН
+\end{theorem}
+\begin{definition}[Малое (допустимое) изменение]
+    Малое (допустимое) изменение ресурса P1 - такое изменение $\Delta b_1 = b_1' - b_1$ для кот в задаче I' существует оптимальное решение той же структуры, что и оптимальное решение исходной задачи I
+\end{definition}
+\begin{definition}[3-я теорема двойственности]
+    При допустимом изменении i-того ресурса приращение целевой функции прямо пропорционально изменению ресурса с коэффициентом пропорциональности, равным $y_i^*$
+
+    $$\Delta_i F = \Delta b_i y_i^*, \Delta_i F = F(b_1, \dots, b_{i-1}, b_i + \Delta b_i, \dots, b_m)-F(b_1, \dots, b_{i-1}, b_i, \dots, b_m)$$
+\end{definition}
+\section{II}
+\begin{definition}[Выпуклое множество]
+	Множество называется выпуклым, если вместе с двумя его точками оно содержит отрезок, их соединяющий, или
+	\[\forall x^1, x^2 \in D \quad \forall \lambda \in (0, 1) \quad
+		x^* = (1 - \lambda)x^1 + \lambda x^2 \in D\]
+\end{definition}
+\begin{definition}[Выпуклая функция]
+	Функция $f:D\to R$ (D - выпкуло) называется выпуклой, если
+	\[\forall x^1, x^2 \in D, \forall \lambda \in (0, 1) \quad f((1-\lambda)x^1 +\lambda x^2) \le
+		(1-\lambda)f(x^1) + \lambda f(x^2)\]
+\end{definition}\begin{definition}[Задача ВП]:
+	\begin{center}
+		\(f(x) \to \min\) \\
+		\(\phi_i(x) \le 0, i = 1, \dots, m\)\\
+		\(x \in G\)
+	\end{center}
+	Здесь $\phi_i, f$ - выпуклые в G функции,
+	G - выпуклое замкнутое множество ($\mathbb{R}^n,\mathbb{R}_+^n $)
+
+\end{definition}
+\begin{definition}[Условие Слейтера]
+	\textbf{(УС)}
+	\[\exists \overline{x}\in G, \phi_i(\overline{x})<0.\]
+	\[D = \{x\in G|\phi_i \le 0, i = 1, \dots, m\} - \textbf{множество допустимых решений задачи ВП.}\]
+	УС гарантирует существование внутренних точек множества D.
+\end{definition}
+\begin{theorem}[О градиенте и производной по направлению]
+	Если $f(x)$ дифференцируема в точке $x^0$, то
+	предел
+	\[\lim_{\lambda \to 0+0} \frac{f(x^0+\lambda z) - f(x^0)}{\lambda},\] существует и равен
+	\[f_z'(x^0) = (\nabla f(x^0), z)\]
+\end{theorem}
+
+Пусть задана точка $x_0\in D$.
+$I_0 = \{i \; | \; \phi_i(x^0) = 0\}$ - множество индексов \textit{активных} ограничений
+
+\begin{definition}[Возможное направление]
+	Направление z называется возможным (допустимым) в $x^0$, если $(\nabla \phi_i(x^0), z)<0 \quad \forall i \in I_0$
+\end{definition}
+\begin{definition}[Прогрессивное направление]
+	Направление z называется прогрессивным в точке $x^0$, если
+	\[\begin{cases}
+			(\nabla \phi_i(x^0), z)<0 \quad \forall i \in I_0 \\
+			(\nabla f(x^0), z)<0
+		\end{cases}\]
+\end{definition}
+\begin{theorem}[Критерий оптимальности ЗВП]
+	$x^* \in D$ - оптимальное решение задачи ВП $\Leftrightarrow$
+	в точке $x^*$ нет прогрессивного направления, т.е не существует $z\in R^n$:
+	\[\begin{cases}
+			(\nabla \phi_i(x^0), z)<0 \quad \forall i \in I_0 \\
+			(\nabla f(x^0), z)<0
+		\end{cases}\]
+\end{theorem}
+\begin{definition}[Каноническая ЗВП]
+	Канонической задачей ВП называется задача ВП с линейной целевой функцией, т.е $f(x) = (c, x)\to \min$
+\end{definition}
+\begin{theorem}[Теорема Куна-Таккера о седловой точке]
+	$x^*\in G$ - оптимальное решение задачи выпуклого программирования тогда и только тогда, когда существует $y^* \ge 0$, такое что $(x^*, y^*)$ является седловой точкой функции Лагранжа
+\end{theorem}
+\begin{definition}[Задача ЦЛП]
+	\begin{equation}
+		f(x) = \sum_{j=1}^n c_j x_j \to \max
+	\end{equation}
+	\begin{equation}
+		\sum_{j = 1}^n a_{ij}x_j \# b_i, i = 1, \dots, m
+	\end{equation}
+	\begin{equation}
+		x_j \ge 0, j = 1, \dots, n
+	\end{equation}
+	\begin{equation}
+		x_j \in \mathbb{Z}, j =1, \dots, n
+	\end{equation}
+
+	\(c_j, b_i, a_{ij} \in \mathbb{Z} \text{ или } \mathbb{Q}\)
+\end{definition}
+\begin{definition}[Правильное отсечение]
+	Доп. линейное ограничение - правильное отсечение, если
+	\begin{enumerate}
+		\item оно отсекает часть области D, содержащее нецелочисленное оптимальное решение $x^0$ текущей задачи ЛП.
+		\item В отсекаемой части области не должно быть ни одного допустимого решения задачи ЦЛП (ограничение сохраняет все допустимые целочисленные решения)
+	\end{enumerate}
+\end{definition}
+\begin{definition}[Отсечение Гомори]
+	Имеем оптимальную с-таблицу $a_{ij, i = 0, \dots, m, j = 0, \dots, n}$
+
+	Рассмотрим $a_{l0}\notin \mathbb{Z}$. l выбираем с наибольшей дробной частью по правилу "первая сверху" ($l\in \{0, \dots, n\}$)
+
+	Отсечение Гомори - дополнительное линейное ограничение
+	\[\sum_{j\in Nb} \{a_{lj}\}x_j \geq \{a_{l0}\}\], где Nb - множество индексов небазисных переменных, $\{x\}$ - дробная часть x
+\end{definition}
+\end{document}

@@ -267,7 +267,7 @@ void attack(vector<pair<text, text>> plain_cipher, size_t dim, matrix ciphertext
 
 int main()
 {
-    matrix key = {{5, 17, 0, 3}, {7, 11, 13, 6}, {5, 15, 5, 17}, {1, 6, 3, 5}};
+    // matrix key = {{5, 17, 0, 3}, {7, 11, 13, 6}, {5, 15, 5, 17}, {1, 6, 3, 5}};
     text p = string_to_vector("pink");
     // 15 8 13 10
     // ciphers = { {3, 2, 22, 21},}
