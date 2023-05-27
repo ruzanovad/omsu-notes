@@ -938,5 +938,57 @@ $$f \ast  g : y \mapsto
     k = 5. Взяли правильное приближение в итоге.
 \end{example}
 Ляпунова не будет в задачах.
+\section{Лемма Бореля-Кантелли}
+(174-177)
+$A_1, \dots, A_n \in \mathcal{F}$
 
+Определим множество 
+
+\[A^* \text{множество элементарных событий из} \Omega, \text{принадлежащим бесконечному множеству событий}A_n\]
+
+\[A_*\text{множество элементарных событий из} \Omega | \exists N_0 \in \mathbb{N}\forall n> N_0 \]
+\[A^* = \limsup A_n = \bigcap^\infty_{n = 1} \bigcup_{k\ge n} A_k\]
+\[A_* = \liminf A_n = \bigcup^\infty_{n = 1} \bigcap_{k\ge n} A_k\]
+
+\begin{theorem}[Лемма Бореля-Кантелли]
+    Если $\sum_{n\ge 0}P(A_n) < \infty$, то $P(A^*) = 0$
+
+    Если $\sum_{n\ge 0}P(A_n) = \infty$ и $A_1, \dots, A_n$ - независимы, то $P(A^*) = 1$
+\end{theorem}
+\begin{proof}
+    \[\xi = \sum_{i = 1}^{\infty}I_{A_n}\]
+    \[M\xi = \sum_{i = 1}^\infty P(A_n) <\infty\]
+    С одной стороны
+    \[P(\xi = \infty) = 0\]
+    С другой стороны, событие $\xi = \infty$ - $A^*$
+    
+    Вложенная цепочка убывающих по включению
+    \[P(A^*)= \lim_{n\to \infty}P( \bigcup_{k\ge n }A_k)=\lim_{n\to\infty}(1 - P(\bigcap_{k\ge n}\overline{A_k})) \]
+    независимость
+    \[\lim_{n\to\infty}(1 - \prod_{k\ge n}(1 - P(A_k)))\]
+    \[\lim_{m\to\infty} \prod_{k = n}^{m+n}(1 - P(A_k)) = e^{-\infty} = 0\]
+\[\lim_{n\to\infty}(\ln(1 - P(A_n)) + \dots + \ln(1 - P(A_{n+m})))\]
+\[\sum \ln(1 - \alpha_k) = -\infty\]
+\end{proof}
+Пусть имеется некоторая последовательность независимых случайных величин $\xi_1, \dots, \xi_n ...$
+
+минимальная сигма-алгебра, относительно которой все случайные величины из списка являются измеримыми
+
+$\widetilde{f_{\le n}} = \sigma(\xi_1, \dots, \xi_n)$
+
+$\widetilde{f_{> n}} = \sigma(\xi_n+1, \dots)$
+
+$\widetilde{f_\infty} = \bigcap_{n\ge 1} \widetilde{f_{> n}}$ - сигма алгебра остаточных событий.
+\begin{lemma}[закон 0 и 1 Колмогорова]
+    вероятности остаточных событий (элементы сигма алгебры остаточных событий) могут принимать либо значение 0, либо 1
+\end{lemma}
+\begin{proof}
+    Пусть $A\in \widetilde{f_\infty}, B \in \widetilde{f_{\le n}}$. Они независимы.
+
+    Это справедливо для любого n. $\forall B\in \sigma(\xi_1, \dots, \xi_n \dots): $ A и B независимы
+
+    $\implies $ A не зависит само от себя $\implies A$ либо 0, либо 1
+
+
+\end{proof}
 \end{document}
