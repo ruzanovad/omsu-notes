@@ -738,4 +738,13 @@ if __name__ == '__main__':
         problem = Problem(*read(file))
         problem.make_canon(False)
         x, y = SimplexTable.simplex_method(problem, "f", False)
+    with open("input10.txt") as file:
+        problem = Problem(*read(file))
+        problem.make_canon(False)
+        SimplexTable.simplex_method(problem, "f", False)
+    with open("input11.txt") as file:
+        problem = Problem(*read(file))
+        problem.make_canon(False)
+        SimplexTable.simplex_method(problem, "f", False)
+
 

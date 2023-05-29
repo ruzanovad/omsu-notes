@@ -199,11 +199,11 @@ $    \begin{cases}
 \end{definition}
 \begin{definition}[Двойственная задача]
     Для ЗЛП I двойственной задачей II является ЗЛП вида:
-        $$f(x) = \sum_{j = 1}^n c_j x_j \to \max \leftrightarrow g(y) = \sum_{i = 1}^m b_i y_i\to \min,$$
-        $$\sum_{j = 1}^n a_{ij} x_j \leq b_i, i = 1, \dots, l \leftrightarrow y_i\geq 0, i = 1...l,$$
-        $$\sum_{j = 1}^n a_{ij} x_j = b_i, i = l+1, \dots m \leftrightarrow y_i\in \mathbb{R}, i = l+1, \dots, m,$$
-        $$x_j\geq 0, i = 1, \dots p\leftrightarrow \sum_{i = 1}^m a_{ij} y_i \leq c_j, j = 1, \dots, p$$
-        $$x_j \in \mathbb{R}, j = p+1, \dots n \leftrightarrow \sum_{i = 1}^m a_{ij} y_i \leq c_j, j = p+1, \dots, n$$
+    $$f(x) = \sum_{j = 1}^n c_j x_j \to \max \leftrightarrow g(y) = \sum_{i = 1}^m b_i y_i\to \min,$$
+    $$\sum_{j = 1}^n a_{ij} x_j \leq b_i, i = 1, \dots, l \leftrightarrow y_i\geq 0, i = 1...l,$$
+    $$\sum_{j = 1}^n a_{ij} x_j = b_i, i = l+1, \dots m \leftrightarrow y_i\in \mathbb{R}, i = l+1, \dots, m,$$
+    $$x_j\geq 0, i = 1, \dots p\leftrightarrow \sum_{i = 1}^m a_{ij} y_i \geq c_j, j = 1, \dots, p$$
+    $$x_j \in \mathbb{R}, j = p+1, \dots n \leftrightarrow \sum_{i = 1}^m a_{ij} y_i = c_j, j = p+1, \dots, n$$
         Задачу I называют прямой, а II - двойственной. Стрелки соответствуют сопряженным ограничениям
 \end{definition}
 \begin{theorem}[Основное неравенство двойственности]
@@ -739,21 +739,27 @@ $\phi_i - $выпуклая, непрерывно дифф.
     \item[шаг 0] (проверка близости $x_0$ к границе D)
 
     Определяем для текущих $x^0, \delta^0$ множества $I_0, I_{\delta_0}$
+    (безусловно активные и условно активные ограничения)
+    
+    [На практиках отрезок $-\delta^0 \le \phi(x^0) \le 0$]
     \item[шаг 1] Нахождение прогрессивного направления z в $x^0$
 
     Составляем вспомогательную задачу ЛП:
     \[y\to \min\]
     \[(\nabla \phi_i(x^0), z)\le y ,\forall i \in I_\delta\]
-    \[(c, z)\le y\]
+    \[(c, z)\le y, \textbf{может быть и не линейное ограничение actually}\]
+    \[\textbf{тогда просто скалярное произведение градиента и z}\]
     \[|z_j|\le 1, j = 1, \dots, n - \text{условие нормировки, }\textbf{зам 1}\]
     \[y \le 0, \textbf{зам 2}\]
     Решаем задачу ЛП (она везде разрешима, \textbf{зам 3})
+
+    [Замены $|z_j|\le 1\implies u_j = x_j - 1$, тем самым получаем неотрицательную переменную]
 
     Возможны следующие случаи.
     \begin{enumerate}
         \item \begin{enumerate}
             \item $y^0 = y^* < -\delta^0\implies z^0$ - прогрессивное направление и на следующей итерации полагаем $\delta^1 = \delta^0$
-            \item $-\delta^0 \le y^0 < 0 \implies z^0$ - также прогрессивное, но на след итерации $\delta^1 = \delta^0/2$($y^0$ характеризует скорость убывания)
+            \item $-\delta^0 \le y^0 < 0 \implies z^0$ - также прогрессивное, но на след итерации $\delta^1 = \delta^0/2$($\delta^0$ характеризует скорость убывания)
         \end{enumerate}
         Переходим на шаг 2
         \item Если $y^0 = y^* = 0, $ то строим аналогичную задачу ЛП, только индексы i из $I_0$. Если и в этом случае $y^* = 0$, то прогрессивного направления нет и текущая точка оптимальна, \textbf{СТОП}
@@ -771,7 +777,7 @@ $\phi_i - $выпуклая, непрерывно дифф.
 \begin{enumerate}
     \item $|z_j|\le 1, j = 1, \dots, n.$ Без этого условия соответствующая задача ЛП неразрешима, z - прогрессивное направление, y - значение целевой функции. $\implies$ tz - прогрессивное направление 
 
-    \[(\nabla phi_i(x^0), tz) \le (ty), i\in I_s\]
+    \[(\nabla \phi_i(x^0), tz) \le (ty), i\in I_s\]
     \[(\nabla f(x^0), tz) = ty\implies\] 
     ty - соотв. значение целевой функции.
 
@@ -931,9 +937,9 @@ $f, \phi_i$ - непрерывно дифференцируемые на G
 Выполнено УС
 
 \[L(x, y) = f(x) +\sum_{i = 1}^{m}y_i \phi_i(x), y_i\ge 0 , i = 1, \dots, m\]
-Обозначим \[\nabla_x L_x(x^*, y^*) = (\frac{\partial L}{\partial x_1}, ..., \frac{\partial L}{\partial x_n})|_{(x^*, y^*)}\]
+Обозначим \[\nabla_x L(x^*, y^*) = (\frac{\partial L}{\partial x_1}, ..., \frac{\partial L}{\partial x_n})|_{(x^*, y^*)}\]
 
-\[\nabla_x L_y(x^*, y^*) = (\frac{\partial L}{\partial y_1}, ..., \frac{\partial L}{\partial y_n})|_{(x^*, y^*)} = (\phi_1(x^*), \dots, \phi_m(x^*))\]
+\[\nabla_y L(x^*, y^*) = (\frac{\partial L}{\partial y_1}, ..., \frac{\partial L}{\partial y_m})|_{(x^*, y^*)} = (\phi_1(x^*), \dots, \phi_m(x^*))\]
 \begin{theorem}[Куна-Таккера в дифференциальной форме 1]
     Точка $x^* \ge 0$ является оптимальным решением задачи (I) тогда  и только тогда, когда существует $y^*\ge 0$ такой, что выполняются следующие условия:
     \begin{enumerate}
@@ -1013,13 +1019,13 @@ $f, \phi_i$ - непрерывно дифференцируемые на G
     Диагональные элементы - коэффициенты при квадратах переменных, а остальные - половине коэффициентов
 \end{definition}
 \begin{example}
-    \[g(x1, x2) = 3x1^2 -3x1x2 + 4x2^2, C =\begin{pmatrix}
+    \[g(x_1, x_2) = 3x_1^2 -3x_1x_2 + 4x_2^2, C =\begin{pmatrix}
         3 & -\frac32\\
         -\frac32 & 4
         \end{pmatrix}\]
     
 \end{example}
 \begin{definition}
-    Квадратичная форма называется неотрицательно определенной, если $\forall x\in R^n  | x\neq 0$ выполняется $g(x)\ge 0$, и положительно определенной если $\forall x\in R^n  | x!= 0$ выполняется $g(x) > 0$
+    Квадратичная форма называется неотрицательно определенной, если $\{\forall x\in R^n  | x\neq 0\}$ выполняется $g(x)\ge 0$, и положительно определенной если $\{\forall x\in R^n  | x\neq 0\}$ выполняется $g(x) > 0$
 \end{definition}
 \end{document}
