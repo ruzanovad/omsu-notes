@@ -650,101 +650,105 @@ class SimplexTable:
             return second_phase_problem
 
 if __name__ == '__main__':
-    with open("input.txt") as file:
-        problem = Problem(*read(file))
-        assert not problem.check_canon()
-        print(problem)
-        problem.make_canon(True)
-        assert problem.check_canon()
-        print(problem)
-        assert not problem.check_reduced()
-    with open("input1.txt") as file:
-        problem = Problem(*read(file))
-        assert not problem.check_canon()
-        print(problem)
-        problem.make_canon(False)
-        assert problem.check_canon()
-        print(problem)
-        assert problem.check_reduced()
-        print("Базис: %s" % (problem.get_basis()))
-        x, y = SimplexTable.simplex_method(problem, "f")
-        assert x == [2, 2, 0, 0, 4]
-        assert y == 12
-    with open("input2.txt") as file:
-        problem = Problem(*read(file))
-        assert not problem.check_canon()
-        problem.make_canon(False)
-        print(problem)
-        assert problem.check_special()
-        x, y = SimplexTable.simplex_method(problem, "f", False)  # == [3, 2, 0, 0, 4, 2], 17
-        # assert SimplexTable.simplex_method(problem, False) == [3, 2, 0, 0, 4, 2], 17
-    
-        assert x == [3, 2, 0, 0, 4, 2]
-        assert y == 17
-    with open("input3.txt") as file:
-        problem = Problem(*read(file))
-        print(problem)
-        assert not problem.check_special()
-        IIphase = SimplexTable.artificial_basis(problem, False)
-        print(IIphase)
-        # assert IIphase.check_special()
-    with open("max.txt") as file:
-        problem = Problem(*read(file))
-        IIphase = SimplexTable.artificial_basis(problem, False)
-        print(problem.get_dual())
-    with open("max1.txt") as file:
-        problem = Problem(*read(file))
-        vectors = [[0, -1, 0, 1, 0],
-                   [1, 0, 1, 5, 0],
-                   [0, 0, 1, 1, 1],
-                   [0, 1, 1, 2, 0]]
-        for i in vectors:
-            print(*i)
-            if problem.check_vector(i):
-                print("f(%s) = %s" % (i, problem.function.value(i)))
-        print(problem.get_dual())
-    with open("input4.txt") as file:
-        problem = Problem(*read(file))
-        assert not problem.check_canon()
-        problem.make_canon(False)
-        print(problem)
-        assert problem.check_special()
-        x, y = SimplexTable.simplex_method(problem, "f", False)
-        print(*x)
-        print(y)
-    with open("input5.txt") as file:
-        problem = Problem(*read(file))
-        assert problem.check_canon()
-        print(problem)
-        assert problem.is_dual_feasible()
-        x, y = SimplexTable.simplex_method(problem, "f", False, dual=True)
-        assert x == [2, 1, 6, 1, 0, 0, 0, 0]
-        assert y == 8
-    with open("input6.txt") as file:
-        problem = Problem(*read(file))
-        assert problem.check_canon()
-        print(problem)
-        assert problem.is_primarly_feasible()
-        x, y = SimplexTable.simplex_method(problem, "f", False)
-    with open("input7.txt") as file:
-        problem = Problem(*read(file))
-        problem.make_canon(False)
-        x, y = SimplexTable.simplex_method(problem, "f", False)
-    with open("input8.txt") as file:
+    # with open("input.txt") as file:
+    #     problem = Problem(*read(file))
+    #     assert not problem.check_canon()
+    #     print(problem)
+    #     problem.make_canon(True)
+    #     assert problem.check_canon()
+    #     print(problem)
+    #     assert not problem.check_reduced()
+    # with open("input1.txt") as file:
+    #     problem = Problem(*read(file))
+    #     assert not problem.check_canon()
+    #     print(problem)
+    #     problem.make_canon(False)
+    #     assert problem.check_canon()
+    #     print(problem)
+    #     assert problem.check_reduced()
+    #     print("Базис: %s" % (problem.get_basis()))
+    #     x, y = SimplexTable.simplex_method(problem, "f")
+    #     assert x == [2, 2, 0, 0, 4]
+    #     assert y == 12
+    # with open("input2.txt") as file:
+    #     problem = Problem(*read(file))
+    #     assert not problem.check_canon()
+    #     problem.make_canon(False)
+    #     print(problem)
+    #     assert problem.check_special()
+    #     x, y = SimplexTable.simplex_method(problem, "f", False)  # == [3, 2, 0, 0, 4, 2], 17
+    #     # assert SimplexTable.simplex_method(problem, False) == [3, 2, 0, 0, 4, 2], 17
+    #
+    #     assert x == [3, 2, 0, 0, 4, 2]
+    #     assert y == 17
+    # with open("input3.txt") as file:
+    #     problem = Problem(*read(file))
+    #     print(problem)
+    #     assert not problem.check_special()
+    #     IIphase = SimplexTable.artificial_basis(problem, False)
+    #     print(IIphase)
+    #     # assert IIphase.check_special()
+    # with open("max.txt") as file:
+    #     problem = Problem(*read(file))
+    #     IIphase = SimplexTable.artificial_basis(problem, False)
+    #     print(problem.get_dual())
+    # with open("max1.txt") as file:
+    #     problem = Problem(*read(file))
+    #     vectors = [[0, -1, 0, 1, 0],
+    #                [1, 0, 1, 5, 0],
+    #                [0, 0, 1, 1, 1],
+    #                [0, 1, 1, 2, 0]]
+    #     for i in vectors:
+    #         print(*i)
+    #         if problem.check_vector(i):
+    #             print("f(%s) = %s" % (i, problem.function.value(i)))
+    #     print(problem.get_dual())
+    # with open("input4.txt") as file:
+    #     problem = Problem(*read(file))
+    #     assert not problem.check_canon()
+    #     problem.make_canon(False)
+    #     print(problem)
+    #     assert problem.check_special()
+    #     x, y = SimplexTable.simplex_method(problem, "f", False)
+    #     print(*x)
+    #     print(y)
+    # with open("input5.txt") as file:
+    #     problem = Problem(*read(file))
+    #     assert problem.check_canon()
+    #     print(problem)
+    #     assert problem.is_dual_feasible()
+    #     x, y = SimplexTable.simplex_method(problem, "f", False, dual=True)
+    #     assert x == [2, 1, 6, 1, 0, 0, 0, 0]
+    #     assert y == 8
+    # with open("input6.txt") as file:
+    #     problem = Problem(*read(file))
+    #     assert problem.check_canon()
+    #     print(problem)
+    #     assert problem.is_primarly_feasible()
+    #     x, y = SimplexTable.simplex_method(problem, "f", False)
+    # with open("input7.txt") as file:
+    #     problem = Problem(*read(file))
+    #     problem.make_canon(False)
+    #     x, y = SimplexTable.simplex_method(problem, "f", False)
+    # with open("input8.txt") as file:
+    #     problem = Problem(*read(file))
+    #
+    #     x, y = SimplexTable.simplex_method(problem, "f", False, dual=True)
+    # with open("input9.txt") as file:
+    #     problem = Problem(*read(file))
+    #     problem.make_canon(False)
+    #     x, y = SimplexTable.simplex_method(problem, "f", False)
+    # with open("input10.txt") as file:
+    #     problem = Problem(*read(file))
+    #     problem.make_canon(False)
+    #     SimplexTable.simplex_method(problem, "f", False)
+    # with open("input11.txt") as file:
+    #     problem = Problem(*read(file))
+    #     problem.make_canon(False)
+    #     SimplexTable.simplex_method(problem, "f", False)
+    with open("input12.txt") as file:
         problem = Problem(*read(file))
 
         x, y = SimplexTable.simplex_method(problem, "f", False, dual=True)
-    with open("input9.txt") as file:
-        problem = Problem(*read(file))
-        problem.make_canon(False)
-        x, y = SimplexTable.simplex_method(problem, "f", False)
-    with open("input10.txt") as file:
-        problem = Problem(*read(file))
-        problem.make_canon(False)
-        SimplexTable.simplex_method(problem, "f", False)
-    with open("input11.txt") as file:
-        problem = Problem(*read(file))
-        problem.make_canon(False)
-        SimplexTable.simplex_method(problem, "f", False)
 
 
