@@ -10,7 +10,7 @@ def print_(array):
 if __name__ == '__main__':
     with open("inputt.txt") as file:
         table = []
-        cols = 8
+        cols = 7
         rows = 5
         for i in range(rows):
             table.append([Fraction(x) for x in file.readline().split()])
