@@ -16,7 +16,8 @@ def read(file):
     for i in range(number_of_restrictions):
         restrictions.append(Restriction(file.readline().split()))
     for i in range(number_of_variables):
-        soft_restrictions.append(Inequality.parseString(file.readline().split()[1]))
+        soft_restrictions.append(
+            Inequality.parseString(file.readline().split()[1]))
     return function, restrictions, soft_restrictions
 
 
@@ -84,7 +85,8 @@ class Problem:
         self.function = fun
         self.restrictions = restrictions
 
-        self.variables = ["x_%d" % (i + 1) for i in range(len(restrictions[0].coefs))]
+        self.variables = ["x_%d" % (i + 1)
+                          for i in range(len(restrictions[0].coefs))]
         # for i in range(len(restrictions[0].coefs)):
         #     self.variables.append("x_%d" % (i + 1))
         self.soft_restrictions = soft_restrictions
@@ -106,14 +108,14 @@ class Problem:
         for soft_restriction in self.soft_restrictions:
             flag &= soft_restriction == Inequality.GREATEREQ
         return flag
-    
+
     def is_primarly_feasible(self) -> bool:
         flag = True
         for i in range(len(self.restrictions)):
             flag &= self.restrictions[i].b >= 0
         return flag
-    
-    def is_dual_feasible(self)->bool:
+
+    def is_dual_feasible(self) -> bool:
         flag = True
         for i in range(len(self.function.array)):
             flag &= self.function.array[i] <= 0
@@ -147,8 +149,10 @@ class Problem:
             elif self.soft_restrictions[index] == Inequality.NONE:
                 self.soft_restrictions.insert(index + 1, Inequality.GREATEREQ)
                 for i in range(len(self.restrictions)):
-                    self.restrictions[i].coefs.insert(index + 1, -self.restrictions[i].coefs[index])
-                self.function.array.insert(index + 1, -self.function.array[index])
+                    self.restrictions[i].coefs.insert(
+                        index + 1, -self.restrictions[i].coefs[index])
+                self.function.array.insert(
+                    index + 1, -self.function.array[index])
                 # self.function.array[index] *= -1
 
                 var = self.variables[index]
@@ -200,15 +204,22 @@ class Problem:
                 s += " "
         if len(self.function.array) >= 1:
             if self.function.array[0] == 0:
-                s += " " * len("(" + str(self.function.array[0]) + ")*" + self.variables[0])
+                s += " " * \
+                    len("(" +
+                        str(self.function.array[0]) + ")*" + self.variables[0])
             else:
-                s += "(" + str(self.function.array[0]) + ")*" + self.variables[0]
+                s += "(" + \
+                    str(self.function.array[0]) + ")*" + self.variables[0]
 
         for i in range(len(self.function.array) - 1):
             if self.function.array[i + 1] != 0:
-                s += "+ (" + str(self.function.array[i + 1]) + ")*" + self.variables[i + 1]
+                s += "+ (" + \
+                    str(self.function.array[i + 1]) + \
+                    ")*" + self.variables[i + 1]
             else:
-                s += "   " + " " * len(str(self.function.array[i + 1]) + ")*" + self.variables[i + 1])
+                s += "   " + " " * \
+                    len(str(self.function.array[i + 1]
+                            ) + ")*" + self.variables[i + 1])
         s += " "
         if self.function.max():
             s += "-> max\n"
@@ -217,15 +228,23 @@ class Problem:
         for i in range(len(self.restrictions)):
             if len(self.restrictions[i].coefs) >= 1:
                 if self.restrictions[i].coefs[0] == 0:
-                    s += " " * len("(" + str(self.restrictions[i].coefs[0]) + ")*" + self.variables[0])
+                    s += " " * \
+                        len("(" +
+                            str(self.restrictions[i].coefs[0]) + ")*" + self.variables[0])
                 else:
-                    s += "(" + str(self.restrictions[i].coefs[0]) + ")*" + self.variables[0]
+                    s += "(" + \
+                        str(self.restrictions[i].coefs[0]
+                            ) + ")*" + self.variables[0]
 
             for j in range(1, len(self.restrictions[i].coefs)):
                 if self.restrictions[i].coefs[j] != 0:
-                    s += "+ (" + str(self.restrictions[i].coefs[j]) + ")*" + self.variables[j]
+                    s += "+ (" + \
+                        str(self.restrictions[i].coefs[j]
+                            ) + ")*" + self.variables[j]
                 else:
-                    s += "   " + " " * len(str(self.restrictions[i].coefs[j]) + ")*" + self.variables[j])
+                    s += "   " + " " * \
+                        len(str(
+                            self.restrictions[i].coefs[j]) + ")*" + self.variables[j])
             # s += ' + '.join(["(" + str(self.restrictions[i].coefs[j]) + ")*" + self.variables[j]
             #                  if self.restrictions[i].coefs[j] !=0 else
             #                  for j in range(len(self.restrictions[i].coefs))]) + " " + str(
@@ -256,7 +275,8 @@ class Problem:
                         index_of_basis = j
                 if basis == 1 and null == len(self.restrictions) - 1:
                     candidate[-1] = index_of_basis
-                    candidates.append(candidate) # iтая переменная, index oj basis - номер ограничения
+                    # iтая переменная, index oj basis - номер ограничения
+                    candidates.append(candidate)
                     list_of_basis.append(index_of_basis)
         list_of_basis.sort()
         if len(list_of_basis) != len(problem.restrictions):
@@ -287,7 +307,8 @@ class Problem:
                         index_of_basis = j
                 if basis == 1 and null == len(self.restrictions) - 1:
                     candidate[-1] = index_of_basis
-                    list_of_basis.append(candidate) # iтая переменная, index oj basis - номер ограничения
+                    # iтая переменная, index oj basis - номер ограничения
+                    list_of_basis.append(candidate)
         list_of_basis.sort(key=lambda x: x[1])
         if len(list_of_basis) != len(problem.restrictions):
             return None
@@ -319,10 +340,12 @@ class Problem:
         assert self.function.c == 0
         variables = ["y_%d" for i in range(1, len(self.restrictions) + 1)]
         opt = "max" if self.function.min() else "min"
-        function = Function([0] + [self.restrictions[i].b for i in range(len(self.restrictions))] + [opt])
+        function = Function(
+            [0] + [self.restrictions[i].b for i in range(len(self.restrictions))] + [opt])
         soft_restrictions = []
         for i in self.restrictions:
-            assert i.inequal == Inequality.EQUAL or i.inequal == Inequality.LESSEQ  # todo different tasks (I or II)
+            # todo different tasks (I or II)
+            assert i.inequal == Inequality.EQUAL or i.inequal == Inequality.LESSEQ
             if i.inequal == Inequality.EQUAL:
                 soft_restrictions.append(Inequality.NONE)
             if i.inequal == Inequality.LESSEQ:
@@ -354,7 +377,8 @@ class SimplexTable:
             print("таблица не двойственно допустимая")
             return None
         if dual and artificial:
-            print("метод искусственного базиса не используется с двойственным симплекс методом")
+            print(
+                "метод искусственного базиса не используется с двойственным симплекс методом")
             return None
         table = []
 
@@ -365,34 +389,41 @@ class SimplexTable:
         if full_table:
             table.append(["B"] + ["x_0"] + problem.variables)
             # print(*table[0])
-            table.append([func, problem.function.c] + [-i for i in problem.function.array])
+            table.append([func, problem.function.c] +
+                         [-i for i in problem.function.array])
             for i in range(len(basis)):
-                row = [problem.variables[basis[i][0]], problem.restrictions[i].b]
+                row = [problem.variables[basis[i][0]],
+                       problem.restrictions[i].b]
                 row += problem.restrictions[i].coefs
                 table.append(row)
                 # print(row)
             count = 1
             while count <= 100:
-                print(tabulate(table, headers='firstrow', tablefmt='grid', disable_numparse=True))
+                print(tabulate(table, headers='firstrow',
+                      tablefmt='grid', disable_numparse=True))
                 print("Итерация №%d" % count)
 
                 print("Проверка на оптимальность")
                 if not dual and all([table[1][i + 2] >= 0 for i in range(len(problem.function.array))]) or dual and all([table[i+2][1] >= 0 for i in range(len(problem.restrictions))]):
-                    d = {problem.variables[i]: 0 for i in range(len(problem.variables))}
+                    d = {problem.variables[i]: 0 for i in range(
+                        len(problem.variables))}
                     for i in range(len(problem.restrictions)):
                         d[table[i + 2][0]] = table[i + 2][1]
                     # solution = [0 if table[0][i + 2] not in [table[j + 2][0] for j in range(len(problem.restrictions))] else
                     #         table[1][i + 2] for i in range(len(problem.variables))]
-                    print("Базисное решение (%s) оптимально." % (', '.join([str(i) for i in list(d.values())])))
-                    assert table[1][1] == problem.function.value(list(d.values()))
+                    print("Базисное решение (%s) оптимально." %
+                          (', '.join([str(i) for i in list(d.values())])))
+                    assert table[1][1] == problem.function.value(
+                        list(d.values()))
 
                     if artificial:
                         return table
                     return list(d.values()), table[1][1]
                 print("Проверка на неразрешимость")
                 if dual:
-                    if any([table [i+2][1] and all([table[i+2][j+2] >= 0 for j in range(len(problem.variables))]) for i in range(len(problem.restrictions))]):
-                        print("Задача ЛП неразрешима, т.к множество допустимых решений D_I пусто")
+                    if any([table[i+2][1] and all([table[i+2][j+2] >= 0 for j in range(len(problem.variables))]) for i in range(len(problem.restrictions))]):
+                        print(
+                            "Задача ЛП неразрешима, т.к множество допустимых решений D_I пусто")
                         return None
                     print("Выбор ведущей строки")
                     p = -1
@@ -401,22 +432,25 @@ class SimplexTable:
                         if table[i+2][1] < 0 and table[i+2][1] < max_p:
                             max_p = table[i+2][1]
                             p = i
-                    print("Строка %s является ведущей" % problem.variables[basis[p][0]])
-
+                    print("Строка %s является ведущей" %
+                          problem.variables[basis[p][0]])
 
                     print("Выбор ведущего столбца")
                     q = -1
                     possible_q = []
                     for i in range(len(problem.variables)):
-                        if table[p+2][i +2] < 0:
-                            possible_q.append((table[1][i+2]/table[p+2][i +2], i))
+                        if table[p+2][i + 2] < 0:
+                            possible_q.append(
+                                (table[1][i+2]/table[p+2][i + 2], i))
                     possible_q.sort(key=lambda x: x[0])
                     q = possible_q[-1][1]
-                    print("Столбец %s является ведущим" % problem.variables[q]) # todo а тут нумерация столбцов сбивается, так как не берем базисные!!!
+                    # todo а тут нумерация столбцов сбивается, так как не берем базисные!!!
+                    print("Столбец %s является ведущим" % problem.variables[q])
                 else:
                     if any([all([table[j + 1][i + 2] < 0 for j in range(len(problem.restrictions) + 1)]) for i in
                             range(len(problem.variables))]):
-                        print("Задача ЛП неразрешима, т.к f(x) не ограничена сверху на множестве допустимых решений D_I")
+                        print(
+                            "Задача ЛП неразрешима, т.к f(x) не ограничена сверху на множестве допустимых решений D_I")
                         return None
                     print("Выбор ведущего столбца")
                     q = -1
@@ -433,27 +467,31 @@ class SimplexTable:
                     possible_p = []
                     for i in range(len(problem.restrictions)):
                         if table[i + 2][q + 2] > 0:
-                            possible_p.append((table[i + 2][1] / table[i + 2][q + 2], i))
+                            possible_p.append(
+                                (table[i + 2][1] / table[i + 2][q + 2], i))
                     possible_p.sort(key=lambda x: x[0])
                     p = possible_p[0][1]
-                    print("Строка %s является ведущей" % problem.variables[basis[p][0]])
+                    print("Строка %s является ведущей" %
+                          problem.variables[basis[p][0]])
                 print("Преобразование...")
 
                 table[p + 2][0] = table[0][q + 2]
                 old_table = copy.deepcopy(table)
                 for i in range(len(problem.variables) + 1):
-                    table[p + 2][i + 1] = old_table[p + 2][i + 1] / old_table[p + 2][q + 2]
+                    table[p + 2][i + 1] = old_table[p + 2][i + 1] / \
+                        old_table[p + 2][q + 2]
                 for i in range(len(problem.restrictions) + 1):
                     if i + 1 != p + 2:
                         for j in range(len(problem.variables) + 1):
                             table[i + 1][j + 1] = old_table[i + 1][j + 1] - \
-                                                  old_table[i + 1][q + 2] / old_table[p + 2][q + 2] * old_table[p + 2][
-                                                      j + 1]
+                                old_table[i + 1][q + 2] / old_table[p + 2][q + 2] * old_table[p + 2][
+                                j + 1]
 
                 count += 1
             return None
         else:
-            map_basis = {problem.variables[i]: False for i in range(len(problem.variables))}
+            map_basis = {problem.variables[i]: False for i in range(
+                len(problem.variables))}
             nonbasis = copy.deepcopy(problem.variables)
 
             for i in basis:
@@ -467,7 +505,8 @@ class SimplexTable:
                     index_row.append(-problem.function.array[i])
             table.append(index_row)
             for i in range(len(basis)):
-                row = [problem.variables[basis[i][0]], problem.restrictions[i].b]
+                row = [problem.variables[basis[i][0]],
+                       problem.restrictions[i].b]
                 for j in range(len(problem.restrictions[i].coefs)):
                     if not map_basis[problem.variables[j]]:
                         row.append(problem.restrictions[i].coefs[j])
@@ -475,26 +514,31 @@ class SimplexTable:
                 # print(row)
             count = 1
             while count <= 100:
-                print(tabulate(table, headers='firstrow', tablefmt='grid', disable_numparse=True))
+                print(tabulate(table, headers='firstrow',
+                      tablefmt='grid', disable_numparse=True))
                 print("Итерация №%d" % count)
 
                 print("Проверка на оптимальность")
                 if dual and all([table[i+2][1] >= 0 for i in range(len(problem.restrictions))]) or not dual and all([table[1][i + 2] >= 0 for i in range(len(problem.function.array) - len(basis))]):
-                        d = {problem.variables[i]: 0 for i in range(len(problem.variables))}
-                        for i in range(len(problem.restrictions)):
-                            d[table[i + 2][0]] = table[i + 2][1]
-                        # solution = [0 if table[0][i + 2] not in [table[j + 2][0] for j in range(len(problem.restrictions))] else
-                        #         table[1][i + 2] for i in range(len(problem.variables))]
-                        print("Базисное решение (%s) оптимально." % (', '.join([str(i) for i in list(d.values())])))
-                        assert table[1][1] == problem.function.value(list(d.values()))
-                        if artificial:
-                            return table
-                        return list(d.values()), table[1][1]
+                    d = {problem.variables[i]: 0 for i in range(
+                        len(problem.variables))}
+                    for i in range(len(problem.restrictions)):
+                        d[table[i + 2][0]] = table[i + 2][1]
+                    # solution = [0 if table[0][i + 2] not in [table[j + 2][0] for j in range(len(problem.restrictions))] else
+                    #         table[1][i + 2] for i in range(len(problem.variables))]
+                    print("Базисное решение (%s) оптимально." %
+                          (', '.join([str(i) for i in list(d.values())])))
+                    assert table[1][1] == problem.function.value(
+                        list(d.values()))
+                    if artificial:
+                        return table
+                    return list(d.values()), table[1][1]
                 print("Проверка на неразрешимость")
                 if not dual:
                     if any([all([table[j + 1][i + 2] < 0 for j in range(len(problem.restrictions) + 1)]) for i in
                             range(len(problem.variables) - len(basis))]):
-                        print("Задача ЛП неразрешима, т.к f(x) не ограничена сверху на множестве допустимых решений D_I")
+                        print(
+                            "Задача ЛП неразрешима, т.к f(x) не ограничена сверху на множестве допустимых решений D_I")
                         return None
                     print("Выбор ведущего столбца")
                     q = -1
@@ -508,17 +552,21 @@ class SimplexTable:
                     print("Выбор ведущей строки")
                     p = -1
                     # todo убрать сортировку, сделать обычное сравнение как выше
-                    min_p = max([table[i + 2][1] for i in range(len(problem.restrictions))])
+                    min_p = max([table[i + 2][1]
+                                for i in range(len(problem.restrictions))])
                     possible_p = []
                     for i in range(len(problem.restrictions)):
                         if table[i + 2][q + 2] > 0:
-                            possible_p.append((table[i + 2][1] / table[i + 2][q + 2], i))
+                            possible_p.append(
+                                (table[i + 2][1] / table[i + 2][q + 2], i))
                     possible_p.sort(key=lambda x: x[0])
                     p = possible_p[0][1]
-                    print("Строка %s является ведущей" % problem.variables[basis[p][0]])
+                    print("Строка %s является ведущей" %
+                          problem.variables[basis[p][0]])
                 else:
-                    if any([table [i+2][1]<0 and all([table[i+2][j+2] >= 0 for j in range(len(problem.variables) - len(basis))]) for i in range(len(problem.restrictions))]):
-                        print("Задача ЛП неразрешима, т.к множество допустимых решений D_I пусто")
+                    if any([table[i+2][1] < 0 and all([table[i+2][j+2] >= 0 for j in range(len(problem.variables) - len(basis))]) for i in range(len(problem.restrictions))]):
+                        print(
+                            "Задача ЛП неразрешима, т.к множество допустимых решений D_I пусто")
                         return None
                     print("Выбор ведущей строки")
                     p = -1
@@ -527,37 +575,42 @@ class SimplexTable:
                         if table[i+2][1] < 0 and table[i+2][1] < max_p:
                             max_p = table[i+2][1]
                             p = i
-                    print("Строка %s является ведущей" % problem.variables[basis[p][0]])
-
+                    print("Строка %s является ведущей" %
+                          problem.variables[basis[p][0]])
 
                     print("Выбор ведущего столбца")
                     q = -1
                     possible_q = []
                     for i in range(len(problem.variables) - len(basis)):
-                        if table[p+2][i +2] < 0:
-                            possible_q.append((table[1][i+2]/table[p+2][i +2], i))
+                        if table[p+2][i + 2] < 0:
+                            possible_q.append(
+                                (table[1][i+2]/table[p+2][i + 2], i))
                     possible_q.sort(key=lambda x: x[0])
                     q = possible_q[-1][1]
-                    print("Столбец %s является ведущим" % problem.variables[q]) # todo а тут нумерация столбцов сбивается, так как не берем базисные!!!
+                    # todo а тут нумерация столбцов сбивается, так как не берем базисные!!!
+                    print("Столбец %s является ведущим" % problem.variables[q])
                 print("Преобразование...")
 
-                table[p + 2][0], table[0][q + 2] = table[0][q + 2], table[p + 2][0]
+                table[p + 2][0], table[0][q +
+                                          2] = table[0][q + 2], table[p + 2][0]
                 old_table = copy.deepcopy(table)
                 table[p + 2][q + 2] = 1 / old_table[p + 2][q + 2]
                 for j in range(len(problem.variables) - len(basis) + 1):
                     if j + 1 != q + 2:
-                        table[p + 2][j + 1] = old_table[p + 2][j + 1] / old_table[p + 2][q + 2]
+                        table[p + 2][j + 1] = old_table[p + 2][j + 1] / \
+                            old_table[p + 2][q + 2]
                 for i in range(len(problem.restrictions) + 1):
                     if i + 1 != p + 2:
-                        table[i + 1][q + 2] = -old_table[i + 1][q + 2] / old_table[p + 2][q + 2]
+                        table[i + 1][q + 2] = -old_table[i +
+                                                         1][q + 2] / old_table[p + 2][q + 2]
                 for i in range(len(problem.restrictions) + 1):
                     if i + 1 != p + 2:
                         for j in range(len(problem.variables) - len(basis) + 1):
                             if j + 1 != q + 2:
                                 table[i + 1][j + 1] = old_table[i + 1][j + 1] - \
-                                                      old_table[i + 1][q + 2] / old_table[p + 2][q + 2] * \
-                                                      old_table[p + 2][
-                                                          j + 1]
+                                    old_table[i + 1][q + 2] / old_table[p + 2][q + 2] * \
+                                    old_table[p + 2][
+                                    j + 1]
 
                 count += 1
             return None
@@ -566,14 +619,18 @@ class SimplexTable:
     def problem_from_table(table: list[list[Union[Fraction, int, str]]], full_table=True):
         if full_table:
             function = Function(table[1][1:] + ['max'])
-            soft_restrictions = [Inequality.NONE for _ in range(len(table[0][2:]))]
+            soft_restrictions = [
+                Inequality.NONE for _ in range(len(table[0][2:]))]
             restrictions = []
             for i in range(1, len(table)):
-                restrictions.append(Restriction(table[i][2:] + ['=', table[i][1]]))
+                restrictions.append(Restriction(
+                    table[i][2:] + ['=', table[i][1]]))
             return Problem(function, restrictions, soft_restrictions)
         else:
-            function = Function(table[1][1:] + [0 for j in range(1, len(table))] + ['max'])
-            soft_restrictions = [Inequality.NONE for _ in range(len(function.array))]
+            function = Function(
+                table[1][1:] + [0 for j in range(1, len(table))] + ['max'])
+            soft_restrictions = [
+                Inequality.NONE for _ in range(len(function.array))]
             restrictions = []
             for i in range(1, len(table)):
                 restrictions.append(
@@ -587,43 +644,51 @@ class SimplexTable:
         if not problem.check_canon():
             raise Exception
         list_of_basis = []
-        vector_of_nonbasis = list(map(lambda x: x != 0, problem.function.array))
+        vector_of_nonbasis = list(
+            map(lambda x: x != 0, problem.function.array))
         for i in range(len(vector_of_nonbasis)):
             if not vector_of_nonbasis[i]:
-                column = [problem.restrictions[j].coefs[i] for j in range(len(problem.restrictions))]
+                column = [problem.restrictions[j].coefs[i]
+                          for j in range(len(problem.restrictions))]
                 if column.count(1) == 1 and column.count(0) == len(problem.restrictions) - 1:
                     if len(list(filter(lambda x: x[0] == (column.index(1), list_of_basis)))) == 0:
-                        list_of_basis.append((column.index(1), i))  # номер ограничения номер переменной
+                        # номер ограничения номер переменной
+                        list_of_basis.append((column.index(1), i))
 
         list_of_restrictions_without_basis = list(
             filter(lambda x: x not in [y[1] for y in list_of_basis], range(len(problem.restrictions))))
         auxillary_problem = copy.deepcopy(problem)
-        auxillary_problem.variables += ["t_%d" % i for i in range(1, len(list_of_restrictions_without_basis) + 1)]
+        auxillary_problem.variables += ["t_%d" % i for i in range(
+            1, len(list_of_restrictions_without_basis) + 1)]
         auxillary_basis = [problem.variables[i[1]] for i in list_of_basis] + ["t_%d" % i for i in range(1,
                                                                                                         len(list_of_restrictions_without_basis) + 1)]
         for i in range(len(problem.restrictions)):
             if auxillary_problem.restrictions[i].b < 0:
                 auxillary_problem.restrictions[i].b *= -1
-                auxillary_problem.restrictions[i].coefs = [-i for i in auxillary_problem.restrictions[i].coefs]
+                auxillary_problem.restrictions[i].coefs = [
+                    -i for i in auxillary_problem.restrictions[i].coefs]
         auxillary_problem.soft_restrictions += [Inequality.GREATEREQ for i in
                                                 range(len(list_of_restrictions_without_basis))]
         num_of_t = 0
         for i in range(len(problem.restrictions)):
             if i not in list_of_restrictions_without_basis:
-                auxillary_problem.restrictions[i].coefs += [0 for _ in range(len(list_of_restrictions_without_basis))]
+                auxillary_problem.restrictions[i].coefs += [
+                    0 for _ in range(len(list_of_restrictions_without_basis))]
             else:
                 auxillary_problem.restrictions[i].coefs += [1 if j == num_of_t else 0 for j in range(
                     len(list_of_restrictions_without_basis))]
                 num_of_t += 1
-        auxillary_problem.function.c = sum([-problem.restrictions[i].b for i in range(len(problem.restrictions))])
+        auxillary_problem.function.c = sum(
+            [-problem.restrictions[i].b for i in range(len(problem.restrictions))])
         auxillary_problem.function.array = [
             sum([problem.restrictions[i].coefs[j] for i in
                  range(len(auxillary_problem.restrictions))]) if auxillary_problem.variables[
-                                                                     j] not in auxillary_basis else 0
+                j] not in auxillary_basis else 0
             for j in range(len(auxillary_problem.variables))]
         print("Вспомогательная задача:")
         print(auxillary_problem)
-        table = SimplexTable.simplex_method(auxillary_problem, "h", full_table, True)
+        table = SimplexTable.simplex_method(
+            auxillary_problem, "h", full_table, True)
 
         if table[1][1] < 0:
             print("Задача неразрешима, т.к множество допустимых значений пусто")
@@ -642,12 +707,15 @@ class SimplexTable:
                         table[j].pop(to_remove)
                     bias += 1
             if full_table:
-                table[1] = ["f"] + [problem.function.c] + [problem.function.array]
+                table[1] = ["f"] + [problem.function.c] + \
+                    [problem.function.array]
             else:
                 # table[1] = ["f"] +
                 pass
-            second_phase_problem = SimplexTable.problem_from_table(table, full_table)
+            second_phase_problem = SimplexTable.problem_from_table(
+                table, full_table)
             return second_phase_problem
+
 
 if __name__ == '__main__':
     # with open("input.txt") as file:
@@ -750,5 +818,3 @@ if __name__ == '__main__':
         problem = Problem(*read(file))
 
         x, y = SimplexTable.simplex_method(problem, "f", False, dual=True)
-
-
