@@ -28,7 +28,7 @@ for i in range(4):
 # print(*l)
 
 # sample = [False for _ in range(16)]
-all_patterns = []
+all_patterns = {}
 for k in range(1 << 24):
     cnt = 1
     edges = {i: [] for i in range(1, 17)}
@@ -75,7 +75,8 @@ for k in range(1 << 24):
         if count_of_vertices == 1:
             continue
         is_only_edge = count_of_vertices == 2
-        is_two_edges = count_of_vertices == 3 and not is_cycle
+        is_two_edges = count_of_vertices == 3 and not is_cycle and (
+            (path[0]-1) % 4 == (path[1]-1) % 4 == (path[2]-1) % 4 or (path[0]-1) // 4 == (path[1]-1) // 4 == (path[2]-1) // 4)
         is_cycle &= count_of_vertices == 4
         if not (is_cycle or is_only_edge or is_two_edges):
             error = True
@@ -98,13 +99,15 @@ for k in range(1 << 24):
         #       (cycles, only_edge, two_edges))
         # for x in graph:
         #     print(*x)
-        all_patterns.append(Pattern(graph, [cycles, only_edge, two_edges]))
+        all_patterns[(cycles, only_edge, two_edges)] = (
+            Pattern(graph, [cycles, only_edge, two_edges]))
 # all_patterns.sort(key=lambda x: 16 -
 #                   x.parameters[0]*4 - x.parameters[1]*2 - x.parameters[2]*3)
+all_patterns = list(all_patterns.values())
 all_patterns.sort(key=lambda x:
                   [x.parameters[0], x.parameters[1], x.parameters[2]], reverse=True)
 # with open("patterns.txt", "w") as file:
-with open("patterns1.txt", "w") as file:
+with open("patterns2.txt", "w") as file:
 
     for pattern in all_patterns:
         file.write("Cycles: %d, edge: %d, two edges %d, remainder: %d\n" %

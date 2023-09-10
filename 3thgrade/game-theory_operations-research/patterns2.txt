@@ -1,0 +1,310 @@
+Cycles: 4, edge: 0, two edges 0, remainder: 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+Cycles: 3, edge: 2, two edges 0, remainder: 0
+x x 0 0
+x x 0 0
+0 0 0 0
+0 0 0 0
+Cycles: 3, edge: 1, two edges 0, remainder: 2
+    0 0
+x x 0 0
+0 0 0 0
+0 0 0 0
+Cycles: 3, edge: 0, two edges 0, remainder: 4
+    0 0
+    0 0
+0 0 0 0
+0 0 0 0
+Cycles: 2, edge: 4, two edges 0, remainder: 0
+x x x x
+x x x x
+0 0 0 0
+0 0 0 0
+Cycles: 2, edge: 3, two edges 0, remainder: 2
+    x x
+x x x x
+0 0 0 0
+0 0 0 0
+Cycles: 2, edge: 2, two edges 1, remainder: 1
+0 0 x x
+0 0 0 0
+x   0 0
+x . . .
+Cycles: 2, edge: 2, two edges 0, remainder: 4
+       
+x x x x
+0 0 0 0
+0 0 0 0
+Cycles: 2, edge: 1, two edges 2, remainder: 0
+0 0 0 0
+0 0 0 0
+x . . .
+x . . .
+Cycles: 2, edge: 1, two edges 1, remainder: 3
+0 0    
+0 0 0 0
+x   0 0
+x . . .
+Cycles: 2, edge: 1, two edges 0, remainder: 6
+       
+    x x
+0 0 0 0
+0 0 0 0
+Cycles: 2, edge: 0, two edges 2, remainder: 2
+0 0 0 0
+0 0 0 0
+  . . .
+  . . .
+Cycles: 2, edge: 0, two edges 1, remainder: 5
+       
+0 0 0 0
+0 0 0 0
+  . . .
+Cycles: 2, edge: 0, two edges 0, remainder: 8
+       
+       
+0 0 0 0
+0 0 0 0
+Cycles: 1, edge: 6, two edges 0, remainder: 0
+x x x x
+x x x x
+x x 0 0
+x x 0 0
+Cycles: 1, edge: 5, two edges 0, remainder: 2
+    x x
+x x x x
+x x 0 0
+x x 0 0
+Cycles: 1, edge: 4, two edges 1, remainder: 1
+x   x x
+x x 0 0
+x x 0 0
+x . . .
+Cycles: 1, edge: 4, two edges 0, remainder: 4
+       
+x x x x
+x x 0 0
+x x 0 0
+Cycles: 1, edge: 3, two edges 2, remainder: 0
+x x 0 0
+x x 0 0
+x . . .
+x . . .
+Cycles: 1, edge: 3, two edges 1, remainder: 3
+    x x
+  x 0 0
+x x 0 0
+x . . .
+Cycles: 1, edge: 3, two edges 0, remainder: 6
+       
+    x x
+x x 0 0
+x x 0 0
+Cycles: 1, edge: 2, two edges 2, remainder: 2
+    0 0
+x x 0 0
+x . . .
+x . . .
+Cycles: 1, edge: 2, two edges 1, remainder: 5
+       
+  x 0 0
+x x 0 0
+x . . .
+Cycles: 1, edge: 2, two edges 0, remainder: 8
+       
+       
+x x 0 0
+x x 0 0
+Cycles: 1, edge: 1, two edges 3, remainder: 1
+  x 0 0
+. x 0 0
+. . . .
+. . . .
+Cycles: 1, edge: 1, two edges 2, remainder: 4
+    0 0
+    0 0
+x . . .
+x . . .
+Cycles: 1, edge: 1, two edges 1, remainder: 7
+       
+    0 0
+x   0 0
+x . . .
+Cycles: 1, edge: 1, two edges 0, remainder: 10
+       
+       
+    0 0
+x x 0 0
+Cycles: 1, edge: 0, two edges 4, remainder: 0
+. . . .
+. 0 0 .
+. 0 0 .
+. . . .
+Cycles: 1, edge: 0, two edges 3, remainder: 3
+    0 0
+.   0 0
+. . . .
+. . . .
+Cycles: 1, edge: 0, two edges 2, remainder: 6
+    0 0
+    0 0
+  . . .
+  . . .
+Cycles: 1, edge: 0, two edges 1, remainder: 9
+       
+    0 0
+    0 0
+  . . .
+Cycles: 1, edge: 0, two edges 0, remainder: 12
+       
+       
+    0 0
+    0 0
+Cycles: 0, edge: 8, two edges 0, remainder: 0
+x x x x
+x x x x
+x x x x
+x x x x
+Cycles: 0, edge: 7, two edges 0, remainder: 2
+    x x
+x x x x
+x x x x
+x x x x
+Cycles: 0, edge: 6, two edges 1, remainder: 1
+x   x x
+x x x x
+x x x x
+x . . .
+Cycles: 0, edge: 6, two edges 0, remainder: 4
+       
+x x x x
+x x x x
+x x x x
+Cycles: 0, edge: 5, two edges 2, remainder: 0
+x x x x
+x x x x
+x . . .
+x . . .
+Cycles: 0, edge: 5, two edges 1, remainder: 3
+    x x
+  x x x
+x x x x
+x . . .
+Cycles: 0, edge: 5, two edges 0, remainder: 6
+       
+    x x
+x x x x
+x x x x
+Cycles: 0, edge: 4, two edges 2, remainder: 2
+    x x
+x x x x
+x . . .
+x . . .
+Cycles: 0, edge: 4, two edges 1, remainder: 5
+       
+  x x x
+x x x x
+x . . .
+Cycles: 0, edge: 4, two edges 0, remainder: 8
+       
+       
+x x x x
+x x x x
+Cycles: 0, edge: 3, two edges 3, remainder: 1
+x   x x
+x . . .
+x . . .
+x . . .
+Cycles: 0, edge: 3, two edges 2, remainder: 4
+       
+x x x x
+x . . .
+x . . .
+Cycles: 0, edge: 3, two edges 1, remainder: 7
+       
+    x x
+x   x x
+x . . .
+Cycles: 0, edge: 3, two edges 0, remainder: 10
+       
+       
+    x x
+x x x x
+Cycles: 0, edge: 2, two edges 4, remainder: 0
+x x x x
+. . . .
+. . . .
+. . . .
+Cycles: 0, edge: 2, two edges 3, remainder: 3
+    x x
+  . . .
+x . . .
+x . . .
+Cycles: 0, edge: 2, two edges 2, remainder: 6
+       
+    x x
+x . . .
+x . . .
+Cycles: 0, edge: 2, two edges 1, remainder: 9
+       
+       
+x   x x
+x . . .
+Cycles: 0, edge: 2, two edges 0, remainder: 12
+       
+       
+       
+x x x x
+Cycles: 0, edge: 1, two edges 4, remainder: 2
+    x x
+. . . .
+. . . .
+. . . .
+Cycles: 0, edge: 1, two edges 3, remainder: 5
+       
+  . . .
+x . . .
+x . . .
+Cycles: 0, edge: 1, two edges 2, remainder: 8
+       
+       
+x . . .
+x . . .
+Cycles: 0, edge: 1, two edges 1, remainder: 11
+       
+       
+    x x
+  . . .
+Cycles: 0, edge: 1, two edges 0, remainder: 14
+       
+       
+       
+    x x
+Cycles: 0, edge: 0, two edges 5, remainder: 1
+  . . .
+. . . .
+. . . .
+. . . .
+Cycles: 0, edge: 0, two edges 4, remainder: 4
+       
+. . . .
+. . . .
+. . . .
+Cycles: 0, edge: 0, two edges 3, remainder: 7
+       
+.      
+. . . .
+. . . .
+Cycles: 0, edge: 0, two edges 2, remainder: 10
+       
+       
+  . . .
+  . . .
+Cycles: 0, edge: 0, two edges 1, remainder: 13
+       
+       
+       
+  . . .
