@@ -1,0 +1,77 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\newcommand\letsymbol{\mathord{\sqsupset}}
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\theoremstyle{definition}
+\newtheorem*{example}{Пример}
+\newtheorem*{definition}{Определение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\clo}{cl}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+\begin{enumerate}
+    \item[9] Привести пример $A\subset \mathbb{R}$, т.ч следующие множества
+    попарно различны:
+    \[A, \clo A, \Int A, \clo (\Int A), \Int (\clo A), \Int (\clo (\Int A)), \clo(\Int (\clo A))\]
+
+    \[A = [0, \frac12) \cup (\frac12, 1] \cup \{ 2\} \cup ([3, 4] \cap \mathbb{Q})\]
+    \[\Int A = (0, \frac12) \cup (\frac12, 1)\]
+    \[\clo A = [0,1] \cup \{2\} \cup [3, 4]\]
+    \[\Int (\clo A) = (0, 1) \cup (3, 4)\]
+    \[\clo (\Int A) = [0, 1]\]
+    \[\clo (\Int (\clo A)) = [0,1] \cup [3, 4]\]
+    \[\Int(\clo(\Int A)) = (0, 1)\]
+    \item[10]
+    Какое наибольшее число попарно различных множеств можно получить
+    из подмножества топологического пространства, последовательно
+    применяя к нему операции замыкания и внутренности?
+
+    7, т.к из 9 номера мы получили 7 различных множеств
+    и известно, что 
+    \begin{equation}
+        \clo (\Int (\clo (\Int A)))= \clo (\Int A)
+    \end{equation}
+    \begin{equation}
+        \Int (\clo (\Int (\clo A)))= \Int (\clo A)
+    \end{equation}
+    % \[ (1)\]
+    % \[ (2)\]
+    \begin{proof}
+        \begin{enumerate}
+            \item[1] $\Int A \subset A \implies \clo (\Int A)\subset \clo A$
+            $\implies \clo(\Int(\clo A))\subset \clo (\clo A) = \clo A\implies$
+
+            $\clo (\Int (\clo (\Int A))) \subset \clo (\Int A)$
+
+            $\Int A \subset \clo (\Int A) \implies \Int A \subset \Int (\clo (\Int A)) \implies$
+            $\clo (\Int A) \subset \clo (\Int (\clo (\Int A)))$
+
+            \item[2]  $\Int A \subset A \implies \Int (\clo A) \subset \clo A \implies \clo(\Int(\clo A)) \subset \clo A$
+            $\Int(\clo (\Int (\clo A)))\subset \Int(\clo A)$
+
+            $A\subset \clo A \implies \Int (\clo A) \subset \clo (\Int (\clo A)) \implies$
+            $\Int (\clo A) \subset \Int (\clo (\Int (\clo A)))$
+        \end{enumerate}
+    \end{proof}
+
+\end{enumerate}
+
+
+\end{document}

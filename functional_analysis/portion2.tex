@@ -1,0 +1,96 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\newcommand\letsymbol{\mathord{\sqsupset}}
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\theoremstyle{definition}
+\newtheorem*{example}{Пример}
+\newtheorem*{definition}{Определение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+
+
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\clo}{cl}
+
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+\begin{enumerate}
+    \item[43] Доказать, что если шар радиуса 7 содержится в шаре радиуса 3, то они совпадают.
+    \begin{proof}
+        $B_7(x_0) \subset B_3(y_0) \implies \forall x: d(x, x_0) < 7 \quad d(x, y_0) < 3$
+
+        Сразу получаем, что $d(x_0, y_0) < 3$.
+
+        Пусть $B_3(y_0) \not\subset B_7(x_0)$, тогда существует такое $y\in B_3(y_0)$,
+        что $d(y, x_0) \geq 7$
+
+        Применим свойство полуметрики, учитывая, что $d(y_0, y) < 3$:
+
+        \[d(x_0, y_0) \geq |d(x_0, y) - d(y_0, y)| > 4\]
+        
+        Получили противоречие, значит, имеет место включение и шары совпадают.
+    \end{proof}
+
+    \item[..] Задача с лекции 03.10.23.
+    Найти $\mu$, при которых уравнение разрешимо и найти решение
+    \[x(t) - \mu \int_{0}^{1} t s x(s) ds = t\]
+    
+    Пусть C = $\int_{0}^{1}s x(s) ds$
+
+    \[x(t) = (\mu C + 1)t\]
+    \[t x(t) = (\mu C +1)t^2\]
+    \[C = \int_0^1 (\mu C +1)y^2dy\]
+    \[C = \frac{(\mu C +1) }{3}\]
+    % \[C(1-\frac{\mu}{3}) = \frac{1}{3}\]
+    \[C = \frac{1}{3-\mu}\]
+    \[x(t) = \frac{3t}{3-\mu}, \quad \mu\neq 3\]
+
+    \item[37] Доказать, что если $(X, d)$ - полуметрическое пространство,
+    то
+    \begin{enumerate}
+        \item $\forall x\in X, R > r > 0\quad B_r[x] \subset B_R(x)$;
+        \item $\forall x\in X, r > 0\quad \clo B_r(x) \subset B_r[x]$, а вот равенства может не быть;
+        \item $\forall x\in X, r > 0\quad B_r(x)\in Op(X, d), B_r[x]\in Cl(X, d)$;
+        \item шар большего радиуса может быть собственным подмножеством шара меньшего радиуса
+    \end{enumerate}
+    \begin{proof}
+        \begin{enumerate}
+            \item $B_r[x] = \{y\in X\;|\;d(x, y) \leq r\} \quad$
+            $B_R(x) = \{y\in X\;|\;d(x, y)< R\}$
+
+            Для всех у из шара $B_r[x]$, т.е $y\in X$, таких что $d(x, y)\le r < R \implies y\in B_R(x)$ 
+            \item 
+        \end{enumerate}
+    \end{proof}
+    % \item[47] 
+    % Пусть $d$ - полуметрика на множестве X.
+    % Доказать, что функции
+    % \[d_1(x, y) = \frac{d(x,y)}{1+d(x, y)}, \quad d_2(x, y) = \min\{1, d(x, y)\}, \quad d_3(x, y) = \ln (1 + d(x, y))\]
+    % являются полуметриками на X, причем они все эквивалентны и являются 
+    % метриками или нет, одновременно с исходной.
+    % \begin{enumerate}
+    %     \item {
+    %         \begin{enumerate}
+    %             \item \[d_1(x, x) = \frac{d(x, x)}{1+ d(x, x)} = 0\]
+    %             \item \[d_1(x, y) = \frac{d(x, y)}{1+ d(x, y)} = \frac{d(y, x)}{1+ d(y, x)} = d_1(y, x)\]
+    %             \item \[d_1(x, y) + d_1(y, z) = \frac{d(x, y)}{1+ d(x, y)} + \frac{d(y, z)}{1+ d(y, z)}\]
+    %         \end{enumerate}
+    %     }
+    % \end{enumerate}
+\end{enumerate}
+
+\end{document}
