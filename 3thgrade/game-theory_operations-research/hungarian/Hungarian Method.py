@@ -90,7 +90,7 @@ def iteration(matrix) -> list[list, list]:
     return [highlighted_cols, highlighted_rows_but_cols]
 
 
-with open("input.txt") as file:
+with open("input1.txt") as file:
     matrix = []
     n = int(file.readline())
     for i in range(n):
