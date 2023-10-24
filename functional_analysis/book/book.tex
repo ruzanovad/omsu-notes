@@ -5,6 +5,8 @@
 \usepackage{amsmath, amsthm}
 \usepackage{amssymb}
 \usepackage{hyperref}
+% \usepackage{mathrm}
+\usepackage{bbold}
 \usepackage{mathrsfs}
 
 
@@ -14,7 +16,7 @@
 \newtheorem{theorem}{Теорема}[section]
 \newtheorem{lemma}{Лемма}[section]
 \theoremstyle{definition}
-\newtheorem*{example}{Пример}
+\newtheorem{example}{Пример}
 \newtheorem{problem}{Упражнение}[section]
 \newtheorem*{definition}{Определение}
 \theoremstyle{remark}
@@ -97,12 +99,12 @@ $\mathcal{U}$ является базой порожденного им филь
     ее окрестностей:
     \[V_r(x) = \{y\in C(\mathbb{R}):\; \sup_{t\in\mathbb{R}}|y(t)-x(t)|<r \}, \; r >0.\]
     Доказать, что базы окрестностей $\{V_r(x)\;|\;r>0\}\; (x\in C(\mathbb{R}))$ определяют на $C(\mathbb{R})$
-    топологию (см. I.I.I3[I]), при которой операция сложения непрерывна, а операция умножения на скаляры
+    топологию (см. I.I.13[I]), при которой операция сложения непрерывна, а операция умножения на скаляры
     разрывна в каждой точке $(\lambda, x)\in \mathbb{K}\times C(\mathbb{R})$, где $x$ - неограниченная функция.
     Таким образом, указанная топология не является линейной на $C(\mathbb{R})$
 \end{problem}
 \begin{problem}
-    Привести пример линейной топологии на $C(\mathbb{R})$
+    Привести пример линейной топологии на $C(\mathbb{R})$.
 \end{problem}
 \begin{problem}
     На пространстве $C[a, b]$ топологию введем с помощью окрестностей
@@ -120,12 +122,124 @@ $\mathcal{U}$ является базой порожденного им филь
     Доказать, что эта топология - линейная.
 \end{problem}
 \begin{problem}
+    На пространстве $C(\mathbb{R})$ топологию определим с помощью окрестностей
+    \[V_{K, r}(x) = \{y\in C(\mathbb{R})\ : \ \sup_{t\in K} |y(t) - x(t)|< r\},\]
+    где $r > 0$. $K$ - компакт в $\mathbb{R}$.
     Доказать, что эта топология - линейная.
 \end{problem}
 \begin{remark}
     Всюду, где не оговорено, пространства $C[a, b], l^p, \mathscr{L}^p (0 < p < \infty), C(\mathbb{R})$
     предполагаются наделенными указанными выше линейными топологиями.
 \end{remark}
+% TODO a б в... 
+\begin{problem}
+    Пусть $X$ - ТВП. Тогда:
+    \begin{enumerate}
+        \item для любых $x\in X, \lambda \in \mathbb{K}\setminus \{0\}$
+        отображение $y\longmapsto \lambda y + x$ является гомеоморфизмом
+        $X$ на себя;
+        \item $\forall \ \lambda \in \mathbb{K}\setminus \{0\} \ (V\in \mathcal{O} \implies \lambda V\in \mathcal{O})$;
+        \item $\forall \ x \in X \ \mathcal{O}_x = \{x + V \ | \ V\in \mathcal{O}\}, \quad \mathcal{O} = \{x - V \ | \ V\in \mathcal{O}_x\}$.
+    \end{enumerate}
+\end{problem}
+\begin{problem}
+    Пусть $X$ - ТВП. Тогда:
+    \begin{enumerate}
+        \item $\forall \ V\in \mathcal{O} \ \exists \ U\in \mathcal{O} \ : \ U + U \subset V$;
+        \item $\forall \ V \in \mathcal{O} \ \forall \ n \in \mathbb{N} \ \exists \ U \in \mathcal{O} \ : \ \underbrace{U + \cdots + U}_n \subset V$;
+        \item $\mathcal{O}$ состоит из поглощающих множеств, в частности,
+        \[\forall \ V \in \mathcal{O} \ \forall \ \{r_n\} \subset (0, +\infty) \ : \ \lim_{n\to \infty} r_n = +\infty \quad X = \bigcup_{n\ge 1} r_n V;\]
+        \item в каждой окрестности нуля содержится уравновешенная окрестность нуля.
+        
+
+    \end{enumerate}
+    Указание. Для доказательства в) (соответственно г)) воспользуйтесь непрерывностью произведения на скаляры в точках $(0, x)\in \mathbb{K}\times X$ (соотв. в точке $(0, \mathbb{0})$).
+\end{problem}
+Говорят, что топология на векторном пространстве $X$ инвариантна относительно 
+сдвигов, если все сдвиги на $X$ суть гомеоморфизмы.
+\begin{problem}
+    Для линейности топологии $\tau$ на $X$ необходимо и достаточно, чтобы
+    она она была инвариантна относительно сдвигов и имела базис 
+    окрестностей нуля $\mathcal{U}$, удовлетворяющий условиям:
+    \begin{enumerate}
+        \item $\forall \; V \in \mathcal U \ \exists \; U \in \mathcal U \ : \ U + U \subset V$;
+        \item $\mathcal U$ состоит из поглощающих уравновешенных множеств.
+    \end{enumerate}
+    Указание. При доказательстве непрерывности произведения на скаляры удобно воспользоваться представлением 
+    \[\lambda x = \lambda_0 x_0 + (\lambda - \lambda_0) x_0 + \lambda (x-x_0).\]
+\end{problem}
+\begin{problem}
+    Если предфильтр $\mathcal U$ на векторном пространстве $X$ удовлетворяет условиям:
+    \begin{enumerate}
+        \item $\forall \ V\in \mathcal U \ \exists \; U \in \mathcal U \ : \ U + U \subset V$;
+        \item $\mathcal U$ состоит из поглощающих уравновешенных множеств,
+    \end{enumerate}
+    то на $X$ существует единственная линейная топология $\tau$, для которой $\mathcal U$ - база окрестностей нуля.
+
+    Указание. Положите $\tau = \{V \subset X \; |\; \forall \; x\in V \ \exists \; U \in \mathcal U \ : \ x + U \subset V\}$.
+
+    Докажите, что $\forall \ W \in \mathcal U \ W_0 := \{x\in W \ | \ \exists \; V \in \mathcal U \ : \ x + V \subset W\} \in \tau$, для чего проверьте, что если $x\in W_0,\; x\in V \subset W, \ U + U \subset V \ (U, V \in \mathcal U)$, то $x + U \subset W_0$. Покажите, что $\mathcal U$ - база $\mathcal O^\tau$ и топология $\tau$ инвариантна относительно сдвигов.
+\end{problem}
+\begin{problem}
+    Каждая окрестность нуля в ТВН содержит некоторую замкнутую уравновешенную окрестность нуля. В частности, каждое ТВП является $T_3$-пространством (см. I.3.3[I]).
+
+    Указание. Воспользуйтесь свойствами а), б) из I.12 и тем, что $(x-U)\;\cap \; U \neq \varnothing$ при $U\in \mathcal U, x\in \clo U$.
+\end{problem}
+\begin{problem}
+    Пусть $X$ - ТВП. $A, B \subset X$. Тогда:
+    \begin{enumerate}
+        \item если $A$ открыто, то $\lambda A + B$ открыто для любого $\lambda \in \mathbb{K} \setminus \{0\}$;
+        \item $\clo A = \bigcap \{A + V \; | \; V\in \mathcal U\}$ для любой базы $\mathcal U$ фильтра $\mathcal O$;
+        \item $\clo A + \clo B \subset \clo (A+B)$;
+        \item $\Int A + \Int B \subset \Int (A+B)$;
+        \item если $A$ уравновешено (соотв., является подпространством $X$), то $\clo A$, а если $\mathbb o \in \Int A$, то и $\Int A$ уравновешено (соотв., является подпространством $X$);
+        \item если $A$ выпукло, то $\clo A$ и $\Int A$ выпуклы;
+        \item если $A$ выпукло и $\Int A\neq \varnothing$, то:
+        \[\clo (\Int A) = \clo A, \quad \Int (\clo A) = \Int A;\]
+        \item если $A$ - подпространство $X$ и $\Int A\neq \varnothing$, то $A = X$.
+    \end{enumerate}
+    Указание. а) вытекает из 1.10; доказательства остальных утверждений основаны на том, что замыкание $\clo A$ множества $A$ есть наименьшее замкнутое множество, содержащее $А$, а его внутренность $\Int A$ - наибольшее открытое подмножество $A$.
+
+    Пример. Множество $A = \{(x, y)\in \mathbb{R}^2 : |x|\le |y|\}$ уравновешено в ТВП $\mathbb{R}^2$, то его внутренность не является уравновешенным множеством.
+
+    Вопрос: справедливы ли утверждения д)-ж) для произвольного $\Gamma$-множества $A$ (см. [2, с.26]) ?
+\end{problem}
+Топологическое векторное пространство называется локально
+(полу)выпуклым, если в нем каждая окрестность нуля содержит (полу)выпуклую
+окрестность нуля или, что то же самое, существует
+база окрестностей нуля, состоящая из полу(выпуклых) множеств.
+Его топология называется локально (полу)выпуклой. Напомним,
+что множество $V$ полувыпукло, если $V+V\subset \lambda V$ для
+некоторого $\lambda > 0$. Локально выпуклое топологическое
+векторное пространство обычно называют просто
+локально выпуклым пространством (ЛВП).
+\begin{problem}
+ Какие пространства из упражнений 1.3, 1.6 - 1.9 являются локально выпуклыми?
+\end{problem}
+\begin{example}
+    При $0 < p < 1$ в пространстве $\mathcal {L}^p (0,1)$ нет выпуклых открытых множеств, отличных от $\varnothing$ и $\mathcal {L}^p (0,1)$. В частности, $\mathcal {L}^p (0,1) (0< p < 1)$ не является локально выпуклым пространством.
+
+    Действительно, пусть $V$ - непустое выпуклое открытое множество в $\mathcal {L}^p$. Можно считать, что $\mathbb{o}\in V$. Тогда $V\supset V_r(\mathbb{o})$ для некоторого $r > 0$. Взяв $x\in \mathcal {L}^p $, найдем $n\in \mathbb{N}$ такое, что $n^{p-1}N(x)< r$, где $N(x) = \int_0^1 |x(t)|dt$. Положим $x_i(t) = nx(t)$ при $t_{i-1}< t \le t_i$ и $x_i(t) = 0$ в противном случае, где точки $0 = t_0< t_1 < \dots < t_n = 1$ таковы, что
+    \[\int_{t_{i-1}}^{t_i} |x(t)|^p dt = n^{-1} N(x) \quad (1\le i \le n).\]
+    Так как $N(x_i)< r$, то $x_i\in V (1 \le i \le n)$ и $x = \frac{1}{n} (x_1 + \dots + x_n)\in V$. Таким образом, $V = \mathcal L ^p$
+\end{example}
+\begin{problem}
+    Если множество $V$ в ТВП $X$ открыто или замкнуто, то для его выпуклости достаточно выполнения равенства $V+V=2V$.
+
+    Указание. Согласно условию, множество $V$ вместе с каждыми двумя своими точками содержит середину соединяющего их отрезка. В случае, тогда V открыто, удобно воспользоваться 1.20.
+\end{problem}
+\begin{problem}
+    Пусть $A$ и $B$ - подмножества ТВП. Тогда:
+    \begin{enumerate}
+        \item Если $A$ и $B$ бикомпактны, то $\lambda A + \mu B$ бикомпактно для $\lambda, \mu \in \mathbb{K}$;
+    \end{enumerate}
+\end{problem}
+\begin{problem}
+    
+\end{problem}
+\begin{problem}
+    
+\end{problem}
 \begin{problem}
     
 \end{problem}
