@@ -1,0 +1,66 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+% \usepackage{mathrm}
+\usepackage{bbold}
+\usepackage{mathrsfs}
+
+
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\theoremstyle{definition}
+\newtheorem{example}{Пример}
+\newtheorem{problem}{Упражнение}[section]
+\newtheorem*{definition}{Определение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+\newcommand\letsymbol{\mathord{\sqsupset}}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+\section*{3-раскраска графа}
+\textbf{Вход:} неориентированный граф без кратных ребер и петель $G = (V, E)$ c n вершинами.
+\\
+\textbf{Выход:} $\begin{cases}
+    1,\text{если существует правильная 3-раскраска графа,}\\
+    0,\text{ иначе.}
+\end{cases}$
+\subsection*{Генерический алгоритм}
+\begin{enumerate}
+    \item Сравнить $|E|$ и $\frac32|V|=\frac32 n$.
+
+    Если $|E| \ge \frac32 n$, то правильной 3-раскраски не существует.
+    
+    Иначе ответ - "не знаю".
+\end{enumerate}
+\begin{proof}
+    \[S = \{G = (V, E) \;|\; |E| <\frac32 n\} = \{M \;|\; \text{число единиц <}\frac{3n}{2}\}\]
+
+    Мы рассматриваем верхнетреугольные матрицы (т.е неориентированный граф). Тем самым,
+    
+    \[|I_n| = 2^{\frac{(n-1)n}{2}}\]
+    \[|S \cap I_n| = \sum_{i = 0}^{\lceil \frac{3n}{2} - 1 \rceil} C_{\frac{(n-1)n}{2}}^{i}\]
+    \[\rho (S) = \lim_{n\to\infty} \frac{|S \cap I_n|}{|I_n|} = \lim_{n\to \infty} \frac{\sum_{i = 0}^{\lceil \frac{3n}{2} - 1 \rceil} C_{\frac{(n-1)n}{2}}^{i}}{2^{\frac{(n-1)n}{2}}} = \lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil}\frac{(\frac{(n-1)n}{2})!}{2^{\frac{(n-1)n}{2}}(\frac{(n-1)n}{2} - i)!(i)! }\]
+    Воспользуемся формулой Стирлинга: $n! \sim \sqrt{2 \pi n} \left(\frac{n}{e}\right)^n$
+    \[\rho (S) = \lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil} \frac{\sqrt{2\pi \frac{(n-1)n}{2}} {(\frac{\frac{(n-1)n}{2}}{e})}^{\frac{(n-1)n}{2}}}{2^{\frac{(n-1)n}{2}} \sqrt{2\pi (\frac{(n-1)n}{2} - i)} {(\frac{\frac{(n-1)n}{2} - i}{e})}^{\frac{(n-1)n}{2} - i}      \sqrt{2\pi i} {(\frac{i}{e})}^{i}} =\]
+
+    \[= \lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil} \frac{\sqrt{\frac{(n-1)n}{2}} {({\frac{(n-1)n}{2}})}^{\frac{(n-1)n}{2}} }{2^{\frac{(n-1)n}{2}} \sqrt{2\pi (\frac{(n-1)n}{2} - i)} {({\frac{(n-1)n}{2} - i})}^{\frac{(n-1)n}{2} - i}      \sqrt{i} {({i})}^{i}} = \]
+
+    \[=\lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil} \frac{\sqrt{\frac{(n-1)n}{2}} {({\frac{(n-1)n}{2}})}^{\frac{(n-1)n}{2}} {({\frac{(n-1)n}{2} - i})}^{{i}}}{2^{\frac{(n-1)n}{2}} \sqrt{2\pi (\frac{(n-1)n}{2} - i)} {({\frac{(n-1)n}{2} - i})}^{\frac{(n-1)n}{2} }      \sqrt{i} {({i})}^{i}} =\]
+
+    \[=\lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil}  \frac{  {({(\frac{\frac{(n-1)n}{2}}{i}) - 1})}^{{i}}}{2^{\frac{(n-1)n}{2}} \sqrt{2\pi (1 - (\frac{i}{\frac{(n-1)n}{2}}))} {({1 - (\frac{i}{\frac{(n-1)n}{2}})})}^{\frac{(n-1)n}{2} }      \sqrt{i} } =\]
+    
+    \[=\lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil} \frac{  e^{i}{({(\frac{\frac{(n-1)n}{2}}{i}) - 1})}^{{i}}}{2^{\frac{(n-1)n}{2}} \sqrt{2\pi}       \sqrt{i} } = 0\]
+    (т.к $\lim_{n\to \infty}\frac{n}{2^n} = 0$,$\lim_{n\to \infty} \frac{e^n n^n}{2^{n^2}} = 0$)
+\end{proof}
+\end{document}
