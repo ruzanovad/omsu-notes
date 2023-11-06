@@ -22,6 +22,9 @@
 \newtheorem*{remark}{Замечание}
 \newcommand\letsymbol{\mathord{\sqsupset}}
 
+
+\DeclareMathOperator{\degg}{deg}
+
 \setlength{\topmargin}{-0.5in}
 \setlength{\oddsidemargin}{-0.5in}
 \textwidth 185mm
@@ -41,26 +44,29 @@
 
     Если $|E| \ge \frac32 n$, то правильной 3-раскраски не существует.
     
-    Иначе ответ - "не знаю".
+    Иначе ответ - "не знаю"
 \end{enumerate}
 \begin{proof}
-    \[S = \{G = (V, E) \;|\; |E| <\frac32 n\} = \{M \;|\; \text{число единиц <}\frac{3n}{2}\}\]
+    $|I_n \setminus (I_n\cap S)|$ - множество графов такое, что $\forall v\in V \degg(v) \ge 3$, т.е для них не существует правильной 3-раскраски.
 
-    Мы рассматриваем верхнетреугольные матрицы (т.е неориентированный граф). Тем самым,
+    Для множества S: $2|E| = \sum_{v\in V} \degg (v) < 3n$.
+    \[S = \{G = (V, E) \;|\; |E| <\frac32 |V|\} = \{M \;|\; \text{число единиц в матрице} < 3|V|\}\]
+
+    \[S_1 = \{G = (V, E) \;|\; \text{множество матриц (смежности) такое, что в каждой строчке}\]
+    \[\text{единиц правее главной диагонали меньше или равно 2}\}\]
+    Заметим, что $S_1 \supseteq S$.
+
+    Мы рассматриваем симметричные матрицы смежности (т.к неориентированный граф). Тем самым:
     
     \[|I_n| = 2^{\frac{(n-1)n}{2}}\]
-    \[|S \cap I_n| = \sum_{i = 0}^{\lceil \frac{3n}{2} - 1 \rceil} C_{\frac{(n-1)n}{2}}^{i}\]
-    \[\rho (S) = \lim_{n\to\infty} \frac{|S \cap I_n|}{|I_n|} = \lim_{n\to \infty} \frac{\sum_{i = 0}^{\lceil \frac{3n}{2} - 1 \rceil} C_{\frac{(n-1)n}{2}}^{i}}{2^{\frac{(n-1)n}{2}}} = \lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil}\frac{(\frac{(n-1)n}{2})!}{2^{\frac{(n-1)n}{2}}(\frac{(n-1)n}{2} - i)!(i)! }\]
-    Воспользуемся формулой Стирлинга: $n! \sim \sqrt{2 \pi n} \left(\frac{n}{e}\right)^n$
-    \[\rho (S) = \lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil} \frac{\sqrt{2\pi \frac{(n-1)n}{2}} {(\frac{\frac{(n-1)n}{2}}{e})}^{\frac{(n-1)n}{2}}}{2^{\frac{(n-1)n}{2}} \sqrt{2\pi (\frac{(n-1)n}{2} - i)} {(\frac{\frac{(n-1)n}{2} - i}{e})}^{\frac{(n-1)n}{2} - i}      \sqrt{2\pi i} {(\frac{i}{e})}^{i}} =\]
+    \[|I_n\cap S_1| = |2\prod_{i=1}^{n-2} ((n-i)(n-i-1) + n - i +1)|\]
 
-    \[= \lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil} \frac{\sqrt{\frac{(n-1)n}{2}} {({\frac{(n-1)n}{2}})}^{\frac{(n-1)n}{2}} }{2^{\frac{(n-1)n}{2}} \sqrt{2\pi (\frac{(n-1)n}{2} - i)} {({\frac{(n-1)n}{2} - i})}^{\frac{(n-1)n}{2} - i}      \sqrt{i} {({i})}^{i}} = \]
+    \[ \rho (S_1) = \lim_{n\to \infty} \frac{2\prod_{i=1}^{n-2}((n-i)(n-i-1) + n - i +1)}{2^{\frac{(n-1)n}{2}}}\]
 
-    \[=\lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil} \frac{\sqrt{\frac{(n-1)n}{2}} {({\frac{(n-1)n}{2}})}^{\frac{(n-1)n}{2}} {({\frac{(n-1)n}{2} - i})}^{{i}}}{2^{\frac{(n-1)n}{2}} \sqrt{2\pi (\frac{(n-1)n}{2} - i)} {({\frac{(n-1)n}{2} - i})}^{\frac{(n-1)n}{2} }      \sqrt{i} {({i})}^{i}} =\]
+    Заметим, что сверху полином $n^{2(n-2)}$ степени, поэтому предел равен 0.
 
-    \[=\lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil}  \frac{  {({(\frac{\frac{(n-1)n}{2}}{i}) - 1})}^{{i}}}{2^{\frac{(n-1)n}{2}} \sqrt{2\pi (1 - (\frac{i}{\frac{(n-1)n}{2}}))} {({1 - (\frac{i}{\frac{(n-1)n}{2}})})}^{\frac{(n-1)n}{2} }      \sqrt{i} } =\]
-    
-    \[=\lim_{n\to\infty} \sum_{i=0}^{\lceil \frac{3n}{2} - 1 \rceil} \frac{  e^{i}{({(\frac{\frac{(n-1)n}{2}}{i}) - 1})}^{{i}}}{2^{\frac{(n-1)n}{2}} \sqrt{2\pi}       \sqrt{i} } = 0\]
-    (т.к $\lim_{n\to \infty}\frac{n}{2^n} = 0$,$\lim_{n\to \infty} \frac{e^n n^n}{2^{n^2}} = 0$)
+    (т.к $\lim_{n\to \infty}\frac{n}{2^n} = 0$)
+
+    Подмножество пренебрежимого множества пренебрежимо, тем самым $S$ также пренебрежимо. Алгоритм является генерическим.
 \end{proof}
 \end{document}

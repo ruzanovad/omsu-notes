@@ -1,0 +1,112 @@
+\documentclass[a4paper, 12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\newcommand\letsymbol{\mathord{\sqsupset}}
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{lemma}{Лемма}[section]
+\theoremstyle{definition}
+\newtheorem*{example}{Пример}
+\newtheorem*{definition}{Определение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+
+
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\clo}{cl}
+
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+\begin{large}
+\begin{enumerate}
+
+
+    % \item[21] Привести пример непрерывной биекции, не являющейся гомеоморфизмом.
+
+    % Рассмотрим $f: X \to Y$, где $X = \mathbb{R}$ с дискретной топологией и $Y = \mathbb R$ с естественной на числовой прямой топологией.
+    % $f = id$. $f$ -- биекция.
+    
+    \item[61] Решить интегральные уравнения:
+    \[x(t) = \mu \int_0^1 e^{t-s} x(s) ds + t^2, \quad x(t) = \mu \int_0^1 t^m s^n x(s) ds + t^k\]
+    Ядра обоих интегральных уравнений вырождены.
+    \begin{enumerate}
+        \item \[e^{t-s}x(s) = (e^t)(e^{-s}x(s))\]
+        \[x(t) = \mu e^t\int_0^1 e^{-s}x(s) ds + t^2\]
+        Пусть $C = \int_0^1 e^{-s}x(s) ds$. Тогда:
+        \[x(t) = C\mu e^t + t^2\]
+        \[C = \int_0^1 e^{-s} (\mu e^s C+s^2)ds = \mu C + \int_0^1 s^2e^{-s}ds =  \mu C + e - 2\]\
+        \[C = \frac{2-5e^{-1}}{1-\mu}\]
+        \[x(t) = \mu \frac{2-5e^{-1}}{1-\mu} e^t + t^2, \text{при } \mu = 1\text{уравнение неразрешимо.}\]
+    
+        \item \[x(t) = \mu \int_0^1 t^m s^n x(s) ds + t^k\]
+        \[C = \int_0^1 s^n x(s) ds\]
+        \[x(t) = \mu C t^m + t^k\]
+        \[C = \int_0^1 s^n (\mu C s^m + s^k)ds = \mu C \int_0^1 s^{n+m} ds + \int_0^1 s^{k+n} ds  = \frac{\mu C}{n+m+1} + \frac{1}{k+n+1}\]
+        \[C = \frac{n+m+1}{(k+n+1)(n+m+1-\mu)}\]
+        \[x(t) = \frac{\mu(n+m+1)t^m}{(k+n+1)(n+m+1-\mu)} + t^k\]
+        при $\mu = m+n+1$ уравнение неразрешимо.
+    \end{enumerate}
+    \item[62] Решить интегральные уравнения:
+    \[x(t) = \mu \int_0^\pi \cos(t+s) x(s) ds + 2\sin t, \quad x(t) = \int_0^t e^{t-s} x(s) ds + t +1\]
+    \begin{enumerate}
+        \item \[x(t) = \mu \int_0^\pi \cos(t+s) x(s) ds + 2\sin t\]
+        \[\cos(t+s) = \frac{e^{-is-it} + e^{is+it}}{2} = \frac{e^{-is}e^{-it} + e^{is}e^{it}}{2}\]
+        \[x(t) = \frac{\mu}{2} \int_0^\pi e^{-is}e^{-it}x(s)ds + \frac{\mu}{2} \int_0^\pi e^{is}e^{it} x(s) ds + 2\sin t\]
+        \[C_1 = \int_0^\pi e^{-is}x(s)ds, C_2 = \int_0^\pi e^{is} x(s) ds\]
+        \[x(t) = \frac{\mu}{2}C_1 e^{-it} + \frac{\mu}{2} C_2 e^{it} + 2\sin t\]
+        \[\begin{cases}
+            C_1 = \int_0^\pi e^{-is} (\frac{\mu}{2}C_1 e^{-is} + \frac{\mu}{2} C_2 e^{is} + 2\sin s)ds \\
+            C_2 = \int_0^\pi e^{is} (\frac{\mu}{2}C_1 e^{-is} + \frac{\mu}{2} C_2 e^{is} + 2\sin s) ds
+        \end{cases}\]
+        \[\begin{cases}
+            C_1 = \int_0^\pi \frac{\mu}{2}C_1 e^{-2is} + \frac{\mu}{2} C_2 + 2e^{-is} \sin s ds \\
+            C_2 = \int_0^\pi \frac{\mu}{2}C_1 + \frac{\mu}{2} C_2 e^{2is} + 2e^{is} \sin s ds
+        \end{cases}\]
+        \[\begin{cases}
+            C_1 = \frac{\mu}{2} C_2 \pi + \int_0^\pi \frac{\mu}{2}C_1 e^{-2is} + 2e^{-is} \sin s ds \\
+            C_2 = \frac{\mu}{2}C_1 \pi + \int_0^\pi \frac{\mu}{2} C_2 e^{2is} + 2e^{is} \sin s ds
+        \end{cases}\]
+        \[\sin s = i \frac{e^{-i s}- e^{is}}{2}, e^{-is}\sin s = i\frac{e^{-2is}- 1}{2}, e^{is} \sin s = i\frac{1- e^{-2is}}{2}\]
+        \[2\int_0^\pi e^{-is}\sin s ds = -i\pi, 2\int_0^\pi e^{is}\sin s ds = i\pi\]
+        \[\begin{cases}
+            C_1 = \frac{\mu}{2} C_2 \pi -i\pi \\
+            C_2 = \frac{\mu}{2} C_1 \pi +i\pi,
+        \end{cases} C_1 = -\frac{2i\pi}{2 + \mu \pi}, C_2 = \frac{2i\pi}{2 + \mu \pi}\]
+        \[x(t) = -\frac{\mu i\pi}{2 + \mu \pi} e^{-it} + \frac{\mu i\pi}{2 + \mu \pi} e^{it} + 2\sin t = \frac{\mu i\pi}{2 + \mu \pi}2i \sin t + 2\sin t = \frac{4\sin t}{2+\mu \pi}\]
+        \item \[x(t) = \int_0^t e^{t-s} x(s) ds + t +1\]
+            \[x'(t) = \int_0^t e^{t-s} x(s) ds +1 + x(t)\]
+            \[x'(t)- x(t) =x(t) - t\]
+            \[x'(t) - 2x(t) = -t\]
+            \[x(t) = C e^{2t} +\frac{t}{2} + \frac{1}{4}\]
+            Значение константы найдем из начального условия $x(0) = 1$:
+            \[1 = C + \frac{1}{4}\]
+            \[C = \frac{3}{4}\]
+            \[x(t) = \frac{3}{4}e^{2t} +\frac{t}{2} + \frac{1}{4}\]
+    \end{enumerate}
+    \item[63] Сведением к дифференциальному уравнению решить уравнение Вольтерра 1-го рода
+    \[\int_0^t  \cos(t - s) x(s) ds = \sinh t\]
+    \[\cosh t = \int_0^t \sin(t-s)x(s) ds + \cos(0)x(t)\]
+    \[\sinh t = -\int_0^t \cos(t-s)x(s) dx + x'(t)\]
+    \[x'(t) = 2\sinh t\]
+    \[x(t) = 2\cosh t + c\]
+    
+    Начальное условие определяем из $\int_0^0 \sin(0-s) x(s) ds + x(0)= \cosh(0) = 1$ 
+    \[x(0) = 2\cosh(0) + c = 1\]
+    \[c=-1\]
+    \[x(t) = 2\cosh(t) - 1\]
+    
+\end{enumerate}
+        
+\end{large}
+\end{document}
