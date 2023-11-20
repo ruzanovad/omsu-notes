@@ -51,7 +51,7 @@
     \[P\{n=k\}=C_n^k p^k {(1-p)}^{n-k}, \quad M\xi = np, \quad D\xi = np(1-p), \quad \phi(s) = \sum_{m = 0}^{\infty} C_n^m p^m {(1-p)}^{n-m} = {(ps +1-p)}^n,\]
     \[f_\xi (t) = {(pe^{it} +1-p)}^n\]
     \item Геометрическое распределение
-    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{{(1-p)}^2}, \quad \phi(s) = \sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{p}{1-(1-p)s}, \quad f_\xi (t) = \frac{p}{1-(1-p)e^{it}}\]
+    \[P\{n=k\}=(1-p)p^k, \quad M\xi = \frac{p}{1-p}, \quad D\xi = \frac{p}{{(1-p)}^2}, \quad \phi(s) = \sum_{n=1}^{\infty}p^k (1-p) s^n =\frac{1-p}{1-ps}, \quad f_\xi (t) = \frac{1-p}{1-pe^{it}}\]
     \item Распределение Пуассона
     \[P\{n=k\}=\frac{\lambda^k}{k!}e^{-\lambda}, \quad M\xi = \lambda, \quad D\xi = \lambda, \quad \phi(s) = \sum_{n = 0}^{\infty} \frac{\lambda^n s^n}{n!}e^{-\lambda}=e^{\lambda (s-1)}, \quad f_\xi (t) = e^{\lambda (e^{it}-1)}\]
 \end{enumerate} 
@@ -71,7 +71,13 @@
 
 
         гамма распределение & $\displaystyle\left\{{\begin{matrix}x^{{\alpha-1}}{\frac  {e^{{-x\lambda }}}{\lambda ^{-\alpha}\,\Gamma (\alpha)}},&x\geq 0\\0,&x<0\end{matrix}}\right.$ & $\dots$ & $\alpha \lambda^{-1}$ & $\alpha \lambda^{-2}$ & $ (1-it)^{-\alpha} \; \forall \alpha \in \mathbb{Q}$\\
-        
+     
+        показательное распределение со сдвигом & 
+        $\lambda e^{-\lambda (x-b)}, x\ge b$ & $1 - e^{-\lambda (x-b)}$
+        & 
+        $\frac1{\lambda}$&$\frac{1}{\lambda^2}$
+        &
+        $\left(1 - \frac{it}{\lambda}\right)^{-1}\text{ для с.в. без сдвига}$\\
      \hline
     \end{tabular}
     \end{center}
