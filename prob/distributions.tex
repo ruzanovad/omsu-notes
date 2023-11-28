@@ -82,4 +82,27 @@
     \end{tabular}
     \end{center}
     \[\operatorname {erf}\,x={\frac  {2}{{\sqrt  {\pi }}}}\int \limits _{0}^{x}e^{{-t^{2}}}\,{\mathrm  d}t.\]
+Выборочное среднее
+
+\[\bar x = \frac1m \sum_{i=1}^m x_i.\]
+Выборочная дисперсия:
+\[s^2 = s_m^2 = \frac1m \sum_{i=1}^m \left( x_i - \bar x \right)^2\]
+Несмещённая оценка дисперсии:
+\[s^2 = s_m^2 = \frac1{m-1} \sum_{i=1}^m \left( x_i - \bar x \right)^2.\]
+Выборочный момент $k$-го порядка (выборочное среднее — момент первого порядка):
+\[M_k = \frac1m \sum_{i=1}^m x^k_i\]
+Выборочный центральный момент $k$-го порядка (выборочная дисперсия — центральный момент второго порядка):
+\[\overset{\circ}M_k = \frac1m \sum_{i=1}^m \left( x_i - \bar x \right)^k\]
+Несмещённые оценки центральных моментов:
+\[\overset{\bullet}M_2 = \frac{m}{m-1} \overset{\circ}M_2\]
+\[\overset{\bullet}M_3 = \frac{m^2}{(m-1)(m-2)} \overset{\circ}M_3\]
+\[\overset{\bullet}M_4 = \frac{m(m^2-2m+3)\overset{\circ}M_4 + 3m(2m-3)\overset{\circ}M_2^2}{(m-1)(m-2)(m-3)}\].
+Эмпирическая функция распределения:
+\[F_n(t) = \frac{1}{n} \sum_{i=1}^n \mathbf{1}_{X_i \le t}\]
+Младшая
+
+ порядковая статистика, функция распределения:
+\[F_{X_{(1)}}(x) = 1 - {(1 - F(x))}^n\]
+Старшая порядковая статистика, функция распределения:
+\[F_{X_{(n)}}(x) = F^n(x)\]
 \end{document}
