@@ -1,0 +1,171 @@
+{
+  "main": {
+    "id": "230b2ba2e963f92a",
+    "type": "split",
+    "children": [
+      {
+        "id": "8baed7d76da0b2b2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ed77502c35bda3a8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Non-standard analysis/1 лекция.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "db9ef6ef790fcf73",
+    "type": "split",
+    "children": [
+      {
+        "id": "f4a3d366e846963d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3769f2be7df4e05d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabeticalReverse"
+              }
+            }
+          },
+          {
+            "id": "a4d39b23b21d1178",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#Упражнение",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "267f5e8b9b5313b7",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "9b85a5cd528f0bb6",
+    "type": "split",
+    "children": [
+      {
+        "id": "1c1b0664664115ae",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "65dcba1418ef90dd",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Non-standard analysis/1 лекция.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "3f3d138cf77032d7",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Non-standard analysis/1 лекция.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "4eff3eb89a1e19d1",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "4b5c5f211e709e39",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Non-standard analysis/1 лекция.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 281.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "audio-recorder:Start/stop recording": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "ed77502c35bda3a8",
+  "lastOpenFiles": [
+    "Non-standard analysis/Doki-doki literature club.md",
+    "Non-standard analysis/1 лекция.md",
+    "Model Theory/shen-logic-part2-2.pdf",
+    "Model Theory/Лекция 4 (23.11.2023).md",
+    "Model Theory/Лекция 3 (09.11.2023).md",
+    "Model Theory/Лекция 1 (19.10.2023).md",
+    "Model Theory/Recording 20231123172823.webm",
+    "Model Theory/Лекция 2 (26.10.2023).md",
+    "1 лекция][definition][3][(Мощность языка).md",
+    "Model Theory/Список литературы.md",
+    "Recording 20231119221757.webm",
+    "Non-standard analysis",
+    "Untitled.canvas",
+    "2023-11-12.md",
+    "ITldHoJsFlCJ9.djvu",
+    "Pasted image 20231109003801.png",
+    "Model Theory",
+    "223-11-07.md"
+  ]
+}
