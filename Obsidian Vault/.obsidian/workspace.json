@@ -13,13 +13,38 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Non-standard analysis/1 лекция.md",
+                "file": "Model Theory/Лекция 5 (07.12.2023).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "fb247be28ab9ecd9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Урматы/Контрольная по урматам.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "427e0ee6ea44f44d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Machine Learning/Иерархический алгоритм.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,14 +110,14 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Non-standard analysis/1 лекция.md",
+                "file": "Урматы/Контрольная по урматам.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
+                "unlinkedCollapsed": false
               }
             }
           },
@@ -102,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Non-standard analysis/1 лекция.md",
+                "file": "Урматы/Контрольная по урматам.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Non-standard analysis/1 лекция.md"
+                "file": "Урматы/Контрольная по урматам.md"
               }
             }
           }
@@ -134,7 +159,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 281.5
+    "width": 281.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -147,21 +173,29 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ed77502c35bda3a8",
+  "active": "fb247be28ab9ecd9",
   "lastOpenFiles": [
+    "Model Theory/Лекция 5 (07.12.2023).md",
+    "Урматы/Контрольная по урматам.md",
+    "Урматы",
+    "Untitled.canvas",
+    "Machine Learning/Clustering.md",
+    "Machine Learning/Иерархический алгоритм.md",
     "Non-standard analysis/Doki-doki literature club.md",
-    "Non-standard analysis/1 лекция.md",
-    "Model Theory/shen-logic-part2-2.pdf",
     "Model Theory/Лекция 4 (23.11.2023).md",
-    "Model Theory/Лекция 3 (09.11.2023).md",
+    "Лекция 4 (23.11.2023).pdf",
     "Model Theory/Лекция 1 (19.10.2023).md",
+    "Model Theory/Список литературы.md",
+    "Machine Learning/Metrics.md",
+    "Non-standard analysis/1 лекция.md",
+    "Machine Learning",
+    "Model Theory/shen-logic-part2-2.pdf",
+    "Model Theory/Лекция 3 (09.11.2023).md",
     "Model Theory/Recording 20231123172823.webm",
     "Model Theory/Лекция 2 (26.10.2023).md",
     "1 лекция][definition][3][(Мощность языка).md",
-    "Model Theory/Список литературы.md",
     "Recording 20231119221757.webm",
     "Non-standard analysis",
-    "Untitled.canvas",
     "2023-11-12.md",
     "ITldHoJsFlCJ9.djvu",
     "Pasted image 20231109003801.png",

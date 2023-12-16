@@ -30,7 +30,7 @@
       "labelPrefix": "",
       "lineByLine": true,
       "theoremCalloutStyle": "MathWiki",
-      "theoremCalloutFontInherit": false,
+      "theoremCalloutFontInherit": true,
       "beginProof": "\\begin{proof}",
       "endProof": "\\end{proof}",
       "insertSpace": true
