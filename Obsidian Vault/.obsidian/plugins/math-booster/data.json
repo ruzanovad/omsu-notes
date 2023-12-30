@@ -29,7 +29,7 @@
       "eqRefSuffix": "",
       "labelPrefix": "",
       "lineByLine": true,
-      "theoremCalloutStyle": "MathWiki",
+      "theoremCalloutStyle": "Custom",
       "theoremCalloutFontInherit": true,
       "beginProof": "\\begin{proof}",
       "endProof": "\\end{proof}",
@@ -44,7 +44,8 @@
       "profile": "Русский",
       "noteMathLinkFormat": "[type] [number] ([title])",
       "theoremCalloutStyle": "MathWiki"
-    }
+    },
+    "Урматы/Контрольная по урматам.md": {}
   },
   "extraSettings": {
     "noteTitleInLink": true,

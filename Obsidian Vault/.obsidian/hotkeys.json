@@ -1,1 +1,10 @@
-{}
+{
+  "math-booster:insert-theorem-callout": [
+    {
+      "modifiers": [
+        "Alt"
+      ],
+      "key": "A"
+    }
+  ]
+}
