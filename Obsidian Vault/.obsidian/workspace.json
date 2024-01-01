@@ -49,14 +49,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Untitled.md",
+                "file": "Model Theory/Лекция 1 (19.10.2023).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d14ffcef2d9596b2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Кардиналы и ординалы.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -85,7 +97,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "∀",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -122,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Untitled.md",
+                "file": "Кардиналы и ординалы.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Untitled.md",
+                "file": "Кардиналы и ординалы.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Untitled.md"
+                "file": "Кардиналы и ординалы.md"
               }
             }
           }
@@ -171,7 +183,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 281.5
+    "width": 281.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -184,25 +197,30 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "427e0ee6ea44f44d",
+  "active": "d14ffcef2d9596b2",
   "lastOpenFiles": [
-    "Model Theory/Лекция 2 (26.10.2023).md",
+    "Non-standard analysis/Doki-doki literature club.md",
+    "Лекция.md",
     "Model Theory/Лекция 1 (19.10.2023).md",
+    "Model Theory/Синтаксис & семантика.md",
+    "Model Theory/Лекция 2 (26.10.2023).md",
+    "Кардиналы и ординалы.md",
+    "Аксиомы ZFC.md",
+    "Порядки.md",
+    "Untitled.md",
+    "Non-standard analysis/1 лекция.md",
+    "Урматы/Контрольная по урматам.md",
     "Model Theory/Лекция 3 (09.11.2023).md",
     "Model Theory/Лекция 4 (23.11.2023).md",
+    "Machine Learning/Clustering.md",
     "Machine Learning/Иерархический алгоритм.md",
+    "Machine Learning/Metrics.md",
     "Recording 20231230225347.webm",
     "Model Theory/Список литературы.md",
-    "Machine Learning/Clustering.md",
-    "Non-standard analysis/Doki-doki literature club.md",
-    "Untitled.md",
-    "Урматы/Контрольная по урматам.md",
-    "Non-standard analysis/1 лекция.md",
     "Model Theory/Лекция 5 (07.12.2023).md",
     "Урматы",
     "Untitled.canvas",
     "Лекция 4 (23.11.2023).pdf",
-    "Machine Learning/Metrics.md",
     "Machine Learning",
     "Model Theory/shen-logic-part2-2.pdf",
     "Model Theory/Recording 20231123172823.webm",

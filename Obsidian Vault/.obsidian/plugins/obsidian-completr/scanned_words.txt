@@ -107,6 +107,8 @@ Registry
 RIr
 RaVA
 Regular
+Repl
+Reg
 Introduction
 Iq
 IR
@@ -209,6 +211,7 @@ Izm
 IKk
 IxR
 Identity
+Inf
 to
 the
 tP
@@ -650,6 +653,7 @@ all
 aqzOgy
 aik
 aTOrO
+ade
 of
 ou
 oO
@@ -1392,6 +1396,7 @@ Cj
 Csuj
 CGpE
 ClGK
+Choice
 OPUSc
 OpusHead
 OUc
@@ -2379,6 +2384,7 @@ SmD
 SZc
 SAv
 SKG
+Sep
 PR
 PB
 PJ
@@ -2474,6 +2480,8 @@ Pwd
 Pk
 PZB
 PEc
+Pair
+Power
 ZQ
 Zw
 ZW
@@ -3176,6 +3184,7 @@ UUeU
 UqW
 UCl
 UO
+Union
 Wb
 WM
 Wpn
@@ -3915,6 +3924,7 @@ cfr
 cFb
 cAm
 ciRU
+cebc
 NYDP
 NH
 Na
@@ -5009,6 +5019,8 @@ EXGV
 EE
 ERE
 ECS
+Ext
+Empty
 vA
 vo
 vZ
