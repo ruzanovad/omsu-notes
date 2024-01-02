@@ -8,67 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "ed77502c35bda3a8",
+            "id": "1177b6144c0f2c3f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Model Theory/Лекция 5 (07.12.2023).md",
+                "file": "Functional analysis/2 билет.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "fb247be28ab9ecd9",
+            "id": "339d97537342ed25",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Урматы/Контрольная по урматам.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f57ffa4f68c33c7a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Model Theory/Лекция 3 (09.11.2023).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "427e0ee6ea44f44d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Model Theory/Лекция 1 (19.10.2023).md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "d14ffcef2d9596b2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Кардиналы и ординалы.md",
+                "file": "Functional analysis/Bare minimum.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -134,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Кардиналы и ординалы.md",
+                "file": "Functional analysis/Bare minimum.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,9 +115,9 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Кардиналы и ординалы.md",
+                "file": "Functional analysis/Bare minimum.md",
                 "linksCollapsed": false,
-                "unlinkedCollapsed": true
+                "unlinkedCollapsed": false
               }
             }
           },
@@ -174,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Кардиналы и ординалы.md"
+                "file": "Functional analysis/Bare minimum.md"
               }
             }
           }
@@ -183,8 +147,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 281.5,
-    "collapsed": true
+    "width": 281.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -197,29 +160,35 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d14ffcef2d9596b2",
+  "active": "339d97537342ed25",
   "lastOpenFiles": [
+    "Functional analysis/2 билет.md",
+    "Functional analysis/1 билет.md",
+    "Pasted image 20240102224333.png",
+    "Pasted image 20240102222332.png",
+    "Functional analysis/Bare minimum.md",
+    "Sets Theory/Кардиналы и ординалы.md",
+    "Model Theory/Синтаксис & семантика.md",
+    "Model Theory/Список литературы.md",
+    "Sets Theory/Аксиомы ZFC.md",
+    "Functional analysis",
+    "Sets Theory",
+    "Sets Theory/Порядки.md",
+    "Model Theory/Лекция 2 (26.10.2023).md",
+    "Model Theory/Лекция 1 (19.10.2023).md",
+    "Model Theory/Лекция 3 (09.11.2023).md",
+    "Урматы/Контрольная по урматам.md",
+    "Model Theory/Лекция 5 (07.12.2023).md",
+    "Untitled.canvas",
     "Non-standard analysis/Doki-doki literature club.md",
     "Лекция.md",
-    "Model Theory/Лекция 1 (19.10.2023).md",
-    "Model Theory/Синтаксис & семантика.md",
-    "Model Theory/Лекция 2 (26.10.2023).md",
-    "Кардиналы и ординалы.md",
-    "Аксиомы ZFC.md",
-    "Порядки.md",
-    "Untitled.md",
     "Non-standard analysis/1 лекция.md",
-    "Урматы/Контрольная по урматам.md",
-    "Model Theory/Лекция 3 (09.11.2023).md",
     "Model Theory/Лекция 4 (23.11.2023).md",
     "Machine Learning/Clustering.md",
     "Machine Learning/Иерархический алгоритм.md",
     "Machine Learning/Metrics.md",
     "Recording 20231230225347.webm",
-    "Model Theory/Список литературы.md",
-    "Model Theory/Лекция 5 (07.12.2023).md",
     "Урматы",
-    "Untitled.canvas",
     "Лекция 4 (23.11.2023).pdf",
     "Machine Learning",
     "Model Theory/shen-logic-part2-2.pdf",
@@ -228,9 +197,7 @@
     "Recording 20231119221757.webm",
     "Non-standard analysis",
     "2023-11-12.md",
-    "ITldHoJsFlCJ9.djvu",
     "Pasted image 20231109003801.png",
-    "Model Theory",
     "223-11-07.md"
   ]
 }

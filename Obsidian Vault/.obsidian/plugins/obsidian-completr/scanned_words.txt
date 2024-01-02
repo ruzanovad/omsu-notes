@@ -1077,6 +1077,7 @@ forall
 function
 fIq
 fgT
+fcfc
 kS
 kyw
 kn

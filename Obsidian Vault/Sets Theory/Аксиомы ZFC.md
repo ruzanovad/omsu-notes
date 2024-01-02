@@ -34,6 +34,8 @@
 > [!math|{"type":"axiom","number":"auto","setAsNoteMathLink":false,"title":"Power (Аксиома степени)","label":"power--","_index":5}] Аксиома 6 (Power (Аксиома степени)).
 > $$\forall X\; \exists Y\; \forall u (u \in Y \leftrightarrow u \subseteq X)$$
 
+^a996e1
+
 > [!math|{"type":"definition","number":"","setAsNoteMathLink":false,"title":"Индуктивное множество","label":"-","_index":6}] Определение (Индуктивное множество).
 > Рассмотрим условие 
 > $$Ind (x) := \varnothing \in x \wedge \forall u (u \in x \to u \cup \{u\} \in x).$$
@@ -42,23 +44,31 @@
 > [!math|{"type":"axiom","number":"auto","setAsNoteMathLink":false,"title":"Inf (Аксиома бесконечности)","label":"inf--","_index":6}] Аксиома 7 (Inf (Аксиома бесконечности)).
 > $$\exists X\; Ind (X)$$
 
+^082193
+
 > [!math|{"type":"axiom","number":"auto","setAsNoteMathLink":false,"title":"Repl (Схема аксиом подстановки)","label":"repl---","_index":7}] Аксиома 8 (Repl (Схема аксиом подстановки)).
 > $$\forall x \;\forall y_{1} \;\forall y_2 ((\Phi (x, y_{1}) \wedge \Phi (x, y_2)) \to y_{1} = y_{2}) \to \forall X \;\exists Y \;\forall y (y \in Y \leftrightarrow \exists x (x \in X \wedge \Phi (x, y)))$$
+
+^4897a4
 
 > [!math|{"type":"axiom","number":"auto","setAsNoteMathLink":false,"title":"Reg (Аксиома регулярности)","label":"reg--","_index":8}] Аксиома 9 (Reg (Аксиома регулярности)).
 > $$\forall X (X \neq \varnothing \to \exists u (u \in X \wedge X \cap u = \varnothing))$$
 
+^79a842
+
 > [!math|{"type":"axiom","number":"auto","setAsNoteMathLink":false,"title":"Choice (Аксиома выбора)","label":"choice--","_index":9}] Аксиома 10 (Choice (Аксиома выбора)).
 > $$\forall X (\varnothing \notin X\to \exists f (f: X\to \bigcup X \wedge \forall u \in X (f(u)\in u)))$$
+
+^f0901a
 
 | [Ext](#^5e626d) | Множество определяется своими элементами |
 | ---- | ---- |
 | [Empty](#^ee2ade) | Гарантирует существование пустого множества |
-| [Pair](#^b44a84) | Способ получать новые множества из двух имеющихся |
+| [Pair](#^b44a84) | Eсли имеются X и Y , то можно получить Z, содержащее в точности X и Y . Полученное Z обозначают через {X, Y} и называют неупорядоченной парой X и Y . |
 | [Sep](#^1214de) | Выделение нового множества с каким-то свойством |
 | [Union](#^e9971e) | Объединение существует |
-| Power | Булеан существует |
-| Inf | Гарантирует существование индуктивного (а заодно и бесконечного) множества |
-| Repl | В любом непустом семействе множеств a есть множество b, каждый элемент c которого не принадлежит данному семейству a. |
-| Reg | Структура универса всех множеств |
-| Choice | Камень преткновения |
+| [[#^a996e1\|Power]]  | Булеан существует |
+| [[#^082193\|Inf]]  | Гарантирует существование индуктивного (а заодно и бесконечного) множества |
+| [[#^4897a4\|Repl]]  | В любом непустом семействе множеств a есть множество b, каждый элемент c которого не принадлежит данному семейству a. |
+| [[#^79a842\|Reg]]  | Структура универса всех множеств |
+| [[#^f0901a\|Choice]] | Камень преткновения |
