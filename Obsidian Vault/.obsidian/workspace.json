@@ -8,31 +8,26 @@
         "type": "tabs",
         "children": [
           {
-            "id": "1177b6144c0f2c3f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Functional analysis/2 билет.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "339d97537342ed25",
             "type": "leaf",
             "state": {
+              "type": "graph",
+              "state": {}
+            }
+          },
+          {
+            "id": "c1991a646a2a15f9",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "Functional analysis/Bare minimum.md",
+                "file": "Functional analysis/Vector spaces.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -98,7 +93,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Functional analysis/Bare minimum.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,9 +109,8 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Functional analysis/Bare minimum.md",
                 "linksCollapsed": false,
-                "unlinkedCollapsed": false
+                "unlinkedCollapsed": true
               }
             }
           },
@@ -137,17 +130,16 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Functional analysis/Bare minimum.md"
-              }
+              "state": {}
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 281.5
+    "width": 281.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -162,11 +154,27 @@
   },
   "active": "339d97537342ed25",
   "lastOpenFiles": [
+    "Functional analysis/Thoughts.md",
+    "Functional analysis/Untitled.canvas",
+    "Functional analysis/Bare minimum.md",
+    "Functional analysis/List of theorems from the book.md",
+    "Functional analysis/metric spaces.md",
+    "Functional analysis/Vector spaces.md",
     "Functional analysis/2 билет.md",
+    "Functional analysis/Интегральные уравнения.md",
+    "Functional analysis/3 билет.md",
     "Functional analysis/1 билет.md",
+    "Pasted image 20240105193001.png",
+    "Pasted image 20240105193019.png",
+    "Pasted image 20240103195729.png",
     "Pasted image 20240102224333.png",
     "Pasted image 20240102222332.png",
-    "Functional analysis/Bare minimum.md",
+    "Functional analysis/Задачи/Резольвента.md",
+    "Functional analysis/Задачи/Непрерывность.md",
+    "Functional analysis/Задачи/Спектр.md",
+    "Functional analysis/Задачи",
+    "Functional analysis/Thoughts.canvas",
+    "Pasted image 20240103195619.png",
     "Sets Theory/Кардиналы и ординалы.md",
     "Model Theory/Синтаксис & семантика.md",
     "Model Theory/Список литературы.md",
@@ -179,25 +187,16 @@
     "Model Theory/Лекция 3 (09.11.2023).md",
     "Урматы/Контрольная по урматам.md",
     "Model Theory/Лекция 5 (07.12.2023).md",
-    "Untitled.canvas",
     "Non-standard analysis/Doki-doki literature club.md",
     "Лекция.md",
     "Non-standard analysis/1 лекция.md",
-    "Model Theory/Лекция 4 (23.11.2023).md",
-    "Machine Learning/Clustering.md",
-    "Machine Learning/Иерархический алгоритм.md",
-    "Machine Learning/Metrics.md",
     "Recording 20231230225347.webm",
     "Урматы",
     "Лекция 4 (23.11.2023).pdf",
     "Machine Learning",
     "Model Theory/shen-logic-part2-2.pdf",
     "Model Theory/Recording 20231123172823.webm",
-    "1 лекция][definition][3][(Мощность языка).md",
     "Recording 20231119221757.webm",
-    "Non-standard analysis",
-    "2023-11-12.md",
-    "Pasted image 20231109003801.png",
-    "223-11-07.md"
+    "Pasted image 20231109003801.png"
   ]
 }
