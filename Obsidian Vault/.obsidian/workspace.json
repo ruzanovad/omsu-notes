@@ -4,30 +4,59 @@
     "type": "split",
     "children": [
       {
-        "id": "8baed7d76da0b2b2",
+        "id": "950472ccba051d82",
         "type": "tabs",
         "children": [
           {
-            "id": "339d97537342ed25",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {}
-            }
-          },
-          {
-            "id": "c1991a646a2a15f9",
+            "id": "4461ffa0a81c00dc",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Functional analysis/Vector spaces.md",
+                "file": "Game Theory and Operations' Research/Задача коммивояжера. Метод ветвей и границ.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "19de021247c325ad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Game Theory and Operations' Research/Bare minimum.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "bed9da27d7fb33d2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Game Theory and Operations' Research/Сетевое планирование и управление.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "15636bed57ad881b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Game Theory and Operations' Research/Сетевое планирование и управление.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -56,7 +85,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "∀",
+                "query": "противоречиво",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -93,6 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Game Theory and Operations' Research/Bare minimum.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -109,6 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Game Theory and Operations' Research/Bare minimum.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -130,11 +161,13 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "Game Theory and Operations' Research/Bare minimum.md"
+              }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -145,58 +178,60 @@
     "hiddenItems": {
       "audio-recorder:Start/stop recording": false,
       "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
       "canvas:Create new canvas": false,
+      "graph:Open graph view": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false
     }
   },
-  "active": "339d97537342ed25",
+  "active": "19de021247c325ad",
   "lastOpenFiles": [
+    "Game Theory and Operations' Research/Антагонистические игры.md",
+    "Game Theory and Operations' Research/Bare minimum.md",
+    "Game Theory and Operations' Research/Задача коммивояжера. Метод ветвей и границ.md",
+    "Game Theory and Operations' Research/Динамическое программирование.md",
+    "Game Theory and Operations' Research/Задача о спросе и предложении.md",
+    "Game Theory and Operations' Research/Транспортная задача.md",
+    "Game Theory and Operations' Research/Сетевое планирование и управление.md",
+    "Game Theory and Operations' Research/Потоки в сетях.md",
+    "Game Theory and Operations' Research/Модель Леонтьева.md",
+    "Functional analysis/Topological vector spaces.md",
     "Functional analysis/Thoughts.md",
-    "Functional analysis/Untitled.canvas",
-    "Functional analysis/Bare minimum.md",
     "Functional analysis/List of theorems from the book.md",
-    "Functional analysis/metric spaces.md",
-    "Functional analysis/Vector spaces.md",
-    "Functional analysis/2 билет.md",
-    "Functional analysis/Интегральные уравнения.md",
-    "Functional analysis/3 билет.md",
-    "Functional analysis/1 билет.md",
-    "Pasted image 20240105193001.png",
     "Pasted image 20240105193019.png",
+    "Pasted image 20240113204319.png",
+    "Model Theory/Лекция 4 (23.11.2023).md",
+    "Model Theory/Синтаксис & семантика.md",
+    "Game Theory and Operations' Research",
+    "Functional analysis/Untitled.canvas",
+    "Functional analysis/metric spaces.md",
+    "Functional analysis/Compactness.md",
+    "Functional analysis/Named theorems.md",
+    "Functional analysis/Задачи/Спектр.md",
+    "Functional analysis/Задачи/Резольвента.md",
+    "Functional analysis/Calculus Inequations.md",
+    "Functional analysis/Bare minimum.md",
+    "Functional analysis/Hilbert spaces.md",
+    "Functional analysis/TOPological spaces.md",
+    "Functional analysis/Important spaces.md",
+    "Functional analysis/Интегральные уравнения.md",
+    "Functional analysis/normed spaces.md",
+    "Pasted image 20240105193001.png",
     "Pasted image 20240103195729.png",
     "Pasted image 20240102224333.png",
     "Pasted image 20240102222332.png",
-    "Functional analysis/Задачи/Резольвента.md",
-    "Functional analysis/Задачи/Непрерывность.md",
-    "Functional analysis/Задачи/Спектр.md",
     "Functional analysis/Задачи",
     "Functional analysis/Thoughts.canvas",
     "Pasted image 20240103195619.png",
-    "Sets Theory/Кардиналы и ординалы.md",
-    "Model Theory/Синтаксис & семантика.md",
-    "Model Theory/Список литературы.md",
-    "Sets Theory/Аксиомы ZFC.md",
     "Functional analysis",
     "Sets Theory",
-    "Sets Theory/Порядки.md",
-    "Model Theory/Лекция 2 (26.10.2023).md",
-    "Model Theory/Лекция 1 (19.10.2023).md",
-    "Model Theory/Лекция 3 (09.11.2023).md",
-    "Урматы/Контрольная по урматам.md",
-    "Model Theory/Лекция 5 (07.12.2023).md",
-    "Non-standard analysis/Doki-doki literature club.md",
-    "Лекция.md",
-    "Non-standard analysis/1 лекция.md",
     "Recording 20231230225347.webm",
     "Урматы",
     "Лекция 4 (23.11.2023).pdf",
     "Machine Learning",
     "Model Theory/shen-logic-part2-2.pdf",
     "Model Theory/Recording 20231123172823.webm",
-    "Recording 20231119221757.webm",
     "Pasted image 20231109003801.png"
   ]
 }

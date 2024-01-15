@@ -5,5 +5,8 @@
     "landscape": false,
     "margin": "0",
     "downscalePercent": 48
-  }
+  },
+  "showLineNumber": true,
+  "readableLineLength": false,
+  "alwaysUpdateLinks": true
 }

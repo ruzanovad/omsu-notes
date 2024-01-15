@@ -1,6 +1,7 @@
 {
   "accentColor": "",
-  "theme": "obsidian",
-  "baseFontSize": 19,
-  "cssTheme": "Prism"
+  "theme": "moonstone",
+  "baseFontSize": 21,
+  "cssTheme": "Typomagical",
+  "enabledCssSnippets": []
 }

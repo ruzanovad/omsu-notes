@@ -2,7 +2,7 @@
 > Пусть $X$ - топологическое пространство. Тогда
 > 1) для любого множества $A\subset X \quad \DeclareMathOperator{Int}{int} \Int A \subset A \subset\DeclareMathOperator{cl}{cl} \cl A$
 > 2) если $A\subset B \subset X$, то
-> $$\Int A \subset \int B \quad \cl A \subset \cl B$$
+> $$\Int A \subset \Int B \quad \cl A \subset \cl B$$
 > 3) $$\Int A = \bigcup \{V\in \DeclareMathOperator{op}{Op} \op X:\;V\subset A \}$$
 > 4) $$\cl A = \bigcap \{V\in \DeclareMathOperator{Cl}{Cl} \Cl X:\;V\supset A \}$$
 > 5) $\forall A, B\in X$
@@ -20,7 +20,7 @@
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"о единственности предела","label":"--","_index":1}] Теорема 2 (о единственности предела).
 > В хаусдорфовом топологическом пространстве каждая сходящаяся последовательность имеет единственный предел.
 
-[[Bare minimum#^a219d8]] 
+[[Functional analysis/Bare minimum#^a219d8]] 
 
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"о свойствах бикомпактных множеств","label":"---","_index":2}] Теорема 3 (о свойствах бикомпактных множеств).
 > В каждом топологическом пространстве справедливы следующие утверждения:
@@ -38,6 +38,8 @@
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"критерий замкнутости","label":"-","_index":5}] Теорема 6 (критерий замкнутости).
 > Подмножество полуметрического пространства замкнуто тогда и только тогда, когда оно содержит предел каждой своей сходящейся последовательности
 
+^9d5f0a
+
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"принцип вложенных шаров","label":"--","_index":6}] Теорема 7 (принцип вложенных шаров).
 
 > [!math|{"type":"corollary","number":"auto","setAsNoteMathLink":false,"title":"","label":"","_index":7}] Следствие 8.
@@ -54,19 +56,29 @@
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"Бэр","label":"","_index":9}] Теорема 10 (Бэр).
 > Полное полуметрическое пространство является бэровским.
 
-[[Bare minimum#^84172f]] 
+^4f044a
 
-[[Bare minimum#^a9f449]] 
+[[Functional analysis/Bare minimum#^84172f]] 
 
-[[Bare minimum#^c7ee59]] 
+[[Functional analysis/Bare minimum#^a9f449]] 
 
-[[Bare minimum#^a229a9]] 
+[[Functional analysis/Bare minimum#^c7ee59]] 
+
+[[Functional analysis/Bare minimum#^a229a9]] 
 
 
 ![[Pasted image 20240105193001.png]]
 ![[Pasted image 20240105193019.png]]
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"о наилучшем приближении в ГП","label":"----","_index":10}] Теорема 11 (о наилучшем приближении в ГП).
 > Пусть E - замкнутое [[Vector spaces#^5d7adc|выпуклое]] подмножество гильбертова пространства H. Тогда для любого $x\in H$ существует, и притом единственный, вектор $y\in E$ такое, что $$||x-y|| = dist(x, E)$$
+
+
+> [!danger] доказательство
+> - рассмотрим последовательность расстояний между $y_n \in E$ и x
+> - докажем что это последовательность Коши
+> - тождество параллелограмма
+> 
+
 
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"о проекции","label":"-","_index":11}] Теорема 12 (о проекции).
 > Пусть H - гильбертово пространство и E - его замкнутое подпространство. Тогда для любого вектора $x\in H$ существует единственный вектор $y\in E$ такой, что $x-y\perp E$.
@@ -75,18 +87,21 @@
 > Пусть H - гильбертово пространство, $\{e_{n}| n\in \mathbb N\}$ - ортонормированная система в H, $x\in H$ и $c_{n}:=(x, e_{n})(n\in \mathbb{N})$. Тогда:
 > 1) ряд $\sum\limits_{n=1}^{\infty}{|c_n|}^2$ сходится и выполняется неравенство Бесселя
 >    $$\sum\limits_{n=1}^{\infty}{|c_{n|}^{2}\leqslant}||x||^{2}$$
->  2) ряд Фурье вектора х сходится в H
+>  2) [[Hilbert spaces#^f55d5d|ряд Фурье]] вектора х сходится в H
 >  3) сумма ряда Фурье является ортогональной проекцией х на множество $\cl (span \{e_{n}| n\in \mathbb{N}\})$
 >  4) $\sum\limits_{n=1}^{\infty}c_{n}e_{n} = x$ тогда и только тогда, когда выполнено равенство Парсеваля-Стеклова:$$\sum\limits_{n=1}^{\infty}{{|c_n|}}^{2}=||x||^2$$
 
+^2279f5
+
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"об эквивалентности норм","label":"--","_index":13}] Теорема 14 (об эквивалентности норм).
-> Если две сравнимые нормы на векторном пространстве превращают его в банаховы пространства, то эти нормы эквивалентны.
+> Если две сравнимые [[Functional analysis/Bare minimum#^b93312|нормы]] на векторном пространстве превращают его в банаховы пространства, то эти нормы эквивалентны.
 
-[[Bare minimum#^e420d7]] 
+[[Functional analysis/Bare minimum#^e420d7]] 
 
-[[Bare minimum#^20fd36]] 
 
-[[Bare minimum#^71493e]] 
+[[Functional analysis/Bare minimum#^20fd36]] 
+
+[[Functional analysis/Bare minimum#^71493e]] 
 
 > [!math|{"type":"theorem","number":"auto","setAsNoteMathLink":false,"title":"о ряде Неймана","label":"--","_index":14}] Теорема 15 (о ряде Неймана).
 > Пусть $X$ - банахово пространство и непрерывный линейный оператор $A\in L(X)$ таков, что $||A||<1$. Тогда оператор $I_X-A$ непрерывно обратим и $$(I_{X}-A)^{-1}= \sum\limits_{k=0}^{\infty}A^{k},$$

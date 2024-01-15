@@ -5,18 +5,33 @@
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
-  "collapse-color-groups": false,
-  "colorGroups": [],
+  "collapse-color-groups": true,
+  "colorGroups": [
+    {
+      "query": "path:\"Functional analysis\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 14701138
+      }
+    },
+    {
+      "query": "path:\"Game Theory and Operations' Research\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 14069084
+      }
+    }
+  ],
   "collapse-display": false,
   "showArrow": true,
   "textFadeMultiplier": -0.3,
   "nodeSizeMultiplier": 1.1240022172949,
   "lineSizeMultiplier": 1.84107538802661,
   "collapse-forces": false,
-  "centerStrength": 0.452882483370288,
-  "repelStrength": 9.32372505543237,
+  "centerStrength": 0.524428274428274,
+  "repelStrength": 11.2370062370062,
   "linkStrength": 1,
-  "linkDistance": 191,
-  "scale": 0.46110087477453326,
-  "close": false
+  "linkDistance": 148,
+  "scale": 0.44409504039292197,
+  "close": true
 }
