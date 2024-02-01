@@ -1,6 +1,6 @@
 import fractions
 import igraph
-
+import itertools
 
 def is_graph_three_colorable(graph):
     num_vertices = len(graph)
@@ -70,6 +70,10 @@ def generate_matrices_helper(matrix, row, matrices):
         # Reset the value for backtracking
         matrix[row][col] = 0
 
+def powerset(iterable):
+    "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
+    s = list(iterable)
+    return itertools.chain.from_iterable(itertools.combinations(s, r) for r in range(len(s)+1))
 
 def return_str_repr(lst):
     s = []
@@ -77,15 +81,20 @@ def return_str_repr(lst):
         s.append(''.join(map(str, i)))
     return '\n'.join(s)
 # Example usage:
-for n in range(8, 9):
+for n in range(5, 8):
     count = 0
     adjacency_matrices = generate_adjacency_matrices(n)
-    lst = set(list (map(return_str_repr, adjacency_matrices)))
-    assert len(lst) == 2**(n*(n-1)/2)
-
+    # lst = set(list (map(return_str_repr, adjacency_matrices)))
+    # assert len(lst) == 2**(n*(n-1)/2)
+    cliques = list(itertools.combinations(range(n), 4))
+    print(cliques)
     # igraph.Graph.to_undirected()
     dictionary = {}
+    clicli = {c+1 : 0 for c in range(len(cliques))}
     edgelist_dict = {}
+    test = 0
+    dic = {}
+    # m = {tuple(c) for c in cliques}
     for index, matrix in enumerate(adjacency_matrices):
         # print(*[' '.join(map(str, i)) for i in matrix])
         graph = igraph.Graph.Adjacency(matrix)
@@ -98,46 +107,76 @@ for n in range(8, 9):
         # axs[1].bar(x=[0, 1, 2], height=[1, 5, 3], color='tomato')
         # igraph.Graph.get_edgelist().__len__()
         # print(graph.)
-        components = graph.decompose()
-        for i in components:
-            if len(i.vs) == 4:
-                l = graph.cliques(min=4, max=4)
-                if len(l) > 0:
-                    count+=1
-                    if (graph.get_edgelist().__len__() in edgelist_dict.keys()):
-                        edgelist_dict[graph.get_edgelist().__len__()]+=1
-                    else :
-                        edgelist_dict[graph.get_edgelist().__len__()] = 1
-                    igraph.plot(graph, layout='circle', target='%d_%d_cli_%d.png' % (n, graph.get_edgelist().__len__(), index))
+        # components = graph.decompose()
+        # for i in components:
+        #     if len(i.vs) == 4:
+        #         l = graph.cliques(min=4, max=4)
+        #         if len(l) > 0:
+        #             count+=1
+        #             if (graph.get_edgelist().__len__() in edgelist_dict.keys()):
+        #                 edgelist_dict[graph.get_edgelist().__len__()]+=1
+        #             else :
+        #                 edgelist_dict[graph.get_edgelist().__len__()] = 1
+        #             # igraph.plot(graph, layout='circle', target='%d_%d_cli_%d.png' % (n, graph.get_edgelist().__len__(), index))
+        #
+        #             break
+        diff = []
+        for ind, cli in enumerate(cliques):
+            if matrix[cli[0]][cli[1]] == 1 and matrix[cli[0]][cli[2]] == 1 and matrix[cli[0]][cli[3]] == 1 and \
+                matrix[cli[1]][cli[2]] == 1 and matrix[cli[1]][cli[3]] == 1 and \
+                matrix[cli[2]][cli[3]] == 1:
+                diff.append(str(ind))
 
-                    break
+        # if (test)
+
+        if len(diff) != 0:
+            inx = [int (i) for i in diff]
+            for indxxx in powerset(inx):
+                indxxxx = tuple(indxxx)
+                if indxxxx not in dic.keys():
+                    dic[indxxxx] = 1
+                else:
+                    dic[indxxxx] +=1
+            clicli[len(diff)] += 1
+            count += 1
+            if (graph.get_edgelist().__len__() in edgelist_dict.keys()):
+                edgelist_dict[graph.get_edgelist().__len__()]+=1
+            else :
+                edgelist_dict[graph.get_edgelist().__len__()] = 1
+            # igraph.plot(graph, layout='circle', target='(%s)_clique_%d_%d(%d).png' % (','.join(diff), index, graph.get_edgelist().__len__(), n))
+
         # l = graph.cliques(min=4, max=4)
         # if len(l) > 0:
+        #
+        #
         #     # print(*l)
         #     count += 1
         #     if (graph.get_edgelist().__len__() in edgelist_dict.keys()):
         #         edgelist_dict[graph.get_edgelist().__len__()]+=1
         #     else :
         #         edgelist_dict[graph.get_edgelist().__len__()] = 1
-        #     # if graph.get_edgelist().__len__() not in dictionary.keys():
-        #     #     dictionary[graph.get_edgelist().__len__()] = [graph]
-        #     # else:
-        #     #     flag = False
-        #     #     for grp in dictionary[graph.get_edgelist().__len__()]:
-        #     #         flag = graph.isomorphic(grp)
-        #     #         if flag:
-        #     #             break
-        #     #     if not flag:
-        #     #         dictionary[graph.get_edgelist().__len__()].append(graph)
+        #     if graph.get_edgelist().__len__() not in dictionary.keys():
+        #         dictionary[graph.get_edgelist().__len__()] = [graph]
+        #     else:
+        #         flag = False
+        #         for grp in dictionary[graph.get_edgelist().__len__()]:
+        #             flag = graph.isomorphic(grp)
+        #             if flag:
+        #                 break
+        #         if not flag:
+        #             dictionary[graph.get_edgelist().__len__()].append(graph)
         #     # fig, ax = plt.subplots()
         #     igraph.plot(graph, layout='circle', target='%d_clique_%d.png' % (graph.get_edgelist().__len__(), index))
-        #
+
             # plt.show()
             # print(matrix)
     # for val in dictionary.values():
     #     for index, value in enumerate(val):
     #         igraph.plot(value, layout='circle', target='%d_clique_%d.png' % (value.get_edgelist().__len__(), index))
+
     print(count, 2 ** (n * (n - 1) // 2), count / 2 ** (n * (n - 1) // 2),
           fractions.Fraction(count, 2 ** (n * (n - 1) // 2)))
     print(edgelist_dict)
+    print(clicli)
+    print(dic)
     
