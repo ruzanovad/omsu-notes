@@ -13,9 +13,21 @@ void LU(){
 // генерация матрицы
 // Ax = f
 //x - приближенное решение
+// (1.01, -1, 1)
+
+
+
 
 int method(double ** A, double ** f, double ** x, int n){
+    return 1;
+}
 
+double norm(double * x, int n){
+    double ret = 0;
+    for (int i = 0; i < n; ++i){
+        ret = max(ret, abs(x[i]));
+    }
+    return ret;
 }
 
 int main(){
@@ -100,12 +112,19 @@ int main(){
         xcopy[i] = new double[1];
         xcopy[i][0] = x[i][0];
     }
+    x[0][0] += 0.01;
 
     for(int i = 0; i < n; ++i){
         for (int k = 0; k < 1; ++k)
             cout << xcopy[i][k] << " ";
         cout << endl;
     }
+
+
+
+    cout << "method:" << method(mat, f, xcopy, n) << endl;
+
+    cout << "norm:" <<
 
     for (int i = 0; i < n; ++i){
         delete[] mat[i];
