@@ -41,7 +41,7 @@ public:
 
     unsigned getRows() const;
     unsigned getCols() const;
-
+    void print() const;
     double& operator()(const unsigned &, const unsigned &);
 
 };

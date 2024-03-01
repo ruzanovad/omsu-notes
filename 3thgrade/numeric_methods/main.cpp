@@ -4,8 +4,109 @@
 
 #include <iostream>
 //#include "matrix.h"
+#include <vector>
+#include <algorithm>
+#include <cmath>
+#include <cassert>
+
 using namespace std;
-void LU(){
+
+void printMatrix(const vector<vector<double>> &matrix) {
+    for (const auto &row: matrix) {
+        for (auto elem: row) {
+            cout << elem << " ";
+        }
+        cout << endl;
+    }
+}
+
+void printVector(const vector<double> &vector) {
+
+    for (auto elem: vector) {
+        cout << elem << " ";
+
+        cout << endl;
+    }
+}
+
+vector<double> LU(const vector<vector<double>> &A, const vector<double> &f) {
+/*    Partial pivoting improves the numerical stability of the LU decomposition by selecting
+    the largest element in the column (in absolute value) as the pivot element*/
+    size_t n = A.size();
+
+    // L is identity, U is copy of A
+    vector<vector<double>> L(n, vector<double>(n, 0)), U(A);
+    auto x = vector<double>(n, 0);
+
+
+    // pivot matrix
+    vector<int> P(n);
+    for (int i = 0; i < n; i++) {
+        P[i] = i;
+        L[i][i] = 1;
+    }
+
+    {
+
+    }
+    for (int i = 0; i < n; i++) {
+        // Partial Pivoting
+        double max = U[P[i]][i];
+        int maxIndex = i;
+        // max element in i column (U becomes upper-diagonal)
+        for (int k = i; k < n; k++) {
+            if (fabs(U[P[k]][i]) > max) {
+                max = fabs(U[P[k]][i]);
+                maxIndex = k;
+            }
+        }
+
+        std::swap(P[i], P[maxIndex]);
+
+        // Decomposition into L and U
+        for (int j = i + 1; j < n; j++) {
+            L[P[j]][i] = U[P[j]][i] / U[P[i]][i];
+            for (int k = i; k < n; k++) {
+                U[P[j]][k] -= L[P[j]][i] * U[P[i]][k];
+            }
+        }
+    }
+    for (int i = 0; i < n; ++i) L[i][i] = 1.0;
+//    printMatrix(L);
+
+    for (int i = 0; i < n ; ++i){
+        for(int j = 0; j < n; ++j){
+            cout << L[P[i]][j] << " ";
+        }
+        cout << endl;
+    }
+    for (int i = 0; i < n ; ++i){
+        for(int j = 0; j < n; ++j){
+            cout << U[P[i]][j] << " ";
+        }
+        cout << endl;
+    }
+
+//    printMatrix(U);
+    auto y = vector<double>(n, 0.0);
+    for (int i = 0; i < n; ++i) {
+        y[i] = f[P[i]];
+        for (int j = 0; j < i; ++j) {
+            y[i] -= L[P[i]][j] * y[j];
+        }
+        y[i] /= L[P[i]][i];
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        x[i] = y[i];
+        for (int j = i + 1; j < n; j++) {
+            x[i] -= U[P[i]][j] * x[j];
+        }
+        x[i] /= U[P[i]][i];
+    }
+
+
+    return x;
 
 }
 // (1, -1, 1) => (2, 1, 1) (свободный столбец)
@@ -16,133 +117,29 @@ void LU(){
 // (1.01, -1, 1)
 
 
-
-
-int method(double ** A, double ** f, double ** x, int n){
+int method(double **A, double **f, double **x, int n) {
     return 1;
 }
 
-double norm(double * x, int n){
+double norm(double *x, int n) {
     double ret = 0;
-    for (int i = 0; i < n; ++i){
+    for (int i = 0; i < n; ++i) {
         ret = max(ret, abs(x[i]));
     }
     return ret;
 }
 
-int main(){
-    int n = 3;
-    double ** mat = new double * [n];
-    for (int i = 0; i < n; ++i){
-        mat[i] = new double[n];
-
+int main() {
+    {
+        vector<vector<double>> A = {
+                {2,  -1, -2},
+                {-4, 6,  3},
+                {-4, -2, 8}
+        };
+        vector<double> b = {-8, -11, -3};
+        vector<double> expected_x = {2, -1, -2};
+        printVector(expected_x);
+        printVector(LU(A, b));
+        assert(expected_x == LU(A, b));
     }
-    int j = 0;
-    for(auto& x: {1, 2, 1}){
-        mat[0][j] = x;
-        j++;
-    }
-    j = 0;
-    for(auto& x: {2, 2, 1}){
-        mat[1][j] = x;
-        j++;
-    }
-    j = 0;
-    for(auto& x: {1, 1, 1}){
-        mat[2][j] = x;
-        j++;
-    }
-    for(int i = 0; i < n; ++i){
-        for (int k = 0; k < n; ++k)
-            cout << mat[i][k] << " ";
-        cout << endl;
-    }
-
-
-    double ** x = new double * [n];
-    for (int i = 0; i < n; ++i){
-        x[i] = new double[1];
-
-    }
-    x[0][0] = 1;
-    x[1][0] = -1;
-    x[2][0] = 1;
-
-    for(int i = 0; i < n; ++i){
-        for (int k = 0; k < 1; ++k)
-            cout << x[i][k] << " ";
-        cout << endl;
-    }
-
-    double ** f = new double *[n];
-    for (int i = 0; i < n; ++i){
-        f[i] = new double[1];
-
-    }
-
-    f[0][0] = 2;
-    f[1][0] = 1;
-    f[2][0] = 1;
-
-    for(int i = 0; i < n; ++i){
-        for (int k = 0; k < 1; ++k)
-            cout << f[i][k] << " ";
-        cout << endl;
-    }
-
-    double ** copy = new double * [n];
-    for (int i = 0; i < n; ++i){
-        copy[i] = new double[n];
-
-    }
-    for (int i = 0; i < n; ++i){
-        for (int k = 0; k < n; ++k){
-            copy[i][k] = mat[i][k];
-        }
-    }
-
-    for(int i = 0; i < n; ++i){
-        for (int k = 0; k < n; ++k)
-            cout << copy[i][k] << " ";
-        cout << endl;
-    }
-
-    double ** xcopy = new double * [n];
-    for (int i = 0; i < n; ++i){
-        xcopy[i] = new double[1];
-        xcopy[i][0] = x[i][0];
-    }
-    x[0][0] += 0.01;
-
-    for(int i = 0; i < n; ++i){
-        for (int k = 0; k < 1; ++k)
-            cout << xcopy[i][k] << " ";
-        cout << endl;
-    }
-
-
-
-    cout << "method:" << method(mat, f, xcopy, n) << endl;
-
-    cout << "norm:" <<
-
-    for (int i = 0; i < n; ++i){
-        delete[] mat[i];
-    }
-    delete[] mat;
-
-    for (int i = 0; i < n; ++i){
-        delete[] x[i];
-    }
-    delete[] x;
-
-    for (int i = 0; i < n; ++i){
-        delete[] copy[i];
-    }
-    delete[] copy;
-
-    for (int i = 0; i < n; ++i){
-        delete[] xcopy[i];
-    }
-    delete[] xcopy;
 }

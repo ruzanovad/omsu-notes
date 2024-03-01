@@ -234,7 +234,6 @@ Matrix Matrix::transpose()
     return Transpose;
 }
 
-// Prints the matrix beautifully
 void Matrix::print() const
 {
     cout << "Matrix: " << endl;
