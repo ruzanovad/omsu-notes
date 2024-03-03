@@ -1,0 +1,197 @@
+\documentclass[c]{beamer}
+
+\usetheme{Singapore}
+\usecolortheme{rose}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{iftex}
+\ifPDFTeX
+  % PDFLaTeX or LaTeX 
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \DeclareUnicodeCharacter{00B5}{\ensuremath{\mu}}
+\else
+  %  XeLaTeX or LuaLaTeX
+  \usepackage{fontspec}
+\fi
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{color}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{grffile}
+\usepackage{ifthen}
+\usepackage{amsfonts}
+\newsavebox{\picturebox}
+\newlength{\pictureboxwidth}
+\newlength{\pictureboxheight}
+\newcommand{\includeimage}[1]{
+    \savebox{\picturebox}{\includegraphics{#1}}
+    \settoheight{\pictureboxheight}{\usebox{\picturebox}}
+    \settowidth{\pictureboxwidth}{\usebox{\picturebox}}
+    \ifthenelse{\lengthtest{\pictureboxwidth > .95\linewidth}}
+    {
+        \includegraphics[width=.95\linewidth,height=.80\textheight,keepaspectratio]{#1}
+    }
+    {
+        \ifthenelse{\lengthtest{\pictureboxheight>.80\textheight}}
+        {
+            \includegraphics[width=.95\linewidth,height=.80\textheight,keepaspectratio]{#1}
+            
+        }
+        {
+            \includegraphics{#1}
+        }
+    }
+}
+\newlength{\thislabelwidth}
+\DeclareMathOperator{\abs}{abs}
+
+\definecolor{labelcolor}{RGB}{100,0,0}
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm} 
+\usepackage{titlesec}
+
+\titleformat{\section}{\filcenter\normalfont\Large\bfseries}{\thesection.}{0.2em}{}
+% \setlength{\oddsidemargin}{0 in}
+% \textwidth 160mm
+% \textheight 220mm
+
+
+\title{Лабораторная работа}
+\subtitle{Исследование автономных систем\\
+дифференциальных уравнений}
+\author{Рузанова Д.П.}
+\date{\today}
+\institute[ОмГУ]{Омский государственный университет \\ им. Ф.М. Достоевского}
+\begin{document}
+\frame[plain]{\titlepage}	% Титульный слайд
+\section{Исследование системы}
+
+Дана следующая система дифференциальных
+уравнений:
+
+$$\begin{cases}
+    x' = -2x + ay \\
+    y' = 9x - 4ay
+\end{cases}$$
+Необходимо:
+\begin{enumerate}
+    \item выяснить, при каких значениях параметра $a$ точка равновесия системы одна и является: седлом, узлом, фокусом и т.д.;
+    \item построить интерактивную диаграмму фазового портрета системы при различных значениях параметра $a$;
+    \item сделать снимки фазового портрета при различных значениях $a$ (седло, узел, фокус и т.д.).
+\end{enumerate}
+\newpage
+\noindent
+
+Составим характеристическое уравнение и найдем его корни. Для этого зададим матрицу:
+
+\[\displaystyle \tag{matrix} 
+\begin{pmatrix}\operatorname{-}lambda\operatorname{-}2 & a\\
+9 & \operatorname{-}lambda\operatorname{-}4 a\end{pmatrix}\mbox{}
+\]
+%%%%%%%%%%%%%%%%
+Вычислим определитель матрицы и найдем
+собственные значения матрицы.
+
+%%%% OUTPUT:
+\[\displaystyle \tag{d} 
+\left( \operatorname{-}lambda\operatorname{-}2\right) \, \left( \operatorname{-}lambda\operatorname{-}4 a\right) \operatorname{-}9 a\mbox{}
+\]
+
+
+%%%%%%%%%%%%%%%%
+
+
+\[\displaystyle 
+\operatorname{[}lambda\operatorname{=}\operatorname{-}\sqrt{4 {{a}^{2}}\operatorname{+}5 a\operatorname{+}1}\operatorname{-}2 a\operatorname{-}1\operatorname{,}lambda\operatorname{=}\sqrt{4 {{a}^{2}}\operatorname{+}5 a\operatorname{+}1}\operatorname{-}2 a\operatorname{-}1\operatorname{]}\mbox{}
+\]
+%%%%%%%%%%%%%%%%
+\newpage
+Вычислим произведение собственных значений матрицы $\lambda_1 \lambda_2$:
+
+%%%%%%%%%%%%%%%%
+
+$$
+   \lambda_1 \lambda_2=-a=	\left\{
+		\begin{aligned}
+		     <0 &, \text{при} \; a>0 \\ 
+		   =0 &, \text{при} \; a = 0 \\
+              >0 &, \text{при} \; a < 0 \\
+		\end{aligned}
+	\right.
+$$ 
+
+Посмотрим на поведение одного из собственных значений.
+\newpage
+\[\
+\includegraphics[width=.95\linewidth,height=.80\textheight,keepaspectratio]{difur1_img/difur1_2}\mbox{}\]
+
+\newpage
+Очевидно, что при $a < 0$ оба собственных числа отрицательны.
+
+Остается посмотреть
+на знак дискриминанта и определить, при каких значениях a собственные
+значения являются действительными, а при каких комплексными, числами.
+Вычислим дискриминант выражения d, предварительно представив его в
+виде квадратного трехчлена:
+
+
+%%%% OUTPUT:
+\[\displaystyle
+{{lambda}^{2}}\operatorname{+}4 a lambda\operatorname{+}2 lambda\operatorname{-}a\mbox{}
+\]
+%%%%%%%%%%%%%%%%
+
+%%%% OUTPUT:
+\[\displaystyle \tag{dis} 
+{{\left( 4 a\operatorname{+}2\right) }^{2}}\operatorname{-}4 a\mbox{}
+\]
+%%%%%%%%%%%%%%%%
+
+%%%% OUTPUT:
+\[\displaystyle \tag{\% o43} 
+16 {{a}^{2}}\operatorname{+}12 a\operatorname{+}4\mbox{}
+\]
+%%%%%%%%%%%%%%%%
+\newpage
+Определим знак дискриминанта при различных значениях параметра $a$.
+
+\[\
+\includegraphics[width=.80\linewidth,height=.70\textheight,keepaspectratio]{difur_img/difur_1}\mbox{}\]
+\newpage
+%%%%%%%%%%%%%%%%
+Дискриминант больше нуля при всех $a\in \mathbb R$, поэтому оба корня вещественные.
+
+Тогда, согласно классификации особых точек получаем:
+\begin{enumerate}
+    \item При $a<0$ имеем $\lambda_1 \lambda_2 > 0$ , особая точка – неустойчивый узел.
+    \item При $a=0$ имеем $\lambda_1 \lambda_2 = 0$ , особых точек бесконечно много.
+    \item При $a>0$ имеем $\lambda_1 \lambda_2 < 0$ , особая точка – седло.
+\end{enumerate}
+Подтвердим рассуждения при помощи снимков фазовых портретов.
+\newpage
+
+При $a < 0$ имеем неустойчивый узел.
+\[\includegraphics[width=.95\linewidth,height=.80\textheight,keepaspectratio]{alesszero.png}\mbox{}
+\]
+\newpage
+При $a=0$ система имеет бесконечное множество особых точек.
+\[\includegraphics[width=.95\linewidth,height=.80\textheight,keepaspectratio]{azero.png}\mbox{}
+\]
+\newpage
+При $a > 0$ имеем седло.
+\[\includegraphics[width=.95\linewidth,height=.80\textheight,keepaspectratio]{amorezero.png}\mbox{}
+\]
+\newpage
+\section{Заключение}
+\textbf{Цель исследования:} Определить, при каких значениях параметра a система имеет одну точку равновесия, которая может быть седлом, узлом, фокусом и т.п. Создать изображения, демонстрирующие фазовый портрет системы при разных значениях параметра a. Предоставить изображения фазовых портретов для различных значений a, включая седло, узел, фокус и другие. 
+
+\textbf{Использованные средства}: система компьютерной
+алгебры Maxima.
+
+\textbf{Результат}: выяснили, что система при значении
+параметра a > 0 имеет особую точку - седло, при a = 0
+система имеет множество особых точек, при a < 0 система
+имеет особую точку - неустойчивый узел.
+\end{document}
