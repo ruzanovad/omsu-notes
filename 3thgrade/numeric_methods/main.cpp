@@ -5,6 +5,8 @@
 #include <cmath>
 #include <cassert>
 #include <random>
+#include <iomanip>
+
 
 #define matrix vector<vector<double>>
 
@@ -50,19 +52,23 @@ vector<double> mult(const matrix &A, const vector<double> &x) {
             vec[i] += A[i][j] * x[j];
         }
     }
+
     return vec;
 }
 
-matrix multmat(const matrix&A, const matrix&B){
+matrix multmat(const matrix &A, const matrix &B) {
     size_t n = A.size();
     matrix result(n, vector<double>(n, 0));
 
-    for (int i = 0; i < n; ++i){
-        for (int j = 0; i < n; ++i){
-            for (int k = 0; k < n; ++k){
-                result[i][j] += A[i][k]* B[k][j];}
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            for (int k = 0; k < n; ++k) {
+                result[i][j] += A[i][k] * B[k][j];
+            }
         }
     }
+//    printMatrix(result);
+//    cout << endl;
     return result;
 }
 
@@ -149,12 +155,12 @@ double norm(const vector<double> &x) {
     return ret;
 }
 
-double norm (const matrix &x) {
+double norm(const matrix &x) {
     double ret = 0;
     size_t n = x.size(), m = x[0].size();
-    for (int i = 0; i < n ;++i){
-        for (int j = 0; j < m; ++j){
-            ret  = max(ret, abs(x[i][j]));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            ret = max(ret, abs(x[i][j]));
         }
     }
     return ret;
@@ -181,21 +187,20 @@ void print_results(matrix &A, vector<double> &b, vector<double> &expected_x, vec
     cout << endl;
 }
 
-vector<double> generate_actual_solution(int n){
+vector<double> generate_actual_solution(int n) {
     std::random_device r;
 
-    // Choose a random mean between 1 and 6
     std::default_random_engine e1(r());
     std::uniform_int_distribution<int> uniform_dist(-100, 100);
 
     vector<double> return_value(n, 0);
-    for (auto& x: return_value){
+    for (auto &x: return_value) {
         x = uniform_dist(e1);
     }
     return return_value;
 }
 
-matrix first_class(int n, double alpha, double beta) {
+matrix first_class(int n, double alpha, double beta, bool inv = false) {
     matrix T(n, vector<double>(n, 0)), T_inv(n, vector<double>(n, 0)),
             J(n, vector<double>(n, 0)), return_value(n, vector<double>(n, 0));
     T[0][0] = 1;
@@ -203,27 +208,60 @@ matrix first_class(int n, double alpha, double beta) {
 
     double gamma = 0;
     int sign = rand() & 1;
-
-    J[0][0] = sign * ((1 - gamma)*alpha + gamma * beta);
-    for (int i = 1; i < n; ++i) {
-        T[i][i] = 2;
-        T[i - 1][i] = -1;
-        T[i][i - 1] = -1;
-
-        T_inv[i][i] = n - i;
-        T_inv[0][i] = n - i;
-        T_inv[i][0] = n - i;
-
-        sign = rand() & 1;
-        gamma = sqrt((i+0.)/(n-1));
-        J[i][i] = sign * ((1 - gamma)*alpha + gamma * beta);
+    if (sign == 0){
+        sign = -1;
     }
+    if (inv) {
+        J[0][0] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta));
+        for (int i = 1; i < n; ++i) {
+            T[i][i] = 2;
+            T[i - 1][i] = -1;
+            T[i][i - 1] = -1;
 
+            T_inv[i][i] = n - i;
+            T_inv[0][i] = n - i;
+            T_inv[i][0] = n - i;
+
+            sign = rand() & 1;
+            if (sign == 0) {
+                sign = -1;
+            }
+            gamma = sqrt((i + 0.) / (n - 1));
+            J[i][i] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta));
+        }
+    } else {
+        J[0][0] = sign * ((1 - gamma) * alpha + gamma * beta);
+        for (int i = 1; i < n; ++i) {
+            T[i][i] = 2;
+            T[i - 1][i] = -1;
+            T[i][i - 1] = -1;
+
+            T_inv[i][i] = n - i;
+            T_inv[0][i] = n - i;
+            T_inv[i][0] = n - i;
+
+            sign = rand() & 1;
+            if (sign == 0) {
+                sign = -1;
+            }
+            gamma = sqrt((i + 0.) / (n - 1));
+            auto value = sign * ((1 - gamma) * alpha + gamma * beta);
+            J[i][i] = value;
+        }
+//        printMatrix(J);
+//        cout << endl;
+
+    }
     return_value = multmat(multmat(T, J), T_inv);
+//    printMatrix(T);
+//    cout << endl;
+//    printMatrix(T_inv);
+//    cout << endl;
+//    printMatrix(J);
     return return_value;
 }
 
-matrix second_class(int n, double alpha, double beta) {
+matrix second_class(int n, double alpha, double beta, bool inv = false) {
     matrix T(n, vector<double>(n, 0)), T_inv(n, vector<double>(n, 0)),
             J(n, vector<double>(n, 0)), return_value(n, vector<double>(n, 0));
     T[0][0] = 1;
@@ -231,23 +269,51 @@ matrix second_class(int n, double alpha, double beta) {
 
     double gamma = 0;
     int sign = rand() & 1;
-
-    J[0][0] = sign * ((1 - gamma)*alpha + gamma * beta);
-    for (int i = 1; i < n; ++i) {
-        T[i][i] = 2;
-        T[i - 1][i] = -1;
-        T[i][i - 1] = -1;
-
-        T_inv[i][i] = n - i;
-        T_inv[0][i] = n - i;
-        T_inv[i][0] = n - i;
-
-        sign = rand() & 1;
-        gamma = sqrt((i+0.)/(n-1));
-        J[i][i] = sign * ((1 - gamma)*alpha + gamma * beta);
+    if (sign == 0) {
+        sign = -1;
     }
-    J[0][1] = 1; // клетка 2 на 2
+    if (!inv) {
+        J[0][0] = sign * ((1 - gamma) * alpha + gamma * beta);
+        for (int i = 1; i < n; ++i) {
+            T[i][i] = 2;
+            T[i - 1][i] = -1;
+            T[i][i - 1] = -1;
 
+            T_inv[i][i] = n - i;
+            T_inv[0][i] = n - i;
+            T_inv[i][0] = n - i;
+
+            sign = rand() & 1;
+            if (sign == 0) {
+                sign = -1;
+            }
+            gamma = sqrt((i + 0.) / (n - 1));
+            J[i][i] = sign * ((1 - gamma) * alpha + gamma * beta);
+        }
+        J[0][1] = 1; // клетка 2 на 2
+
+
+    } else {
+        J[0][0] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta));
+        J[0][1] = -J[0][0] * J[0][0]; // клетка 2 на 2
+
+        for (int i = 1; i < n; ++i) {
+            T[i][i] = 2;
+            T[i - 1][i] = -1;
+            T[i][i - 1] = -1;
+
+            T_inv[i][i] = n - i;
+            T_inv[0][i] = n - i;
+            T_inv[i][0] = n - i;
+
+            sign = rand() & 1;
+            if (sign == 0) {
+                sign = -1;
+            }
+            gamma = sqrt((i + 0.) / (n - 1));
+            J[i][i] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta));
+        }
+    }
     return_value = multmat(multmat(T, J), T_inv);
     return return_value;
 }
@@ -266,105 +332,153 @@ int main() {
 //        printVector(actual_x);
 //        assert(expected_x == actual_x);
 //    }
-    {
-        matrix A = {
-                {1, 2, 1},
-                {2, 2, 1},
-                {1, 1, 1}
-        };
-        vector<double> b = {2, 1, 1};
-        vector<double> expected_x = {-1, 1, 1};
-        vector<double> actual_x = LU(A, b);
-
-        print_results(A, b, expected_x, actual_x);
-    }
-    {
-        matrix A = {
-                {1, 2.01, 1},
-                {2, 2,    1},
-                {1, 1,    1}
-        };
-        vector<double> b = {2, 1, 1};
-        vector<double> expected_x = {-100. / 101, 100. / 101, 1};
-        vector<double> actual_x = LU(A, b);
-
-        print_results(A, b, expected_x, actual_x);
-    }
-
-    {
-        matrix A = {
-                {1, 2.01, 1},
-                {2, 2,    1},
-                {1, 1,    0.999}
-        };
-        vector<double> b = {2, 1, 1};
-        vector<double> expected_x = {-99801. / 100798, 49850. / 50399, 500. / 499};
-        vector<double> actual_x = LU(A, b);
-
-        print_results(A, b, expected_x, actual_x);
-    }
-
-    {
-        matrix A = {
-                {1, 2.01, 1},
-                {2, 2,    1},
-                {1, 1,    0.999}
-        };
-        vector<double> b = {2, 1.0001, 1};
-        vector<double> expected_x = {-997909201. / 1007980000, 9970001. / 10079800, 9999. / 9980};
-        vector<double> actual_x = LU(A, b);
-
-        print_results(A, b, expected_x, actual_x);
-    }
-
-    {
-        matrix A = {
-                {1, 2,     1.1},
-                {2, 0,     1},
-                {0, -2.02, 0}
-        };
-        vector<double> b = {0, 1, 1.00001};
-        vector<double> expected_x = {11099. / 121200, -100001. / 202000, 49501. / 60600};
-        vector<double> actual_x = LU(A, b);
-
-        print_results(A, b, expected_x, actual_x);
-    }
-
-    {
-        matrix A = {
-                {1}
-        };
-        vector<double> b = {2};
-        vector<double> expected_x = {2};
-        vector<double> actual_x = LU(A, b);
-
-        print_results(A, b, expected_x, actual_x);
-    }
+//    {
+//        matrix A = {
+//                {1, 2, 1},
+//                {2, 2, 1},
+//                {1, 1, 1}
+//        };
+//        vector<double> b = {2, 1, 1};
+//        vector<double> expected_x = {-1, 1, 1};
+//        vector<double> actual_x = LU(A, b);
+//
+//        print_results(A, b, expected_x, actual_x);
+//    }
+//    {
+//        matrix A = {
+//                {1, 2.01, 1},
+//                {2, 2,    1},
+//                {1, 1,    1}
+//        };
+//        vector<double> b = {2, 1, 1};
+//        vector<double> expected_x = {-100. / 101, 100. / 101, 1};
+//        vector<double> actual_x = LU(A, b);
+//
+//        print_results(A, b, expected_x, actual_x);
+//    }
+//
+//    {
+//        matrix A = {
+//                {1, 2.01, 1},
+//                {2, 2,    1},
+//                {1, 1,    0.999}
+//        };
+//        vector<double> b = {2, 1, 1};
+//        vector<double> expected_x = {-99801. / 100798, 49850. / 50399, 500. / 499};
+//        vector<double> actual_x = LU(A, b);
+//
+//        print_results(A, b, expected_x, actual_x);
+//    }
+//
+//    {
+//        matrix A = {
+//                {1, 2.01, 1},
+//                {2, 2,    1},
+//                {1, 1,    0.999}
+//        };
+//        vector<double> b = {2, 1.0001, 1};
+//        vector<double> expected_x = {-997909201. / 1007980000, 9970001. / 10079800, 9999. / 9980};
+//        vector<double> actual_x = LU(A, b);
+//
+//        print_results(A, b, expected_x, actual_x);
+//    }
+//
+//    {
+//        matrix A = {
+//                {1, 2,     1.1},
+//                {2, 0,     1},
+//                {0, -2.02, 0}
+//        };
+//        vector<double> b = {0, 1, 1.00001};
+//        vector<double> expected_x = {11099. / 121200, -100001. / 202000, 49501. / 60600};
+//        vector<double> actual_x = LU(A, b);
+//
+//        print_results(A, b, expected_x, actual_x);
+//    }
+//
+//    {
+//        matrix A = {
+//                {1}
+//        };
+//        vector<double> b = {2};
+//        vector<double> expected_x = {2};
+//        vector<double> actual_x = LU(A, b);
+//
+//        print_results(A, b, expected_x, actual_x);
+//    }
 
     // Задаем классы матриц
 
-    int n = 100;
+    int n = 200;
 
-    vector<pair<double, double>> params = {{1, 10},
-                                           {1, 100},
-                                           {1, 1000},
-                                           {1, 10000}, {0.1, 1}, {0.01, 1}, {0.001, 1}};
+    vector<pair<double, double>> params = {{1,     10},
+                                           {1,     100},
+                                           {1,     1000},
+                                           {1,     10000},
+                                           {0.1,   1},
+                                           {0.01,  1},
+                                           {0.001, 1}};
 
     cout << "Простые матрицы:\n";
-    cout << "alpha\tbeta\tnormA\tnorm A_inv\tnu_A\tz\tzeta\tr\trho" << endl;
-    for (auto & pair: params){
+    cout << "alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho" << endl;
+    for (auto &pair: params) {
         auto alph = pair.first, beta = pair.second;
 
         auto A = first_class(n, alph, beta);
+        auto A_inv = first_class(n, alph, beta, true);
+
+//        printMatrix(A_inv);
+
+//        cout << endl;
         auto x_starred = generate_actual_solution(n);
 
-// TODO A_inv generate
+//        printVector(x_starred);
+//        cout << endl;
+//        cout << endl;
 
-        double error, zeta, rho;
-        vector<double> r;
-        cout << alph << '\t' << beta << '\t' << norm(A) << '\t' << norm(A) << '\t' << norm(A) << '\t' << error
-        << '\t' << zeta << '\t' << norm(r) << '\t' <<  rho
+        auto f = mult(A, x_starred);
 
+        auto x_tilde = LU(A, f);
+
+        vector<double> r = subtract(mult(A, x_tilde), f);
+
+        double error = norm(subtract(x_tilde, x_starred)), zeta = error / norm(x_starred), rho = norm(r) / norm(f);
+
+        cout << setprecision(10) << alph << '\t' << beta << '\t' << norm(A) << '\t' << norm(A_inv) << '\t' << norm(A)*
+                                                                                                              norm(A_inv)
+             << '\t' << error
+             << '\t' << zeta << '\t' << norm(r) << '\t' << rho << endl;
+    }
+
+    cout << "\"сложные\" матрицы:\n";
+    cout << "alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho" << endl;
+    for (auto &pair: params) {
+        auto alph = pair.first, beta = pair.second;
+
+        auto A = second_class(n, alph, beta);
+        auto A_inv = second_class(n, alph, beta, true);
+
+//        printMatrix(A_inv);
+
+//        cout << endl;
+        auto x_starred = generate_actual_solution(n);
+
+//        printVector(x_starred);
+//        cout << endl;
+//        cout << endl;
+
+        auto f = mult(A, x_starred);
+
+        auto x_tilde = LU(A, f);
+
+        vector<double> r = subtract(mult(A, x_tilde), f);
+
+        double error = norm(subtract(x_tilde, x_starred)), zeta = error / norm(x_starred), rho = norm(r) / norm(f);
+
+        cout << setprecision(10) << alph << '\t' << beta << '\t' << norm(A) << '\t' << norm(A_inv) << '\t' <<  norm(A)*
+                                                                                                               norm(A_inv)
+             << '\t' << error
+             << '\t' << zeta << '\t' << norm(r) << '\t' << rho << endl;
     }
 
 
