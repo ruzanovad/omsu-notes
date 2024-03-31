@@ -89,14 +89,9 @@ double get_sign(int rule, int i) {
 // копии матрицы в тестирующей части
 vector<double> LU(matrix &U, vector<double> &b) {
     matrix L;     // L - нулевая изначально
-//    vector<int> P;
 
     size_t n = U.size();
     L.assign(n, vector<double>(n, 0));
-//    P.resize(n);
-//    iota(P.begin(), P.end(), 0);
-
-//    auto U = A;
 
     for (int i = 0; i < n; ++i) {
         double maxElement = abs(U[i][i]);
@@ -126,10 +121,6 @@ vector<double> LU(matrix &U, vector<double> &b) {
 //    printMatrix(L);
 //    printMatrix(U);
 //    printVector(b);
-//    vector<double> Pb(b.size());
-//    for (int i = 0; i < U.size(); ++i) {
-//        Pb[i] = b[P[i]];
-//    }
 
     vector<double> x = backwardSubstitution(U, forwardSubstitution(L, b));
     return x;
