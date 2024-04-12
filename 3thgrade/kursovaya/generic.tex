@@ -1,0 +1,67 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb}
+\usepackage{hyperref}
+% \usepackage{mathrm}
+\usepackage{bbold}
+\usepackage{mathrsfs}
+
+
+\usepackage[russian]{babel}
+\renewcommand\qedsymbol{$\blacktriangleright$}
+\newtheorem*{theorem}{Утверждение}
+\newtheorem{lemma}{Лемма}
+\theoremstyle{definition}
+\newtheorem{example}{Пример}
+\newtheorem{problem}{Упражнение}[section]
+\newtheorem*{definition}{Определение}
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
+\newcommand\letsymbol{\mathord{\sqsupset}}
+
+
+\DeclareMathOperator{\degg}{deg}
+
+\setlength{\topmargin}{-0.5in}
+\setlength{\oddsidemargin}{-0.5in}
+\textwidth 185mm
+\textheight 250mm
+
+\begin{document}
+\section*{Проблема поиска 3-раскраски $\mathsf{G_3}$}
+Задан неориентированный граф без кратных ребер и петель $G = (V, E)$ c n вершинами. Гарантировано,
+что в нем существует 3-раскраска.
+\\
+Надо найти
+    множества $V_1, V_2, V_3$ такие, что $V_1\sqcup V_2 \sqcup V_3 = V$ и
+    $\forall x, y\in V_i, i\in \{1, 2, 3\} \implies (x, y)\notin E$
+
+\section*{Подпроблема поиска 3-раскраски $\mathsf{G_3}(\gamma)$}
+Рассмотрим бесконечную последовательность графов $\gamma = \{G_1, G_2, ..., G_n, ...\}$
+такую, что $G_n$ имеет n вершин $\forall n\in \mathbb N$
+
+Для каждой последовательности графов $\gamma$ определим подпроблему поиска 3-раскраски
+как ограничение исходной проблемы на множество входов $\{G: G\cong G_n, G_n \in \gamma\}$.
+
+\begin{lemma}
+    Если не существует полиномиального вероятностного алгоритма для
+решения проблемы $\mathsf{G_3}$, то найдется последовательность графов $\gamma$, такая,
+ что не существует полиномиального вероятностного алгоритма для решения
+  проблемы $\mathsf{G_3}(\gamma)$.
+\end{lemma}
+
+\begin{proof}
+    Пусть $P_1, P_2, \dots$ — все полиномиальные вероятностные алгоритмы. Если не существует полиномиального вероятностного алгоритма для проблемы
+GC6k, то для любого вероятностного полиномиального алгоритма Pn найдётся бесконечно много графов, для которых Pn не может решить GC6k. Из этого следует, что
+можно выбрать такую последовательность $\gamma'
+ = \{G1, G2, \dots , Gn, \dots\}$, что алгоритм $P_n$
+не может решить GC6k для Gn для всех n. Более того, $\gamma$
+0 упорядочена по возрастанию
+числа вершин в графах. Теперь можно расширить последовательность $\gamma$
+0 до последовательности графов $\gamma$ с графами Gn для всех размеров n. Из построения $\gamma$ следует,
+что не существует полиномиального вероятностного алгоритма для решения проблемы GC6k($\gamma$).
+\end{proof}
+\end{document}
