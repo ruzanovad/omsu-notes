@@ -46,15 +46,15 @@ def first_class(n, alpha, beta, inv=False, sign_rule=1):
     J = np.zeros((n, n))
     return_value = np.zeros((n, n))
 
-    if not inv:
     for i in range(n):
         sign = 1
         gamma = np.sqrt((i + 0.) / (n - 1))
 
-        if i == 0:
-            J[0, 0] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta))
-        else:
+        if inv:
             J[i, i] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta))
+        else:
+            J[i, i] = (sign * ((1 - gamma) * alpha + gamma * beta))
+ 
         if i != n-1:
             for j in range(i+1):
                 Q[j, i] = 1./np.sqrt((i+1)*(i+2))
@@ -62,51 +62,46 @@ def first_class(n, alpha, beta, inv=False, sign_rule=1):
         else: 
             for j in range(i+1):
                 Q[j, i] = 1./np.sqrt(n)
-
-    return_value = np.matmul(np.matmul(Q, J), Q.T)
-    print(Q)
-    print(J)
-    print(Q.T)
+    return_value = np.matmul(np.matmul(Q.T, J), Q) if inv \
+                    else np.matmul(np.matmul(Q, J), Q.T) 
+        
+    
+    # print(return_value)        
     return return_value
 
 
 def second_class(n, alpha, beta, inv=False, sign_rule=1):
-    T = np.zeros((n, n))
-    T_inv = np.zeros((n, n))
+    Q = np.zeros((n, n))
     J = np.zeros((n, n))
     return_value = np.zeros((n, n))
-
-    T[0, 0] = 1
-    T_inv[0, 0] = n
 
     gamma = 0
     sign = 1
 
-    if not inv:
-        J[0, 0] = sign * ((1 - gamma) * alpha + gamma * beta)
-        for i in range(1, n):
-            T[i-1, i] = T[i, i-1] = -1
-
-            T_inv[i, i] = T_inv[0, i] = T_inv[i, 0] = n - i
-
-            sign = 1
-            gamma = np.sqrt((i + 0.) / (n - 1))
-            J[i, i] = sign * ((1 - gamma) * alpha + gamma * beta)
-        J[0, 1] = 1  # Set the (0, 1) element to 1
+    if inv:
+        J[0, 1] = -(1. / (sign * ((1 - gamma) * alpha + gamma * beta)))**2 # Set the (0, 1) element
     else:
-        J[0, 0] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta))
-        J[0, 1] = -J[0, 0] * J[0, 0]  # Set the (0, 1) element
+        J[0, 1] = 1  # Set the (0, 1) element to 1
+    for i in range(0, n):
+        sign = 1
 
-        for i in range(1, n):
-            T[i-1, i] = T[i, i-1] = -1
-
-            T_inv[i, i] = T_inv[0, i] = T_inv[i, 0] = n - i
-
-            sign = 1
-            gamma = np.sqrt((i + 0.) / (n - 1))
+        if inv:
             J[i, i] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta))
-
-    return_value = np.matmul(np.matmul(T, J), T_inv)
+        else:
+            J[i, i] = (sign * ((1 - gamma) * alpha + gamma * beta))
+ 
+        if i != n-1:
+            for j in range(i+1):
+                Q[j, i] = 1./np.sqrt((i+1)*(i+2))
+            Q[i+1, i] = -np.sqrt(float(i+1)/(i+2))
+        else: 
+            for j in range(i+1):
+                Q[j, i] = 1./np.sqrt(n)
+        gamma = np.sqrt((i + 0.) / (n - 1))
+    return_value = np.matmul(np.matmul(Q.T, J), Q) if inv \
+                    else np.matmul(np.matmul(Q, J), Q.T) 
+    
+    # print(return_value)        
     return return_value
 
 
