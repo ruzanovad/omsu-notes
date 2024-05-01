@@ -1,3 +1,0 @@
-X:/repos/omsu-notes/3thgrade/numeric_methods/cmake-build-debug/CMakeFiles/numeric_methods.dir
-X:/repos/omsu-notes/3thgrade/numeric_methods/cmake-build-debug/CMakeFiles/edit_cache.dir
-X:/repos/omsu-notes/3thgrade/numeric_methods/cmake-build-debug/CMakeFiles/rebuild_cache.dir
