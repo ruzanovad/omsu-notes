@@ -5,6 +5,7 @@ warnings.filterwarnings("ignore")
 
 EPS = 1e-5
 NUMBER_OF_ITERATIONS = 1000
+ROUND_CONST = 3
 
 
 def gauss_seidel(A, b):
@@ -44,16 +45,18 @@ def get_sign(sign_rule, i):
 def first_class(n, alpha, beta, inv=False, sign_rule=1):
     Q = np.zeros((n, n))
     J = np.zeros((n, n))
+    # J_inv = np.zeros((n, n))
     return_value = np.zeros((n, n))
-
+    # inv of J is got correctly
     for i in range(n):
-        sign = 1
         gamma = np.sqrt((i + 0.) / (n - 1))
 
         if inv:
-            J[i, i] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta))
+        
+            J[i, i] = 1. / (((1 - gamma) * alpha + gamma * beta))
         else:
-            J[i, i] = (sign * ((1 - gamma) * alpha + gamma * beta))
+            # print(((1 - gamma) * alpha + gamma * beta))
+            J[i, i] = (((1 - gamma) * alpha + gamma * beta))
  
         if i != n-1:
             for j in range(i+1):
@@ -62,11 +65,12 @@ def first_class(n, alpha, beta, inv=False, sign_rule=1):
         else: 
             for j in range(i+1):
                 Q[j, i] = 1./np.sqrt(n)
-    return_value = np.matmul(np.matmul(Q.T, J), Q) if inv \
-                    else np.matmul(np.matmul(Q, J), Q.T) 
+    # print(Q.T @ J_inv @ Q)    
+    # print(Q @ J @ Q.T)
+    # A^-1 @ A = E, но не наоборот(
+    return_value = Q @ J @ Q.T
         
-    
-    # print(return_value)        
+    # print((Q @ J @ Q.T) @ (Q @ J_inv @ Q.T))        
     return return_value
 
 
@@ -76,19 +80,17 @@ def second_class(n, alpha, beta, inv=False, sign_rule=1):
     return_value = np.zeros((n, n))
 
     gamma = 0
-    sign = 1
 
     if inv:
-        J[0, 1] = -(1. / (sign * ((1 - gamma) * alpha + gamma * beta)))**2 # Set the (0, 1) element
+        J[0, 1] = -(1. / (((1 - gamma) * alpha + gamma * beta)))**2 # Set the (0, 1) element
     else:
         J[0, 1] = 1  # Set the (0, 1) element to 1
     for i in range(0, n):
-        sign = 1
 
         if inv:
-            J[i, i] = 1. / (sign * ((1 - gamma) * alpha + gamma * beta))
+            J[i, i] = 1. / (((1 - gamma) * alpha + gamma * beta))
         else:
-            J[i, i] = (sign * ((1 - gamma) * alpha + gamma * beta))
+            J[i, i] = (((1 - gamma) * alpha + gamma * beta))
  
         if i != n-1:
             for j in range(i+1):
@@ -98,8 +100,7 @@ def second_class(n, alpha, beta, inv=False, sign_rule=1):
             for j in range(i+1):
                 Q[j, i] = 1./np.sqrt(n)
         gamma = np.sqrt((i + 0.) / (n - 1))
-    return_value = np.matmul(np.matmul(Q.T, J), Q) if inv \
-                    else np.matmul(np.matmul(Q, J), Q.T) 
+    return_value = Q @ J @ Q.T
     
     # print(return_value)        
     return return_value
@@ -207,7 +208,11 @@ def main():
     print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho")
     for alpha, beta in params_alpha_increasing:
         A = first_class(n, alpha, beta)
+        # print(A)
         A_inv = first_class(n, alpha, beta, inv=True)
+        # print(A_inv)
+        # print(A_inv @ A)
+        # assert abs(norm(np.matmul(A, A_inv)) - 1) <= EPS
         x_starred = generate_actual_solution(n, alpha, beta)
         f = np.matmul(A, x_starred)
         x_tilde = gauss_seidel(A, f)
@@ -216,15 +221,16 @@ def main():
             error = norm(x_tilde- x_starred)
             zeta = error / norm(x_starred)
             rho = norm(r) / norm(f)
-            print(f"{alpha:.2e}\t{beta:.2e}\t{norm(A):.2e}\t{norm(A_inv):.2e}\t{norm(A) * norm(A_inv):.2e}\t{error:.2e}\t{zeta:.2e}\t{norm(r):.2e}\t{rho:.2e}")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}")
         else:
-            print(f"{alpha:.2e}\t{beta:.2e}\t{norm(A):.2e}\t{norm(A_inv):.2e}\t{norm(A) * norm(A_inv):.2e}\t-\t-\t-\t-")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
             
     print("\nFirst class: beta_increasing")
     print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho")
     for alpha, beta in params_beta_increasing:
         A = first_class(n, alpha, beta)
         A_inv = first_class(n, alpha, beta, inv=True)
+
         x_starred = generate_actual_solution(n, alpha, beta)
         f = np.matmul(A, x_starred)
         x_tilde = gauss_seidel(A, f)
@@ -233,9 +239,9 @@ def main():
             error = norm(x_tilde- x_starred)
             zeta = error / norm(x_starred)
             rho = norm(r) / norm(f)
-            print(f"{alpha:.2e}\t{beta:.2e}\t{norm(A):.2e}\t{norm(A_inv):.2e}\t{norm(A) * norm(A_inv):.2e}\t{error:.2e}\t{zeta:.2e}\t{norm(r):.2e}\t{rho:.2e}")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}")
         else:
-            print(f"{alpha:.2e}\t{beta:.2e}\t{norm(A):.2e}\t{norm(A_inv):.2e}\t{norm(A) * norm(A_inv):.2e}\t-\t-\t-\t-")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
 
     print("\nSecond class: alpha_increasing")
     print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho")
@@ -250,14 +256,15 @@ def main():
             error = norm(x_tilde-x_starred)
             zeta = error / norm(x_starred)
             rho = norm(r) / norm(f)
-            print(f"{alpha:.2e}\t{beta:.2e}\t{norm(A):.2e}\t{norm(A_inv):.2e}\t{norm(A) * norm(A_inv):.2e}\t{error:.2e}\t{zeta:.2e}\t{norm(r):.2e}\t{rho:.2e}")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}")
         else:
-            print(f"{alpha:.2e}\t{beta:.2e}\t{norm(A):.2e}\t{norm(A_inv):.2e}\t{norm(A) * norm(A_inv):.2e}\t-\t-\t-\t-")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
     print("\nSecond class: beta_increasing")
     print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho")
     for alpha, beta in params_beta_increasing:
         A = second_class(n, alpha, beta)
         A_inv = second_class(n, alpha, beta, inv=True)
+        # print(A_inv @ A)
         x_starred = generate_actual_solution(n, alpha, beta)
         f = np.matmul(A, x_starred)
         x_tilde = gauss_seidel(A, f)
@@ -266,8 +273,8 @@ def main():
             error = norm(x_tilde-x_starred)
             zeta = error / norm(x_starred)
             rho = norm(r) / norm(f)
-            print(f"{alpha:.2e}\t{beta:.2e}\t{norm(A):.2e}\t{norm(A_inv):.2e}\t{norm(A) * norm(A_inv):.2e}\t{error:.2e}\t{zeta:.2e}\t{norm(r):.2e}\t{rho:.2e}")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}")
         else:
-            print(f"{alpha:.2e}\t{beta:.2e}\t{norm(A):.2e}\t{norm(A_inv):.2e}\t{norm(A) * norm(A_inv):.2e}\t-\t-\t-\t-")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
 if __name__ == "__main__":
     main()
