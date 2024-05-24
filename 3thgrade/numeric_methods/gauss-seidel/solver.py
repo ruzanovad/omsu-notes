@@ -4,7 +4,7 @@ import numpy as np
 warnings.filterwarnings("ignore")
 
 EPS = 1e-5
-NUMBER_OF_ITERATIONS = 10000
+NUMBER_OF_ITERATIONS = 1000
 ROUND_CONST = 3
 
 num_of_iter = 0
@@ -206,107 +206,107 @@ def main():
     n = 100
     print(f"n = {n}")
 
-    # params_beta_increasing = [(1, 0.0000001),(1, 0.001),(1, 0.01), (1, 0.1), (1, 1), (1, 10), (1, 100), (1, 1000), (1, 10000000)]
-    # params_beta_increasing += [(42, 0.0000001),(42, 0.001),(42, 0.01), (42, 0.1), (42, 1), (42, 10), (42, 100), (42, 1000), (42, 10000000)]
-    # params_alpha_increasing = [y[::-1] for y in params_beta_increasing]
+    params_beta_increasing = [(1, 0.0000001),(1, 0.001),(1, 0.01), (1, 0.1), (1, 1), (1, 10), (1, 100), (1, 1000), (1, 10000000)]
+    params_beta_increasing += [(42, 0.0000001),(42, 0.001),(42, 0.01), (42, 0.1), (42, 1), (42, 10), (42, 100), (42, 1000), (42, 10000000)]
+    params_alpha_increasing = [y[::-1] for y in params_beta_increasing]
 
 
 
-    # print("First class: alpha_increasing")
-    # print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter")
-    # for alpha, beta in params_alpha_increasing:
-    #     A = first_class(n, alpha, beta)
-    #     # print(A)
-    #     A_inv = first_class(n, alpha, beta, inv=True)
-    #     # print(A_inv)
-    #     # print(A_inv @ A)
-    #     # assert abs(norm(np.matmul(A, A_inv)) - 1) <= EPS
-    #     x_starred = generate_actual_solution(n, alpha, beta)
-    #     f = np.matmul(A, x_starred)
-    #     x_tilde = gauss_seidel(A, f)
-    #     if isinstance(x_tilde, np.ndarray):   
-    #         r = np.matmul(A, x_tilde)- f
-    #         error = norm(x_tilde- x_starred)
-    #         zeta = error / norm(x_starred)
-    #         rho = norm(r) / norm(f)
-    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}")
-    #     else:
-    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
+    print("First class: alpha_increasing")
+    print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter")
+    for alpha, beta in params_alpha_increasing:
+        A = first_class(n, alpha, beta)
+        # print(A)
+        A_inv = first_class(n, alpha, beta, inv=True)
+        # print(A_inv)
+        # print(A_inv @ A)
+        # assert abs(norm(np.matmul(A, A_inv)) - 1) <= EPS
+        x_starred = generate_actual_solution(n, alpha, beta)
+        f = np.matmul(A, x_starred)
+        x_tilde = gauss_seidel(A, f)
+        if isinstance(x_tilde, np.ndarray):   
+            r = np.matmul(A, x_tilde)- f
+            error = norm(x_tilde- x_starred)
+            zeta = error / norm(x_starred)
+            rho = norm(r) / norm(f)
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}")
+        else:
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
             
-    # print("\nFirst class: beta_increasing")
-    # print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter")
-    # for alpha, beta in params_beta_increasing:
-    #     A = first_class(n, alpha, beta)
-    #     A_inv = first_class(n, alpha, beta, inv=True)
-
-    #     x_starred = generate_actual_solution(n, alpha, beta)
-    #     f = np.matmul(A, x_starred)
-    #     x_tilde = gauss_seidel(A, f)
-    #     if isinstance(x_tilde, np.ndarray):   
-    #         r = np.matmul(A, x_tilde)- f
-    #         error = norm(x_tilde- x_starred)
-    #         zeta = error / norm(x_starred)
-    #         rho = norm(r) / norm(f)
-    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}")
-    #     else:
-    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
-
-    # print("\nSecond class: alpha_increasing")
-    # print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter")
-    # for alpha, beta in params_alpha_increasing:
-    #     A = second_class(n, alpha, beta)
-    #     A_inv = second_class(n, alpha, beta, inv=True)
-    #     x_starred = generate_actual_solution(n, alpha, beta)
-    #     f = np.matmul(A, x_starred)
-    #     x_tilde = gauss_seidel(A, f)
-    #     if isinstance(x_tilde, np.ndarray):   
-    #         r = np.matmul(A, x_tilde)- f
-    #         error = norm(x_tilde-x_starred)
-    #         zeta = error / norm(x_starred)
-    #         rho = norm(r) / norm(f)
-    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}")
-    #     else:
-    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
-    # print("\nSecond class: beta_increasing")
-    # print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter")
-    # for alpha, beta in params_beta_increasing:
-    #     A = second_class(n, alpha, beta)
-    #     A_inv = second_class(n, alpha, beta, inv=True)
-    #     # print(A_inv @ A)
-    #     x_starred = generate_actual_solution(n, alpha, beta)
-    #     f = np.matmul(A, x_starred)
-    #     x_tilde = gauss_seidel(A, f)
-    #     if isinstance(x_tilde, np.ndarray):   
-    #         r = np.matmul(A, x_tilde)- f
-    #         error = norm(x_tilde-x_starred)
-    #         zeta = error / norm(x_starred)
-    #         rho = norm(r) / norm(f)
-    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}")
-    #     else:
-            # print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
-    print("alpha = 1e-5 beta=1e5")
-    alpha = 1e-5
-    beta = 1e5
-    epsilon = 0
-    for par in range(18):
-        epsilon = 10**(3 - par)
-        print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter\tepsilon")
+    print("\nFirst class: beta_increasing")
+    print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter")
+    for alpha, beta in params_beta_increasing:
         A = first_class(n, alpha, beta)
         A_inv = first_class(n, alpha, beta, inv=True)
-        # print(A_inv @ A)
+
         x_starred = generate_actual_solution(n, alpha, beta)
-        # print(norm(x_starred))
-        # print(x_starred)
         f = np.matmul(A, x_starred)
-        x_tilde = gauss_seidel(A, f, epsilon)
+        x_tilde = gauss_seidel(A, f)
+        if isinstance(x_tilde, np.ndarray):   
+            r = np.matmul(A, x_tilde)- f
+            error = norm(x_tilde- x_starred)
+            zeta = error / norm(x_starred)
+            rho = norm(r) / norm(f)
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}")
+        else:
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
+
+    print("\nSecond class: alpha_increasing")
+    print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter")
+    for alpha, beta in params_alpha_increasing:
+        A = second_class(n, alpha, beta)
+        A_inv = second_class(n, alpha, beta, inv=True)
+        x_starred = generate_actual_solution(n, alpha, beta)
+        f = np.matmul(A, x_starred)
+        x_tilde = gauss_seidel(A, f)
         if isinstance(x_tilde, np.ndarray):   
             r = np.matmul(A, x_tilde)- f
             error = norm(x_tilde-x_starred)
             zeta = error / norm(x_starred)
             rho = norm(r) / norm(f)
-            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}\t{epsilon}")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}")
         else:
-            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-\t-{epsilon:.{ROUND_CONST}}")
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
+    print("\nSecond class: beta_increasing")
+    print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter")
+    for alpha, beta in params_beta_increasing:
+        A = second_class(n, alpha, beta)
+        A_inv = second_class(n, alpha, beta, inv=True)
+        # print(A_inv @ A)
+        x_starred = generate_actual_solution(n, alpha, beta)
+        f = np.matmul(A, x_starred)
+        x_tilde = gauss_seidel(A, f)
+        if isinstance(x_tilde, np.ndarray):   
+            r = np.matmul(A, x_tilde)- f
+            error = norm(x_tilde-x_starred)
+            zeta = error / norm(x_starred)
+            rho = norm(r) / norm(f)
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}")
+        else:
+            print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-")
+    # print("alpha = 1e-5 beta=1e5")
+    # alpha = 1e-5
+    # beta = 1e5
+    # epsilon = 0
+    # for par in range(18):
+    #     epsilon = 10**(3 - par)
+    #     print("alpha\tbeta\tnormA\tnorm_A_inv\tnu_A\tz\tzeta\tr\trho\tnum_of_iter\tepsilon")
+    #     A = first_class(n, alpha, beta)
+    #     A_inv = first_class(n, alpha, beta, inv=True)
+    #     # print(A_inv @ A)
+    #     x_starred = generate_actual_solution(n, alpha, beta)
+    #     # print(norm(x_starred))
+    #     # print(x_starred)
+    #     f = np.matmul(A, x_starred)
+    #     x_tilde = gauss_seidel(A, f, epsilon)
+    #     if isinstance(x_tilde, np.ndarray):   
+    #         r = np.matmul(A, x_tilde)- f
+    #         error = norm(x_tilde-x_starred)
+    #         zeta = error / norm(x_starred)
+    #         rho = norm(r) / norm(f)
+    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t{error:.{ROUND_CONST}e}\t{zeta:.{ROUND_CONST}e}\t{norm(r):.{ROUND_CONST}e}\t{rho:.{ROUND_CONST}e}\t{num_of_iter}\t{epsilon}")
+    #     else:
+    #         print(f"{alpha:.{ROUND_CONST}e}\t{beta:.{ROUND_CONST}e}\t{norm(A):.{ROUND_CONST}e}\t{norm(A_inv):.{ROUND_CONST}e}\t{norm(A) * norm(A_inv):.{ROUND_CONST}e}\t-\t-\t-\t-\t-{epsilon:.{ROUND_CONST}}")
 
         
         

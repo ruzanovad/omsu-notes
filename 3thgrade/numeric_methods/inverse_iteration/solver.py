@@ -1,5 +1,7 @@
 import warnings
 import numpy as np
+import scipy
+import scipy.linalg
 
 warnings.filterwarnings("ignore")
 
@@ -12,14 +14,22 @@ num_of_iter = 0
 def check_symmetric(a, rtol=1e-05, atol=1e-08):
     return np.allclose(a, a.T, rtol=rtol, atol=atol)
 
-def reverse_iteration(A, epsilon=1e-8, max_iter=NUMBER_OF_ITERATIONS):
+def reverse_iteration(A, epsilon=1e-9, max_iter=NUMBER_OF_ITERATIONS):
     n = A.shape[0]
     x = np.ones(n) # начальное значение
     global num_of_iter
     x /= norm(x)
     _lambda = 0
+    
+    P, L, U = LU_decompose(A)
+    # P, L, U = scipy.linalg.lu(A)
+    
+    assert np.allclose(L @ U, P @ A, rtol=1e-8, atol=1e-8)
     for _ in range(max_iter):
-        y = np.linalg.solve(A, x)   # TODO LU factor
+        y = backward_substitution(U, forward_substitution(L, P @ x))
+        
+        # assert np.allclose(y, np.linalg.solve(A, x), rtol=1e-5, atol=1e-8)
+        # y = np.linalg.solve(A, x)   # TODO LU factor
         # y = gauss_seidel(A, x)  
         
         # converge?
@@ -32,12 +42,63 @@ def reverse_iteration(A, epsilon=1e-8, max_iter=NUMBER_OF_ITERATIONS):
             return y, 1.0 / new_lambda, True
         _lambda = new_lambda
         x = y
-
-    print("Не достигнута сходимость за {} итераций".format(max_iter))
+    print("Inverse iterations method does not converge (max_num={})".format(max_iter))
     return x, 1.0 / _lambda, False
     
+def LU_decompose(A):
+    U = A.copy()
+    assert U.shape[1] == U.shape[0], "Matrix must be square"
+    n = U.shape[0]
     
+    P = np.eye(n)
+    L = np.zeros((n, n))
+    
+    for i in range(n):
+        max_element = abs(U[i, i])
+        pivot_row = i
+        for k in range(i+1, n):
+            if abs(U[k, i]) > max_element:
+                max_element = abs(U[k, i])
+                pivot_row = k
+                
+        U[[i, pivot_row], :] = U[[pivot_row, i], :]
+        P[[i, pivot_row], :] = P[[pivot_row, i], :]
+        if i > 0:  # Ensure we only swap filled entries in L
+            L[[i, pivot_row], :i] = L[[pivot_row, i], :i]
+        
+        # decompose
+        
+        for j in range(i+1, n):
+            L[j, i] = U[j, i] / U[i, i]
+            U[j, i:] -= L[j, i] * U[i, i:]
+            
+        L[i, i] = 1
+    return P, L, U
+        
+     
+def forward_substitution(L, Pb):
+    n = L.shape[0]
+    y = np.zeros(n)
+    for i in range(n):
+        s = 0.
+        for j in range(i):
+            s += L[i, j] * y[j]
+        y[i] = Pb[i] - s
+    return y
 
+
+def backward_substitution(U, y):
+    n = U.shape[0]
+    x = np.zeros(n)
+    for i in range(n-1, -1, -1):
+        # print(i)
+        s = 0.
+        for j in range(i+1, n):
+            s += U[i, j] * x[j]
+        x[i] = (y[i] - s) / U[i, i]
+    return x     
+        
+        
 def gauss_seidel(A, b, epsilon=1e-7):
     n = len(A)
     x = np.zeros(n) 
@@ -60,11 +121,11 @@ def gauss_seidel(A, b, epsilon=1e-7):
         converge = norm(x_new - x) <= epsilon
         x = x_new
         cnt+=1
-    num_of_iter = cnt
+    # num_of_iter = cnt
     if converge:
         return x
     else:
-        # print("Method does not converge")
+        # print("Gauss-Seidel method does not converge")
         return x
     
 
@@ -73,6 +134,7 @@ def get_sign(sign_rule, i):
         return 1 if i % 2 == 0 else -1
     else:
         return -1 if i % 2 == 0 else 1
+
 
 # alpha beta 
 def first_class(n, alpha, beta, inv=False, sign_rule=1):
@@ -152,10 +214,10 @@ def norm(x):
 
 def main():
     
-    n = 5
+    n = 100
     print(f"n = {n}")
 
-    params_beta_increasing = [(1, 0.0000001),(1, 0.001),(1, 0.01), (1, 0.1), (1, 1), (1, 10), (1, 100), (1, 1000), (1, 10000000)]
+    params_beta_increasing = [(1, 0.0000000001),(1, 0.0000001), (1, 0.001),(1, 0.01), (1, 0.1), (1, 1), (1, 10), (1, 100), (1, 1000), (1, 10000000), (1, 1000000000)]
     params_beta_increasing += [(42, 0.0000001),(42, 0.001),(42, 0.01), (42, 0.1), (42, 1), (42, 10), (42, 100), (42, 1000), (42, 10000000)]
     params_alpha_increasing = [y[::-1] for y in params_beta_increasing]
 
