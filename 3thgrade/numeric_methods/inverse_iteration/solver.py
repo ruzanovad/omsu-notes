@@ -11,12 +11,14 @@ ROUND_CONST = 3
 
 num_of_iter = 0
 
+
 def check_symmetric(a, rtol=1e-05, atol=1e-08):
     return np.allclose(a, a.T, rtol=rtol, atol=atol)
 
-def reverse_iteration(A, epsilon=1e-9, max_iter=NUMBER_OF_ITERATIONS):
+
+def reverse_iteration(A, epsilon=1e-10, max_iter=NUMBER_OF_ITERATIONS):
     n = A.shape[0]
-    x = np.ones(n) # начальное значение
+    x = np.ones(n) # начальное значение 
     global num_of_iter
     x /= norm(x)
     _lambda = 0
@@ -26,18 +28,18 @@ def reverse_iteration(A, epsilon=1e-9, max_iter=NUMBER_OF_ITERATIONS):
     
     assert np.allclose(L @ U, P @ A, rtol=1e-8, atol=1e-8)
     for _ in range(max_iter):
-        y = backward_substitution(U, forward_substitution(L, P @ x))
+        # y = backward_substitution(U, forward_substitution(L, P @ x))
         
         # assert np.allclose(y, np.linalg.solve(A, x), rtol=1e-5, atol=1e-8)
         # y = np.linalg.solve(A, x)   # TODO LU factor
-        # y = gauss_seidel(A, x)  
+        y = gauss_seidel(A, x)  
         
         # converge?
         new_lambda = np.dot(A @ y, y) # scalar product
         
         y /= norm(y)
         
-        if abs(new_lambda-_lambda) < epsilon:
+        if norm(A @ y - new_lambda * y) < epsilon:
             num_of_iter = _+1
             return y, 1.0 / new_lambda, True
         _lambda = new_lambda
@@ -211,7 +213,6 @@ def norm(x):
     return np.linalg.norm(x)
 
     
-
 def main():
     
     n = 100
