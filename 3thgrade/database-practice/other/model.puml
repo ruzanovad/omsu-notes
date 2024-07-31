@@ -1,0 +1,49 @@
+@startuml Model of database
+
+entity localities {
+    * locality_id **PK**
+    ---
+    - name //varchar127//
+    - population //int//
+    - area //float//
+    - locality_type_id **FK**
+    - locality_trip_description_id **FK**
+}
+
+entity roads {
+    * f_locality_id **FK**
+    * s_locality_id **FK**
+    ---
+    - length //int//
+    - road_type_id **FK**
+}
+
+entity locality_types {
+    * locality_type_id **PK**
+    ---
+    - name //varchar127//
+}
+
+entity locality_trip_descriptions {
+    * locality_trip_description_id **PK**
+    ---
+    - description //text//
+    - count_of_landmarks //int//
+    - count_of_hotels //int//
+    - date_of_foundation //date//
+}
+
+entity road_types {
+    * road_type_id **PK**
+    ---
+    - name //varchar127//
+}
+
+' localities }o..o{ roads
+
+' localities ||..o{ locality_types
+' localities ||..o{ locality_trip_descriptions
+
+' roads ||..o| road_types
+
+@enduml
