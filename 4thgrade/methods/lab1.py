@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def generate_b(x, n, m):
@@ -11,10 +12,11 @@ def generate_b(x, n, m):
 
 def preprocess(x: np.array, y: np.array):
     assert len(x) == len(y)
-    z = np.stack((x, y), axis=1)
-
-    z = [z[:, 0].argsort()]
-    return z[:, 0], z[:, 1]
+    # Сортировка точек по возрастанию значений x
+    sorted_indices = np.argsort(x)
+    x_sorted = x[sorted_indices]
+    y_sorted = y[sorted_indices]
+    return x_sorted, y_sorted
 
 
 def get_parameters(x, y, b: list):
@@ -66,8 +68,37 @@ def calculate_error(x, y, b, beta):
         z = max(z, np.abs(y[i] - fun(x[i], b, beta)))
     return z
 
+
+def plot_results(x, y, x_hat, fun, b, beta):
+    y_hat = np.zeros(len(x_hat))
+    for i in range(len(x_hat)):
+        y_hat[i] = fun(x_hat[i], b, beta)
+
+    plt.figure()
+    plt.plot(x, y, "o")
+    plt.plot(x_hat, y_hat, "-")
+    plt.grid()
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.show()
+
+
 def solve(x, y, n, m):
     x, y = preprocess(x, y)
     b = generate_b(x, n, m)
     beta = get_parameters(x, y, b)
     return fun(b=b, beta=beta)
+
+
+def create_table(function_str, x, y, n, m_values):
+    data = []
+
+    for m in m_values:
+        error, b, beta = solve(x, y, n, m)
+        data.append([function_str, len(x), m, error])
+
+    # Создание DataFrame для удобного вывода
+    df = pd.DataFrame(
+        data, columns=["Function", "Number of points", "Number of pieces (M)", "Error"]
+    )
+    print(df)
