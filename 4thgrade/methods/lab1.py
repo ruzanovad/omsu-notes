@@ -3,11 +3,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-
 def generate_b(x, n, m):
     b = [0]
-    for i in range(1, n // m + 1):
-        b.append(x[m * i - 1])
+    for i in range(1, m):
+        b.append(x[n * i // m])
     b.append(1)
     return b
 
@@ -22,18 +21,14 @@ def preprocess(x: np.array, y: np.array):
 
 
 def get_parameters(x, y, b: list):
-    b.sort()
-    b = [0.0] + b + [1.0]
     assert len(b) >= 2
-
     A = np.zeros((len(x), len(b)))
     for i in range(0, len(x)):
         A[i, 0] = 1.0
         A[i, 1] = x[i] - 0
     for i in range(0, len(x)):
-        for j in range(2, len(b)):
+        for j in range(1, len(b)):
             A[i, j] = (x[i] > b[j - 1]) * (x[i] - b[j - 1])
-
     beta = (np.linalg.inv(A.T @ A) @ A.T) @ y
 
     return beta
@@ -88,6 +83,7 @@ def plot_results(x, y, x_hat, fun, b, beta):
 def solve(x, y, n, m):
     x, y = preprocess(x, y)
     b = generate_b(x, n, m)
+
     beta = get_parameters(x, y, b)
     return fun(b=b, beta=beta)
 
@@ -106,4 +102,29 @@ def create_table(func_str, x, y, n, m_values):
     df = pd.DataFrame(
         data, columns=["Function", "Number of points", "Number of pieces (M)", "Error"]
     )
-    print(df)
+    return df
+
+
+def create_table_improved(func_strs, steps, m_values):
+    data = []
+
+    for func_str_ in func_strs:
+        func_str, fun = func_str_
+        for step in steps:
+            x = np.arange(0, 1, step)
+            y = fun(x)
+            n = len(x)
+            for m in m_values:
+                if n < m * 2:
+                    continue
+                x, y = preprocess(x, y)
+                b = generate_b(x, n, m)
+                beta = get_parameters(x, y, b)
+                error = calculate_error(x, y, b, beta)
+                data.append([func_str, len(x), m, error])
+
+    # Создание DataFrame для удобного вывода
+    df = pd.DataFrame(
+        data, columns=["Function", "Number of points", "Number of pieces (M)", "Error"]
+    )
+    return df

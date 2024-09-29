@@ -282,3 +282,6 @@ TSWLatexianTemp*
 .vscode
 3thgrade/kursovaya/*.png
 3thgrade/numeric_methods/cmake-build-debug/
+
+
+__pycache__
