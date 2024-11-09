@@ -48,21 +48,18 @@ def remove_redundant_attributes(fds):
     Удаляет избыточные атрибуты из левой части каждой зависимости
     """
     minimized_fds = []
-    for left, rights in fds:
-        left = set(left)  # Копируем левую часть для модификации
-        for attr in list(left):  # Итерируемся по копии списка атрибутов
-            test_left = left.copy()
+    for left, right in fds:
+        left = list(left)
+        for attr in left:
+            test_left = set(left)
             test_left.remove(attr)
-            # Формируем новое множество зависимостей G
-            G = [fd for fd in fds if fd != (left, rights)]
-            G.append((test_left, rights))
-            closure = find_closure(test_left, G)
-            if rights.issubset(closure):
+            closure = find_closure(test_left, fds)
+            if right.issubset(closure):
                 left.remove(attr)
                 print(
                     f"Удаляем избыточный атрибут '{attr}' из зависимости: {left | {attr}} -> {rights}"
                 )
-        minimized_fds.append((left, rights))
+        minimized_fds.append((set(left), right))
     return minimized_fds
 
 
@@ -72,8 +69,8 @@ def minimal_cover(fds):
     """
     # decomposed_fds = decompose_fd(fds)
     without_redundant_fds = remove_redundant_fds(fds)
-    minimized_fds = remove_redundant_attributes(without_redundant_fds)
-    return minimized_fds
+    # minimized_fds = remove_redundant_attributes(without_redundant_fds)
+    return without_redundant_fds
 
 
 def reading_function(file="decomposed-deps.md"):
@@ -82,13 +79,12 @@ def reading_function(file="decomposed-deps.md"):
         lines = f.readlines()
         for line in lines:
             left, right = line.strip().split(" -> ")
-            left_set = set(left.split(", "))  # Преобразуем левую часть в множество
-            right_set = set(right.split(", "))  # Преобразуем правую часть в множество
+            left_set = set(left.split(", "))
+            right_set = set(right.split(", "))
             fds.append((left_set, right_set))
     return fds
 
 
-# Пример использования
 # fds = {
 #     ("A1",): {"A2", "A3", "A4", "A5", "A6", "A7", "A8"},
 #     ("B1",): {"B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11"},
@@ -96,7 +92,27 @@ def reading_function(file="decomposed-deps.md"):
 #     ("D1",): {"D2"},
 # }
 
+
+def convert_fds_list_to_map_single(fds_list):
+    """
+    :param fds_list: Список кортежей вида (set(left), set(right))
+    :return: Словарь вида {left: set(right)}
+    """
+    fd_map = {}
+    for left, right in fds_list:
+        if len(left) != 1:
+            raise ValueError(
+                "Этот вариант функции предполагает, что левая часть содержит один атрибут."
+            )
+        key = next(iter(left))  # Извлекаем единственный элемент из множества
+        if key in fd_map:
+            fd_map[key].update(right)
+        else:
+            fd_map[key] = set(right)
+    return fd_map
+
+
 fds = reading_function()
-print(fds)
+print(convert_fds_list_to_map_single(fds))
 min_cover = minimal_cover(fds)
-print("Минимальное покрытие:", min_cover)
+print("Минимальное покрытие:", convert_fds_list_to_map_single(min_cover))
