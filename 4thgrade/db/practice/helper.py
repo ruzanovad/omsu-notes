@@ -17,13 +17,15 @@ def find_closure(attributes, fds):
     """
     Находит замыкание атрибутов по множеству зависимостей
     """
-    closure = set(attributes)
+    closure = set(attributes)  # по множеству каких атрибутов строим
     while True:
-        new_elements = len(closure)
+        new_elements = len(closure)  # текущее количество атрибутов
         for left, right in fds:
-            if set(left).issubset(closure):
+            if set(left).issubset(closure):  # если левая часть текущей ФЗ
+                # является подмножеством текущего множества атрибутов, добавляем туда
+                # правую часть
                 closure.update(right)
-        if len(closure) == new_elements:
+        if len(closure) == new_elements:  # если на текущем шаге не добавили ни одну...
             break
     return closure
 
@@ -34,9 +36,13 @@ def remove_redundant_fds(fds):
     """
     minimized_fds = deepcopy(fds)
     for fd in fds:
-        minimized_fds.remove(fd)
-        closure = find_closure(fd[0], minimized_fds)
-        if not fd[1].issubset(closure):
+        minimized_fds.remove(fd)  # удаляем из множества ФЗ текущую
+        closure = find_closure(
+            fd[0], minimized_fds
+        )  # строим замыкание на основе левой части
+
+        if not fd[1].issubset(closure):  # если правую часть не удалось вывести
+            # мы не можем ее удалить, добавляем обратно
             minimized_fds.append(fd)
         else:
             print("Удаляем ФЗ", fd[0], "->", fd[1])
@@ -47,19 +53,28 @@ def remove_redundant_attributes(fds):
     """
     Удаляет избыточные атрибуты из левой части каждой зависимости
     """
-    minimized_fds = []
-    for left, right in fds:
-        left = list(left)
-        for attr in left:
-            test_left = set(left)
-            test_left.remove(attr)
-            closure = find_closure(test_left, fds)
-            if right.issubset(closure):
-                left.remove(attr)
-                print(
-                    f"Удаляем избыточный атрибут '{attr}' из зависимости: {left | {attr}} -> {rights}"
-                )
-        minimized_fds.append((set(left), right))
+
+    minimized_fds = deepcopy(fds)
+    for i in range(len(minimized_fds)):
+        left, right = minimized_fds[i]
+        left = list(left)  # левые части
+        flag = False
+        if len(left) > 1:  # слева больше одного атрибута
+            for attr in left:  # пытаемся удалить атрибут
+                test_left = set(left)
+                test_left.remove(attr)
+                closure = find_closure(
+                    test_left, minimized_fds
+                )  # minimized fds обновляется
+                # находим замыкание на основе оставшихся атрибутов
+                if right.issubset(closure):
+                    flag = True
+                    left.remove(attr)
+                    print(
+                        f"Удаляем избыточный атрибут '{attr}' из зависимости: {left | {attr}} -> {right}"
+                    )
+        if flag:
+            minimized_fds[i] = (set(left), right)
     return minimized_fds
 
 
@@ -67,20 +82,20 @@ def minimal_cover(fds):
     """
     Строит минимальное покрытие для множества функциональных зависимостей
     """
-    # decomposed_fds = decompose_fd(fds)
-    without_redundant_fds = remove_redundant_fds(fds)
-    # minimized_fds = remove_redundant_attributes(without_redundant_fds)
-    return without_redundant_fds
+    decomposed_fds = decompose_fd(fds)
+    without_redundant_fds = remove_redundant_fds(decomposed_fds)
+    minimized_fds = remove_redundant_attributes(without_redundant_fds)
+    return minimized_fds
 
 
-def reading_function(file="decomposed-deps.md"):
+def reading_function(file="dependencies.md"):
     fds = []
     with open(file, "r") as f:
         lines = f.readlines()
         for line in lines:
             left, right = line.strip().split(" -> ")
             left_set = set(left.split(", "))
-            right_set = set(right.split(", "))
+            right_set = set(right[1:-1].split(", "))
             fds.append((left_set, right_set))
     return fds
 
@@ -100,19 +115,24 @@ def convert_fds_list_to_map_single(fds_list):
     """
     fd_map = {}
     for left, right in fds_list:
-        if len(left) != 1:
-            raise ValueError(
-                "Этот вариант функции предполагает, что левая часть содержит один атрибут."
-            )
-        key = next(iter(left))  # Извлекаем единственный элемент из множества
-        if key in fd_map:
-            fd_map[key].update(right)
+        left = frozenset(left)
+        # right = frozenset(right)
+        if left in fd_map.keys():
+            fd_map[left] |= right
         else:
-            fd_map[key] = set(right)
+            fd_map[left] = right
     return fd_map
 
 
+def printing_function(fds):
+    converted = convert_fds_list_to_map_single(fds)
+    for x, y in converted.items():
+        print(set(x), ":", y)
+
+
 fds = reading_function()
-print(convert_fds_list_to_map_single(fds))
+printing_function(fds)
+
 min_cover = minimal_cover(fds)
-print("Минимальное покрытие:", convert_fds_list_to_map_single(min_cover))
+print("Минимальное покрытие:")
+printing_function(min_cover)
