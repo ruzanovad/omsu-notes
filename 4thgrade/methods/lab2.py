@@ -1,7 +1,9 @@
 import numpy as np
 from scipy.linalg import solve
+from scipy.integrate import quad
 import matplotlib.pyplot as plt
 import pandas as pd
+from functools import lru_cache
 
 
 def gauss_quadrature_3rd_order(f, a, b):
@@ -153,35 +155,44 @@ def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100, m=3):
     A_matrix = np.zeros((n_intervals - 1, m + 1))  # +1 для постоянного члена
     B_vec = np.zeros(n_intervals - 1)
 
-    for i in range(n_intervals - 1):
-        x_i_half = x_half_nodes[i]
-
-        def K_ki(k, i):
-            return gauss_quadrature_3rd_order(
+    @lru_cache
+    def K_ki(k, i, qud=False):
+        if qud:
+            return quad(
                 lambda s: kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
-            )
+            )[0]
+        return gauss_quadrature_3rd_order(
+            lambda s: kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
+        )
 
-        def K_ki_(k, i):
-            return gauss_quadrature_3rd_order(
+    @lru_cache
+    def K_ki_(k, i, qud=False):
+        if qud:
+            return quad(
                 lambda s: s * kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
-            )
+            )[0]
+        return gauss_quadrature_3rd_order(
+            lambda s: s * kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
+        )
+
+    for i in range(n_intervals - 1):
 
         num = 0
         for j in range(m + 1):
             if j == 0:
                 for k in range(n_intervals - 1):
                     # Постоянный член
-                    num += K_ki(k, i)
+                    num += K_ki(i, k)
             else:
                 for k in range(n_intervals - 1):
                     if b_breaks[j] < x_nodes[k + 1]:
                         break
                     # Постоянный член
-                    num += K_ki_(k, i) - b_breaks[j - 1] * K_ki(k, i)
+                    num += K_ki_(i, k) - b_breaks[j - 1] * K_ki(i, k)
                 # Линейный член для сегмента j
             A_matrix[i, j] = num
         # Задание правой части уравнения
-        B_vec[i] = g(x_i_half)
+        B_vec[i] = g(x_half_nodes[i])
 
     # Решение системы линейных уравнений A * beta = B с использованием наименьших квадратов
     beta = np.linalg.lstsq(A_matrix, B_vec, rcond=None)[0]
@@ -195,7 +206,7 @@ def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100, m=3):
 
     # Вычисление средней квадратичной ошибки
     error = np.max(np.abs((f_approx_fine - f_exact_fine)))
-    print(f"Среднеквадратичная ошибка: {error:.6f}")
+    print(f"Ошибка: {error:.6f}")
 
     # Визуализация результатов
     plot_results(t_fine, f_exact_fine, t_fine, f_approx_fine)
@@ -207,23 +218,24 @@ def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100, m=3):
 if __name__ == "__main__":
     # Определение точного решения
     def exact_solution(t):
-        return np.sin(np.pi * t)
+        return t * t - 0.5
 
+    # @lru_cache
     # Определение ядра интегрального уравнения
     def kernel(x, t):
         return np.cos(x - t)  # Без шума для детерминированных результатов
 
+    @lru_cache
     # Определение правой части уравнения g(x) на основе точного решения
     def g(x):
-        # Интеграл K(x, t) * f(t) dt = интеграл cos(x - t) * sin(pi t) dt
         # Используем квадратуру Гаусса 3-го порядка для численного интегрирования
         integrand = lambda t: kernel(x, t) * exact_solution(t)
         return gauss_quadrature_3rd_order(integrand, 0, 1)
 
     # Параметры решения
     a, b = 0, 1  # Границы интегрирования
-    n_intervals = 1000  # Количество узлов для дискретизации x
-    m = 10  # Количество сегментов для аппроксимации f(t)
+    n_intervals = 150  # Количество узлов для дискретизации x
+    m = 50  # Количество сегментов для аппроксимации f(t)
 
     # Решение интегрального уравнения
     f_approx, error, beta, b_breaks = fredholm_solver(
