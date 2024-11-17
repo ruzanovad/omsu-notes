@@ -46,7 +46,7 @@ def has_lossless_join(
             # Выбираем строки, содержащие все атрибуты из X
             mask = (table[list(X)] == "+").all(axis=1)  # по строкам
             selected_rows = table[mask]
-            # print(selected_rows)
+            print(selected_rows)
 
             # Если ни одна строка не удовлетворяет, пропускаем
             if selected_rows.empty:
@@ -77,7 +77,8 @@ def convert_min_cover_to_F(min_cover):
     :return: Список кортежей вида [({left}, "right")]
     """
     F = []
-    for left, right in min_cover:
+    mapping = convert_fds_list_to_map_single(min_cover)
+    for left, right in mapping.items():
         for r in right: 
             F.append((left, r))
     return F
