@@ -19,17 +19,19 @@ def has_lossless_join(
     attributes = set()
     for Ri in decomposition:
         attributes.update(Ri)
+    sorted_attributes = sorted(list(attributes))
 
     # Создаем таблицу с "+" для атрибутов, присутствующих в каждом подмножестве
+    sorted_decomposition = sorted([tuple(sorted(subset)) for subset in decomposition])
+
+    # Создаём таблицу с "+" для атрибутов, присутствующих в каждом подмножестве
     table = pd.DataFrame(
         [
-            ["+" if attr in subset else "" for attr in attributes]
+            ["+" if attr in subset else "" for attr in sorted_attributes]
             for subset in decomposition
         ],
-        columns=sorted(list(attributes)),
-        index=sorted([
-            frozenset(x) for x in decomposition
-        ]),  # индексируем строки подмножествами
+        columns=sorted_attributes,
+        index=sorted_decomposition,  # индексируем строки отсортированными кортежами
     )
     print(table)
 
@@ -44,7 +46,7 @@ def has_lossless_join(
             # Выбираем строки, содержащие все атрибуты из X
             mask = (table[list(X)] == "+").all(axis=1)  # по строкам
             selected_rows = table[mask]
-            print(selected_rows)
+            # print(selected_rows)
 
             # Если ни одна строка не удовлетворяет, пропускаем
             if selected_rows.empty:
