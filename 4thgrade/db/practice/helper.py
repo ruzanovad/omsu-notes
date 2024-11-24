@@ -46,7 +46,7 @@ def has_lossless_join(
             # Выбираем строки, содержащие все атрибуты из X
             mask = (table[list(X)] == "+").all(axis=1)  # по строкам
             selected_rows = table[mask]
-            print(selected_rows)
+            # print(selected_rows)
 
             # Если ни одна строка не удовлетворяет, пропускаем
             if selected_rows.empty:
