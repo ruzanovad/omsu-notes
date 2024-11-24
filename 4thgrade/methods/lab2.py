@@ -6,6 +6,7 @@ import pandas as pd
 from functools import lru_cache
 
 
+
 def gauss_quadrature_3rd_order(f, a, b):
     """
     Вычисляет интеграл функции f на интервале [a, b] с использованием квадратуры Гаусса третьего порядка.
@@ -21,6 +22,23 @@ def gauss_quadrature_3rd_order(f, a, b):
     # Вычисление интеграла
     integral = np.sum(transformed_weights * f(transformed_nodes))
     return integral
+
+def gauss_quadrature_2nd_order(f, a, b):
+    """
+    Вычисляет интеграл функции f на интервале [a, b] с использованием квадратуры Гаусса второго порядка
+    """
+# Узлы и веса для интервала [-1, 1]
+    nodes = np.array([-np.sqrt(1 / 3), np.sqrt(1 / 3)])
+    weights = np.array([1, 1])
+
+    # Масштабирование узлов и весов для интервала [a, b]
+    transformed_nodes = 0.5 * (b - a) * nodes + 0.5 * (a + b)
+    transformed_weights = 0.5 * (b - a) * weights
+
+    # Вычисление интеграла
+    integral = np.sum(transformed_weights * f(transformed_nodes))
+    return integral
+    
 
 
 def generate_b(x, n, m):
@@ -143,56 +161,20 @@ def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100, m=3):
         beta (np.ndarray): Коэффициенты аппроксимации.
         b_breaks (list): Точки разбиения.
     """
+
+    #треугольная функция (треугольный импульс)
+
     # Дискретизация по x
     x_nodes = np.linspace(a, b, n_intervals)
+    h = 1/n_intervals
+    def V(x_i, x):
+        if abs(x-x_i) <= h:
+            return 1 - abs(x-x_i)/h
+        else:
+            return 0
 
-    x_half_nodes = (x_nodes[:-1] + x_nodes[1:]) * 0.5
 
-    # Генерация точек разбиения для аппроксимации
-    b_breaks = generate_b(x_nodes, n_intervals, m)
-
-    # Инициализация матрицы A и вектора B
-    A_matrix = np.zeros((n_intervals - 1, m + 1))  # +1 для постоянного члена
-    B_vec = np.zeros(n_intervals - 1)
-
-    @lru_cache
-    def K_ki(k, i, qud=False):
-        if qud:
-            return quad(
-                lambda s: kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
-            )[0]
-        return gauss_quadrature_3rd_order(
-            lambda s: kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
-        )
-
-    @lru_cache
-    def K_ki_(k, i, qud=False):
-        if qud:
-            return quad(
-                lambda s: s * kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
-            )[0]
-        return gauss_quadrature_3rd_order(
-            lambda s: s * kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
-        )
-
-    for i in range(n_intervals - 1):
-
-        num = 0
-        for j in range(m + 1):
-            if j == 0:
-                for k in range(n_intervals - 1):
-                    # Постоянный член
-                    num += K_ki(i, k)
-            else:
-                for k in range(n_intervals - 1):
-                    if b_breaks[j] < x_nodes[k + 1]:
-                        break
-                    # Постоянный член
-                    num += K_ki_(i, k) - b_breaks[j - 1] * K_ki(i, k)
-                # Линейный член для сегмента j
-            A_matrix[i, j] = num
-        # Задание правой части уравнения
-        B_vec[i] = g(x_half_nodes[i])
+r
 
     # Решение системы линейных уравнений A * beta = B с использованием наименьших квадратов
     beta = np.linalg.lstsq(A_matrix, B_vec, rcond=None)[0]
@@ -218,7 +200,7 @@ def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100, m=3):
 if __name__ == "__main__":
     # Определение точного решения
     def exact_solution(t):
-        return t * t - 0.5
+        return -np.sin(2*t)
 
     # @lru_cache
     # Определение ядра интегрального уравнения
@@ -235,7 +217,7 @@ if __name__ == "__main__":
     # Параметры решения
     a, b = 0, 1  # Границы интегрирования
     n_intervals = 150  # Количество узлов для дискретизации x
-    m = 50  # Количество сегментов для аппроксимации f(t)
+    m = 5  # Количество сегментов для аппроксимации f(t)
 
     # Решение интегрального уравнения
     f_approx, error, beta, b_breaks = fredholm_solver(

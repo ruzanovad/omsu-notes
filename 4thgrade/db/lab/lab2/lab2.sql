@@ -1,5 +1,5 @@
 -- Создание базы данных
-CREATE DATABASE users;
+-- CREATE DATABASE users;
 
 --https://stackoverflow.com/questions/55300370/postgresql-serial-vs-identity
 
@@ -56,7 +56,7 @@ WHERE NOT EXISTS (SELECT 1 FROM Orders WHERE Users.id_users = Orders.id_users)
 ORDER BY registration_date;
 
 -- 3. Количество и сумма заказов по пользователям
-SELECT id_users, COUNT(id_users) AS count, SUM(amount) AS sum 
+SELECT id_users, COUNT(id_users) count, SUM(amount) sum 
 FROM Orders 
 GROUP BY id_users;
 
@@ -76,6 +76,7 @@ GROUP BY Users.id_users
 HAVING SUM(Orders.amount) > 1000;
 
 -- 6. Пользователи с заказами со статусом "отменён"
+-- https://stackoverflow.com/questions/7633086/why-is-there-a-select-1-from-table
 SELECT * 
 FROM Users 
 WHERE EXISTS (
