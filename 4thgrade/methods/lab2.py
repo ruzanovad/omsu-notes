@@ -1,77 +1,26 @@
 import numpy as np
-from regex import T
 from scipy.linalg import solve
 from scipy.integrate import quad
 import matplotlib.pyplot as plt
 import pandas as pd
 from functools import lru_cache
 
-QUADRATURE = 2
-
 
 def gauss_quadrature_3rd_order(f, a, b):
     """
-    Вычисляет интеграл функции f на интервале [a, b] с использованием квадратуры Гаусса третьего порядка,
-    разделяя интервал [a, b] на n_intervals + 1 подинтервалов.
+    Вычисляет интеграл функции f на интервале [a, b] с использованием квадратуры Гаусса третьего порядка.
     """
-    n_intervals = 10
     # Узлы и веса для интервала [-1, 1]
     nodes = np.array([-np.sqrt(3 / 5), 0, np.sqrt(3 / 5)])
     weights = np.array([5 / 9, 8 / 9, 5 / 9])
 
-    # Шаг между узлами
-    h = (b - a) / n_intervals
-    integral = 0.0
+    # Масштабирование узлов и весов для интервала [a, b]
+    transformed_nodes = 0.5 * (b - a) * nodes + 0.5 * (a + b)
+    transformed_weights = 0.5 * (b - a) * weights
 
-    # Проходим по каждому подинтервалу
-    for i in range(n_intervals):
-        sub_a = a + i * h
-        sub_b = sub_a + h
-
-        # Масштабирование узлов и весов для текущего подинтервала
-        transformed_nodes = 0.5 * (sub_b - sub_a) * nodes + 0.5 * (sub_a + sub_b)
-        transformed_weights = 0.5 * (sub_b - sub_a) * weights
-
-        # Вычисление интеграла на текущем подинтервале
-        integral += np.sum(transformed_weights * f(transformed_nodes))
-    
+    # Вычисление интеграла
+    integral = np.sum(transformed_weights * f(transformed_nodes))
     return integral
-
-
-def gauss_quadrature_2nd_order(f, a, b):
-    """
-    Вычисляет интеграл функции f на интервале [a, b] с использованием квадратуры Гаусса второго порядка,
-    разделяя интервал [a, b] на n_intervals + 1 подинтервалов.
-    """
-    n_intervals = 10
-    # Узлы и веса для интервала [-1, 1]
-    nodes = np.array([-np.sqrt(1 / 3), np.sqrt(1 / 3)])
-    weights = np.array([1, 1])
-
-    # Шаг между узлами
-    h = (b - a) / n_intervals
-    integral = 0.0
-
-    # Проходим по каждому подинтервалу
-    for i in range(n_intervals):
-        sub_a = a + i * h
-        sub_b = sub_a + h
-
-        # Масштабирование узлов и весов для текущего подинтервала
-        transformed_nodes = 0.5 * (sub_b - sub_a) * nodes + 0.5 * (sub_a + sub_b)
-        transformed_weights = 0.5 * (sub_b - sub_a) * weights
-
-        # Вычисление интеграла на текущем подинтервале
-        integral += np.sum(transformed_weights * f(transformed_nodes))
-    
-    return integral
-
-
-
-if QUADRATURE == 3:
-    integral = gauss_quadrature_3rd_order
-else:
-    integral = gauss_quadrature_2nd_order
 
 
 def generate_b(x, n, m):
@@ -194,136 +143,105 @@ def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100):
         beta (np.ndarray): Коэффициенты аппроксимации.
         b_breaks (list): Точки разбиения.
     """
-
-    # треугольная функция (треугольный импульс)
-
     # Дискретизация по x
     x_nodes = np.linspace(a, b, n_intervals)
-    h = 1 / n_intervals
 
-    def V(x_i, x):
-        diff = np.abs(x - x_i)
-        return np.where(diff <= h, 1 - diff / h, 0)
+    x_half_nodes = (x_nodes[:-1] + x_nodes[1:]) * 0.5
+    m = n_intervals
+    # Генерация точек разбиения для аппроксимации
+    b_breaks = generate_b(x_nodes, n_intervals, m)
 
-    A_matrix = np.zeros((n_intervals, n_intervals), dtype=float)
-    B_vec = g(x_nodes)
+    # Инициализация матрицы A и вектора B
+    A_matrix = np.zeros((n_intervals - 1, m + 1))  # +1 для постоянного члена
+    B_vec = np.zeros(n_intervals - 1)
 
-    for i in range(n_intervals):
-        for j in range(n_intervals):
-            A_matrix[i, j] = integral(
-                lambda s: kernel(x_nodes[i], s) * V(x_nodes[j], s), 0, 1
-            )
+    @lru_cache
+    def K_ki(k, i, qud=False):
+        if qud:
+            return quad(
+                lambda s: kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
+            )[0]
+        return gauss_quadrature_3rd_order(
+            lambda s: kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
+        )
 
-    # print(A_matrix)
-    # print(B_vec)
-    A_matrix += 0.0001 * np.eye(n_intervals)
-    # Решение системы линейных уравнений A * beta = B
-    beta = np.linalg.solve(A_matrix, B_vec)
+    @lru_cache
+    def K_ki_(k, i, qud=False):
+        if qud:
+            return quad(
+                lambda s: s * kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
+            )[0]
+        return gauss_quadrature_3rd_order(
+            lambda s: s * kernel(x_half_nodes[k], s), x_nodes[i], x_nodes[i + 1]
+        )
+
+    for i in range(n_intervals - 1):
+
+        num = 0
+        for j in range(m + 1):
+            if j == 0:
+                for k in range(n_intervals - 1):
+                    # Постоянный член
+                    num += K_ki(i, k)
+            else:
+                for k in range(n_intervals - 1):
+                    if b_breaks[j] < x_nodes[k + 1]:
+                        break
+                    # Постоянный член
+                    num += K_ki_(i, k) - b_breaks[j - 1] * K_ki(i, k)
+                # Линейный член для сегмента j
+            A_matrix[i, j] = num
+        # Задание правой части уравнения
+        B_vec[i] = g(x_half_nodes[i])
+
+    # Решение системы линейных уравнений A * beta = B с использованием наименьших квадратов
+    beta = np.linalg.lstsq(A_matrix, B_vec, rcond=None)[0]
 
     # Аппроксимация f(t) на более плотной сетке для визуализации
     t_fine = np.linspace(a, b, 1000)
-    f_approx_fine = np.zeros_like(t_fine)
-    for j in range(n_intervals):
-        f_approx_fine += beta[j] * V(x_nodes[j], t_fine)
+    f_approx_fine = fun(t_fine, b_breaks, beta)
 
     # Точное решение на плотной сетке
     f_exact_fine = exact_solution(t_fine)
 
-    # Вычисление максимальной абсолютной ошибки
-    error = np.max(np.abs(f_approx_fine - f_exact_fine))
-    print(f"Максимальная абсолютная ошибка: {error:.6f}")
+    # Вычисление средней квадратичной ошибки
+    error = np.max(np.abs((f_approx_fine - f_exact_fine)))
+    print(f"Ошибка: {error:.6f}")
 
     # Визуализация результатов
-    plot_results(
-        t_fine,
-        f_exact_fine,
-        t_fine,
-        f_approx_fine,
-        func_label="Аппроксимация (треугольники)",
-    )
+    plot_results(t_fine, f_exact_fine, t_fine, f_approx_fine)
 
-    return f_approx_fine, error, beta, x_nodes
+    return f_approx_fine, error, beta, b_breaks
 
 
-def create_error_dataframe(kernel, exact_solution, g, a=0, b=1, intervals_list=None, function_label="Unknown"):
-    """
-    Создаёт DataFrame, содержащий ошибки аппроксимации для разных n_intervals.
-    
-    Параметры:
-        kernel (function): Ядро K(x, t).
-        exact_solution (function): Точное решение f(t).
-        g (function): Правая часть интегрального уравнения g(x).
-        a (float): Левая граница интегрирования.
-        b (float): Правая граница интегрирования.
-        intervals_list (list): Список значений n_intervals для экспериментов.
-        function_label (str): Строковое описание типа функции.
-    
-    Возвращает:
-        pd.DataFrame: Таблица с колонками Function, n_intervals, Error.
-    """
-    if intervals_list is None:
-        intervals_list = [10, 20, 50, 100]  # Default values if not provided
-    
-    results = []
-    
-    for n_intervals in intervals_list:
-        # Решение уравнения Фредгольма для текущего n_intervals
-        _, error, _, _ = fredholm_solver(
-            kernel, g, exact_solution, a=a, b=b, n_intervals=n_intervals
-        )
-        # Запись результатов
-        results.append({"Function": function_label, "n_intervals": n_intervals, "Error": error})
-    
-    # Преобразование в DataFrame
-    return pd.DataFrame(results)
-
-# Пример использования
+# Пример использования функции
 if __name__ == "__main__":
     # Определение точного решения
     def exact_solution(t):
-        return t  # Простое линейное решение
+        return t * t - 0.5
 
+    # @lru_cache
     # Определение ядра интегрального уравнения
     def kernel(x, t):
-        return np.cos(x - t)  # Пример ядра
+        return np.cos(x - t)  # Без шума для детерминированных результатов
 
+    @lru_cache
     # Определение правой части уравнения g(x) на основе точного решения
     def g(x):
-        def integrand(t, x_i):
-            return kernel(x_i, t) * exact_solution(t)
-        return np.array([integral(lambda t: integrand(t, x_i), 0, 1) for x_i in x])
+        # Используем квадратуру Гаусса 3-го порядка для численного интегрирования
+        integrand = lambda t: kernel(x, t) * exact_solution(t)
+        return gauss_quadrature_3rd_order(integrand, 0, 1)
 
-    # Параметры
+    # Параметры решения
     a, b = 0, 1  # Границы интегрирования
-    intervals_list = [10, 20, 50, 100, 200, 500, 1000]  # Различные значения n_intervals
-    # function_label = "Linear Function (t)"
+    n_intervals = 150  # Количество узлов для дискретизации x
+    # m = 50  # Количество сегментов для аппроксимации f(t)
 
-    # # Создание DataFrame с ошибками
-    # error_df = create_error_dataframe(kernel, exact_solution, g, a, b, intervals_list, function_label)
+    # Решение интегрального уравнения
+    f_approx, error, beta, b_breaks = fredholm_solver(
+        kernel, g, exact_solution, a, b, n_intervals
+    )
 
-    # # Вывод таблицы
-    # print(error_df)
-
-    # # Сохранение в файл (опционально)
-    # error_df.to_csv("error_results.csv", index=False)
-    # ---
-    def exact_solution(t):
-        return np.exp(2*t)  # Простое линейное решение
-    function_label = "exp (t)"
-
-    # Создание DataFrame с ошибками
-    error_df = create_error_dataframe(kernel, exact_solution, g, a, b, intervals_list, function_label)
-
-    # Вывод таблицы
-    print(error_df)
-
-    # Сохранение в файл (опционально)
-    error_df.to_csv("error_results_1.csv", index=False)
-
-    # sns.lineplot(data=error_df, x="n_intervals", y="Error", marker="o")
-    # plt.title("Error vs. n_intervals")
-    # plt.xlabel("Number of Intervals (n_intervals)")
-    # plt.ylabel("Error")
-    # plt.grid(True)
-    # plt.show()
-
+    # Аппроксимация f(t) в узлах разбиения
+    f_approx_nodes = fun(np.array(b_breaks), b_breaks, beta)
+    print(f"Приближённые значения f(t) в узлах разбиения: {f_approx_nodes}")
