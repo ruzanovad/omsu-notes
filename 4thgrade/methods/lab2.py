@@ -1,10 +1,12 @@
 import numpy as np
+from regex import T
 from scipy.linalg import solve
 from scipy.integrate import quad
 import matplotlib.pyplot as plt
 import pandas as pd
 from functools import lru_cache
 
+QUADRATURE = 3
 
 
 def gauss_quadrature_3rd_order(f, a, b):
@@ -23,11 +25,12 @@ def gauss_quadrature_3rd_order(f, a, b):
     integral = np.sum(transformed_weights * f(transformed_nodes))
     return integral
 
+
 def gauss_quadrature_2nd_order(f, a, b):
     """
     Вычисляет интеграл функции f на интервале [a, b] с использованием квадратуры Гаусса второго порядка
     """
-# Узлы и веса для интервала [-1, 1]
+    # Узлы и веса для интервала [-1, 1]
     nodes = np.array([-np.sqrt(1 / 3), np.sqrt(1 / 3)])
     weights = np.array([1, 1])
 
@@ -38,7 +41,12 @@ def gauss_quadrature_2nd_order(f, a, b):
     # Вычисление интеграла
     integral = np.sum(transformed_weights * f(transformed_nodes))
     return integral
-    
+
+
+if QUADRATURE == 3:
+    integral = gauss_quadrature_3rd_order
+else:
+    integral = gauss_quadrature_2nd_order
 
 
 def generate_b(x, n, m):
@@ -141,7 +149,7 @@ def plot_results(x, y, x_hat, y_hat, func_label="Приближённое реш
     plt.show()
 
 
-def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100, m=3):
+def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100):
     """
     Решает интегральное уравнение Фредгольма первого рода методом кусочно-линейной аппроксимации
     с использованием квадратурной формулы Гаусса 3-го порядка.
@@ -162,66 +170,90 @@ def fredholm_solver(kernel, g, exact_solution, a=0, b=1, n_intervals=100, m=3):
         b_breaks (list): Точки разбиения.
     """
 
-    #треугольная функция (треугольный импульс)
+    # треугольная функция (треугольный импульс)
 
     # Дискретизация по x
     x_nodes = np.linspace(a, b, n_intervals)
-    h = 1/n_intervals
+    h = 1 / n_intervals
+
     def V(x_i, x):
-        if abs(x-x_i) <= h:
-            return 1 - abs(x-x_i)/h
-        else:
-            return 0
+        diff = np.abs(x - x_i)
+        return np.where(diff <= h, 1 - diff / h, 0)
 
+    A_matrix = np.zeros((n_intervals, n_intervals), dtype=float)
+    B_vec = g(x_nodes)
 
-r
+    for i in range(n_intervals):
+        for j in range(n_intervals):
+            A_matrix[i, j] = integral(
+                lambda s: kernel(x_nodes[i], s) * V(x_nodes[j], s), 0, 1
+            )
 
-    # Решение системы линейных уравнений A * beta = B с использованием наименьших квадратов
-    beta = np.linalg.lstsq(A_matrix, B_vec, rcond=None)[0]
+    # print(A_matrix)
+    # print(B_vec)
+    A_matrix += 0.001 * np.eye(n_intervals)
+    # Решение системы линейных уравнений A * beta = B
+    beta = np.linalg.solve(A_matrix, B_vec)
 
     # Аппроксимация f(t) на более плотной сетке для визуализации
     t_fine = np.linspace(a, b, 1000)
-    f_approx_fine = fun(t_fine, b_breaks, beta)
+    f_approx_fine = np.zeros_like(t_fine)
+    for j in range(n_intervals):
+        f_approx_fine += beta[j] * V(x_nodes[j], t_fine)
 
     # Точное решение на плотной сетке
     f_exact_fine = exact_solution(t_fine)
 
-    # Вычисление средней квадратичной ошибки
-    error = np.max(np.abs((f_approx_fine - f_exact_fine)))
-    print(f"Ошибка: {error:.6f}")
+    # Вычисление максимальной абсолютной ошибки
+    error = np.max(np.abs(f_approx_fine - f_exact_fine))
+    print(f"Максимальная абсолютная ошибка: {error:.6f}")
 
     # Визуализация результатов
-    plot_results(t_fine, f_exact_fine, t_fine, f_approx_fine)
+    plot_results(
+        t_fine,
+        f_exact_fine,
+        t_fine,
+        f_approx_fine,
+        func_label="Аппроксимация (треугольники)",
+    )
 
-    return f_approx_fine, error, beta, b_breaks
+    return f_approx_fine, error, beta, x_nodes
 
 
 # Пример использования функции
 if __name__ == "__main__":
+
     # Определение точного решения
     def exact_solution(t):
-        return -np.sin(2*t)
+        return t+0.5
 
     # @lru_cache
     # Определение ядра интегрального уравнения
     def kernel(x, t):
-        return np.cos(x - t)  # Без шума для детерминированных результатов
+        # Ensure x and t are broadcasted to compatible shapes
+        return np.cos(np.subtract.outer(x, t))
 
-    @lru_cache
+    # @lru_cache
     # Определение правой части уравнения g(x) на основе точного решения
     def g(x):
-        # Используем квадратуру Гаусса 3-го порядка для численного интегрирования
-        integrand = lambda t: kernel(x, t) * exact_solution(t)
-        return gauss_quadrature_3rd_order(integrand, 0, 1)
+        # Define the integrand
+        def integrand(t):
+            # Kernel returns a 2D array; we need the corresponding exact_solution for broadcasting
+            return kernel(x, t) * exact_solution(t)
+
+        # Compute g(x) using Gauss quadrature for each x
+        g_values = np.array(
+            [integral(lambda t: integrand(t)[i], 0, 1) for i in range(len(x))]
+        )
+        return g_values
 
     # Параметры решения
     a, b = 0, 1  # Границы интегрирования
-    n_intervals = 150  # Количество узлов для дискретизации x
-    m = 5  # Количество сегментов для аппроксимации f(t)
+    n_intervals = 10  # Количество узлов для дискретизации x
 
     # Решение интегрального уравнения
     f_approx, error, beta, b_breaks = fredholm_solver(
-        kernel, g, exact_solution, a, b, n_intervals, m
+        kernel, g, exact_solution, a, b, n_intervals
     )
 
     # Аппроксимация f(t) в узлах разбиения
