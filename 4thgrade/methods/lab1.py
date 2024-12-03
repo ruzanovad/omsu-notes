@@ -4,6 +4,17 @@ import pandas as pd
 
 
 def generate_b(x, n, m):
+    """
+    Генерирует точки разбиения для кусочно-линейной аппроксимации.
+
+    Параметры:
+        x (np.array): Массив узлов.
+        n (int): Общее количество узлов.
+        m (int): Количество сегментов (кусочков).
+
+    Возвращает:
+        b (list): Список точек разбиения.
+    """
     b = [0]
     for i in range(1, m):
         b.append(x[n * i // m])
@@ -12,6 +23,9 @@ def generate_b(x, n, m):
 
 
 def preprocess(x: np.array, y: np.array):
+    """
+    Сортирует точки по возрастанию x.
+    """
     assert len(x) == len(y)
     # Сортировка точек по возрастанию значений x
     sorted_indices = np.argsort(x)
@@ -21,6 +35,17 @@ def preprocess(x: np.array, y: np.array):
 
 
 def get_parameters(x, y, b: list):
+    """
+    Вычисляет коэффициенты кусочно-линейной аппроксимации.
+
+    Параметры:
+        x (np.array): Отсортированные значения x.
+        y (np.array): Соответствующие значения y.
+        b (list): Точки разбиения.
+
+    Возвращает:
+        beta (np.ndarray): Коэффициенты аппроксимации.
+    """
     assert len(b) >= 2
     A = np.zeros((len(x), len(b)))
     for i in range(0, len(x)):
@@ -85,7 +110,7 @@ def solve(x, y, n, m):
     b = generate_b(x, n, m)
 
     beta = get_parameters(x, y, b)
-    return fun(b=b, beta=beta)
+    return lambdafun(b=b, beta=beta)
 
 
 def create_table(func_str, x, y, n, m_values):
