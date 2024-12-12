@@ -220,7 +220,7 @@ def fredholm_solver(
     error = np.max(np.abs(f_approx_fine - f_exact_fine))
     print(f"Maximum absolute error: {error:.2e}")
 
-    # plot_results(t_fine, f_exact_fine, t_fine, lab1.fun, b_mse, beta, (x_hat, Y))
+    plot_results(t_fine, f_exact_fine, t_fine, lab1.fun, b_mse, beta, (x_hat, Y))
     return f_approx_fine, error, x_hat
 
 
@@ -264,24 +264,24 @@ def create_error_dataframe(
 if __name__ == "__main__":
     pd.options.display.float_format = "{:.2e}".format
 
-    def kernel(x, t):
-        return np.abs(x - t)
+    # def kernel(x, t):
+    #     return np.abs(x - t)
 
     a, b = 0, 1
 
     kernels = [
         ("np.abs(x-t)", lambda x, t: np.abs(x - t)),
-        ("2*np.sin(x - t)", lambda x, t: 2 * np.sin(x - t)),
+        # ("2*np.sin(x - t)", lambda x, t: 2 * np.sin(x - t)),
     ]
 
     intervals_list = [20, 50, 200, 500]
-    m_list = [4, 10, 50]
+    m_list = [4, 10]
 
     test_cases = [
         (lambda t: t, "Linear Function (t)", 2),
         (lambda t: t, "Linear Function (t)", 3),
-        (lambda t: np.exp(2 * t), "Exponential Function (exp(2*t))", 2),
-        (lambda t: np.exp(2 * t), "Exponential Function (exp(2*t))", 3),
+        # (lambda t: np.exp(2 * t), "Exponential Function (exp(2*t))", 2),
+        # (lambda t: np.exp(2 * t), "Exponential Function (exp(2*t))", 3),
         (lambda t: np.sin(6 * t), "Sine Function (sin(6*t))", 2),
         (lambda t: np.sin(6 * t), "Sine Function (sin(6*t))", 3),
     ]
@@ -305,4 +305,4 @@ if __name__ == "__main__":
 
     combined_df = pd.concat(final_results, ignore_index=True)
     print(combined_df)
-    combined_df.to_csv("error_results_combined.csv", index=False)
+    # combined_df.to_csv("error_results_combined.csv", index=False)
