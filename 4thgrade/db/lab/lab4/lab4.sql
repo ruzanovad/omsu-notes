@@ -1,7 +1,7 @@
 CREATE TABLE Clients (
-    id_client primary key GENERATED ALWAYS AS IDENTITY,
+    id_client int primary key GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(40) NOT NULL,
-    age INTEGER check (age >= 18)
+    age INTEGER check (age >= 18),
     email VARCHAR(255) UNIQUE,
     -- phone VARCHAR(11) UNIQUE,
     registration_date DATE NOT NULL
@@ -10,11 +10,12 @@ CREATE TABLE Clients (
 CREATE TYPE status_type AS ENUM ('в процессе', 'завершен', 'отменен');
 
 CREATE TABLE Orders (
-    id_order primary key GENERATED ALWAYS AS IDENTITY,
+    id_order int primary key GENERATED ALWAYS AS IDENTITY,
     amount DECIMAL(10, 2) NOT NULL CHECK (amount >= 0.0), 
     order_date DATE NOT NULL,
     status status_type NOT NULL,
-    id_users INT REFERENCES Clients(id_client) ON DELETE CASCADE
+    id_users int not null,
+    foreign key (id_users) REFERENCES Clients(id_client) ON DELETE CASCADE
 );
 
 -- Создание индексов (доп)
@@ -30,7 +31,7 @@ VALUES
 ('Григорий Распутин', 'rasputin@example.com', '2003-01-10', 25); --  без заказов
 
 -- Вставка данных в Orders
-INSERT INTO Orders (client_id, amount, order_date, status)
+INSERT INTO Orders (id_users, amount, order_date, status)
 VALUES 
 -- Заказы за 2023 год
 (1, 100, '2023-01-15', 'завершен'),
@@ -45,7 +46,6 @@ VALUES
 (1, 330, '2023-10-05', 'завершен'),
 (2, 30, '2023-11-12', 'в процессе'),
 (3, 400, '2023-12-25', 'завершен'),
-
 -- Заказы за 2024 год
 (1, 150, '2024-01-15', 'завершен'),
 (2, 17, '2024-02-10', 'в процессе'),
@@ -59,6 +59,7 @@ VALUES
 (1, 430, '2024-10-05', 'завершен'),
 (2, 30, '2024-11-12', 'в процессе'),
 (3, 500, '2024-12-01', 'завершен');
+
 -- 1
 
 select count(*) total_count
@@ -68,54 +69,54 @@ where status = 'завершен';
 -- 2
 
 SELECT 
-    c.client_id,
+    c.id_client,
     c.name,
     count(CASE WHEN o.status = 'завершен' THEN 1 END) AS completed_orders,
     count(CASE WHEN o.status = 'отменен' THEN 1 END) AS canceled_orders
 FROM Clients c
-LEFT JOIN Orders o ON c.client_id = o.client_id
-GROUP BY c.client_id, c.name;
+LEFT JOIN Orders o ON c.id_client = o.id_users
+GROUP BY c.id_client, c.name;
 
 -- 3
 select avg(amount)
 from Orders
-where status = 'завершен' and current_date - order_date <= INTERVAL '6 months'
+where status = 'завершен' and current_date - INTERVAL '6 months' <= order_date;
 
 -- 4
 
 SELECT 
-    c.client_id,
+    c.id_client,
     c.name,
     AVG(o.amount)  avg_completed_amount
 FROM Clients c
-LEFT JOIN Orders o ON c.client_id = o.client_id
+LEFT JOIN Orders o ON c.id_client = o.id_users
 WHERE o.status = 'завершен'
-GROUP BY c.client_id, c.name
+GROUP BY c.id_client, c.name
 HAVING SUM(o.amount) >= 500;
 
 -- 5
 
 SELECT 
-    c.client_id,
+    c.id_client,
     c.name,
     o.status,
     SUM(o.amount) total_amount
 FROM Clients c
-LEFT JOIN Orders o ON c.client_id = o.client_id
-GROUP BY c.client_id, c.name, o.status
-ORDER BY c.client_id, o.status;
+LEFT JOIN Orders o ON c.id_client = o.id_users
+GROUP BY c.id_client, c.name, o.status
+ORDER BY c.id_client, o.status;
 
 
 -- 6 
 SELECT 
-    c.client_id,
+    c.id_client,
     c.name,
     MAX(o.amount) max_completed_amount,
     MIN(o.amount) min_completed_amount
 FROM Clients c
-JOIN Orders o ON c.client_id = o.client_id
+JOIN Orders o ON c.id_client = o.id_users
 WHERE o.status = 'завершен'
-GROUP BY c.client_id, c.name;
+GROUP BY c.id_client, c.name;
 
 -- 7
 
@@ -131,13 +132,13 @@ ORDER BY year, month, status;
 -- 8
 
 SELECT 
-    c.client_id,
+    c.id_client,
     c.name,
     MIN(o.order_date) earliest_canceled_order
 FROM Clients c
-LEFT JOIN Orders o ON c.client_id = o.client_id
+LEFT JOIN Orders o ON c.id_client = o.id_users
 WHERE o.status = 'отменен'
-GROUP BY c.client_id, c.name;
+GROUP BY c.id_client, c.name;
 
 -- 9
 
@@ -146,11 +147,11 @@ WITH avg_order AS (
     FROM Orders
 )
 SELECT 
-    c.client_id,
+    c.id_client,
     c.name,
     o.amount AS order_amount
 FROM Clients c
-LEFT JOIN Orders o ON c.client_id = o.client_id
+LEFT JOIN Orders o ON c.id_client = o.id_users
 CROSS JOIN avg_order
 WHERE o.amount > avg_order.overall_avg;
 
@@ -158,22 +159,22 @@ WHERE o.amount > avg_order.overall_avg;
 
 WITH monthly_orders AS (
     SELECT 
-        c.client_id,
+        c.id_client,
         c.name,
         TO_CHAR(o.order_date, 'YYYY-MM') AS order_month,
         COUNT(*) AS order_count
     FROM Clients c
-    JOIN Orders o ON c.client_id = o.client_id
+    JOIN Orders o ON c.id_client = o.id_users
     WHERE EXTRACT(YEAR FROM o.order_date) = EXTRACT(YEAR FROM CURRENT_DATE) -- текущий год
-    GROUP BY c.client_id, c.name, TO_CHAR(o.order_date, 'YYYY-MM') 
+    GROUP BY c.id_client, c.name, TO_CHAR(o.order_date, 'YYYY-MM') 
 )
 SELECT 
-    client_id,
+    id_client,
     name,
     COUNT(DISTINCT order_month) AS months_with_orders,
     SUM(order_count) AS total_orders_this_year
 FROM monthly_orders
-GROUP BY client_id, name
+GROUP BY id_client, name
 HAVING COUNT(DISTINCT order_month) = 12;
 
 -- 11
@@ -188,10 +189,15 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER check_no_negative ON Orders
+CREATE TRIGGER check_no_negative
 BEFORE INSERT OR UPDATE ON Orders 
 FOR EACH ROW
 EXECUTE FUNCTION check_order_amount();
+
+INSERT INTO Orders (id_users, amount, order_date, status)
+VALUES 
+-- Заказы за 2023 год
+(1, -100, '2023-01-15', 'завершен');
 
 -- 12
 
@@ -209,26 +215,26 @@ BEGIN
     -- Определяем условия для возрастных групп
     IF age_group = 'младше 30' THEN
         SELECT 
-            COUNT(DISTINCT c.client_id), COALESCE(SUM(o.amount), 0)
+            COUNT(DISTINCT c.id_client), COALESCE(SUM(o.amount), 0)
         INTO total_clients, total_order_amount
         FROM Clients c
-        LEFT JOIN Orders o ON c.client_id = o.client_id
+        LEFT JOIN Orders o ON c.id_client = o.id_client
         WHERE c.age < 30;
 
     ELSIF age_group = 'от 30 до 50' THEN
         SELECT 
-            COUNT(DISTINCT c.client_id), COALESCE(SUM(o.amount), 0)
+            COUNT(DISTINCT c.id_client), COALESCE(SUM(o.amount), 0)
         INTO total_clients, total_order_amount
         FROM Clients c
-        LEFT JOIN Orders o ON c.client_id = o.client_id
+        LEFT JOIN Orders o ON c.id_client = o.id_client
         WHERE c.age BETWEEN 30 AND 50;
 
     ELSIF age_group = 'старше 50' THEN
         SELECT 
-            COUNT(DISTINCT c.client_id), COALESCE(SUM(o.amount), 0)
+            COUNT(DISTINCT c.id_client), COALESCE(SUM(o.amount), 0)
         INTO total_clients, total_order_amount
         FROM Clients c
-        LEFT JOIN Orders o ON c.client_id = o.client_id
+        LEFT JOIN Orders o ON c.id_client = o.id_client
         WHERE c.age > 50;
 
     ELSE
@@ -236,6 +242,9 @@ BEGIN
     END IF;
 END;
 $$;
+
+call get_clients_and_order_sum_by_age_group('от 30 до 50');
+
 
 -- 13
 
@@ -246,7 +255,7 @@ BEGIN
     UPDATE Orders o
     SET amount = amount * 0.9
     FROM Clients c
-    WHERE o.client_id = c.client_id
+    WHERE o.id_client = c.id_client
       AND c.age > 50;
 
     RAISE NOTICE 'Скидка 10%% применена для клиентов старше 50 лет.';
@@ -256,8 +265,8 @@ $$;
 -- 14
 
 CREATE OR REPLACE PROCEDURE transfer_orders(
-    IN from_client_id INT,
-    IN to_client_id INT
+    IN from_id_client INT,
+    IN to_id_client INT
 )
 LANGUAGE plpgsql AS $$
 DECLARE
@@ -265,26 +274,26 @@ DECLARE
     to_exists BOOLEAN;
 BEGIN
     -- Проверяем существование клиентов
-    SELECT EXISTS(SELECT 1 FROM Clients WHERE client_id = from_client_id) INTO from_exists;
-    SELECT EXISTS(SELECT 1 FROM Clients WHERE client_id = to_client_id) INTO to_exists;
+    SELECT EXISTS(SELECT 1 FROM Clients WHERE id_client = from_id_client) INTO from_exists;
+    SELECT EXISTS(SELECT 1 FROM Clients WHERE id_client = to_id_client) INTO to_exists;
 
     -- Если хотя бы один из клиентов не существует, вызываем исключение
     IF NOT from_exists THEN
-        RAISE EXCEPTION 'Клиент с ID % не существует.', from_client_id;
+        RAISE EXCEPTION 'Клиент с ID % не существует.', from_id_client;
     ELSIF NOT to_exists THEN
-        RAISE EXCEPTION 'Клиент с ID % не существует.', to_client_id;
+        RAISE EXCEPTION 'Клиент с ID % не существует.', to_id_client;
     END IF;
 
     -- Начинаем транзакцию
     BEGIN
         UPDATE Orders
-        SET client_id = to_client_id
-        WHERE client_id = from_client_id;
+        SET id_client = to_id_client
+        WHERE id_client = from_id_client;
 
         -- Проверка: если не было ошибок, фиксируем транзакцию
         COMMIT;
 
-        RAISE NOTICE 'Заказы клиента % успешно перенесены к клиенту %.', from_client_id, to_client_id;
+        RAISE NOTICE 'Заказы клиента % успешно перенесены к клиенту %.', from_id_client, to_id_client;
 
     EXCEPTION
         WHEN OTHERS THEN
