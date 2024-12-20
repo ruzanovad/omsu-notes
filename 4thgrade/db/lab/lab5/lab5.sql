@@ -379,17 +379,21 @@ END $$;
 -- 14
 
 CREATE OR REPLACE PROCEDURE cancel_orders_by_product_limit(
-    IN product_id INT,
+    IN product INT,
     IN order_limit INT
 )
 LANGUAGE plpgsql AS $$
 BEGIN
-    UPDATE Orders
+    UPDATE Orders o
     SET status = 'отменен'
-    WHERE product_id = product_id
-      AND (SELECT COUNT(*) FROM Orders WHERE product_id = product_id) > order_limit;
+    WHERE product = o.product_id
+      AND (SELECT COUNT(*) FROM Orders o WHERE product = o.product_id) > order_limit;
 END;
 $$;
+
+
+CALL cancel_orders_by_product_limit(1, 0);
+SELECT * FROM Orders WHERE product_id = 1;
 
 -- 15
 
@@ -408,6 +412,7 @@ BEGIN
     LOOP
         FETCH order_cursor INTO product_record;
         EXIT WHEN NOT FOUND;
+        RAISE NOTICE 'Обновляем цену %', product_record.id;
         UPDATE Products
         SET price = price * 1.05
         WHERE id = product_record.id;
@@ -415,3 +420,8 @@ BEGIN
     CLOSE order_cursor;
 END;
 $$;
+
+SELECT * FROM Products;
+CALL increase_price_for_large_orders();
+SELECT * FROM Products;
+select * from pricelogs p;
