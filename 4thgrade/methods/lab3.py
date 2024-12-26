@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
+
 def solve_cauchy_second_order(f, y0, t0, t_end, h):
     """
     Solve the Cauchy problem for a first-order ODE using a second-order approximation scheme (Heun's method).
@@ -57,7 +58,25 @@ def improve_to_third_order(f, y0, t0, t_end, h):
 
         k1 = f(t, y)
         k2 = f(t + h, y + h * k1)
-        residual = (h**2) * (k2 - k1) / 2
+
+        f_t = (f(t + h, y) - f(t - h, y)) / (2.0 * h)
+        f_y = (f(t, y + h) - f(t, y - h)) / (2.0 * h)
+        f_tt = (f(t + h, y) - 2 * f(t, y) + f(t - h, y)) / (2.0 * h)
+        f_ty = (
+            f(t + h, y + h) - f(t - h, y + h) - f(t + h, y - h) + f(t - h, y - h)
+        ) / (4.0 * h*h)
+        f_yy = (f(t, y + h) - 2 * f(t, y) + f(t, y - h)) / (2.0 * h)
+        residual = (
+            (h**3)
+            * (
+                2 * f_y * f_y * k1
+                + 3 * f_y * f_t
+                # - f_tt
+                # - 2 * k1 * f_ty
+                # - k1 * k1 * f_yy
+            )
+            / 12
+        )
 
         y_corrected[i] = y_values[i] + residual
 
@@ -74,29 +93,38 @@ if __name__ == "__main__":
     # h_values: список шагов сетки для тестирования
     test_problems = {
         "problem1": {
-            "f": lambda t, y: -2 * t * y,          # dy/dt = -2ty
-            "analytical": lambda t: np.exp(-(t**2)), # y(t) = e^{-t^2}
+            "f": lambda t, y: -2 * t * y,  # dy/dt = -2ty
+            "analytical": lambda t: np.exp(-(t**2)),  # y(t) = e^{-t^2}
             "t0": 0,
             "t_end": 2,
             "y0": 1,
-            "h_values": [0.1, 0.05, 0.01, 0.001]
+            "h_values": [0.1, 0.01, 0.001, 0.0001],
         },
         "problem2": {
-            "f": lambda t, y: y,                   # dy/dt = y
+            "f": lambda t, y: y,  # dy/dt = y
             "analytical": lambda t: np.exp(t),
             "t0": 0,
             "t_end": 1,
             "y0": 1,
-            "h_values": [0.1, 0.05, 0.01, 0.001]
+            "h_values": [0.1, 0.01, 0.001, 0.0001],
         },
         "problem3": {
-            "f": lambda t, y: np.sin(t),           # dy/dt = sin(t)
-            "analytical": lambda t: 1 - np.cos(t), # Решение: y(t)=1 - cos(t), при y(0)=0
+            "f": lambda t, y: np.sin(t),  # dy/dt = sin(t)
+            "analytical": lambda t: 1
+            - np.cos(t),  # Решение: y(t)=1 - cos(t), при y(0)=0
             "t0": 0,
-            "t_end": 2*np.pi,
+            "t_end": 2 * np.pi,
             "y0": 0,
-            "h_values": [0.2, 0.1, 0.05, 0.01, 0.001]
-        }
+            "h_values": [0.1, 0.01, 0.001, 0.0001],
+        },
+        "problem4": {
+            "f": lambda t, y: t**4,  # dy/dt = sin(t)
+            "analytical": lambda t: t**5*0.2,
+            "t0": 0,
+            "t_end": 1,
+            "y0": 0,
+            "h_values": [0.1, 0.01, 0.001, 0.0001],
+        },
     }
 
     results = []
@@ -127,13 +155,24 @@ if __name__ == "__main__":
     filename = "results_table.csv"
     with open(filename, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["Problem", "Step size (h)", "Max Error (2nd order)", "Max Error (3rd order)"])
+        writer.writerow(
+            [
+                "Problem",
+                "Step size (h)",
+                "Max Error (2nd order)",
+                "Max Error (3rd order)",
+            ]
+        )
         for row in results:
             writer.writerow(row)
 
     # Выводим таблицу на экран
     print("Results Table:")
-    print("{:<10} {:<15} {:<20} {:<20}".format("Problem", "h", "Max Error (2nd)", "Max Error (3rd)"))
+    print(
+        "{:<10} {:<15} {:<20} {:<20}".format(
+            "Problem", "h", "Max Error (2nd)", "Max Error (3rd)"
+        )
+    )
     for r in results:
         print("{:<10} {:<15} {:<20} {:<20}".format(r[0], r[1], r[2], r[3]))
 
@@ -142,8 +181,12 @@ if __name__ == "__main__":
     problem_to_plot = "problem1"
     h_plot = 0.2
     p_data = test_problems[problem_to_plot]
-    t_values, y_second = solve_cauchy_second_order(p_data["f"], p_data["y0"], p_data["t0"], p_data["t_end"], h_plot)
-    _, y_third = improve_to_third_order(p_data["f"], p_data["y0"], p_data["t0"], p_data["t_end"], h_plot)
+    t_values, y_second = solve_cauchy_second_order(
+        p_data["f"], p_data["y0"], p_data["t0"], p_data["t_end"], h_plot
+    )
+    _, y_third = improve_to_third_order(
+        p_data["f"], p_data["y0"], p_data["t0"], p_data["t_end"], h_plot
+    )
     y_analytic = p_data["analytical"](t_values)
 
     plt.figure(figsize=(10, 6))
