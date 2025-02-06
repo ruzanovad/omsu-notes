@@ -103,7 +103,7 @@ def plot_results(
     kernel,
     m,
     function,
-    error, 
+    error,
     real_label="Function",
     approx_label="Approximation",
 ):
@@ -153,7 +153,7 @@ def plot_results(
     )
 
     plt.text(
-        0.69, 
+        0.69,
         0.25,
         info_text,
         transform=plt.gca().transAxes,
@@ -302,16 +302,17 @@ def create_error_dataframe(
                 n_intervals=n_intervals,
                 m=m,
             )
-            results.append(
-                {
-                    "Kernel": kernel_string,
-                    "Function": function_label,
-                    "n_intervals": n_intervals,
-                    "Quadrature Degree": quadrature_degree,
-                    "Error": error,
-                    "m": m,
-                }
-            )
+            if error!=None:
+                results.append(
+                    {
+                        "Kernel": kernel_string,
+                        "Function": function_label,
+                        "n_intervals": n_intervals,
+                        "Quadrature Degree": quadrature_degree,
+                        "m": m,
+                        "Error": error
+                    }
+                )
 
     return pd.DataFrame(results)
 
@@ -358,4 +359,4 @@ if __name__ == "__main__":
 
     combined_df = pd.concat(final_results, ignore_index=True)
     # print(combined_df)
-    # combined_df.to_csv("error_results_combined.csv", index=False)
+    combined_df.to_latex("error_results_combined.tex", index=False)
