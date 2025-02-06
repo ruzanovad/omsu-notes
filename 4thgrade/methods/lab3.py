@@ -47,41 +47,30 @@ def improve_to_third_order(f, y0, t0, t_end, h):
     t_values: np.array - array of time values
     y_values: np.array - array of solution values (third-order corrected)
     """
-    # Стартуем со второго порядка
-    t_values, y_values = solve_cauchy_second_order(f, y0, t0, t_end, h)
-
-    # Вносим поправку для третьего порядка
-    y_corrected = y_values.copy()
-    for i in range(1, len(t_values)):
-        t = t_values[i - 1]
-        y = y_values[i - 1]
-
-        k1 = f(t, y)
-        k2 = f(t + h, y + h * k1)
-
-        f_t = (f(t + h, y) - f(t - h, y)) / (2.0 * h)
-        f_y = (f(t, y + h) - f(t, y - h)) / (2.0 * h)
-        f_tt = (f(t + h, y) - 2 * f(t, y) + f(t - h, y)) / (2.0 * h)
-        f_ty = (
-            f(t + h, y + h) - f(t - h, y + h) - f(t + h, y - h) + f(t - h, y - h)
-        ) / (4.0 * h*h)
-        f_yy = (f(t, y + h) - 2 * f(t, y) + f(t, y - h)) / (2.0 * h)
-        residual = (
-            (h**3)
-            * (
-                2 * f_y * f_y * k1
-                + 3 * f_y * f_t
-                # - f_tt
-                # - 2 * k1 * f_ty
-                # - k1 * k1 * f_yy
-            )
-            / 12
-        )
-
-        y_corrected[i] = y_values[i] + residual
-
-    return t_values, y_corrected
-
+    t_vals = np.arange(t0, t_end + h, h)  # +1e-12, чтобы включить конечную точку (если делится точно)
+    n = len(t_vals)
+    
+    # Массив значений решения
+    y_vals = np.zeros(n)
+    y_vals[0] = y0
+    
+    for i in range(n-1):
+        t_n = t_vals[i]
+        y_n = y_vals[i]
+        
+        # Шаги Рунге–Кутты 3-го порядка (одно из распространённых представлений):
+        # 1) k1 = f(t_n,         y_n)
+        # 2) k2 = f(t_n + h/2,   y_n + (h/2)*k1)
+        # 3) k3 = f(t_n + h,     y_n - h*k1 + 2*h*k2)
+        # y_{n+1} = y_n + (h/6)*(k1 + 4*k2 + k3)
+        
+        k1 = f(t_n, y_n)
+        k2 = f(t_n + h/2, y_n + (h/2)*k1)
+        k3 = f(t_n + h,   y_n - h*k1 + 2*h*k2)
+        
+        y_vals[i+1] = y_n + (h/6)*(k1 + 4*k2 + k3)
+    
+    return t_vals, y_vals
 
 if __name__ == "__main__":
 
