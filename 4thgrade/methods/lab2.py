@@ -98,7 +98,13 @@ def plot_results(
     b,
     beta,
     dots,
-    real_label="Real Function",
+    number_of_intervals,
+    order,
+    kernel,
+    m,
+    function,
+    error, 
+    real_label="Function",
     approx_label="Approximation",
 ):
     """
@@ -129,18 +135,48 @@ def plot_results(
     )  # Approximated function
 
     plt.scatter(
-        dots[0], dots[1], linewidth=2, label="Y", color="green"
+        dots[0], dots[1], linewidth=2, label="Linear system solution", color="green"
     )  # results of sle
     plt.grid()
     plt.xlabel("x")
     plt.ylabel("y")
     plt.legend(loc="best")
-    plt.title("Real Function vs Approximation")
+
+    # Add text information about parameters
+    info_text = (
+        f"Intervals: {number_of_intervals}\n"
+        f"Quadrature Order: {order}\n"
+        f"Kernel: {kernel}\n"
+        f"Solution: {function}\n"
+        f"Segments (m): {m}\n"
+        f"Error: {error:.3e}"
+    )
+
+    plt.text(
+        0.69, 
+        0.25,
+        info_text,
+        transform=plt.gca().transAxes,
+        fontsize=12,
+        color="black",
+        verticalalignment="top",
+        bbox=dict(facecolor="white", alpha=0.7, edgecolor="black"),
+    )
+
+    plt.title("Function vs Approximation")
     plt.show()
 
 
 def fredholm_solver(
-    kernel, exact_solution, a=0, b=1, n_intervals=100, m=5, alpha=0.001
+    kernel,
+    exact_solution,
+    function_label,
+    kernel_string,
+    a=0,
+    b=1,
+    n_intervals=100,
+    m=5,
+    alpha=0.001,
 ):
     """
     Solves Fredholm integral equation of the first kind using piecewise linear approximation
@@ -197,11 +233,9 @@ def fredholm_solver(
 
     # Build the vector f_i using the selected quadrature
     f_vector = g(x_nodes_f)
-    # print(f_vector)
 
     # Apply regularization to solve ill-posed systems
     A = K + alpha * np.eye(n)
-    # print(A)
     Y = np.linalg.solve(A, f_vector)
 
     x_hat, Y = lab1.preprocess(x_hat, Y)
@@ -209,9 +243,9 @@ def fredholm_solver(
     beta = lab1.get_parameters(x_hat, Y, b=b_mse)
 
     # Fine grid for visualization
-    t_fine = np.linspace(a, b, num=1000)
-    f_approx_fine = np.zeros((1000))
-    for i in range(1000):
+    t_fine = np.linspace(a, b, num=1500)
+    f_approx_fine = np.zeros((1500))
+    for i in range(1500):
         f_approx_fine[i] = lab1.fun(t_fine[i], b_mse, beta)
 
     f_exact_fine = exact_solution(t_fine)
@@ -220,7 +254,21 @@ def fredholm_solver(
     error = np.max(np.abs(f_approx_fine - f_exact_fine))
     print(f"Maximum absolute error: {error:.2e}")
 
-    plot_results(t_fine, f_exact_fine, t_fine, lab1.fun, b_mse, beta, (x_hat, Y))
+    # plot_results(
+    #     t_fine,
+    #     f_exact_fine,
+    #     t_fine,
+    #     lab1.fun,
+    #     b_mse,
+    #     beta,
+    #     (x_hat, Y),
+    #     n_intervals,
+    #     QUADRATURE,
+    #     kernel_string,
+    #     m,
+    #     function_label,
+    #     error
+    # )
     return f_approx_fine, error, x_hat
 
 
@@ -245,7 +293,14 @@ def create_error_dataframe(
     for n_intervals in intervals_list:
         for m in m_list:
             _, error, _ = fredholm_solver(
-                kernel, exact_solution, a=a, b=b, n_intervals=n_intervals, m=m
+                kernel,
+                exact_solution,
+                function_label,
+                kernel_string,
+                a=a,
+                b=b,
+                n_intervals=n_intervals,
+                m=m,
             )
             results.append(
                 {
@@ -264,24 +319,22 @@ def create_error_dataframe(
 if __name__ == "__main__":
     pd.options.display.float_format = "{:.2e}".format
 
-    # def kernel(x, t):
-    #     return np.abs(x - t)
-
     a, b = 0, 1
 
     kernels = [
         ("np.abs(x-t)", lambda x, t: np.abs(x - t)),
-        # ("2*np.sin(x - t)", lambda x, t: 2 * np.sin(x - t)),
+        ("2*np.sin(xt)", lambda x, t: 2 * np.sin(x * t)),
+        ("2*np.sin(x-t)", lambda x, t: 2 * np.sin(x - t)),
     ]
 
-    intervals_list = [20, 50, 200, 500]
+    intervals_list = [10, 100, 500]
     m_list = [4, 10]
 
     test_cases = [
         (lambda t: t, "Linear Function (t)", 2),
         (lambda t: t, "Linear Function (t)", 3),
-        # (lambda t: np.exp(2 * t), "Exponential Function (exp(2*t))", 2),
-        # (lambda t: np.exp(2 * t), "Exponential Function (exp(2*t))", 3),
+        (lambda t: np.exp(2 * t), "Exponential Function (exp(2*t))", 2),
+        (lambda t: np.exp(2 * t), "Exponential Function (exp(2*t))", 3),
         (lambda t: np.sin(6 * t), "Sine Function (sin(6*t))", 2),
         (lambda t: np.sin(6 * t), "Sine Function (sin(6*t))", 3),
     ]
@@ -304,5 +357,5 @@ if __name__ == "__main__":
             final_results.append(error_df)
 
     combined_df = pd.concat(final_results, ignore_index=True)
-    print(combined_df)
+    # print(combined_df)
     # combined_df.to_csv("error_results_combined.csv", index=False)
