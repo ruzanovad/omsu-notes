@@ -1,8 +1,5 @@
-import glob
-from operator import mul
+
 import numpy as np
-from scipy.linalg import solve
-from scipy.integrate import quad
 import matplotlib.pyplot as plt
 import pandas as pd
 import lab1
@@ -358,5 +355,7 @@ if __name__ == "__main__":
             final_results.append(error_df)
 
     combined_df = pd.concat(final_results, ignore_index=True)
+
+    combined_df["Error"] = combined_df["Error"].apply(lambda x: f"{x:.3e}")
     # print(combined_df)
     combined_df.to_latex("error_results_combined.tex", index=False)
