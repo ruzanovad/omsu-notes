@@ -54,7 +54,7 @@ def get_parameters(x, y, b: list):
     for i in range(0, len(x)):
         for j in range(1, len(b)):
             A[i, j] = (x[i] > b[j - 1]) * (x[i] - b[j - 1])
-    beta = (np.linalg.inv(A.T @ A) @ A.T) @ y
+    beta = (np.linalg.inv(A.T @ A) @ (A.T @ y))
 
     return beta
 
